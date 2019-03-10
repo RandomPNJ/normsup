@@ -1,0 +1,41 @@
+%li.m-nav__item.m-dropdown.m-dropdown--medium.m-dropdown--arrow.m-dropdown--align-right.m-dropdown--mobile-full-width.m-dropdown--skin-light{"m-dropdown-toggle" => "click"}
+  %a.m-nav__link.m-dropdown__toggle{:href => "#"}
+    %span.m-topbar__userpic
+      = image_tag 'users/jerem.jpg', class: 'm--img-rounded m--marginless m--img-centered'
+      -# %img.m--img-rounded.m--marginless.m--img-centered{:alt => "", :src => "assets/users/jerem.jpg"}/
+    %span.m-nav__link-icon.m-topbar__usericon.m--hide
+      %span.m-nav__link-icon-wrapper
+        %i.flaticon-user-ok
+    %span.m-topbar__username.m--hide
+      Mark
+  .m-dropdown__wrapper
+    %span.m-dropdown__arrow.m-dropdown__arrow--right.m-dropdown__arrow--adjust
+    .m-dropdown__inner
+      .m-dropdown__header.m--align-center
+        .m-card-user.m-card-user--skin-light
+          .m-card-user__pic
+            = image_tag 'users/jerem.jpg', class: ' m--img-rounded m--marginless'
+          .m-card-user__details
+            %span.m-card-user__name.m--font-weight-400
+              = current_user.company.name
+            %span.m-card-user__name.m--font-weight-500
+              = current_user.email
+            %a.m-card-user__email.m--font-weight-300.m-link{:href => ""}
+              = current_user.email
+      .m-dropdown__body
+        .m-dropdown__content
+          %ul.m-nav.m-nav--skin-light
+            %li.m-nav__section.m--hide
+              %span.m-nav__section-text
+                Section
+            -# %li.m-nav__item
+            -#   %a.m-nav__link{href: edit_user_registration_path}
+            -#     %i.m-nav__link-icon.flaticon-profile-1
+            -#     %span.m-nav__link-title
+            -#       %span.m-nav__link-wrap
+            -#         %span.m-nav__link-text
+            -#           Mon profil
+
+            %li.m-nav__separator.m-nav__separator--fit
+            %li.m-nav__item
+              = link_to 'Déconnexion', destroy_user_session_path, class: 'btn m-btn--pill btn-secondary m-btn m-btn--custom m-btn--label-brand m-btn--bolder', method: :delete

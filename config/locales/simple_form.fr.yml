@@ -1,0 +1,122 @@
+fr:
+  simple_form:
+    "yes": 'Oui'
+    "no": 'Non'
+    required:
+      text: 'requis'
+      mark: '*'
+      # You can uncomment the line below if you need to overwrite the whole required html.
+      # When using html, text and mark won't be used.
+      # html: '<abbr title="required">*</abbr>'
+    error_notification:
+      default_message: "Veuillez remplir les champs correctement"
+      defaults:
+        man: 'Veuillez indiquer votre sex'
+    values:
+      defaults:
+        meet_at: 'Cliquez ici pour afficher le calendrier'
+        update: 'Enregistrer'
+        submit: 'Soumettre'
+    placeholders:
+      mission:
+        price: '50,0'
+        promo: '50,0'
+        supplement_long_hair: '10,0'
+        supplement_half_long_hair: '5,0'
+        title: 'ex: Nattes collées tête entière'
+      defaults:
+        instagram_url: '@bineta_doucoure'
+        email: 'Votre Email'
+        zipcode: 'Votre code postal'
+        phone: 'Votre N° de téléphone'
+        password: 'Mot de passe'
+        current_password: 'Mot de passe actuel'
+        password_confirmation: 'Retapez votre mot de passe'
+        username: 'Pseudo'
+        first_name: 'Votre prénom'
+        last_name: 'Votre nom'
+        birthday: 'Date de naissance'
+      booking:
+        reason_for_refusal: 'Raison du refus'
+    labels:
+      defaults:
+        instagram_url: 'Votre instagram'
+        gift: 'Votre cadeau'
+        remember_me: "Se souvenir de moi ?"
+        content: "Précisions"
+        moves: "Chez la cliente"
+        at_home: "Chez vous"
+        nickname: 'Pseudo'
+        first_slot: "6h-12h"
+        second_slot: "12h-18h"
+        third_slot: "18h-22h"
+        first_name: "Prénom"
+        last_name: "Nom de famille"
+        phone: "Téléphone"
+        price: "Votre prix"
+        zipcode: "Code postal (ex: 78260)"
+        new_price: "Votre prix"
+        supplement_half_long_hair: "Cheveux mi-longs"
+        supplement_long_hair: "Cheveux longs"
+        mission_category_id: "Catégorie de la prestation"
+        duration: "Durée"
+        zipcode_part1: "Code postal"
+        street: "Votre adresse"
+        moves_to: "Départements dans lesquels vous acceptez de vous déplacer"
+        missions_proposal: "Quelles coiffures maîtrisez-vous ?"
+        accepts_men: "Vous acceptez les hommes ?"
+        siret: "Votre numéro de siret"
+        degree: "Nom du diplôme dans le domaine de la coiffure"
+        comment: "Commentaire"
+        score: "Note"
+        players: 'Nombre de players'
+        meet_at: 'Quel jour ?'
+        hour: 'Choisissez une heure'
+        start_time: 'Quel jour ?'
+        monday: 'Lundi'
+        tuesday: 'Mardi'
+        wednesday: 'Mercredi'
+        thursday: 'Jeudi'
+        friday: 'Vendredi'
+        saturday: 'Samedi'
+        sunday: 'Dimanche'
+        address: 'Adresse (ex: 1 rue du coq, Créteil)'
+        address_complement: "Complément d'adresse"
+        city: 'Ville'
+        country: 'Pays'
+        password: 'Mot de passe'
+        current_password: 'Mot de passe actuel'
+        password_confirmation: 'Retapez votre mot de passe'
+        username: 'Pseudo'
+        name: 'Nom puis prénom'
+        check_mobile_token: 'Code de vérification'
+        birthday: 'Date de naissance'
+        cgu: "J'accepte les CGU"
+        partners_offers: 'Recevoir les promotions des partenaires Ma Coiffeuse Afro'
+        newsletter: 'Recevoir notre newsletter'
+      mission:
+        name: 'Prestation'
+      user:
+        new:
+          email: 'Email'
+        edit:
+          email: 'Email'
+    hints:
+      location:
+        address: 'Seule la ville apparaîtra'
+      listing:
+        siret: 'Ne remplir que si vous êtes auto-entrepreneur'
+        photo: 'Ça doit être une photo de vous/votre salon'
+      mission:
+        price: Incluez vos déplacements
+        description: 'Ex: Comprend un brushing, des boucles...'
+      defaults:
+        degree: "Diplôme dans le domaine de la coiffure"
+        username: "C'est ce nom que les autres utilisateurs verront"
+        password: '6 caractères minimum'
+    include_blanks:
+      defaults:
+        age: 'Rather not say'
+    prompts:
+      defaults:
+        age: 'Select your age'

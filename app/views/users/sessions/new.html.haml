@@ -1,0 +1,36 @@
+.container
+  .row
+    .col-md-6.offset-md-3
+      %br
+      %br
+      %br
+      .text-center.fadeInDown.animated
+        = image_tag 'logos/logo.png', width: '150'
+      %br
+      %br
+      %br
+      .m-portlet
+        .m-portlet__head
+          .m-portlet__head-caption
+            .m-portlet__head-title
+              %span.m-portlet__head-icon
+                %i.flaticon-lock
+              %h3.m-portlet__head-text
+                Connexion
+                %small Plateforme conformité fournisseurs
+        .m-portlet__body
+          = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
+            .field.form-group.m-form__group
+              = f.label :email
+              = f.email_field :email, autofocus: true, autocomplete: "email", class: 'form-control m-input m-input--square'
+            .field.form-group.m-form__group
+              = f.label :password
+              = f.password_field :password, autofocus: true, autocomplete: "password", class: 'form-control m-input m-input--square'
+
+            - if devise_mapping.rememberable?
+              .field
+                = f.check_box :remember_me
+                = f.label :remember_me
+            .actions
+              = f.submit "Connexion", class: 'btn btn-primary'
+          = render "users/shared/links"

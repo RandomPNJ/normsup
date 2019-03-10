@@ -1,0 +1,31 @@
+.nested-fields
+  .field
+    -# = f.label :first_name, 'Prénom'
+    %label Sexe
+    %br
+    = f.radio_button :man, '1', {checked: (!f.object.new_record? && f.object.man)}
+    = f.label :man, 'Homme'
+    &nbsp;
+    = f.radio_button :man, '0', {checked: (!f.object.new_record? && !f.object.man)}
+    = f.label :man, 'Femme'
+  .field
+    = f.label :first_name, 'Prénom'
+    = f.text_field :first_name, class: 'form-control m-input'
+  .field
+    = f.label :last_name, 'Nom'
+    = f.text_field :last_name, class: 'form-control m-input'
+  .field
+    = f.label :last_name, 'Poste occupé'
+    = f.text_field :position, class: 'form-control m-input'
+  .field
+    = f.label :email, 'Email'
+    = f.text_field :email, class: 'form-control m-input'
+  -# .field
+  -#   %br
+  -#   = f.check_box :privileged
+  -#   = f.label :privileged, 'Définir en tant qu\'interlocuteur privilégié pour cet entreprise'
+  -#   %br
+  -#   %br
+  = link_to_remove_association "Supprimer cet interlocuteur", f
+  %br
+  %br

@@ -1,0 +1,16 @@
+- if @rooms.present?
+  - @rooms.each do |room|
+    - if room.pro.present?
+      = link_to [:interface, room] do
+        .row{class: (room.last_message_for(current_resource).present? && !room.last_message_for(current_resource).read ? 'unread' : '')}
+          .col-md-3.col-xs-3
+            = image_tag room.pro.avatar, class: 'avatar mini-avatar'
+          .col-md-9.col-xs-9
+            .sender= room.pro.nickname
+            - if room.last_message.present?
+              .message
+                = "#{room.last_message.sender.nickname}: #{room.last_message.body[0...40]}.."
+                %br
+                %small #{I18n.l(room.last_message.created_at)} à #{room.last_message.created_at.strftime("%H : %M")}
+.text-center
+  = will_paginate @rooms

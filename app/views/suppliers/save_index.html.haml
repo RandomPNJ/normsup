@@ -1,0 +1,2979 @@
+
+
+
+/ begin::Page loader
+.m-page-loader.m-page-loader--base
+  .m-blockui
+    %span
+      Chargement des données...
+    %span
+      .m-loader.m-loader--brand
+/ end::Page Loader
+/ begin:: Page
+.m-grid.m-grid--hor.m-grid--root.m-page
+  / begin::Header
+  %header#m_header.m-grid__item.m-header{"m-minimize" => "minimize", "m-minimize-mobile" => "minimize", "m-minimize-mobile-offset" => "10", "m-minimize-offset" => "10"}
+    .m-header__top
+      .m-container.m-container--fluid.m-container--full-height.m-page__container
+        .m-stack.m-stack--ver.m-stack--desktop
+          / begin::Brand
+          .m-stack__item.m-brand.m-stack__item--left
+            .m-stack.m-stack--ver.m-stack--general.m-stack--inline
+              .m-stack__item.m-stack__item--middle.m-brand__logo
+                %a.m-brand__logo-wrapper{:href => "index.html"}
+                  %img.m-brand__logo-desktop{:alt => "", :src => "assets/demo/demo10/media/img/logo/logo.png"}/
+                  %img.m-brand__logo-mobile{:alt => "", :src => "assets/demo/demo10/media/img/logo/logo_mini.png"}/
+              .m-stack__item.m-stack__item--middle.m-brand__tools
+                / begin::Quick Actions
+                .m-dropdown.m-dropdown--inline.m-dropdown--arrow.m-dropdown--align-left.m-dropdown--align-push{"aria-expanded" => "true", "m-dropdown-toggle" => "click"}
+                  %a.dropdown-toggle.m-dropdown__toggle.btn.btn-outline-metal.m-btn.m-btn--icon.m-btn--pill{:href => "#"}
+                    %span
+                      Dashboard
+                  .m-dropdown__wrapper
+                    %span.m-dropdown__arrow.m-dropdown__arrow--left.m-dropdown__arrow--adjust
+                    .m-dropdown__inner
+                      .m-dropdown__body
+                        .m-dropdown__content
+                          %ul.m-nav
+                            %li.m-nav__section.m-nav__section--first.m--hide
+                              %span.m-nav__section-text
+                                Quick Menu
+                            %li.m-nav__item
+                              %a.m-nav__link{:href => ""}
+                                %i.m-nav__link-icon.flaticon-share
+                                %span.m-nav__link-text
+                                  Human Resources
+                            %li.m-nav__item
+                              %a.m-nav__link{:href => ""}
+                                %i.m-nav__link-icon.flaticon-chat-1
+                                %span.m-nav__link-text
+                                  Customer Relationship
+                            %li.m-nav__item
+                              %a.m-nav__link{:href => ""}
+                                %i.m-nav__link-icon.flaticon-info
+                                %span.m-nav__link-text
+                                  Order Processing
+                            %li.m-nav__item
+                              %a.m-nav__link{:href => ""}
+                                %i.m-nav__link-icon.flaticon-lifebuoy
+                                %span.m-nav__link-text
+                                  Accounting
+                            %li.m-nav__separator.m-nav__separator--fit
+                            %li.m-nav__item
+                              %a.m-nav__link{:href => ""}
+                                %i.m-nav__link-icon.flaticon-chat-1
+                                %span.m-nav__link-text
+                                  Customer Relationship
+                            %li.m-nav__item
+                              %a.m-nav__link{:href => ""}
+                                %i.m-nav__link-icon.flaticon-info
+                                %span.m-nav__link-text
+                                  Order Processing
+                / end::Quick Actions
+                / begin::Responsive Header Menu Toggler
+                %a#m_aside_header_menu_mobile_toggle.m-brand__icon.m-brand__toggler.m--visible-tablet-and-mobile-inline-block{:href => "javascript:;"}
+                  %span
+                / end::Responsive Header Menu Toggler
+                / begin::Topbar Toggler
+                %a#m_aside_header_topbar_mobile_toggle.m-brand__icon.m--visible-tablet-and-mobile-inline-block{:href => "javascript:;"}
+                  %i.flaticon-more
+                / end::Topbar Toggler
+          / end::Brand
+          / begin::Topbar
+          #m_header_nav.m-stack__item.m-stack__item--right.m-header-head
+            #m_header_topbar.m-topbar.m-stack.m-stack--ver.m-stack--general
+              .m-stack__item.m-topbar__nav-wrapper
+                %ul.m-topbar__nav.m-nav.m-nav--inline
+                  %li#m_quicksearch.m-nav__item.m-nav__item--focus.m-dropdown.m-dropdown--large.m-dropdown--arrow.m-dropdown--align-center.m-dropdown--mobile-full-width.m-dropdown--skin-light.m-list-search.m-list-search--skin-light{"m-dropdown-persistent" => "1", "m-dropdown-toggle" => "click", "m-quicksearch-mode" => "dropdown"}
+                    %a.m-nav__link.m-dropdown__toggle{:href => "#"}
+                      %span.m-nav__link-icon
+                        %span.m-nav__link-icon-wrapper
+                          %i.flaticon-search-1
+                    .m-dropdown__wrapper
+                      %span.m-dropdown__arrow.m-dropdown__arrow--center
+                      .m-dropdown__inner
+                        .m-dropdown__header
+                          %form.m-list-search__form
+                            .m-list-search__form-wrapper
+                              %span.m-list-search__form-input-wrapper
+                                %input#m_quicksearch_input.m-list-search__form-input{:autocomplete => "off", :name => "q", :placeholder => "Search...", :type => "text", :value => ""}/
+                              %span#m_quicksearch_close.m-list-search__form-icon-close
+                                %i.la.la-remove
+                        .m-dropdown__body
+                          .m-dropdown__scrollable.m-scrollable{"data-max-height" => "300", "data-mobile-max-height" => "200", "data-scrollable" => "true"}
+                            .m-dropdown__content
+                  %li.m-nav__item.m-nav__item--accent.m-dropdown.m-dropdown--large.m-dropdown--arrow.m-dropdown--align-center.m-dropdown--mobile-full-width{"m-dropdown-persistent" => "1", "m-dropdown-toggle" => "click"}
+                    %a#m_topbar_notification_icon.m-nav__link.m-dropdown__toggle{:href => "#"}
+                      %span.m-nav__link-badge.m-badge.m-badge--dot.m-badge--dot-small.m-badge--danger
+                      %span.m-nav__link-icon
+                        %span.m-nav__link-icon-wrapper
+                          %i.flaticon-music-2
+                    .m-dropdown__wrapper
+                      %span.m-dropdown__arrow.m-dropdown__arrow--center
+                      .m-dropdown__inner
+                        .m-dropdown__header.m--align-center
+                          %span.m-dropdown__header-title
+                            9 New
+                          %span.m-dropdown__header-subtitle
+                            User Notifications
+                        .m-dropdown__body
+                          .m-dropdown__content
+                            %ul.nav.nav-tabs.m-tabs.m-tabs-line.m-tabs-line--brand{:role => "tablist"}
+                              %li.nav-item.m-tabs__item
+                                %a.nav-link.m-tabs__link.active{"data-toggle" => "tab", :href => "#topbar_notifications_notifications", :role => "tab"}
+                                  Alerts
+                              %li.nav-item.m-tabs__item
+                                %a.nav-link.m-tabs__link{"data-toggle" => "tab", :href => "#topbar_notifications_events", :role => "tab"}
+                                  Events
+                              %li.nav-item.m-tabs__item
+                                %a.nav-link.m-tabs__link{"data-toggle" => "tab", :href => "#topbar_notifications_logs", :role => "tab"}
+                                  Logs
+                            .tab-content
+                              #topbar_notifications_notifications.tab-pane.active{:role => "tabpanel"}
+                                .m-scrollable{"data-max-height" => "250", "data-mobile-max-height" => "200", "data-scrollable" => "true"}
+                                  .m-list-timeline.m-list-timeline--skin-light
+                                    .m-list-timeline__items
+                                      .m-list-timeline__item
+                                        %span.m-list-timeline__badge.-m-list-timeline__badge--state-success
+                                        %span.m-list-timeline__text
+                                          12 new users registered
+                                        %span.m-list-timeline__time
+                                          Just now
+                                      .m-list-timeline__item
+                                        %span.m-list-timeline__badge
+                                        %span.m-list-timeline__text
+                                          System shutdown
+                                          %span.m-badge.m-badge--success.m-badge--wide
+                                            pending
+                                        %span.m-list-timeline__time
+                                          14 mins
+                                      .m-list-timeline__item
+                                        %span.m-list-timeline__badge
+                                        %span.m-list-timeline__text
+                                          New invoice received
+                                        %span.m-list-timeline__time
+                                          20 mins
+                                      .m-list-timeline__item
+                                        %span.m-list-timeline__badge
+                                        %span.m-list-timeline__text
+                                          DB overloaded 80%
+                                          %span.m-badge.m-badge--info.m-badge--wide
+                                            settled
+                                        %span.m-list-timeline__time
+                                          1 hr
+                                      .m-list-timeline__item
+                                        %span.m-list-timeline__badge
+                                        %span.m-list-timeline__text
+                                          System error -
+                                          %a.m-link{:href => "#"}
+                                            Check
+                                        %span.m-list-timeline__time
+                                          2 hrs
+                                      .m-list-timeline__item.m-list-timeline__item--read
+                                        %span.m-list-timeline__badge
+                                        %span.m-list-timeline__text{:href => ""}
+                                          New order received
+                                          %span.m-badge.m-badge--danger.m-badge--wide
+                                            urgent
+                                        %span.m-list-timeline__time
+                                          7 hrs
+                                      .m-list-timeline__item.m-list-timeline__item--read
+                                        %span.m-list-timeline__badge
+                                        %span.m-list-timeline__text
+                                          Production server down
+                                        %span.m-list-timeline__time
+                                          3 hrs
+                                      .m-list-timeline__item
+                                        %span.m-list-timeline__badge
+                                        %span.m-list-timeline__text
+                                          Production server up
+                                        %span.m-list-timeline__time
+                                          5 hrs
+                              #topbar_notifications_events.tab-pane{:role => "tabpanel"}
+                                .m-scrollable{"data-max-height" => "250", "data-mobile-max-height" => "200", "data-scrollable" => "true"}
+                                  .m-list-timeline.m-list-timeline--skin-light
+                                    .m-list-timeline__items
+                                      .m-list-timeline__item
+                                        %span.m-list-timeline__badge.m-list-timeline__badge--state1-success
+                                        %a.m-list-timeline__text{:href => ""}
+                                          New order received
+                                        %span.m-list-timeline__time
+                                          Just now
+                                      .m-list-timeline__item
+                                        %span.m-list-timeline__badge.m-list-timeline__badge--state1-danger
+                                        %a.m-list-timeline__text{:href => ""}
+                                          New invoice received
+                                        %span.m-list-timeline__time
+                                          20 mins
+                                      .m-list-timeline__item
+                                        %span.m-list-timeline__badge.m-list-timeline__badge--state1-success
+                                        %a.m-list-timeline__text{:href => ""}
+                                          Production server up
+                                        %span.m-list-timeline__time
+                                          5 hrs
+                                      .m-list-timeline__item
+                                        %span.m-list-timeline__badge.m-list-timeline__badge--state1-info
+                                        %a.m-list-timeline__text{:href => ""}
+                                          New order received
+                                        %span.m-list-timeline__time
+                                          7 hrs
+                                      .m-list-timeline__item
+                                        %span.m-list-timeline__badge.m-list-timeline__badge--state1-info
+                                        %a.m-list-timeline__text{:href => ""}
+                                          System shutdown
+                                        %span.m-list-timeline__time
+                                          11 mins
+                                      .m-list-timeline__item
+                                        %span.m-list-timeline__badge.m-list-timeline__badge--state1-info
+                                        %a.m-list-timeline__text{:href => ""}
+                                          Production server down
+                                        %span.m-list-timeline__time
+                                          3 hrs
+                              #topbar_notifications_logs.tab-pane{:role => "tabpanel"}
+                                .m-stack.m-stack--ver.m-stack--general{:style => "min-height: 180px;"}
+                                  .m-stack__item.m-stack__item--center.m-stack__item--middle
+                                    %span
+                                      All caught up!
+                                      %br/
+                                      No new logs.
+                  %li.m-nav__item.m-nav__item--danger.m-dropdown.m-dropdown--skin-light.m-dropdown--large.m-dropdown--arrow.m-dropdown--align-right.m-dropdown--align-push.m-dropdown--mobile-full-width.m-dropdown--skin-light{"m-dropdown-toggle" => "click"}
+                    %a.m-nav__link.m-dropdown__toggle{:href => "#"}
+                      %span.m-nav__link-badge.m-badge.m-badge--dot.m-badge--info.m--hide
+                      %span.m-nav__link-icon
+                        %span.m-nav__link-icon-wrapper
+                          %i.flaticon-share
+                    .m-dropdown__wrapper
+                      %span.m-dropdown__arrow.m-dropdown__arrow--right.m-dropdown__arrow--adjust
+                      .m-dropdown__inner
+                        .m-dropdown__header.m--align-center
+                          %span.m-dropdown__header-title
+                            Quick Actions
+                          %span.m-dropdown__header-subtitle
+                            Shortcuts
+                        .m-dropdown__body.m-dropdown__body--paddingless
+                          .m-dropdown__content
+                            .m-scrollable{"data-max-height" => "380", "data-mobile-max-height" => "200", "data-scrollable" => "false"}
+                              .m-nav-grid.m-nav-grid--skin-light
+                                .m-nav-grid__row
+                                  %a.m-nav-grid__item{:href => "#"}
+                                    %i.m-nav-grid__icon.flaticon-file
+                                    %span.m-nav-grid__text
+                                      Generate Report
+                                  %a.m-nav-grid__item{:href => "#"}
+                                    %i.m-nav-grid__icon.flaticon-time
+                                    %span.m-nav-grid__text
+                                      Add New Event
+                                .m-nav-grid__row
+                                  %a.m-nav-grid__item{:href => "#"}
+                                    %i.m-nav-grid__icon.flaticon-folder
+                                    %span.m-nav-grid__text
+                                      Create New Task
+                                  %a.m-nav-grid__item{:href => "#"}
+                                    %i.m-nav-grid__icon.flaticon-clipboard
+                                    %span.m-nav-grid__text
+                                      Completed Tasks
+                  %li.m-nav__item.m-dropdown.m-dropdown--medium.m-dropdown--arrow.m-dropdown--align-right.m-dropdown--mobile-full-width.m-dropdown--skin-light{"m-dropdown-toggle" => "click"}
+                    %a.m-nav__link.m-dropdown__toggle{:href => "#"}
+                      %span.m-topbar__userpic
+                        %img.m--img-rounded.m--marginless.m--img-centered{:alt => "", :src => "assets/app/media/img/users/user4.jpg"}/
+                      %span.m-nav__link-icon.m-topbar__usericon.m--hide
+                        %span.m-nav__link-icon-wrapper
+                          %i.flaticon-user-ok
+                      %span.m-topbar__username.m--hide
+                        Mark
+                    .m-dropdown__wrapper
+                      %span.m-dropdown__arrow.m-dropdown__arrow--right.m-dropdown__arrow--adjust
+                      .m-dropdown__inner
+                        .m-dropdown__header.m--align-center
+                          .m-card-user.m-card-user--skin-light
+                            .m-card-user__pic
+                              %img.m--img-rounded.m--marginless{:alt => "", :src => "assets/app/media/img/users/user4.jpg"}/
+                            .m-card-user__details
+                              %span.m-card-user__name.m--font-weight-500
+                                Mark Andre
+                              %a.m-card-user__email.m--font-weight-300.m-link{:href => ""}
+                                mark.andre@gmail.com
+                        .m-dropdown__body
+                          .m-dropdown__content
+                            %ul.m-nav.m-nav--skin-light
+                              %li.m-nav__section.m--hide
+                                %span.m-nav__section-text
+                                  Section
+                              %li.m-nav__item
+                                %a.m-nav__link{:href => "profile.html"}
+                                  %i.m-nav__link-icon.flaticon-profile-1
+                                  %span.m-nav__link-title
+                                    %span.m-nav__link-wrap
+                                      %span.m-nav__link-text
+                                        My Profile
+                                      %span.m-nav__link-badge
+                                        %span.m-badge.m-badge--success
+                                          2
+                              %li.m-nav__item
+                                %a.m-nav__link{:href => "profile.html"}
+                                  %i.m-nav__link-icon.flaticon-share
+                                  %span.m-nav__link-text
+                                    Activity
+                              %li.m-nav__item
+                                %a.m-nav__link{:href => "profile.html"}
+                                  %i.m-nav__link-icon.flaticon-chat-1
+                                  %span.m-nav__link-text
+                                    Messages
+                              %li.m-nav__separator.m-nav__separator--fit
+                              %li.m-nav__item
+                                %a.m-nav__link{:href => "profile.html"}
+                                  %i.m-nav__link-icon.flaticon-info
+                                  %span.m-nav__link-text
+                                    FAQ
+                              %li.m-nav__item
+                                %a.m-nav__link{:href => "profile.html"}
+                                  %i.m-nav__link-icon.flaticon-lifebuoy
+                                  %span.m-nav__link-text
+                                    Support
+                              %li.m-nav__separator.m-nav__separator--fit
+                              %li.m-nav__item
+                                %a.btn.m-btn--pill.btn-secondary.m-btn.m-btn--custom.m-btn--label-brand.m-btn--bolder{:href => "snippets/pages/user/login-1.html"}
+                                  Logout
+                  %li#m_quick_sidebar_toggle.m-nav__item.m-nav__item--info.m-nav__item--qs
+                    %a.m-nav__link.m-dropdown__toggle{:href => "#"}
+                      %span.m-nav__link-icon.m-nav__link-icon-alt
+                        %span.m-nav__link-icon-wrapper
+                          %i.flaticon-grid-menu
+          / end::Topbar
+    .m-header__bottom
+      .m-container.m-container--fluid.m-container--full-height.m-page__container
+        .m-stack.m-stack--ver.m-stack--desktop
+          / begin::Horizontal Menu
+          .m-stack__item.m-stack__item--fluid.m-header-menu-wrapper
+            %button#m_aside_header_menu_mobile_close_btn.m-aside-header-menu-mobile-close.m-aside-header-menu-mobile-close--skin-light
+              %i.la.la-close
+            #m_header_menu.m-header-menu.m-aside-header-menu-mobile.m-aside-header-menu-mobile--offcanvas.m-header-menu--skin-dark.m-header-menu--submenu-skin-light.m-aside-header-menu-mobile--skin-light.m-aside-header-menu-mobile--submenu-skin-light
+              %ul.m-menu__nav.m-menu__nav--submenu-arrow
+                %li.m-menu__item.m-menu__item--active.m-menu__item--active-tab.m-menu__item--submenu.m-menu__item--tabs{"aria-haspopup" => "true", "m-menu-submenu-toggle" => "tab"}
+                  %a.m-menu__link.m-menu__toggle{:href => "javascript:;"}
+                    %span.m-menu__link-text
+                      Dashboard
+                    %i.m-menu__hor-arrow.la.la-angle-down
+                    %i.m-menu__ver-arrow.la.la-angle-right
+                  .m-menu__submenu.m-menu__submenu--classic.m-menu__submenu--left.m-menu__submenu--tabs
+                    %span.m-menu__arrow.m-menu__arrow--adjust
+                    %ul.m-menu__subnav
+                      %li.m-menu__item{"aria-haspopup" => "true", "m-menu-link-redirect" => "1"}
+                        %a.m-menu__link{:href => "builder.html"}
+                          %i.m-menu__link-icon.flaticon-support
+                          %span.m-menu__link-text
+                            Dashboard
+                      %li.m-menu__item.m-menu__item--active{"aria-haspopup" => "true"}
+                        %a.m-menu__link{:href => "index.html"}
+                          %i.m-menu__link-icon.flaticon-file
+                          %span.m-menu__link-text
+                            Reports
+                      %li.m-menu__item{"aria-haspopup" => "true", "m-menu-link-redirect" => "1"}
+                        %a.m-menu__link{:href => "builder.html"}
+                          %i.m-menu__link-icon.flaticon-coins
+                          %span.m-menu__link-text
+                            Finance
+                      %li.m-menu__item.m-menu__item--submenu.m-menu__item--submenu-tabs{"aria-haspopup" => "true", "m-menu-submenu-toggle" => "click"}
+                        %a.m-menu__link.m-menu__toggle{:href => "javascript:;"}
+                          %i.m-menu__link-icon.flaticon-users
+                          %span.m-menu__link-text
+                            Customers
+                          %i.m-menu__hor-arrow.la.la-angle-down
+                          %i.m-menu__ver-arrow.la.la-angle-right
+                        .m-menu__submenu.m-menu__submenu--fixed-xl.m-menu__submenu--center
+                          %span.m-menu__arrow.m-menu__arrow--adjust
+                          .m-menu__subnav
+                            %ul.m-menu__content
+                              %li.m-menu__item
+                                %h3.m-menu__heading.m-menu__toggle
+                                  %span.m-menu__link-text
+                                    Finance Reports
+                                  %i.m-menu__ver-arrow.la.la-angle-right
+                                %ul.m-menu__inner
+                                  %li.m-menu__item{"aria-haspopup" => "true", "m-menu-link-redirect" => "1"}
+                                    %a.m-menu__link{:href => "inner2.html"}
+                                      %i.m-menu__link-icon.flaticon-map
+                                      %span.m-menu__link-text
+                                        Annual Reports
+                                  %li.m-menu__item{"aria-haspopup" => "true", "m-menu-link-redirect" => "1"}
+                                    %a.m-menu__link{:href => "inner2.html"}
+                                      %i.m-menu__link-icon.flaticon-user
+                                      %span.m-menu__link-text
+                                        HR Reports
+                                  %li.m-menu__item{"aria-haspopup" => "true", "m-menu-link-redirect" => "1"}
+                                    %a.m-menu__link{:href => "inner2.html"}
+                                      %i.m-menu__link-icon.flaticon-clipboard
+                                      %span.m-menu__link-text
+                                        IPO Reports
+                                  %li.m-menu__item{"aria-haspopup" => "true", "m-menu-link-redirect" => "1"}
+                                    %a.m-menu__link{:href => "inner2.html"}
+                                      %i.m-menu__link-icon.flaticon-graphic-1
+                                      %span.m-menu__link-text
+                                        Finance Margins
+                                  %li.m-menu__item{"aria-haspopup" => "true", "m-menu-link-redirect" => "1"}
+                                    %a.m-menu__link{:href => "inner2.html"}
+                                      %i.m-menu__link-icon.flaticon-graphic-2
+                                      %span.m-menu__link-text
+                                        Revenue Reports
+                              %li.m-menu__item
+                                %h3.m-menu__heading.m-menu__toggle
+                                  %span.m-menu__link-text
+                                    Project Reports
+                                  %i.m-menu__ver-arrow.la.la-angle-right
+                                %ul.m-menu__inner
+                                  %li.m-menu__item{"aria-haspopup" => "true", "m-menu-link-redirect" => "1"}
+                                    %a.m-menu__link{:href => "inner2.html"}
+                                      %i.m-menu__link-bullet.m-menu__link-bullet--line
+                                        %span
+                                      %span.m-menu__link-text
+                                        Coca Cola CRM
+                                  %li.m-menu__item{"aria-haspopup" => "true", "m-menu-link-redirect" => "1"}
+                                    %a.m-menu__link{:href => "inner2.html"}
+                                      %i.m-menu__link-bullet.m-menu__link-bullet--line
+                                        %span
+                                      %span.m-menu__link-text
+                                        Delta Airlines Booking Site
+                                  %li.m-menu__item{"aria-haspopup" => "true", "m-menu-link-redirect" => "1"}
+                                    %a.m-menu__link{:href => "inner2.html"}
+                                      %i.m-menu__link-bullet.m-menu__link-bullet--line
+                                        %span
+                                      %span.m-menu__link-text
+                                        Malibu Accounting
+                                  %li.m-menu__item{"aria-haspopup" => "true", "m-menu-link-redirect" => "1"}
+                                    %a.m-menu__link{:href => "inner2.html"}
+                                      %i.m-menu__link-bullet.m-menu__link-bullet--line
+                                        %span
+                                      %span.m-menu__link-text
+                                        Vineseed Website Rewamp
+                                  %li.m-menu__item{"aria-haspopup" => "true", "m-menu-link-redirect" => "1"}
+                                    %a.m-menu__link{:href => "inner2.html"}
+                                      %i.m-menu__link-bullet.m-menu__link-bullet--line
+                                        %span
+                                      %span.m-menu__link-text
+                                        Zircon Mobile App
+                                  %li.m-menu__item{"aria-haspopup" => "true", "m-menu-link-redirect" => "1"}
+                                    %a.m-menu__link{:href => "inner2.html"}
+                                      %i.m-menu__link-bullet.m-menu__link-bullet--line
+                                        %span
+                                      %span.m-menu__link-text
+                                        Mercury CMS
+                              %li.m-menu__item
+                                %h3.m-menu__heading.m-menu__toggle
+                                  %span.m-menu__link-text
+                                    HR Reports
+                                  %i.m-menu__ver-arrow.la.la-angle-right
+                                %ul.m-menu__inner
+                                  %li.m-menu__item{"aria-haspopup" => "true", "m-menu-link-redirect" => "1"}
+                                    %a.m-menu__link{:href => "inner2.html"}
+                                      %i.m-menu__link-bullet.m-menu__link-bullet--dot
+                                        %span
+                                      %span.m-menu__link-text
+                                        Staff Directory
+                                  %li.m-menu__item{"aria-haspopup" => "true", "m-menu-link-redirect" => "1"}
+                                    %a.m-menu__link{:href => "inner2.html"}
+                                      %i.m-menu__link-bullet.m-menu__link-bullet--dot
+                                        %span
+                                      %span.m-menu__link-text
+                                        Client Directory
+                                  %li.m-menu__item{"aria-haspopup" => "true", "m-menu-link-redirect" => "1"}
+                                    %a.m-menu__link{:href => "inner2.html"}
+                                      %i.m-menu__link-bullet.m-menu__link-bullet--dot
+                                        %span
+                                      %span.m-menu__link-text
+                                        Salary Reports
+                                  %li.m-menu__item{"aria-haspopup" => "true", "m-menu-link-redirect" => "1"}
+                                    %a.m-menu__link{:href => "inner2.html"}
+                                      %i.m-menu__link-bullet.m-menu__link-bullet--dot
+                                        %span
+                                      %span.m-menu__link-text
+                                        Staff Payslips
+                                  %li.m-menu__item{"aria-haspopup" => "true", "m-menu-link-redirect" => "1"}
+                                    %a.m-menu__link{:href => "inner2.html"}
+                                      %i.m-menu__link-bullet.m-menu__link-bullet--dot
+                                        %span
+                                      %span.m-menu__link-text
+                                        Corporate Expenses
+                                  %li.m-menu__item{"aria-haspopup" => "true", "m-menu-link-redirect" => "1"}
+                                    %a.m-menu__link{:href => "inner2.html"}
+                                      %i.m-menu__link-bullet.m-menu__link-bullet--dot
+                                        %span
+                                      %span.m-menu__link-text
+                                        Project Expenses
+                              %li.m-menu__item
+                                %h3.m-menu__heading.m-menu__toggle
+                                  %span.m-menu__link-text
+                                    Reporting Apps
+                                  %i.m-menu__ver-arrow.la.la-angle-right
+                                %ul.m-menu__inner
+                                  %li.m-menu__item{"aria-haspopup" => "true", "m-menu-link-redirect" => "1"}
+                                    %a.m-menu__link{:href => "inner2.html"}
+                                      %span.m-menu__link-text
+                                        Report Adjusments
+                                  %li.m-menu__item{"aria-haspopup" => "true", "m-menu-link-redirect" => "1"}
+                                    %a.m-menu__link{:href => "inner2.html"}
+                                      %span.m-menu__link-text
+                                        Sources &amp; Mediums
+                                  %li.m-menu__item{"aria-haspopup" => "true", "m-menu-link-redirect" => "1"}
+                                    %a.m-menu__link{:href => "inner2.html"}
+                                      %span.m-menu__link-text
+                                        Reporting Settings
+                                  %li.m-menu__item{"aria-haspopup" => "true", "m-menu-link-redirect" => "1"}
+                                    %a.m-menu__link{:href => "inner2.html"}
+                                      %span.m-menu__link-text
+                                        Conversions
+                                  %li.m-menu__item{"aria-haspopup" => "true", "m-menu-link-redirect" => "1"}
+                                    %a.m-menu__link{:href => "inner2.html"}
+                                      %span.m-menu__link-text
+                                        Report Flows
+                                  %li.m-menu__item{"aria-haspopup" => "true", "m-menu-link-redirect" => "1"}
+                                    %a.m-menu__link{:href => "inner2.html"}
+                                      %span.m-menu__link-text
+                                        Audit &amp; Logs
+                      %li.m-menu__item.m-menu__item--submenu.m-menu__item--rel.m-menu__item--submenu-tabs{"aria-haspopup" => "true", "m-menu-submenu-toggle" => "click"}
+                        %a.m-menu__link.m-menu__toggle{:href => "javascript:;"}
+                          %i.m-menu__link-icon.flaticon-add
+                          %span.m-menu__link-text
+                            Actions
+                          %i.m-menu__hor-arrow.la.la-angle-down
+                          %i.m-menu__ver-arrow.la.la-angle-right
+                        .m-menu__submenu.m-menu__submenu--classic.m-menu__submenu--left
+                          %span.m-menu__arrow.m-menu__arrow--adjust
+                          %ul.m-menu__subnav
+                            %li.m-menu__item{"aria-haspopup" => "true"}
+                              %a.m-menu__link{:href => "inner2.html"}
+                                %i.m-menu__link-icon.flaticon-diagram
+                                %span.m-menu__link-title
+                                  %span.m-menu__link-wrap
+                                    %span.m-menu__link-text
+                                      Generate Reports
+                                    %span.m-menu__link-badge
+                                      %span.m-badge.m-badge--success
+                                        2
+                            %li.m-menu__item.m-menu__item--submenu{"aria-haspopup" => "true", "m-menu-link-redirect" => "1", "m-menu-submenu-toggle" => "hover"}
+                              %a.m-menu__link.m-menu__toggle{:href => "javascript:;"}
+                                %i.m-menu__link-icon.flaticon-business
+                                %span.m-menu__link-text
+                                  Manage Orders
+                                %i.m-menu__hor-arrow.la.la-angle-right
+                                %i.m-menu__ver-arrow.la.la-angle-right
+                              .m-menu__submenu.m-menu__submenu--classic.m-menu__submenu--right
+                                %span.m-menu__arrow
+                                %ul.m-menu__subnav
+                                  %li.m-menu__item{"aria-haspopup" => "true", "m-menu-link-redirect" => "1"}
+                                    %a.m-menu__link{:href => "inner2.html"}
+                                      %span.m-menu__link-text
+                                        Latest Orders
+                                  %li.m-menu__item{"aria-haspopup" => "true", "m-menu-link-redirect" => "1"}
+                                    %a.m-menu__link{:href => "inner2.html"}
+                                      %span.m-menu__link-text
+                                        Pending Orders
+                                  %li.m-menu__item{"aria-haspopup" => "true", "m-menu-link-redirect" => "1"}
+                                    %a.m-menu__link{:href => "inner2.html"}
+                                      %span.m-menu__link-text
+                                        Processed Orders
+                                  %li.m-menu__item{"aria-haspopup" => "true", "m-menu-link-redirect" => "1"}
+                                    %a.m-menu__link{:href => "inner2.html"}
+                                      %span.m-menu__link-text
+                                        Delivery Reports
+                                  %li.m-menu__item{"aria-haspopup" => "true", "m-menu-link-redirect" => "1"}
+                                    %a.m-menu__link{:href => "inner2.html"}
+                                      %span.m-menu__link-text
+                                        Payments
+                                  %li.m-menu__item{"aria-haspopup" => "true", "m-menu-link-redirect" => "1"}
+                                    %a.m-menu__link{:href => "inner2.html"}
+                                      %span.m-menu__link-text
+                                        Customers
+                            %li.m-menu__item.m-menu__item--submenu{"aria-haspopup" => "true", "m-menu-link-redirect" => "1", "m-menu-submenu-toggle" => "hover"}
+                              %a.m-menu__link.m-menu__toggle{:href => "javascript:;"}
+                                %i.m-menu__link-icon.flaticon-chat-1
+                                %span.m-menu__link-text
+                                  Customer Feedbacks
+                                %i.m-menu__hor-arrow.la.la-angle-right
+                                %i.m-menu__ver-arrow.la.la-angle-right
+                              .m-menu__submenu.m-menu__submenu--classic.m-menu__submenu--right
+                                %span.m-menu__arrow
+                                %ul.m-menu__subnav
+                                  %li.m-menu__item{"aria-haspopup" => "true", "m-menu-link-redirect" => "1"}
+                                    %a.m-menu__link{:href => "inner2.html"}
+                                      %span.m-menu__link-text
+                                        Customer Feedbacks
+                                  %li.m-menu__item{"aria-haspopup" => "true", "m-menu-link-redirect" => "1"}
+                                    %a.m-menu__link{:href => "inner2.html"}
+                                      %span.m-menu__link-text
+                                        Company Feedbacks
+                                  %li.m-menu__item{"aria-haspopup" => "true", "m-menu-link-redirect" => "1"}
+                                    %a.m-menu__link{:href => "inner2.html"}
+                                      %span.m-menu__link-text
+                                        Reviewed Feedbacks
+                                  %li.m-menu__item{"aria-haspopup" => "true", "m-menu-link-redirect" => "1"}
+                                    %a.m-menu__link{:href => "inner2.html"}
+                                      %span.m-menu__link-text
+                                        Resolved Feedbacks
+                                  %li.m-menu__item{"aria-haspopup" => "true", "m-menu-link-redirect" => "1"}
+                                    %a.m-menu__link{:href => "inner2.html"}
+                                      %span.m-menu__link-text
+                                        Feedback Reports
+                            %li.m-menu__item{"aria-haspopup" => "true", "m-menu-link-redirect" => "1"}
+                              %a.m-menu__link{:href => "inner2.html"}
+                                %i.m-menu__link-icon.flaticon-users
+                                %span.m-menu__link-text
+                                  Register Member
+                      %li.m-menu__item.m-menu__item--submenu.m-menu__item--rel.m-menu__item--submenu-tabs{"aria-haspopup" => "true", "m-menu-link-redirect" => "1", "m-menu-submenu-toggle" => "click"}
+                        %a.m-menu__link.m-menu__toggle{:href => "javascript:;"}
+                          %i.m-menu__link-icon.flaticon-line-graph
+                          %span.m-menu__link-text
+                            Reports
+                          %i.m-menu__hor-arrow.la.la-angle-down
+                          %i.m-menu__ver-arrow.la.la-angle-right
+                        .m-menu__submenu.m-menu__submenu--fixed.m-menu__submenu--left{:style => "width:600px"}
+                          %span.m-menu__arrow.m-menu__arrow--adjust
+                          .m-menu__subnav
+                            %ul.m-menu__content
+                              %li.m-menu__item
+                                %h3.m-menu__heading.m-menu__toggle
+                                  %span.m-menu__link-text
+                                    Finance Reports
+                                  %i.m-menu__ver-arrow.la.la-angle-right
+                                %ul.m-menu__inner
+                                  %li.m-menu__item{"aria-haspopup" => "true", "m-menu-link-redirect" => "1"}
+                                    %a.m-menu__link{:href => "inner2.html"}
+                                      %i.m-menu__link-icon.flaticon-map
+                                      %span.m-menu__link-text
+                                        Annual Reports
+                                  %li.m-menu__item{"aria-haspopup" => "true", "m-menu-link-redirect" => "1"}
+                                    %a.m-menu__link{:href => "inner2.html"}
+                                      %i.m-menu__link-icon.flaticon-user
+                                      %span.m-menu__link-text
+                                        HR Reports
+                                  %li.m-menu__item{"aria-haspopup" => "true", "m-menu-link-redirect" => "1"}
+                                    %a.m-menu__link{:href => "inner2.html"}
+                                      %i.m-menu__link-icon.flaticon-clipboard
+                                      %span.m-menu__link-text
+                                        IPO Reports
+                                  %li.m-menu__item{"aria-haspopup" => "true", "m-menu-link-redirect" => "1"}
+                                    %a.m-menu__link{:href => "inner2.html"}
+                                      %i.m-menu__link-icon.flaticon-graphic-1
+                                      %span.m-menu__link-text
+                                        Finance Margins
+                                  %li.m-menu__item{"aria-haspopup" => "true", "m-menu-link-redirect" => "1"}
+                                    %a.m-menu__link{:href => "inner2.html"}
+                                      %i.m-menu__link-icon.flaticon-graphic-2
+                                      %span.m-menu__link-text
+                                        Revenue Reports
+                              %li.m-menu__item
+                                %h3.m-menu__heading.m-menu__toggle
+                                  %span.m-menu__link-text
+                                    Project Reports
+                                  %i.m-menu__ver-arrow.la.la-angle-right
+                                %ul.m-menu__inner
+                                  %li.m-menu__item{"aria-haspopup" => "true", "m-menu-link-redirect" => "1"}
+                                    %a.m-menu__link{:href => "inner2.html"}
+                                      %i.m-menu__link-bullet.m-menu__link-bullet--line
+                                        %span
+                                      %span.m-menu__link-text
+                                        Coca Cola CRM
+                                  %li.m-menu__item{"aria-haspopup" => "true", "m-menu-link-redirect" => "1"}
+                                    %a.m-menu__link{:href => "inner2.html"}
+                                      %i.m-menu__link-bullet.m-menu__link-bullet--line
+                                        %span
+                                      %span.m-menu__link-text
+                                        Delta Airlines Booking Site
+                                  %li.m-menu__item{"aria-haspopup" => "true", "m-menu-link-redirect" => "1"}
+                                    %a.m-menu__link{:href => "inner2.html"}
+                                      %i.m-menu__link-bullet.m-menu__link-bullet--line
+                                        %span
+                                      %span.m-menu__link-text
+                                        Malibu Accounting
+                                  %li.m-menu__item{"aria-haspopup" => "true", "m-menu-link-redirect" => "1"}
+                                    %a.m-menu__link{:href => "inner2.html"}
+                                      %i.m-menu__link-bullet.m-menu__link-bullet--line
+                                        %span
+                                      %span.m-menu__link-text
+                                        Vineseed Website Rewamp
+                                  %li.m-menu__item{"aria-haspopup" => "true", "m-menu-link-redirect" => "1"}
+                                    %a.m-menu__link{:href => "inner2.html"}
+                                      %i.m-menu__link-bullet.m-menu__link-bullet--line
+                                        %span
+                                      %span.m-menu__link-text
+                                        Zircon Mobile App
+                                  %li.m-menu__item{"aria-haspopup" => "true", "m-menu-link-redirect" => "1"}
+                                    %a.m-menu__link{:href => "inner2.html"}
+                                      %i.m-menu__link-bullet.m-menu__link-bullet--line
+                                        %span
+                                      %span.m-menu__link-text
+                                        Mercury CMS
+                      %li.m-menu__item.m-menu__item--submenu.m-menu__item--rel.m-menu__item--more.m-menu__item--submenu-tabs.m-menu__item--icon-only{"aria-haspopup" => "true", "m-menu-link-redirect" => "1", "m-menu-submenu-toggle" => "click"}
+                        %a.m-menu__link.m-menu__toggle{:href => "javascript:;"}
+                          %i.m-menu__link-icon.flaticon-more-v3
+                          %span.m-menu__link-text
+                        .m-menu__submenu.m-menu__submenu--classic.m-menu__submenu--left.m-menu__submenu--pull
+                          %span.m-menu__arrow.m-menu__arrow--adjust
+                          %ul.m-menu__subnav
+                            %li.m-menu__item{"aria-haspopup" => "true", "m-menu-link-redirect" => "1"}
+                              %a.m-menu__link{:href => "inner2.html"}
+                                %i.m-menu__link-icon.flaticon-business
+                                %span.m-menu__link-text
+                                  eCommerce
+                            %li.m-menu__item.m-menu__item--submenu{"aria-haspopup" => "true", "m-menu-link-redirect" => "1", "m-menu-submenu-toggle" => "hover"}
+                              %a.m-menu__link.m-menu__toggle{:href => "crud/datatable_v1.html"}
+                                %i.m-menu__link-icon.flaticon-computer
+                                %span.m-menu__link-text
+                                  Audience
+                                %i.m-menu__hor-arrow.la.la-angle-right
+                                %i.m-menu__ver-arrow.la.la-angle-right
+                              .m-menu__submenu.m-menu__submenu--classic.m-menu__submenu--right
+                                %span.m-menu__arrow
+                                %ul.m-menu__subnav
+                                  %li.m-menu__item{"aria-haspopup" => "true", "m-menu-link-redirect" => "1"}
+                                    %a.m-menu__link{:href => "inner2.html"}
+                                      %i.m-menu__link-icon.flaticon-users
+                                      %span.m-menu__link-text
+                                        Active Users
+                                  %li.m-menu__item{"aria-haspopup" => "true", "m-menu-link-redirect" => "1"}
+                                    %a.m-menu__link{:href => "inner2.html"}
+                                      %i.m-menu__link-icon.flaticon-interface-1
+                                      %span.m-menu__link-text
+                                        User Explorer
+                                  %li.m-menu__item{"aria-haspopup" => "true", "m-menu-link-redirect" => "1"}
+                                    %a.m-menu__link{:href => "inner2.html"}
+                                      %i.m-menu__link-icon.flaticon-lifebuoy
+                                      %span.m-menu__link-text
+                                        Users Flows
+                                  %li.m-menu__item{"aria-haspopup" => "true", "m-menu-link-redirect" => "1"}
+                                    %a.m-menu__link{:href => "inner2.html"}
+                                      %i.m-menu__link-icon.flaticon-graphic-1
+                                      %span.m-menu__link-text
+                                        Market Segments
+                                  %li.m-menu__item{"aria-haspopup" => "true", "m-menu-link-redirect" => "1"}
+                                    %a.m-menu__link{:href => "inner2.html"}
+                                      %i.m-menu__link-icon.flaticon-graphic
+                                      %span.m-menu__link-text
+                                        User Reports
+                            %li.m-menu__item{"aria-haspopup" => "true", "m-menu-link-redirect" => "1"}
+                              %a.m-menu__link{:href => "inner2.html"}
+                                %i.m-menu__link-icon.flaticon-map
+                                %span.m-menu__link-text
+                                  Marketing
+                            %li.m-menu__item{"aria-haspopup" => "true", "m-menu-link-redirect" => "1"}
+                              %a.m-menu__link{:href => "inner2.html"}
+                                %i.m-menu__link-icon.flaticon-graphic-2
+                                %span.m-menu__link-title
+                                  %span.m-menu__link-wrap
+                                    %span.m-menu__link-text
+                                      Campaigns
+                                    %span.m-menu__link-badge
+                                      %span.m-badge.m-badge--success
+                                        3
+                            %li.m-menu__item.m-menu__item--submenu{"aria-haspopup" => "true", "m-menu-link-redirect" => "1", "m-menu-submenu-toggle" => "hover"}
+                              %a.m-menu__link.m-menu__toggle{:href => "javascript:;"}
+                                %i.m-menu__link-icon.flaticon-infinity
+                                %span.m-menu__link-text
+                                  Cloud Manager
+                                %i.m-menu__hor-arrow.la.la-angle-right
+                                %i.m-menu__ver-arrow.la.la-angle-right
+                              .m-menu__submenu.m-menu__submenu--classic.m-menu__submenu--left
+                                %span.m-menu__arrow
+                                %ul.m-menu__subnav
+                                  %li.m-menu__item{"aria-haspopup" => "true", "m-menu-link-redirect" => "1"}
+                                    %a.m-menu__link{:href => "inner2.html"}
+                                      %i.m-menu__link-icon.flaticon-add
+                                      %span.m-menu__link-title
+                                        %span.m-menu__link-wrap
+                                          %span.m-menu__link-text
+                                            File Upload
+                                          %span.m-menu__link-badge
+                                            %span.m-badge.m-badge--danger
+                                              3
+                                  %li.m-menu__item{"aria-haspopup" => "true", "m-menu-link-redirect" => "1"}
+                                    %a.m-menu__link{:href => "inner2.html"}
+                                      %i.m-menu__link-icon.flaticon-signs-1
+                                      %span.m-menu__link-text
+                                        File Attributes
+                                  %li.m-menu__item{"aria-haspopup" => "true", "m-menu-link-redirect" => "1"}
+                                    %a.m-menu__link{:href => "inner2.html"}
+                                      %i.m-menu__link-icon.flaticon-folder
+                                      %span.m-menu__link-text
+                                        Folders
+                                  %li.m-menu__item{"aria-haspopup" => "true", "m-menu-link-redirect" => "1"}
+                                    %a.m-menu__link{:href => "inner2.html"}
+                                      %i.m-menu__link-icon.flaticon-cogwheel-2
+                                      %span.m-menu__link-text
+                                        System Settings
+                      %li.m-menu__item.m-menu__item--actions{"aria-haspopup" => "true"}
+                        .m-menu__link.m-menu__link--toggle-skip
+                          %a.btn.btn-accent.m-btn.m-btn--icon.m-btn--pill{:href => "#"}
+                            %span
+                              %i.la.la-plus
+                              %span
+                                New order
+                %li.m-menu__item.m-menu__item--submenu.m-menu__item--tabs{"aria-haspopup" => "true", "m-menu-submenu-toggle" => "tab"}
+                  %a.m-menu__link.m-menu__toggle{:href => "javascript:;"}
+                    %span.m-menu__link-text
+                      Accounting
+                    %i.m-menu__hor-arrow.la.la-angle-down
+                    %i.m-menu__ver-arrow.la.la-angle-right
+                  .m-menu__submenu.m-menu__submenu--classic.m-menu__submenu--left.m-menu__submenu--tabs
+                    %span.m-menu__arrow.m-menu__arrow--adjust
+                    %ul.m-menu__subnav
+                      %li.m-menu__item{"aria-haspopup" => "true", "m-menu-link-redirect" => "1"}
+                        %a.m-menu__link{:href => "builder.html"}
+                          %i.m-menu__link-icon.flaticon-graphic-2
+                          %span.m-menu__link-text
+                            Revenue
+                      %li.m-menu__item{"aria-haspopup" => "true", "m-menu-link-redirect" => "1"}
+                        %a.m-menu__link{:href => "builder.html"}
+                          %i.m-menu__link-icon.flaticon-analytics
+                          %span.m-menu__link-text
+                            Bills
+                      %li.m-menu__item{"aria-haspopup" => "true", "m-menu-link-redirect" => "1"}
+                        %a.m-menu__link{:href => "builder.html"}
+                          %i.m-menu__link-icon.flaticon-notes
+                          %span.m-menu__link-text
+                            IPO
+                      %li.m-menu__item{"aria-haspopup" => "true", "m-menu-link-redirect" => "1"}
+                        %a.m-menu__link{:href => "builder.html"}
+                          %i.m-menu__link-icon.flaticon-clipboard
+                          %span.m-menu__link-text
+                            Tax Management
+                      %li.m-menu__item{"aria-haspopup" => "true", "m-menu-link-redirect" => "1"}
+                        %a.m-menu__link{:href => "builder.html"}
+                          %i.m-menu__link-icon.flaticon-alarm-1
+                          %span.m-menu__link-text
+                            Invoices
+                      %li.m-menu__item.m-menu__item--actions{"aria-haspopup" => "true"}
+                        .m-menu__link.m-menu__link--toggle-skip
+                          %a.btn.btn-danger.m-btn.m-btn--icon.m-btn--pill{:href => "#"}
+                            %span
+                              %i.la.la-cloud-download
+                              %span
+                                Generate report
+                %li.m-menu__item.m-menu__item--submenu.m-menu__item--tabs{"aria-haspopup" => "true", "m-menu-submenu-toggle" => "tab"}
+                  %a.m-menu__link.m-menu__toggle{:href => "javascript:;"}
+                    %span.m-menu__link-text
+                      Reports
+                    %i.m-menu__hor-arrow.la.la-angle-down
+                    %i.m-menu__ver-arrow.la.la-angle-right
+                  .m-menu__submenu.m-menu__submenu--classic.m-menu__submenu--left.m-menu__submenu--tabs
+                    %span.m-menu__arrow.m-menu__arrow--adjust
+                    %ul.m-menu__subnav
+                      %li.m-menu__item{"aria-haspopup" => "true", "m-menu-link-redirect" => "1"}
+                        %a.m-menu__link{:href => "builder.html"}
+                          %i.m-menu__link-icon.flaticon-graphic-2
+                          %span.m-menu__link-text
+                            Orders
+                      %li.m-menu__item{"aria-haspopup" => "true", "m-menu-link-redirect" => "1"}
+                        %a.m-menu__link{:href => "builder.html"}
+                          %i.m-menu__link-icon.flaticon-analytics
+                          %span.m-menu__link-text
+                            Customers
+                      %li.m-menu__item{"aria-haspopup" => "true"}
+                        %a.m-menu__link{:href => "inner.html"}
+                          %i.m-menu__link-icon.flaticon-notes
+                          %span.m-menu__link-text
+                            Revenue
+                      %li.m-menu__item{"aria-haspopup" => "true", "m-menu-link-redirect" => "1"}
+                        %a.m-menu__link{:href => "builder.html"}
+                          %i.m-menu__link-icon.flaticon-clipboard
+                          %span.m-menu__link-text
+                            Invoices
+                      %li.m-menu__item{"aria-haspopup" => "true", "m-menu-link-redirect" => "1"}
+                        %a.m-menu__link{:href => "builder.html"}
+                          %i.m-menu__link-icon.flaticon-alarm-1
+                          %span.m-menu__link-text
+                            Bills
+                      %li.m-menu__item.m-menu__item--actions{"aria-haspopup" => "true"}
+                        .m-menu__link.m-menu__link--toggle-skip
+                          .dropdown
+                            %a.btn.btn-primary.m-btn.m-btn--icon.m-btn--pill.m-btn--air.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :href => "#"}
+                              %i.la.la-cloud-download
+                                Export
+                            .dropdown-menu.dropdown-menu-right
+                              %a.dropdown-item{:href => "#"}
+                                %i.flaticon-share
+                                Action
+                              %a.dropdown-item{:href => "#"}
+                                %i.flaticon-settings
+                                Another action
+                              %a.dropdown-item{:href => "#"}
+                                %i.flaticon-graphic-2
+                                Something else
+                %li.m-menu__item.m-menu__item--submenu.m-menu__item--tabs{"aria-haspopup" => "true", "m-menu-submenu-toggle" => "tab"}
+                  %a.m-menu__link.m-menu__toggle{:href => "javascript:;"}
+                    %span.m-menu__link-text
+                      Orders
+                    %i.m-menu__hor-arrow.la.la-angle-down
+                    %i.m-menu__ver-arrow.la.la-angle-right
+                  .m-menu__submenu.m-menu__submenu--classic.m-menu__submenu--left.m-menu__submenu--tabs
+                    %span.m-menu__arrow.m-menu__arrow--adjust
+                    %ul.m-menu__subnav
+                      %li.m-menu__item{"aria-haspopup" => "true", "m-menu-link-redirect" => "1"}
+                        %a.m-menu__link{:href => "builder.html"}
+                          %i.m-menu__link-icon.flaticon-graphic-2
+                          %span.m-menu__link-text
+                            Pending
+                      %li.m-menu__item{"aria-haspopup" => "true", "m-menu-link-redirect" => "1"}
+                        %a.m-menu__link{:href => "builder.html"}
+                          %i.m-menu__link-icon.flaticon-analytics
+                          %span.m-menu__link-text
+                            Delivered
+                      %li.m-menu__item{"aria-haspopup" => "true", "m-menu-link-redirect" => "1"}
+                        %a.m-menu__link{:href => "builder.html"}
+                          %i.m-menu__link-icon.flaticon-notes
+                          %span.m-menu__link-text
+                            Canceled
+                      %li.m-menu__item{"aria-haspopup" => "true", "m-menu-link-redirect" => "1"}
+                        %a.m-menu__link{:href => "builder.html"}
+                          %i.m-menu__link-icon.flaticon-clipboard
+                          %span.m-menu__link-text
+                            Customer Care
+                      %li.m-menu__item{"aria-haspopup" => "true", "m-menu-link-redirect" => "1"}
+                        %a.m-menu__link{:href => "builder.html"}
+                          %i.m-menu__link-icon.flaticon-alarm-1
+                          %span.m-menu__link-text
+                            Payments
+                %li.m-menu__item.m-menu__item--submenu.m-menu__item--tabs{"aria-haspopup" => "true", "m-menu-submenu-toggle" => "tab"}
+                  %a.m-menu__link.m-menu__toggle{:href => "javascript:;"}
+                    %span.m-menu__link-text
+                      Customers
+                    %i.m-menu__hor-arrow.la.la-angle-down
+                    %i.m-menu__ver-arrow.la.la-angle-right
+                  .m-menu__submenu.m-menu__submenu--classic.m-menu__submenu--left.m-menu__submenu--tabs
+                    %span.m-menu__arrow.m-menu__arrow--adjust
+                    %ul.m-menu__subnav
+                      %li.m-menu__item{"aria-haspopup" => "true", "m-menu-link-redirect" => "1"}
+                        %a.m-menu__link{:href => "inner.html"}
+                          %i.m-menu__link-icon.flaticon-settings-1
+                          %span.m-menu__link-text
+                            Orders
+                      %li.m-menu__item{"aria-haspopup" => "true", "m-menu-link-redirect" => "1"}
+                        %a.m-menu__link{:href => "inner.html"}
+                          %i.m-menu__link-icon.flaticon-imac
+                          %span.m-menu__link-text
+                            Feedbacks
+                      %li.m-menu__item{"aria-haspopup" => "true", "m-menu-link-redirect" => "1"}
+                        %a.m-menu__link{:href => "inner.html"}
+                          %i.m-menu__link-icon.flaticon-paper-plane
+                          %span.m-menu__link-text
+                            Customer Support
+                      %li.m-menu__item{"aria-haspopup" => "true", "m-menu-link-redirect" => "1"}
+                        %a.m-menu__link{:href => "inner2.html"}
+                          %i.m-menu__link-icon.flaticon-multimedia
+                          %span.m-menu__link-text
+                            Statistics
+                %li.m-menu__item.m-menu__item--submenu.m-menu__item--tabs{"aria-haspopup" => "true", "m-menu-submenu-toggle" => "tab"}
+                  %a.m-menu__link.m-menu__toggle{:href => "javascript:;"}
+                    %span.m-menu__link-text
+                      Tools
+                    %i.m-menu__hor-arrow.la.la-angle-down
+                    %i.m-menu__ver-arrow.la.la-angle-right
+                  .m-menu__submenu.m-menu__submenu--classic.m-menu__submenu--left.m-menu__submenu--tabs
+                    %span.m-menu__arrow.m-menu__arrow--adjust
+                    %ul.m-menu__subnav
+                      %li.m-menu__item{"aria-haspopup" => "true", "m-menu-link-redirect" => "1"}
+                        %a.m-menu__link{:href => "inner.html"}
+                          %i.m-menu__link-icon.flaticon-settings-1
+                          %span.m-menu__link-text
+                            Build Tools
+                      %li.m-menu__item{"aria-haspopup" => "true"}
+                        %a.m-menu__link{:href => "builder.html"}
+                          %i.m-menu__link-icon.flaticon-imac
+                          %span.m-menu__link-text
+                            Layout Builder
+                      %li.m-menu__item{"aria-haspopup" => "true", "m-menu-link-redirect" => "1"}
+                        %a.m-menu__link{:href => "inner.html"}
+                          %i.m-menu__link-icon.flaticon-paper-plane
+                          %span.m-menu__link-text
+                            Documentatiion
+                      %li.m-menu__item{"aria-haspopup" => "true", "m-menu-link-redirect" => "1"}
+                        %a.m-menu__link{:href => "inner2.html"}
+                          %i.m-menu__link-icon.flaticon-multimedia
+                          %span.m-menu__link-text
+                            Reviews
+          / end::Horizontal Menu
+  / end::Header
+  / begin::Body
+  .m-grid__item.m-grid__item--fluid.m-grid.m-grid--ver-desktop.m-grid--desktop.m-page__container.m-body
+    .m-grid__item.m-grid__item--fluid.m-wrapper
+      / BEGIN: Subheader
+      .m-subheader
+        .d-flex.align-items-center
+          .mr-auto
+            %h3.m-subheader__title.m-subheader__title--separator
+              Dashboard
+            %ul.m-subheader__breadcrumbs.m-nav.m-nav--inline
+              %li.m-nav__item.m-nav__item--home
+                %a.m-nav__link.m-nav__link--icon{:href => "#"}
+                  %i.m-nav__link-icon.la.la-home
+              %li.m-nav__separator
+                \-
+              %li.m-nav__item
+                %a.m-nav__link{:href => ""}
+                  %span.m-nav__link-text
+                    Dashboard
+              %li.m-nav__separator
+                \-
+              %li.m-nav__item
+                %a.m-nav__link{:href => ""}
+                  %span.m-nav__link-text
+                    Reports
+          %div
+            %span#m_dashboard_daterangepicker.m-subheader__daterange
+              %span.m-subheader__daterange-label
+                %span.m-subheader__daterange-title
+                %span.m-subheader__daterange-date.m--font-brand
+              %a.btn.btn-sm.btn-brand.m-btn.m-btn--icon.m-btn--icon-only.m-btn--custom.m-btn--pill{:href => "#"}
+                %i.la.la-angle-down
+      / END: Subheader
+      .m-content
+        / Begin::Section
+        .row
+          .col-xl-4
+            / begin:: Widgets/Quick Stats
+            .row.m-row--full-height
+              .col-sm-12.col-md-12.col-lg-6
+                .m-portlet.m-portlet--half-height.m-portlet--border-bottom-brand.m-portlet--rounded
+                  .m-portlet__body
+                    .m-widget26
+                      .m-widget26__number
+                        570
+                        %small
+                          All Sales
+                      .m-widget26__chart{:style => "height:90px; width: 220px;"}
+                        %canvas#m_chart_quick_stats_1
+                .m--space-30
+                .m-portlet.m-portlet--half-height.m-portlet--border-bottom-danger.m-portlet--rounded
+                  .m-portlet__body
+                    .m-widget26
+                      .m-widget26__number
+                        690
+                        %small
+                          All Orders
+                      .m-widget26__chart{:style => "height:90px; width: 220px;"}
+                        %canvas#m_chart_quick_stats_2
+              .col-sm-12.col-md-12.col-lg-6
+                .m-portlet.m-portlet--half-height.m-portlet--border-bottom-success.m-portlet--rounded
+                  .m-portlet__body
+                    .m-widget26
+                      .m-widget26__number
+                        230
+                        %small
+                          All Transactions
+                      .m-widget26__chart{:style => "height:90px; width: 220px;"}
+                        %canvas#m_chart_quick_stats_3
+                .m--space-30
+                .m-portlet.m-portlet--half-height.m-portlet--border-bottom-accent.m-portlet--rounded
+                  .m-portlet__body
+                    .m-widget26
+                      .m-widget26__number
+                        470
+                        %small
+                          All Comissions
+                      .m-widget26__chart{:style => "height:90px; width: 220px;"}
+                        %canvas#m_chart_quick_stats_4
+            / end:: Widgets/Quick Stats
+          .col-xl-4
+            / begin:: Widgets/Finance Summary
+            .m-portlet.m-portlet--full-height.m-portlet--fit.m-portlet--rounded
+              .m-portlet__head
+                .m-portlet__head-caption
+                  .m-portlet__head-title
+                    %h3.m-portlet__head-text
+                      Finance Summary
+                .m-portlet__head-tools
+                  %ul.nav.nav-pills.nav-pills--brand.m-nav-pills--align-right.m-nav-pills--btn-pill.m-nav-pills--btn-sm{:role => "tablist"}
+                    %li.nav-item.m-tabs__item
+                      %a.nav-link.m-tabs__link.active{"data-toggle" => "tab", :href => "#m_widget4_tab1_content", :role => "tab"}
+                        Month
+                    %li.nav-item.m-tabs__item
+                      %a.nav-link.m-tabs__link{"data-toggle" => "tab", :href => "#m_widget4_tab2_content", :role => "tab"}
+                        All Time
+              .m-portlet__body
+                .tab-content
+                  .tab-pane.active
+                    .m-widget12.m-widget12--chart-bottom.m--margin-top-10{:style => "min-height: 450px"}
+                      .m-widget12__item
+                        %span.m-widget12__text1
+                          Annual Companies Taxes EMS
+                          %br/
+                          %span
+                            $500,000
+                        %span.m-widget12__text2
+                          Next Tax Review Date
+                          %br/
+                          %span
+                            July 24,2017
+                      .m-widget12__item
+                        %span.m-widget12__text1
+                          Avarage Product Price
+                          %br/
+                          %span
+                            $60,70
+                        .m-widget12__text2
+                          .m-widget12__desc
+                            Satisfication Rate
+                          %br/
+                          .m-widget12__progress
+                            .m-widget12__progress-sm.progress.m-progress--sm
+                              .m-widget12__progress-bar.progress-bar.bg-brand{"aria-valuemax" => "100", "aria-valuemin" => "0", "aria-valuenow" => "25", :role => "progressbar"}
+                            %span.m-widget12__stats
+                              63%
+                      .m-widget12__chart.m-portlet-fit--sides{:style => "height:290px;"}
+                        %canvas#m_chart_finance_summary
+                  .tab-pane
+            / end:: Widgets/Finance Summary
+          .col-xl-4
+            / begin:: Widgets/Top Products
+            .m-portlet.m-portlet--full-height.m-portlet--fit.m-portlet--rounded
+              .m-portlet__head
+                .m-portlet__head-caption
+                  .m-portlet__head-title
+                    %h3.m-portlet__head-text
+                      Top Products
+                .m-portlet__head-tools
+                  %ul.m-portlet__nav
+                    %li.m-portlet__nav-item.m-dropdown.m-dropdown--inline.m-dropdown--arrow.m-dropdown--align-right.m-dropdown--align-push{"aria-expanded" => "true", "m-dropdown-toggle" => "hover"}
+                      %a.m-portlet__nav-link.m-dropdown__toggle.dropdown-toggle.btn.btn--sm.m-btn--pill.btn-secondary.m-btn.m-btn--label-brand{:href => "#"}
+                        All
+                      .m-dropdown__wrapper
+                        %span.m-dropdown__arrow.m-dropdown__arrow--right.m-dropdown__arrow--adjust{:style => "left: auto; right: 36.5px;"}
+                        .m-dropdown__inner
+                          .m-dropdown__body
+                            .m-dropdown__content
+                              %ul.m-nav
+                                %li.m-nav__item
+                                  %a.m-nav__link{:href => ""}
+                                    %i.m-nav__link-icon.flaticon-share
+                                    %span.m-nav__link-text
+                                      Activity
+                                %li.m-nav__item
+                                  %a.m-nav__link{:href => ""}
+                                    %i.m-nav__link-icon.flaticon-chat-1
+                                    %span.m-nav__link-text
+                                      Messages
+                                %li.m-nav__item
+                                  %a.m-nav__link{:href => ""}
+                                    %i.m-nav__link-icon.flaticon-info
+                                    %span.m-nav__link-text
+                                      FAQ
+                                %li.m-nav__item
+                                  %a.m-nav__link{:href => ""}
+                                    %i.m-nav__link-icon.flaticon-lifebuoy
+                                    %span.m-nav__link-text
+                                      Support
+              .m-portlet__body
+                / begin::Widget5
+                .m-widget4.m-widget4--chart-bottom{:style => "min-height: 480px"}
+                  .m-widget4__item
+                    .m-widget4__img.m-widget4__img--logo
+                      %img{:alt => "", :src => "assets/app/media/img/client-logos/logo3.png"}/
+                    .m-widget4__info
+                      %span.m-widget4__title
+                        Phyton
+                      %br/
+                      %span.m-widget4__sub
+                        A Programming Language
+                    %span.m-widget4__ext
+                      %span.m-widget4__number.m--font-brand
+                        +$17
+                  .m-widget4__item
+                    .m-widget4__img.m-widget4__img--logo
+                      %img{:alt => "", :src => "assets/app/media/img/client-logos/logo1.png"}/
+                    .m-widget4__info
+                      %span.m-widget4__title
+                        FlyThemes
+                      %br/
+                      %span.m-widget4__sub
+                        A Let's Fly Fast Again Language
+                    %span.m-widget4__ext
+                      %span.m-widget4__number.m--font-brand
+                        +$300
+                  .m-widget4__item
+                    .m-widget4__img.m-widget4__img--logo
+                      %img{:alt => "", :src => "assets/app/media/img/client-logos/logo4.png"}/
+                    .m-widget4__info
+                      %span.m-widget4__title
+                        Starbucks
+                      %br/
+                      %span.m-widget4__sub
+                        Good Coffee &amp; Snacks
+                    %span.m-widget4__ext
+                      %span.m-widget4__number.m--font-brand
+                        +$300
+                  .m-widget4__chart.m-portlet-fit--sides.m--margin-top-20{:style => "height:260px;"}
+                    %canvas#m_chart_trends_stats_2
+                / end::Widget 5
+            / end:: Widgets/Top Products
+        / End::Section
+        / Begin::Section
+        .row
+          .col-xl-8
+            / begin:: Widgets/Application Sales
+            .m-portlet.m-portlet--full-height.m-portlet--rounded
+              .m-portlet__head
+                .m-portlet__head-caption
+                  .m-portlet__head-title
+                    %h3.m-portlet__head-text
+                      Application Sales
+                .m-portlet__head-tools
+                  %ul.nav.nav-pills.nav-pills--brand.m-nav-pills--align-right.m-nav-pills--btn-pill.m-nav-pills--btn-sm{:role => "tablist"}
+                    %li.nav-item.m-tabs__item
+                      %a.nav-link.m-tabs__link.active{"data-toggle" => "tab", :href => "#m_widget11_tab1_content", :role => "tab"}
+                        Last Month
+                    %li.nav-item.m-tabs__item
+                      %a.nav-link.m-tabs__link{"data-toggle" => "tab", :href => "#m_widget11_tab2_content", :role => "tab"}
+                        All Time
+              .m-portlet__body
+                .tab-content
+                  #m_widget11_tab1_content.tab-pane.active
+                    / begin::Widget 11
+                    .m-widget11
+                      .table-responsive
+                        / begin::Table
+                        %table.table
+                          / begin::Thead
+                          %thead
+                            %tr
+                              %td.m-widget11__label
+                                \#
+                              %td.m-widget11__app
+                                Application
+                              %td.m-widget11__sales
+                                Sales
+                              %td.m-widget11__change
+                                Change
+                              %td.m-widget11__price
+                                Avg Price
+                              %td.m-widget11__total.m--align-right
+                                Total
+                          / end::Thead
+                          / begin::Tbody
+                          %tbody
+                            %tr
+                              %td
+                                %label.m-checkbox.m-checkbox--solid.m-checkbox--single.m-checkbox--brand
+                                  %input{:type => "checkbox"}/
+                                  %span
+                              %td
+                                %span.m-widget11__title
+                                  Vertex 2.0
+                                %span.m-widget11__sub
+                                  Vertex To By Again
+                              %td
+                                19,200
+                              %td
+                                .m-widget11__chart{:style => "height:50px; width: 100px"}
+                                  %iframe.chartjs-hidden-iframe{:style => "display: block; overflow: hidden; border: 0px; margin: 0px; top: 0px; left: 0px; bottom: 0px; right: 0px; height: 100%; width: 100%; position: absolute; pointer-events: none; z-index: -1;", :tabindex => "-1"}
+                                  %canvas#m_chart_sales_by_apps_1_1{:height => "50", :style => "display: block; width: 100px; height: 50px;", :width => "100"}
+                              %td
+                                $63
+                              %td.m--align-right.m--font-brand
+                                $14,740
+                            %tr
+                              %td
+                                %label.m-checkbox.m-checkbox--solid.m-checkbox--single.m-checkbox--brand
+                                  %input{:type => "checkbox"}/
+                                  %span
+                              %td
+                                %span.m-widget11__title
+                                  Metronic
+                                %span.m-widget11__sub
+                                  Powerful Admin Theme
+                              %td
+                                24,310
+                              %td
+                                .m-widget11__chart{:style => "height:50px; width: 100px"}
+                                  %iframe.chartjs-hidden-iframe{:style => "display: block; overflow: hidden; border: 0px; margin: 0px; top: 0px; left: 0px; bottom: 0px; right: 0px; height: 100%; width: 100%; position: absolute; pointer-events: none; z-index: -1;", :tabindex => "-1"}
+                                  %canvas#m_chart_sales_by_apps_1_2{:height => "50", :style => "display: block; width: 100px; height: 50px;", :width => "100"}
+                              %td
+                                $39
+                              %td.m--align-right.m--font-brand
+                                $16,010
+                            %tr
+                              %td
+                                %label.m-checkbox.m-checkbox--solid.m-checkbox--single.m-checkbox--brand
+                                  %input{:type => "checkbox"}/
+                                  %span
+                              %td
+                                %span.m-widget11__title
+                                  Apex
+                                %span.m-widget11__sub
+                                  The Best Selling App
+                              %td
+                                9,076
+                              %td
+                                .m-widget11__chart{:style => "height:50px; width: 100px"}
+                                  %iframe.chartjs-hidden-iframe{:style => "display: block; overflow: hidden; border: 0px; margin: 0px; top: 0px; left: 0px; bottom: 0px; right: 0px; height: 100%; width: 100%; position: absolute; pointer-events: none; z-index: -1;", :tabindex => "-1"}
+                                  %canvas#m_chart_sales_by_apps_1_3{:height => "50", :style => "display: block; width: 100px; height: 50px;", :width => "100"}
+                              %td
+                                $105
+                              %td.m--align-right.m--font-brand
+                                $37,200
+                            %tr
+                              %td
+                                %label.m-checkbox.m-checkbox--solid.m-checkbox--single.m-checkbox--brand
+                                  %input{:type => "checkbox"}/
+                                  %span
+                              %td
+                                %span.m-widget11__title
+                                  Cascades
+                                %span.m-widget11__sub
+                                  Design Tool
+                              %td
+                                11,094
+                              %td
+                                .m-widget11__chart{:style => "height:50px; width: 100px"}
+                                  %iframe.chartjs-hidden-iframe{:style => "display: block; overflow: hidden; border: 0px; margin: 0px; top: 0px; left: 0px; bottom: 0px; right: 0px; height: 100%; width: 100%; position: absolute; pointer-events: none; z-index: -1;", :tabindex => "-1"}
+                                  %canvas#m_chart_sales_by_apps_1_4{:height => "50", :style => "display: block; width: 100px; height: 50px;", :width => "100"}
+                              %td
+                                $16
+                              %td.m--align-right.m--font-brand
+                                $8,520
+                          / end::Tbody
+                        / end::Table
+                      .m-widget11__action.m--align-right
+                        %button.btn.m-btn--pill.btn-secondary.m-btn.m-btn--custom.m-btn--hover-brand{:type => "button"}
+                          Generate Report
+                    / end::Widget 11
+                  #m_widget11_tab2_content.tab-pane
+                    / begin::Widget 11
+                    .m-widget11
+                      .table-responsive
+                        / begin::Table
+                        %table.table
+                          / begin::Thead
+                          %thead
+                            %tr
+                              %td.m-widget11__label
+                                \#
+                              %td.m-widget11__app
+                                Application
+                              %td.m-widget11__sales
+                                Sales
+                              %td.m-widget11__change
+                                Change
+                              %td.m-widget11__price
+                                Avg Price
+                              %td.m-widget11__total.m--align-right
+                                Total
+                          / end::Thead
+                          / begin::Tbody
+                          %tbody
+                            %tr
+                              %td
+                                %label.m-checkbox.m-checkbox--solid.m-checkbox--single.m-checkbox--brand
+                                  %input{:type => "checkbox"}/
+                                  %span
+                              %td
+                                %span.m-widget11__title
+                                  Loop
+                                %span.m-widget11__sub
+                                  CRM System
+                              %td
+                                19,200
+                              %td
+                                .m-widget11__chart{:style => "height:50px; width: 100px"}
+                                  %iframe.chartjs-hidden-iframe{:style => "display: block; overflow: hidden; border: 0px; margin: 0px; top: 0px; left: 0px; bottom: 0px; right: 0px; height: 100%; width: 100%; position: absolute; pointer-events: none; z-index: -1;", :tabindex => "-1"}
+                                  %canvas#m_chart_sales_by_apps_2_1{:height => "0", :style => "display: block; width: 0px; height: 0px;", :width => "0"}
+                              %td
+                                $63
+                              %td.m--align-right.m--font-brand
+                                $34,740
+                            %tr
+                              %td
+                                %label.m-checkbox.m-checkbox--solid.m-checkbox--single.m-checkbox--brand
+                                  %input{:type => "checkbox"}/
+                                  %span
+                              %td
+                                %span.m-widget11__title
+                                  Selto
+                                %span.m-widget11__sub
+                                  Powerful Website Builder
+                              %td
+                                24,310
+                              %td
+                                .m-widget11__chart{:style => "height:50px; width: 100px"}
+                                  %iframe.chartjs-hidden-iframe{:style => "display: block; overflow: hidden; border: 0px; margin: 0px; top: 0px; left: 0px; bottom: 0px; right: 0px; height: 100%; width: 100%; position: absolute; pointer-events: none; z-index: -1;", :tabindex => "-1"}
+                                  %canvas#m_chart_sales_by_apps_2_2{:height => "0", :style => "display: block; width: 0px; height: 0px;", :width => "0"}
+                              %td
+                                $39
+                              %td.m--align-right.m--font-brand
+                                $46,010
+                            %tr
+                              %td
+                                %label.m-checkbox.m-checkbox--solid.m-checkbox--single.m-checkbox--brand
+                                  %input{:type => "checkbox"}/
+                                  %span
+                              %td
+                                %span.m-widget11__title
+                                  Jippo
+                                %span.m-widget11__sub
+                                  The Best Selling App
+                              %td
+                                9,076
+                              %td
+                                .m-widget11__chart{:style => "height:50px; width: 100px"}
+                                  %iframe.chartjs-hidden-iframe{:style => "display: block; overflow: hidden; border: 0px; margin: 0px; top: 0px; left: 0px; bottom: 0px; right: 0px; height: 100%; width: 100%; position: absolute; pointer-events: none; z-index: -1;", :tabindex => "-1"}
+                                  %canvas#m_chart_sales_by_apps_2_3{:height => "0", :style => "display: block; width: 0px; height: 0px;", :width => "0"}
+                              %td
+                                $105
+                              %td.m--align-right.m--font-brand
+                                $67,800
+                            %tr
+                              %td
+                                %label.m-checkbox.m-checkbox--solid.m-checkbox--single.m-checkbox--brand
+                                  %input{:type => "checkbox"}/
+                                  %span
+                              %td
+                                %span.m-widget11__title
+                                  Verto
+                                %span.m-widget11__sub
+                                  Web Development Tool
+                              %td
+                                11,094
+                              %td
+                                .m-widget11__chart{:style => "height:50px; width: 100px"}
+                                  %iframe.chartjs-hidden-iframe{:style => "display: block; overflow: hidden; border: 0px; margin: 0px; top: 0px; left: 0px; bottom: 0px; right: 0px; height: 100%; width: 100%; position: absolute; pointer-events: none; z-index: -1;", :tabindex => "-1"}
+                                  %canvas#m_chart_sales_by_apps_2_4{:height => "0", :style => "display: block; width: 0px; height: 0px;", :width => "0"}
+                              %td
+                                $16
+                              %td.m--align-right.m--font-brand
+                                $18,520
+                          / end::Tbody
+                        / end::Table
+                      .m-widget11__action.m--align-right
+                        %button.btn.m-btn--pill.btn-secondary.m-btn.m-btn--custom.m-btn--hover-brand{:type => "button"}
+                          Generate Report
+                    / end::Widget 11
+            / end:: Widgets/Application Sales
+          .col-xl-4
+            / begin:: Widgets/Latest Updates
+            .m-portlet.m-portlet--full-height.m-portlet--fit.m-portlet--rounded
+              .m-portlet__head
+                .m-portlet__head-caption
+                  .m-portlet__head-title
+                    %h3.m-portlet__head-text
+                      Latest Updates
+                .m-portlet__head-tools
+                  %ul.m-portlet__nav
+                    %li.m-portlet__nav-item.m-dropdown.m-dropdown--inline.m-dropdown--arrow.m-dropdown--align-right.m-dropdown--align-push{"m-dropdown-toggle" => "hover"}
+                      %a.m-portlet__nav-link.m-dropdown__toggle.dropdown-toggle.btn.btn--sm.m-btn--pill.btn-secondary.m-btn.m-btn--label-brand{:href => "#"}
+                        Today
+                      .m-dropdown__wrapper
+                        %span.m-dropdown__arrow.m-dropdown__arrow--right.m-dropdown__arrow--adjust
+                        .m-dropdown__inner
+                          .m-dropdown__body
+                            .m-dropdown__content
+                              %ul.m-nav
+                                %li.m-nav__item
+                                  %a.m-nav__link{:href => ""}
+                                    %i.m-nav__link-icon.flaticon-share
+                                    %span.m-nav__link-text
+                                      Activity
+                                %li.m-nav__item
+                                  %a.m-nav__link{:href => ""}
+                                    %i.m-nav__link-icon.flaticon-chat-1
+                                    %span.m-nav__link-text
+                                      Messages
+                                %li.m-nav__item
+                                  %a.m-nav__link{:href => ""}
+                                    %i.m-nav__link-icon.flaticon-info
+                                    %span.m-nav__link-text
+                                      FAQ
+                                %li.m-nav__item
+                                  %a.m-nav__link{:href => ""}
+                                    %i.m-nav__link-icon.flaticon-lifebuoy
+                                    %span.m-nav__link-text
+                                      Support
+              .m-portlet__body
+                .m-widget4.m-widget4--chart-bottom{:style => "min-height: 350px"}
+                  .m-widget4__item
+                    .m-widget4__ext
+                      %a.m-widget4__icon.m--font-brand{:href => "#"}
+                        %i.flaticon-interface-3
+                    .m-widget4__info
+                      %span.m-widget4__text
+                        Make Metronic Great Again
+                    .m-widget4__ext
+                      %span.m-widget4__number.m--font-accent
+                        +500
+                  .m-widget4__item
+                    .m-widget4__ext
+                      %a.m-widget4__icon.m--font-brand{:href => "#"}
+                        %i.flaticon-folder-4
+                    .m-widget4__info
+                      %span.m-widget4__text
+                        Green Maker Team
+                    .m-widget4__ext
+                      %span.m-widget4__stats.m--font-info
+                        %span.m-widget4__number.m--font-accent
+                          \-64
+                  .m-widget4__item
+                    .m-widget4__ext
+                      %a.m-widget4__icon.m--font-brand{:href => "#"}
+                        %i.flaticon-line-graph
+                    .m-widget4__info
+                      %span.m-widget4__text
+                        Make Apex Great Again
+                    .m-widget4__ext
+                      %span.m-widget4__stats.m--font-info
+                        %span.m-widget4__number.m--font-accent
+                          +1080
+                  .m-widget4__item.m-widget4__item--last
+                    .m-widget4__ext
+                      %a.m-widget4__icon.m--font-brand{:href => "#"}
+                        %i.flaticon-diagram
+                    .m-widget4__info
+                      %span.m-widget4__text
+                        A Programming Language
+                    .m-widget4__ext
+                      %span.m-widget4__stats.m--font-info
+                        %span.m-widget4__number.m--font-accent
+                          +19
+                  .m-widget4__chart.m-portlet-fit--sides.m--margin-top-20.m-portlet-fit--bottom1{:style => "height:120px;"}
+                    %canvas#m_chart_latest_updates
+            / end:: Widgets/Latest Updates
+        / End::Section
+        / Begin::Section
+        .row
+          .col-xl-4
+            / begin:: Widgets/Blog
+            .m-portlet.m-portlet--head-overlay.m-portlet--full-height.m-portlet--rounded.m-portlet--rounded-force
+              .m-portlet__head.m-portlet__head--fit-
+                .m-portlet__head-caption
+                  .m-portlet__head-title
+                    %h3.m-portlet__head-text.m--font-light
+                      Personal Income
+                .m-portlet__head-tools
+                  %ul.m-portlet__nav
+                    %li.m-portlet__nav-item.m-dropdown.m-dropdown--inline.m-dropdown--arrow.m-dropdown--align-right.m-dropdown--align-push{"m-dropdown-toggle" => "hover"}
+                      %a.m-portlet__nav-link.m-dropdown__toggle.dropdown-toggle.btn.btn--sm.m-btn--pill.m-btn.btn-outline-light.m-btn--hover-light{:href => "#"}
+                        2018
+                      .m-dropdown__wrapper
+                        %span.m-dropdown__arrow.m-dropdown__arrow--right.m-dropdown__arrow--adjust
+                        .m-dropdown__inner
+                          .m-dropdown__body
+                            .m-dropdown__content
+                              %ul.m-nav
+                                %li.m-nav__section.m-nav__section--first
+                                  %span.m-nav__section-text
+                                    Orders
+                                %li.m-nav__item
+                                  %a.m-nav__link{:href => ""}
+                                    %i.m-nav__link-icon.flaticon-share
+                                    %span.m-nav__link-text
+                                      Pending
+                                %li.m-nav__item
+                                  %a.m-nav__link{:href => ""}
+                                    %i.m-nav__link-icon.flaticon-chat-1
+                                    %span.m-nav__link-text
+                                      Delivered
+                                %li.m-nav__item
+                                  %a.m-nav__link{:href => ""}
+                                    %i.m-nav__link-icon.flaticon-info
+                                    %span.m-nav__link-text
+                                      Canceled
+                                %li.m-nav__item
+                                  %a.m-nav__link{:href => ""}
+                                    %i.m-nav__link-icon.flaticon-lifebuoy
+                                    %span.m-nav__link-text
+                                      Approved
+              .m-portlet__body
+                .m-widget27.m-portlet-fit--sides
+                  .m-widget27__pic
+                    %img{:alt => "", :src => "assets/app/media/img//bg/bg-4.jpg"}/
+                    %h3.m-widget27__title.m--font-light
+                      %span
+                        %span
+                          $
+                        256,100
+                    .m-widget27__btn
+                      %button.btn.m-btn--pill.btn-secondary.m-btn.m-btn--custom.m-btn--bolder{:type => "button"}
+                        Inclusive All Earnings
+                  .m-widget27__container
+                    / begin::Nav pills
+                    %ul.m-widget27__nav-items.nav.nav-pills.nav-fill{:role => "tablist"}
+                      %li.m-widget27__nav-item.nav-item
+                        %a.nav-link.active{"data-toggle" => "pill", :href => "#m_personal_income_quater_1"}
+                          Quater 1
+                      %li.m-widget27__nav-item.nav-item
+                        %a.nav-link{"data-toggle" => "pill", :href => "#m_personal_income_quater_2"}
+                          Quater 2
+                      %li.m-widget27__nav-item.nav-item
+                        %a.nav-link{"data-toggle" => "pill", :href => "#m_personal_income_quater_3"}
+                          Quater 3
+                      %li.m-widget27__nav-item.nav-item
+                        %a.nav-link{"data-toggle" => "pill", :href => "#m_personal_income_quater_4"}
+                          Quater 4
+                    / end::Nav pills
+                    / begin::Tab Content
+                    .m-widget27__tab.tab-content.m-widget27--no-padding
+                      #m_personal_income_quater_1.tab-pane.active
+                        .row.align-items-center
+                          .col
+                            #m_chart_personal_income_quater_1.m-widget27__chart{:style => "height: 160px"}
+                              .m-widget27__stat
+                                37
+                          .col
+                            .m-widget27__legends
+                              .m-widget27__legend
+                                %span.m-widget27__legend-bullet.m--bg-accent
+                                %span.m-widget27__legend-text
+                                  37% Case
+                              .m-widget27__legend
+                                %span.m-widget27__legend-bullet.m--bg-warning
+                                %span.m-widget27__legend-text
+                                  42% Events
+                              .m-widget27__legend
+                                %span.m-widget27__legend-bullet.m--bg-brand
+                                %span.m-widget27__legend-text
+                                  19% Others
+                      #m_personal_income_quater_2.tab-pane.fade
+                        .row.align-items-center
+                          .col
+                            #m_chart_personal_income_quater_2.m-widget27__chart{:style => "height: 160px"}
+                              .m-widget27__stat
+                                70
+                          .col
+                            .m-widget27__legends
+                              .m-widget27__legend
+                                %span.m-widget27__legend-bullet.m--bg-focus
+                                %span.m-widget27__legend-text
+                                  57% Case
+                              .m-widget27__legend
+                                %span.m-widget27__legend-bullet.m--bg-success
+                                %span.m-widget27__legend-text
+                                  20% Events
+                              .m-widget27__legend
+                                %span.m-widget27__legend-bullet.m--bg-danger
+                                %span.m-widget27__legend-text
+                                  19% Others
+                      #m_personal_income_quater_3.tab-pane.fade
+                        .row.align-items-center
+                          .col
+                            #m_chart_personal_income_quater_3.m-widget27__chart{:style => "height: 160px"}
+                              .m-widget27__stat
+                                67
+                          .col
+                            .m-widget27__legends
+                              .m-widget27__legend
+                                %span.m-widget27__legend-bullet.m--bg-info
+                                %span.m-widget27__legend-text
+                                  47% Case
+                              .m-widget27__legend
+                                %span.m-widget27__legend-bullet.m--bg-danger
+                                %span.m-widget27__legend-text
+                                  55% Events
+                              .m-widget27__legend
+                                %span.m-widget27__legend-bullet.m--bg-brand
+                                %span.m-widget27__legend-text
+                                  27% Others
+                      #m_personal_income_quater_4.tab-pane.fade
+                        .row.align-items-center
+                          .col
+                            #m_chart_personal_income_quater_4.m-widget27__chart{:style => "height: 160px"}
+                              .m-widget27__stat
+                                77
+                          .col
+                            .m-widget27__legends
+                              .m-widget27__legend
+                                %span.m-widget27__legend-bullet.m--bg-warning
+                                %span.m-widget27__legend-text
+                                  37% Case
+                              .m-widget27__legend
+                                %span.m-widget27__legend-bullet.m--bg-primary
+                                %span.m-widget27__legend-text
+                                  65% Events
+                              .m-widget27__legend
+                                %span.m-widget27__legend-bullet.m--bg-danger
+                                %span.m-widget27__legend-text
+                                  33% Others
+                    / end::Tab Content
+            / end:: Widgets/Blog
+          .col-xl-4
+            / begin:: Packages
+            .m-portlet.m-portlet--bordered-semi.m-portlet--full-height.m-portlet--rounded
+              .m-portlet__head.m--padding-top-20
+                .m-portlet__head-caption
+                  .m-portlet__head-title
+                    %h3.m-portlet__head-text
+                      Earnings
+                .m-portlet__head-tools
+                  %ul.m-portlet__nav
+                    %li.m-portlet__nav-item.m-dropdown.m-dropdown--inline.m-dropdown--arrow.m-dropdown--align-right.m-dropdown--align-push{"m-dropdown-toggle" => "hover"}
+                      %a.m-portlet__nav-link.m-dropdown__toggle.dropdown-toggle.btn.btn--sm.m-btn--pill.btn-secondary.m-btn{:href => "#"}
+                        All
+                      .m-dropdown__wrapper
+                        %span.m-dropdown__arrow.m-dropdown__arrow--right.m-dropdown__arrow--adjust
+                        .m-dropdown__inner
+                          .m-dropdown__body
+                            .m-dropdown__content
+                              %ul.m-nav
+                                %li.m-nav__section.m-nav__section--first
+                                  %span.m-nav__section-text
+                                    Quick Actions
+                                %li.m-nav__item
+                                  %a.m-nav__link{:href => ""}
+                                    %i.m-nav__link-icon.flaticon-share
+                                    %span.m-nav__link-text
+                                      Activity
+                                %li.m-nav__item
+                                  %a.m-nav__link{:href => ""}
+                                    %i.m-nav__link-icon.flaticon-chat-1
+                                    %span.m-nav__link-text
+                                      Messages
+                                %li.m-nav__item
+                                  %a.m-nav__link{:href => ""}
+                                    %i.m-nav__link-icon.flaticon-info
+                                    %span.m-nav__link-text
+                                      FAQ
+                                %li.m-nav__item
+                                  %a.m-nav__link{:href => ""}
+                                    %i.m-nav__link-icon.flaticon-lifebuoy
+                                    %span.m-nav__link-text
+                                      Support
+                                %li.m-nav__separator.m-nav__separator--fit
+                                %li.m-nav__item
+                                  %a.btn.btn-outline-danger.m-btn.m-btn--pill.m-btn--wide.btn-sm{:href => "#"}
+                                    Cancel
+              .m-portlet__body.m-portlet__body--no-padding
+                / begin::Widget 30
+                .m-widget30
+                  .m-widget_head
+                    .m-widget_head-owlcarousel-items.owl-carousel
+                      .m-widget_head-owlcarousel-item.carousel
+                        %span
+                          KeenThemes
+                        %span
+                          Admin Themes
+                      .m-widget_head-owlcarousel-item.carousel
+                        %span
+                          Creek State
+                        %span
+                          WP Experts
+                      .m-widget_head-owlcarousel-item.carousel
+                        %span
+                          Onteco
+                        %span
+                          Social Networks
+                  .m-widget_body
+                    #m_widget_body_owlcarousel_items.m-widget_body-owlcarousel-items.owl-carousel
+                      .m-widget_body-owlcarousel-item.carousel
+                        .m-widget_body-items
+                          .m-widget_body-item
+                            .m-widget_body-item-pic
+                              %img{:src => "assets/app/media/img/users/100_4.jpg", :title => ""}/
+                            .m-widget_body-item-desc
+                              %span
+                                Amy Black
+                              %span
+                                A Programming Language
+                            .m-widget_body-item-price
+                              %span
+                                +$381
+                          .m-widget_body-item
+                            .m-widget_body-item-pic
+                              %img{:src => "assets/app/media/img/users/100_3.jpg", :title => ""}/
+                            .m-widget_body-item-desc
+                              %span
+                                Mike Green
+                              %span
+                                Programming Language Definition
+                            .m-widget_body-item-price
+                              %span
+                                +$17
+                          .m-widget_body-item
+                            .m-widget_body-item-pic
+                              %img{:src => "assets/app/media/img/users/100_7.jpg", :title => ""}/
+                            .m-widget_body-item-desc
+                              %span
+                                Jade Blue
+                              %span
+                                Let's Fly Fast Again
+                            .m-widget_body-item-price
+                              %span
+                                +$200
+                          .m-widget_body-item
+                            .m-widget_body-item-pic
+                              %img{:src => "assets/app/media/img/users/300_9.jpg", :title => ""}/
+                            .m-widget_body-item-desc
+                              %span
+                                Jimmy Grey
+                              %span
+                                Good Coffee &amp; Snacks
+                            .m-widget_body-item-price
+                              %span
+                                \-$290
+                      .m-widget_body-owlcarousel-item.carousel
+                        .m-widget_body-items
+                          .m-widget_body-item
+                            .m-widget_body-item-pic
+                              %img{:src => "assets/app/media/img/users/100_3.jpg", :title => ""}/
+                            .m-widget_body-item-desc
+                              %span
+                                Mike Green
+                              %span
+                                Programming Computers in Everyday
+                            .m-widget_body-item-price
+                              %span
+                                +$17
+                          .m-widget_body-item
+                            .m-widget_body-item-pic
+                              %img{:src => "assets/app/media/img/users/100_4.jpg", :title => ""}/
+                            .m-widget_body-item-desc
+                              %span
+                                Amy Black
+                              %span
+                                A Programming Language
+                            .m-widget_body-item-price
+                              %span
+                                +$381
+                          .m-widget_body-item
+                            .m-widget_body-item-pic
+                              %img{:src => "assets/app/media/img/users/100_9.jpg", :title => ""}/
+                            .m-widget_body-item-desc
+                              %span
+                                Jimmy Grey
+                              %span
+                                Let's Fly Fast Again
+                            .m-widget_body-item-price
+                              %span
+                                \-$290
+                          .m-widget_body-item
+                            .m-widget_body-item-pic
+                              %img{:src => "assets/app/media/img/users/300_7.jpg", :title => ""}/
+                            .m-widget_body-item-desc
+                              %span
+                                Jade Blue
+                              %span
+                                Good Coffee &amp; Snacks
+                            .m-widget_body-item-price
+                              %span
+                                +$200
+                      .m-widget_body-owlcarousel-item.carousel
+                        .m-widget_body-items
+                          .m-widget_body-item
+                            .m-widget_body-item-pic
+                              %img{:src => "assets/app/media/img/users/100_7.jpg", :title => ""}/
+                            .m-widget_body-item-desc
+                              %span
+                                Jade Blue
+                              %span
+                                Good Coffee &amp; Snacks
+                            .m-widget_body-item-price
+                              %span
+                                +$200
+                          .m-widget_body-item
+                            .m-widget_body-item-pic
+                              %img{:src => "assets/app/media/img/users/100_9.jpg", :title => ""}/
+                            .m-widget_body-item-desc
+                              %span
+                                Jimmy Grey
+                              %span
+                                Programming Language Definition
+                            .m-widget_body-item-price
+                              %span
+                                \-$290
+                          .m-widget_body-item
+                            .m-widget_body-item-pic
+                              %img{:src => "assets/app/media/img/users/100_4.jpg", :title => ""}/
+                            .m-widget_body-item-desc
+                              %span
+                                Amy Black
+                              %span
+                                Let's Fly Fast Again
+                            .m-widget_body-item-price
+                              %span
+                                +$381
+                          .m-widget_body-item
+                            .m-widget_body-item-pic
+                              %img{:src => "assets/app/media/img/users/300_3.jpg", :title => ""}/
+                            .m-widget_body-item-desc
+                              %span
+                                Mike Green
+                              %span
+                                A Programming Language
+                            .m-widget_body-item-price
+                              %span
+                                +$17
+                / end::Widget 30
+            / end:: Packages
+          .col-xl-4
+            / begin:: Packages
+            .m-portlet.m--bg-warning.m-portlet--bordered-semi.m-portlet--full-height.m-portlet--rounded
+              .m-portlet__head
+                .m-portlet__head-caption
+                  .m-portlet__head-title
+                    %h3.m-portlet__head-text.m--font-light
+                      Packages
+                .m-portlet__head-tools
+                  %ul.m-portlet__nav
+                    %li.m-portlet__nav-item.m-dropdown.m-dropdown--inline.m-dropdown--arrow.m-dropdown--align-right.m-dropdown--align-push{"m-dropdown-toggle" => "hover"}
+                      %a.m-portlet__nav-link.m-dropdown__toggle.dropdown-toggle.btn.btn--sm.m-btn--pill.m-btn.btn-outline-light.m-btn--hover-light{:href => "#"}
+                        2018
+                      .m-dropdown__wrapper
+                        %span.m-dropdown__arrow.m-dropdown__arrow--right.m-dropdown__arrow--adjust
+                        .m-dropdown__inner
+                          .m-dropdown__body
+                            .m-dropdown__content
+                              %ul.m-nav
+                                %li.m-nav__section.m-nav__section--first
+                                  %span.m-nav__section-text
+                                    Reports
+                                %li.m-nav__item
+                                  %a.m-nav__link{:href => ""}
+                                    %i.m-nav__link-icon.flaticon-share
+                                    %span.m-nav__link-text
+                                      Activity
+                                %li.m-nav__item
+                                  %a.m-nav__link{:href => ""}
+                                    %i.m-nav__link-icon.flaticon-chat-1
+                                    %span.m-nav__link-text
+                                      Messages
+                                %li.m-nav__item
+                                  %a.m-nav__link{:href => ""}
+                                    %i.m-nav__link-icon.flaticon-info
+                                    %span.m-nav__link-text
+                                      FAQ
+                                %li.m-nav__section.m-nav__section--first
+                                  %span.m-nav__section-text
+                                    Export
+                                %li.m-nav__item
+                                  %a.m-nav__link{:href => ""}
+                                    %i.m-nav__link-icon.flaticon-lifebuoy
+                                    %span.m-nav__link-text
+                                      PDF
+                                %li.m-nav__item
+                                  %a.m-nav__link{:href => ""}
+                                    %i.m-nav__link-icon.flaticon-lifebuoy
+                                    %span.m-nav__link-text
+                                      Excel
+                                %li.m-nav__item
+                                  %a.m-nav__link{:href => ""}
+                                    %i.m-nav__link-icon.flaticon-lifebuoy
+                                    %span.m-nav__link-text
+                                      CSV
+              .m-portlet__body
+                / begin::Widget 29
+                .m-widget29
+                  .m-widget_content
+                    %h3.m-widget_content-title
+                      Monthly Income
+                    .m-widget_content-items
+                      .m-widget_content-item
+                        %span
+                          Total
+                        %span.m--font-accent
+                          $680
+                      .m-widget_content-item
+                        %span
+                          Change
+                        %span.m--font-brand
+                          +15%
+                      .m-widget_content-item
+                        %span
+                          Licenses
+                        %span
+                          29
+                  .m-widget_content
+                    %h3.m-widget_content-title
+                      Taxes info
+                    .m-widget_content-items
+                      .m-widget_content-item
+                        %span
+                          Total
+                        %span.m--font-accent
+                          22.50
+                      .m-widget_content-item
+                        %span
+                          Change
+                        %span.m--font-brand
+                          +15%
+                      .m-widget_content-item
+                        %span
+                          Count
+                        %span
+                          701
+                  .m-widget_content
+                    %h3.m-widget_content-title
+                      Partners Sale
+                    .m-widget_content-items
+                      .m-widget_content-item
+                        %span
+                          Total
+                        %span.m--font-accent
+                          $680
+                      .m-widget_content-item
+                        %span
+                          Change
+                        %span.m--font-brand
+                          +15%
+                      .m-widget_content-item
+                        %span
+                          Licenses
+                        %span
+                          29
+                / end::Widget 29
+            / end:: Packages
+        / End::Section
+        / Begin::Section
+        .row
+          .col-xl-6.col-lg-12
+            / Begin::Portlet
+            .m-portlet.m-portlet--full-height.m-portlet--rounded
+              .m-portlet__head
+                .m-portlet__head-caption
+                  .m-portlet__head-title
+                    %h3.m-portlet__head-text
+                      Recent Activities
+                .m-portlet__head-tools
+                  %ul.m-portlet__nav
+                    %li.m-portlet__nav-item.m-dropdown.m-dropdown--inline.m-dropdown--arrow.m-dropdown--align-right.m-dropdown--align-push{"aria-expanded" => "true", "m-dropdown-toggle" => "hover"}
+                      %a.m-portlet__nav-link.m-portlet__nav-link--icon.m-portlet__nav-link--icon-xl.m-dropdown__toggle{:href => "#"}
+                        %i.la.la-ellipsis-h.m--font-brand
+                      .m-dropdown__wrapper
+                        %span.m-dropdown__arrow.m-dropdown__arrow--right.m-dropdown__arrow--adjust
+                        .m-dropdown__inner
+                          .m-dropdown__body
+                            .m-dropdown__content
+                              %ul.m-nav
+                                %li.m-nav__section.m-nav__section--first
+                                  %span.m-nav__section-text
+                                    Quick Actions
+                                %li.m-nav__item
+                                  %a.m-nav__link{:href => ""}
+                                    %i.m-nav__link-icon.flaticon-share
+                                    %span.m-nav__link-text
+                                      Activity
+                                %li.m-nav__item
+                                  %a.m-nav__link{:href => ""}
+                                    %i.m-nav__link-icon.flaticon-chat-1
+                                    %span.m-nav__link-text
+                                      Messages
+                                %li.m-nav__item
+                                  %a.m-nav__link{:href => ""}
+                                    %i.m-nav__link-icon.flaticon-info
+                                    %span.m-nav__link-text
+                                      FAQ
+                                %li.m-nav__item
+                                  %a.m-nav__link{:href => ""}
+                                    %i.m-nav__link-icon.flaticon-lifebuoy
+                                    %span.m-nav__link-text
+                                      Support
+                                %li.m-nav__separator.m-nav__separator--fit
+                                %li.m-nav__item
+                                  %a.btn.btn-outline-danger.m-btn.m-btn--pill.m-btn--wide.btn-sm{:href => "#"}
+                                    Cancel
+              .m-portlet__body
+                .m-scrollable.mCustomScrollbar._mCS_5.mCS-autoHide{"data-max-height" => "380", "data-scrollable" => "true", "data-scrollbar-shown" => "true", :style => "overflow: visible; height: 380px; max-height: 380px; position: relative;"}
+                  / Begin::Timeline 2
+                  .m-timeline-2
+                    .m-timeline-2__items.m--padding-top-25.m--padding-bottom-30
+                      .m-timeline-2__item
+                        %span.m-timeline-2__item-time
+                          10:00
+                        .m-timeline-2__item-cricle
+                          %i.fa.fa-genderless.m--font-danger
+                        .m-timeline-2__item-text.m--padding-top-5
+                          Lorem ipsum dolor sit amit,consectetur eiusmdd tempor
+                          %br/
+                          incididunt ut labore et dolore magna
+                      .m-timeline-2__item.m--margin-top-30
+                        %span.m-timeline-2__item-time
+                          12:45
+                        .m-timeline-2__item-cricle
+                          %i.fa.fa-genderless.m--font-success
+                        .m-timeline-2__item-text.m-timeline-2__item-text--bold
+                          AEOL Meeting With
+                        .m-list-pics.m-list-pics--sm.m--padding-left-20
+                          %a{:href => "#"}
+                            %img{:src => "assets/app/media/img/users/100_4.jpg", :title => ""}/
+                          %a{:href => "#"}
+                            %img{:src => "assets/app/media/img/users/100_13.jpg", :title => ""}/
+                          %a{:href => "#"}
+                            %img{:src => "assets/app/media/img/users/100_11.jpg", :title => ""}/
+                          %a{:href => "#"}
+                            %img{:src => "assets/app/media/img/users/100_14.jpg", :title => ""}/
+                      .m-timeline-2__item.m--margin-top-30
+                        %span.m-timeline-2__item-time
+                          14:00
+                        .m-timeline-2__item-cricle
+                          %i.fa.fa-genderless.m--font-brand
+                        .m-timeline-2__item-text.m--padding-top-5
+                          Make Deposit
+                          %a.m-link.m-link--brand.m--font-bolder{:href => "#"}
+                            USD 700
+                          To ESL.
+                      .m-timeline-2__item.m--margin-top-30
+                        %span.m-timeline-2__item-time
+                          16:00
+                        .m-timeline-2__item-cricle
+                          %i.fa.fa-genderless.m--font-warning
+                        .m-timeline-2__item-text.m--padding-top-5
+                          Lorem ipsum dolor sit amit,consectetur eiusmdd tempor
+                          %br/
+                          incididunt ut labore et dolore magna elit enim at minim
+                          %br/
+                          veniam quis nostrud
+                      .m-timeline-2__item.m--margin-top-30
+                        %span.m-timeline-2__item-time
+                          17:00
+                        .m-timeline-2__item-cricle
+                          %i.fa.fa-genderless.m--font-info
+                        .m-timeline-2__item-text.m--padding-top-5
+                          Placed a new order in
+                          %a.m-link.m-link--brand.m--font-bolder{:href => "#"}
+                            SIGNATURE MOBILE
+                          marketplace.
+                      .m-timeline-2__item.m--margin-top-30
+                        %span.m-timeline-2__item-time
+                          16:00
+                        .m-timeline-2__item-cricle
+                          %i.fa.fa-genderless.m--font-brand
+                        .m-timeline-2__item-text.m--padding-top-5
+                          Lorem ipsum dolor sit amit,consectetur eiusmdd tempor
+                          %br/
+                          incididunt ut labore et dolore magna elit enim at minim
+                          %br/
+                          veniam quis nostrud
+                      .m-timeline-2__item.m--margin-top-30
+                        %span.m-timeline-2__item-time
+                          17:00
+                        .m-timeline-2__item-cricle
+                          %i.fa.fa-genderless.m--font-danger
+                        .m-timeline-2__item-text.m--padding-top-5
+                          Received a new feedback on
+                          %a.m-link.m-link--brand.m--font-bolder{:href => "#"}
+                            FinancePro App
+                          product.
+                  / End::Timeline 2
+            / End::Portlet
+          .col-xl-6.col-lg-12
+            / Begin::Portlet
+            .m-portlet.m-portlet--full-height.m-portlet--rounded
+              .m-portlet__head
+                .m-portlet__head-caption
+                  .m-portlet__head-title
+                    %h3.m-portlet__head-text
+                      Recent Notifications
+                .m-portlet__head-tools
+                  %ul.nav.nav-pills.nav-pills--brand.m-nav-pills--align-right.m-nav-pills--btn-pill.m-nav-pills--btn-sm{:role => "tablist"}
+                    %li.nav-item.m-tabs__item
+                      %a.nav-link.m-tabs__link.active{"data-toggle" => "tab", :href => "#m_widget2_tab1_content", :role => "tab"}
+                        Today
+                    %li.nav-item.m-tabs__item
+                      %a.nav-link.m-tabs__link{"data-toggle" => "tab", :href => "#m_widget2_tab2_content", :role => "tab"}
+                        Month
+              .m-portlet__body
+                .tab-content
+                  #m_widget2_tab1_content.tab-pane.active
+                    / Begin::Timeline 3
+                    .m-timeline-3
+                      .m-timeline-3__items
+                        .m-timeline-3__item.m-timeline-3__item--info
+                          %span.m-timeline-3__item-time
+                            09:00
+                          .m-timeline-3__item-desc
+                            %span.m-timeline-3__item-text
+                              Lorem ipsum dolor sit amit,consectetur eiusmdd tempor
+                            %br/
+                            %span.m-timeline-3__item-user-name
+                              %a.m-link.m-link--metal.m-timeline-3__item-link{:href => "#"}
+                                By Bob
+                        .m-timeline-3__item.m-timeline-3__item--warning
+                          %span.m-timeline-3__item-time
+                            10:00
+                          .m-timeline-3__item-desc
+                            %span.m-timeline-3__item-text
+                              Lorem ipsum dolor sit amit
+                            %br/
+                            %span.m-timeline-3__item-user-name
+                              %a.m-link.m-link--metal.m-timeline-3__item-link{:href => "#"}
+                                By Sean
+                        .m-timeline-3__item.m-timeline-3__item--brand
+                          %span.m-timeline-3__item-time
+                            11:00
+                          .m-timeline-3__item-desc
+                            %span.m-timeline-3__item-text
+                              Lorem ipsum dolor sit amit eiusmdd tempor
+                            %br/
+                            %span.m-timeline-3__item-user-name
+                              %a.m-link.m-link--metal.m-timeline-3__item-link{:href => "#"}
+                                By James
+                        .m-timeline-3__item.m-timeline-3__item--success
+                          %span.m-timeline-3__item-time
+                            12:00
+                          .m-timeline-3__item-desc
+                            %span.m-timeline-3__item-text
+                              Lorem ipsum dolor
+                            %br/
+                            %span.m-timeline-3__item-user-name
+                              %a.m-link.m-link--metal.m-timeline-3__item-link{:href => "#"}
+                                By James
+                        .m-timeline-3__item.m-timeline-3__item--danger
+                          %span.m-timeline-3__item-time
+                            14:00
+                          .m-timeline-3__item-desc
+                            %span.m-timeline-3__item-text
+                              Lorem ipsum dolor sit amit,consectetur eiusmdd
+                            %br/
+                            %span.m-timeline-3__item-user-name
+                              %a.m-link.m-link--metal.m-timeline-3__item-link{:href => "#"}
+                                By Derrick
+                        .m-timeline-3__item.m-timeline-3__item--info
+                          %span.m-timeline-3__item-time
+                            15:00
+                          .m-timeline-3__item-desc
+                            %span.m-timeline-3__item-text
+                              Lorem ipsum dolor sit amit,consectetur
+                            %br/
+                            %span.m-timeline-3__item-user-name
+                              %a.m-link.m-link--metal.m-timeline-3__item-link{:href => "#"}
+                                By Iman
+                        .m-timeline-3__item.m-timeline-3__item--brand
+                          %span.m-timeline-3__item-time
+                            17:00
+                          .m-timeline-3__item-desc
+                            %span.m-timeline-3__item-text
+                              Lorem ipsum dolor sit consectetur eiusmdd tempor
+                            %br/
+                            %span.m-timeline-3__item-user-name
+                              %a.m-link.m-link--metal.m-timeline-3__item-link{:href => "#"}
+                                By Aziko
+                    / End::Timeline 3
+                  #m_widget2_tab2_content.tab-pane
+                    / Begin::Timeline 3
+                    .m-timeline-3
+                      .m-timeline-3__items
+                        .m-timeline-3__item.m-timeline-3__item--info
+                          %span.m-timeline-3__item-time.m--font-focus
+                            09:00
+                          .m-timeline-3__item-desc
+                            %span.m-timeline-3__item-text
+                              Contrary to popular belief, Lorem Ipsum is not simply random text.
+                            %br/
+                            %span.m-timeline-3__item-user-name
+                              %a.m-link.m-link--metal.m-timeline-3__item-link{:href => "#"}
+                                By Bob
+                        .m-timeline-3__item.m-timeline-3__item--warning
+                          %span.m-timeline-3__item-time.m--font-warning
+                            10:00
+                          .m-timeline-3__item-desc
+                            %span.m-timeline-3__item-text
+                              There are many variations of passages of Lorem Ipsum available.
+                            %br/
+                            %span.m-timeline-3__item-user-name
+                              %a.m-link.m-link--metal.m-timeline-3__item-link{:href => "#"}
+                                By Sean
+                        .m-timeline-3__item.m-timeline-3__item--brand
+                          %span.m-timeline-3__item-time.m--font-primary
+                            11:00
+                          .m-timeline-3__item-desc
+                            %span.m-timeline-3__item-text
+                              Contrary to popular belief, Lorem Ipsum is not simply random text.
+                            %br/
+                            %span.m-timeline-3__item-user-name
+                              %a.m-link.m-link--metal.m-timeline-3__item-link{:href => "#"}
+                                By James
+                        .m-timeline-3__item.m-timeline-3__item--success
+                          %span.m-timeline-3__item-time.m--font-success
+                            12:00
+                          .m-timeline-3__item-desc
+                            %span.m-timeline-3__item-text
+                              The standard chunk of Lorem Ipsum used since the 1500s is reproduced.
+                            %br/
+                            %span.m-timeline-3__item-user-name
+                              %a.m-link.m-link--metal.m-timeline-3__item-link{:href => "#"}
+                                By James
+                        .m-timeline-3__item.m-timeline-3__item--danger
+                          %span.m-timeline-3__item-time.m--font-warning
+                            14:00
+                          .m-timeline-3__item-desc
+                            %span.m-timeline-3__item-text
+                              Latin words, combined with a handful of model sentence structures.
+                            %br/
+                            %span.m-timeline-3__item-user-name
+                              %a.m-link.m-link--metal.m-timeline-3__item-link{:href => "#"}
+                                By Derrick
+                        .m-timeline-3__item.m-timeline-3__item--info
+                          %span.m-timeline-3__item-time.m--font-info
+                            15:00
+                          .m-timeline-3__item-desc
+                            %span.m-timeline-3__item-text
+                              Contrary to popular belief, Lorem Ipsum is not simply random text.
+                            %br/
+                            %span.m-timeline-3__item-user-name
+                              %a.m-link.m-link--metal.m-timeline-3__item-link{:href => "#"}
+                                By Iman
+                        .m-timeline-3__item.m-timeline-3__item--brand
+                          %span.m-timeline-3__item-time.m--font-danger
+                            17:00
+                          .m-timeline-3__item-desc
+                            %span.m-timeline-3__item-text
+                              Lorem Ipsum is therefore always free from repetition, injected humour.
+                            %br/
+                            %span.m-timeline-3__item-user-name
+                              %a.m-link.m-link--metal.m-timeline-3__item-link{:href => "#"}
+                                By Aziko
+                    / End::Timeline 3
+            / End::Portlet
+        / End::Section
+        / Begin::Section
+        .row
+          .col-xl-8
+            .m-portlet.m-portlet--mobile.m-portlet--rounded
+              .m-portlet__head
+                .m-portlet__head-caption
+                  .m-portlet__head-title
+                    %h3.m-portlet__head-text
+                      Exclusive Datatable Plugin
+                .m-portlet__head-tools
+                  %ul.m-portlet__nav
+                    %li.m-portlet__nav-item
+                      .m-dropdown.m-dropdown--inline.m-dropdown--arrow.m-dropdown--align-right.m-dropdown--align-push{"aria-expanded" => "true", "m-dropdown-toggle" => "hover"}
+                        %a.m-portlet__nav-link.btn.btn-lg.btn-secondary.m-btn.m-btn--icon.m-btn--icon-only.m-btn--pill.m-dropdown__toggle{:href => "#"}
+                          %i.la.la-ellipsis-h.m--font-brand
+                        .m-dropdown__wrapper
+                          %span.m-dropdown__arrow.m-dropdown__arrow--right.m-dropdown__arrow--adjust
+                          .m-dropdown__inner
+                            .m-dropdown__body
+                              .m-dropdown__content
+                                %ul.m-nav
+                                  %li.m-nav__section.m-nav__section--first
+                                    %span.m-nav__section-text
+                                      Quick Actions
+                                  %li.m-nav__item
+                                    %a.m-nav__link{:href => ""}
+                                      %i.m-nav__link-icon.flaticon-share
+                                      %span.m-nav__link-text
+                                        Create Post
+                                  %li.m-nav__item
+                                    %a.m-nav__link{:href => ""}
+                                      %i.m-nav__link-icon.flaticon-chat-1
+                                      %span.m-nav__link-text
+                                        Send Messages
+                                  %li.m-nav__item
+                                    %a.m-nav__link{:href => ""}
+                                      %i.m-nav__link-icon.flaticon-multimedia-2
+                                      %span.m-nav__link-text
+                                        Upload File
+                                  %li.m-nav__section
+                                    %span.m-nav__section-text
+                                      Useful Links
+                                  %li.m-nav__item
+                                    %a.m-nav__link{:href => ""}
+                                      %i.m-nav__link-icon.flaticon-info
+                                      %span.m-nav__link-text
+                                        FAQ
+                                  %li.m-nav__item
+                                    %a.m-nav__link{:href => ""}
+                                      %i.m-nav__link-icon.flaticon-lifebuoy
+                                      %span.m-nav__link-text
+                                        Support
+                                  %li.m-nav__separator.m-nav__separator--fit.m--hide
+                                  %li.m-nav__item.m--hide
+                                    %a.btn.btn-outline-danger.m-btn.m-btn--pill.m-btn--wide.btn-sm{:href => "#"}
+                                      Submit
+              .m-portlet__body
+                / begin: Datatable
+                #m_datatable_latest_orders.m_datatable
+                / end: Datatable
+          .col-xl-4
+            / begin:: Widgets/Audit Log
+            .m-portlet.m-portlet--full-height.m-portlet--rounded
+              .m-portlet__head
+                .m-portlet__head-caption
+                  .m-portlet__head-title
+                    %h3.m-portlet__head-text
+                      Audit Log
+                .m-portlet__head-tools
+                  %ul.nav.nav-pills.nav-pills--brand.m-nav-pills--align-right.m-nav-pills--btn-pill.m-nav-pills--btn-sm{:role => "tablist"}
+                    %li.nav-item.m-tabs__item
+                      %a.nav-link.m-tabs__link.active{"data-toggle" => "tab", :href => "#m_widget4_tab1_content", :role => "tab"}
+                        Today
+                    %li.nav-item.m-tabs__item
+                      %a.nav-link.m-tabs__link{"data-toggle" => "tab", :href => "#m_widget4_tab2_content", :role => "tab"}
+                        Week
+                    %li.nav-item.m-tabs__item
+                      %a.nav-link.m-tabs__link{"data-toggle" => "tab", :href => "#m_widget4_tab3_content", :role => "tab"}
+                        Month
+              .m-portlet__body
+                .tab-content
+                  #m_widget4_tab1_content.tab-pane.active
+                    .m-scrollable{"data-max-height" => "400", "data-scrollable" => "true", :style => "height: 400px; overflow: hidden;"}
+                      .m-list-timeline.m-list-timeline--skin-light
+                        .m-list-timeline__items
+                          .m-list-timeline__item
+                            %span.m-list-timeline__badge.m-list-timeline__badge--success
+                            %span.m-list-timeline__text
+                              12 new users registered
+                            %span.m-list-timeline__time
+                              Just now
+                          .m-list-timeline__item
+                            %span.m-list-timeline__badge.m-list-timeline__badge--info
+                            %span.m-list-timeline__text
+                              System shutdown
+                              %span.m-badge.m-badge--success.m-badge--wide
+                                pending
+                            %span.m-list-timeline__time
+                              14 mins
+                          .m-list-timeline__item
+                            %span.m-list-timeline__badge.m-list-timeline__badge--danger
+                            %span.m-list-timeline__text
+                              New invoice received
+                            %span.m-list-timeline__time
+                              20 mins
+                          .m-list-timeline__item
+                            %span.m-list-timeline__badge.m-list-timeline__badge--accent
+                            %span.m-list-timeline__text
+                              DB overloaded 80%
+                              %span.m-badge.m-badge--info.m-badge--wide
+                                settled
+                            %span.m-list-timeline__time
+                              1 hr
+                          .m-list-timeline__item
+                            %span.m-list-timeline__badge.m-list-timeline__badge--warning
+                            %span.m-list-timeline__text
+                              System error -
+                              %a.m-link{:href => "#"}
+                                Check
+                            %span.m-list-timeline__time
+                              2 hrs
+                          .m-list-timeline__item
+                            %span.m-list-timeline__badge.m-list-timeline__badge--brand
+                            %span.m-list-timeline__text
+                              Production server down
+                            %span.m-list-timeline__time
+                              3 hrs
+                          .m-list-timeline__item
+                            %span.m-list-timeline__badge.m-list-timeline__badge--info
+                            %span.m-list-timeline__text
+                              Production server up
+                            %span.m-list-timeline__time
+                              5 hrs
+                          .m-list-timeline__item
+                            %span.m-list-timeline__badge.m-list-timeline__badge--success
+                            %span.m-list-timeline__text{:href => ""}
+                              New order received
+                              %span.m-badge.m-badge--danger.m-badge--wide
+                                urgent
+                            %span.m-list-timeline__time
+                              7 hrs
+                          .m-list-timeline__item
+                            %span.m-list-timeline__badge.m-list-timeline__badge--success
+                            %span.m-list-timeline__text
+                              12 new users registered
+                            %span.m-list-timeline__time
+                              Just now
+                          .m-list-timeline__item
+                            %span.m-list-timeline__badge.m-list-timeline__badge--info
+                            %span.m-list-timeline__text
+                              System shutdown
+                              %span.m-badge.m-badge--success.m-badge--wide
+                                pending
+                            %span.m-list-timeline__time
+                              14 mins
+                          .m-list-timeline__item
+                            %span.m-list-timeline__badge.m-list-timeline__badge--danger
+                            %span.m-list-timeline__text
+                              New invoice received
+                            %span.m-list-timeline__time
+                              20 mins
+                          .m-list-timeline__item
+                            %span.m-list-timeline__badge.m-list-timeline__badge--accent
+                            %span.m-list-timeline__text
+                              DB overloaded 80%
+                              %span.m-badge.m-badge--info.m-badge--wide
+                                settled
+                            %span.m-list-timeline__time
+                              1 hr
+                          .m-list-timeline__item
+                            %span.m-list-timeline__badge.m-list-timeline__badge--danger
+                            %span.m-list-timeline__text
+                              New invoice received
+                            %span.m-list-timeline__time
+                              20 mins
+                          .m-list-timeline__item
+                            %span.m-list-timeline__badge.m-list-timeline__badge--accent
+                            %span.m-list-timeline__text
+                              DB overloaded 80%
+                              %span.m-badge.m-badge--info.m-badge--wide
+                                settled
+                            %span.m-list-timeline__time
+                              1 hr
+                          .m-list-timeline__item
+                            %span.m-list-timeline__badge.m-list-timeline__badge--warning
+                            %span.m-list-timeline__text
+                              System error -
+                              %a.m-link{:href => "#"}
+                                Check
+                            %span.m-list-timeline__time
+                              2 hrs
+                          .m-list-timeline__item
+                            %span.m-list-timeline__badge.m-list-timeline__badge--brand
+                            %span.m-list-timeline__text
+                              Production server down
+                            %span.m-list-timeline__time
+                              3 hrs
+                          .m-list-timeline__item
+                            %span.m-list-timeline__badge.m-list-timeline__badge--info
+                            %span.m-list-timeline__text
+                              Production server up
+                            %span.m-list-timeline__time
+                              5 hrs
+                          .m-list-timeline__item
+                            %span.m-list-timeline__badge.m-list-timeline__badge--success
+                            %span.m-list-timeline__text{:href => ""}
+                              New order received
+                              %span.m-badge.m-badge--danger.m-badge--wide
+                                urgent
+                            %span.m-list-timeline__time
+                              7 hrs
+                  #m_widget4_tab2_content.tab-pane
+                  #m_widget4_tab3_content.tab-pane
+            / end:: Widgets/Audit Log
+        / End::Section
+  / end::Body
+  / begin::Footer
+  %footer.m-grid__item.m-footer
+    .m-container.m-container--fluid.m-container--full-height.m-page__container
+      .m-footer__wrapper
+        .m-stack.m-stack--flex-tablet-and-mobile.m-stack--ver.m-stack--desktop
+          .m-stack__item.m-stack__item--left.m-stack__item--middle.m-stack__item--last
+            %span.m-footer__copyright
+              2017 © Metronic theme by
+              %a.m-link{:href => "https://keenthemes.com"}
+                Keenthemes
+          .m-stack__item.m-stack__item--right.m-stack__item--middle.m-stack__item--first
+            %ul.m-footer__nav.m-nav.m-nav--inline.m--pull-right
+              %li.m-nav__item
+                %a.m-nav__link{:href => "#"}
+                  %span.m-nav__link-text
+                    About
+              %li.m-nav__item
+                %a.m-nav__link{:href => "#"}
+                  %span.m-nav__link-text
+                    Privacy
+              %li.m-nav__item
+                %a.m-nav__link{:href => "#"}
+                  %span.m-nav__link-text
+                    T&amp;C
+              %li.m-nav__item
+                %a.m-nav__link{:href => "#"}
+                  %span.m-nav__link-text
+                    Purchase
+              %li.m-nav__item
+                %a.m-nav__link{"data-placement" => "left", "data-toggle" => "m-tooltip", :href => "#", :title => "Support Center"}
+                  %i.m-nav__link-icon.flaticon-info.m--icon-font-size-lg3
+  / end::Footer
+/ end:: Page
+/ begin::Quick Sidebar
+#m_quick_sidebar.m-quick-sidebar.m-quick-sidebar--tabbed.m-quick-sidebar--skin-light
+  .m-quick-sidebar__content.m--hide
+    %span#m_quick_sidebar_close.m-quick-sidebar__close
+      %i.la.la-close
+    %ul#m_quick_sidebar_tabs.nav.nav-tabs.m-tabs.m-tabs-line.m-tabs-line--brand{:role => "tablist"}
+      %li.nav-item.m-tabs__item
+        %a.nav-link.m-tabs__link.active{"data-toggle" => "tab", :href => "#m_quick_sidebar_tabs_messenger", :role => "tab"}
+          Messages
+      %li.nav-item.m-tabs__item
+        %a.nav-link.m-tabs__link{"data-toggle" => "tab", :href => "#m_quick_sidebar_tabs_settings", :role => "tab"}
+          Settings
+      %li.nav-item.m-tabs__item
+        %a.nav-link.m-tabs__link{"data-toggle" => "tab", :href => "#m_quick_sidebar_tabs_logs", :role => "tab"}
+          Logs
+    .tab-content
+      #m_quick_sidebar_tabs_messenger.tab-pane.active.m-scrollable{:role => "tabpanel"}
+        .m-messenger.m-messenger--message-arrow.m-messenger--skin-light
+          .m-messenger__messages
+            .m-messenger__wrapper
+              .m-messenger__message.m-messenger__message--in
+                .m-messenger__message-pic
+                  %img{:alt => "", :src => "assets/app/media/img//users/user3.jpg"}/
+                .m-messenger__message-body
+                  .m-messenger__message-arrow
+                  .m-messenger__message-content
+                    .m-messenger__message-username
+                      Megan wrote
+                    .m-messenger__message-text
+                      Hi Bob. What time will be the meeting ?
+            .m-messenger__wrapper
+              .m-messenger__message.m-messenger__message--out
+                .m-messenger__message-body
+                  .m-messenger__message-arrow
+                  .m-messenger__message-content
+                    .m-messenger__message-text
+                      Hi Megan. It's at 2.30PM
+            .m-messenger__wrapper
+              .m-messenger__message.m-messenger__message--in
+                .m-messenger__message-pic
+                  %img{:alt => "", :src => "assets/app/media/img//users/user3.jpg"}/
+                .m-messenger__message-body
+                  .m-messenger__message-arrow
+                  .m-messenger__message-content
+                    .m-messenger__message-username
+                      Megan wrote
+                    .m-messenger__message-text
+                      Will the development team be joining ?
+            .m-messenger__wrapper
+              .m-messenger__message.m-messenger__message--out
+                .m-messenger__message-body
+                  .m-messenger__message-arrow
+                  .m-messenger__message-content
+                    .m-messenger__message-text
+                      Yes sure. I invited them as well
+            .m-messenger__datetime
+              2:30PM
+            .m-messenger__wrapper
+              .m-messenger__message.m-messenger__message--in
+                .m-messenger__message-pic
+                  %img{:alt => "", :src => "assets/app/media/img//users/user3.jpg"}/
+                .m-messenger__message-body
+                  .m-messenger__message-arrow
+                  .m-messenger__message-content
+                    .m-messenger__message-username
+                      Megan wrote
+                    .m-messenger__message-text
+                      Noted. For the Coca-Cola Mobile App project as well ?
+            .m-messenger__wrapper
+              .m-messenger__message.m-messenger__message--out
+                .m-messenger__message-body
+                  .m-messenger__message-arrow
+                  .m-messenger__message-content
+                    .m-messenger__message-text
+                      Yes, sure.
+            .m-messenger__wrapper
+              .m-messenger__message.m-messenger__message--out
+                .m-messenger__message-body
+                  .m-messenger__message-arrow
+                  .m-messenger__message-content
+                    .m-messenger__message-text
+                      Please also prepare the quotation for the Loop CRM project as well.
+            .m-messenger__datetime
+              3:15PM
+            .m-messenger__wrapper
+              .m-messenger__message.m-messenger__message--in
+                .m-messenger__message-no-pic.m--bg-fill-danger
+                  %span
+                    M
+                .m-messenger__message-body
+                  .m-messenger__message-arrow
+                  .m-messenger__message-content
+                    .m-messenger__message-username
+                      Megan wrote
+                    .m-messenger__message-text
+                      Noted. I will prepare it.
+            .m-messenger__wrapper
+              .m-messenger__message.m-messenger__message--out
+                .m-messenger__message-body
+                  .m-messenger__message-arrow
+                  .m-messenger__message-content
+                    .m-messenger__message-text
+                      Thanks Megan. I will see you later.
+            .m-messenger__wrapper
+              .m-messenger__message.m-messenger__message--in
+                .m-messenger__message-pic
+                  %img{:alt => "", :src => "assets/app/media/img//users/user3.jpg"}/
+                .m-messenger__message-body
+                  .m-messenger__message-arrow
+                  .m-messenger__message-content
+                    .m-messenger__message-username
+                      Megan wrote
+                    .m-messenger__message-text
+                      Sure. See you in the meeting soon.
+          .m-messenger__seperator
+          .m-messenger__form
+            .m-messenger__form-controls
+              %input.m-messenger__form-input{:name => "", :placeholder => "Type here...", :type => "text"}/
+            .m-messenger__form-tools
+              %a.m-messenger__form-attachment{:href => ""}
+                %i.la.la-paperclip
+      #m_quick_sidebar_tabs_settings.tab-pane.m-scrollable{:role => "tabpanel"}
+        .m-list-settings
+          .m-list-settings__group
+            .m-list-settings__heading
+              General Settings
+            .m-list-settings__item
+              %span.m-list-settings__item-label
+                Email Notifications
+              %span.m-list-settings__item-control
+                %span.m-switch.m-switch--outline.m-switch--icon-check.m-switch--brand
+                  %label
+                    %input{:checked => "checked", :name => "", :type => "checkbox"}/
+                    %span
+            .m-list-settings__item
+              %span.m-list-settings__item-label
+                Site Tracking
+              %span.m-list-settings__item-control
+                %span.m-switch.m-switch--outline.m-switch--icon-check.m-switch--brand
+                  %label
+                    %input{:name => "", :type => "checkbox"}/
+                    %span
+            .m-list-settings__item
+              %span.m-list-settings__item-label
+                SMS Alerts
+              %span.m-list-settings__item-control
+                %span.m-switch.m-switch--outline.m-switch--icon-check.m-switch--brand
+                  %label
+                    %input{:name => "", :type => "checkbox"}/
+                    %span
+            .m-list-settings__item
+              %span.m-list-settings__item-label
+                Backup Storage
+              %span.m-list-settings__item-control
+                %span.m-switch.m-switch--outline.m-switch--icon-check.m-switch--brand
+                  %label
+                    %input{:name => "", :type => "checkbox"}/
+                    %span
+            .m-list-settings__item
+              %span.m-list-settings__item-label
+                Audit Logs
+              %span.m-list-settings__item-control
+                %span.m-switch.m-switch--outline.m-switch--icon-check.m-switch--brand
+                  %label
+                    %input{:checked => "checked", :name => "", :type => "checkbox"}/
+                    %span
+          .m-list-settings__group
+            .m-list-settings__heading
+              System Settings
+            .m-list-settings__item
+              %span.m-list-settings__item-label
+                System Logs
+              %span.m-list-settings__item-control
+                %span.m-switch.m-switch--outline.m-switch--icon-check.m-switch--brand
+                  %label
+                    %input{:name => "", :type => "checkbox"}/
+                    %span
+            .m-list-settings__item
+              %span.m-list-settings__item-label
+                Error Reporting
+              %span.m-list-settings__item-control
+                %span.m-switch.m-switch--outline.m-switch--icon-check.m-switch--brand
+                  %label
+                    %input{:name => "", :type => "checkbox"}/
+                    %span
+            .m-list-settings__item
+              %span.m-list-settings__item-label
+                Applications Logs
+              %span.m-list-settings__item-control
+                %span.m-switch.m-switch--outline.m-switch--icon-check.m-switch--brand
+                  %label
+                    %input{:name => "", :type => "checkbox"}/
+                    %span
+            .m-list-settings__item
+              %span.m-list-settings__item-label
+                Backup Servers
+              %span.m-list-settings__item-control
+                %span.m-switch.m-switch--outline.m-switch--icon-check.m-switch--brand
+                  %label
+                    %input{:checked => "checked", :name => "", :type => "checkbox"}/
+                    %span
+            .m-list-settings__item
+              %span.m-list-settings__item-label
+                Audit Logs
+              %span.m-list-settings__item-control
+                %span.m-switch.m-switch--outline.m-switch--icon-check.m-switch--brand
+                  %label
+                    %input{:name => "", :type => "checkbox"}/
+                    %span
+      #m_quick_sidebar_tabs_logs.tab-pane.m-scrollable{:role => "tabpanel"}
+        .m-list-timeline
+          .m-list-timeline__group
+            .m-list-timeline__heading
+              System Logs
+            .m-list-timeline__items
+              .m-list-timeline__item
+                %span.m-list-timeline__badge.m-list-timeline__badge--state-success
+                %a.m-list-timeline__text{:href => ""}
+                  12 new users registered
+                  %span.m-badge.m-badge--warning.m-badge--wide
+                    important
+                %span.m-list-timeline__time
+                  Just now
+              .m-list-timeline__item
+                %span.m-list-timeline__badge.m-list-timeline__badge--state-info
+                %a.m-list-timeline__text{:href => ""}
+                  System shutdown
+                %span.m-list-timeline__time
+                  11 mins
+              .m-list-timeline__item
+                %span.m-list-timeline__badge.m-list-timeline__badge--state-danger
+                %a.m-list-timeline__text{:href => ""}
+                  New invoice received
+                %span.m-list-timeline__time
+                  20 mins
+              .m-list-timeline__item
+                %span.m-list-timeline__badge.m-list-timeline__badge--state-warning
+                %a.m-list-timeline__text{:href => ""}
+                  Database overloaded 89%
+                  %span.m-badge.m-badge--success.m-badge--wide
+                    resolved
+                %span.m-list-timeline__time
+                  1 hr
+              .m-list-timeline__item
+                %span.m-list-timeline__badge.m-list-timeline__badge--state-success
+                %a.m-list-timeline__text{:href => ""}
+                  System error
+                %span.m-list-timeline__time
+                  2 hrs
+              .m-list-timeline__item
+                %span.m-list-timeline__badge.m-list-timeline__badge--state-info
+                %a.m-list-timeline__text{:href => ""}
+                  Production server down
+                  %span.m-badge.m-badge--danger.m-badge--wide
+                    pending
+                %span.m-list-timeline__time
+                  3 hrs
+              .m-list-timeline__item
+                %span.m-list-timeline__badge.m-list-timeline__badge--state-success
+                %a.m-list-timeline__text{:href => ""}
+                  Production server up
+                %span.m-list-timeline__time
+                  5 hrs
+          .m-list-timeline__group
+            .m-list-timeline__heading
+              Applications Logs
+            .m-list-timeline__items
+              .m-list-timeline__item
+                %span.m-list-timeline__badge.m-list-timeline__badge--state-info
+                %a.m-list-timeline__text{:href => ""}
+                  New order received
+                  %span.m-badge.m-badge--info.m-badge--wide
+                    urgent
+                %span.m-list-timeline__time
+                  7 hrs
+              .m-list-timeline__item
+                %span.m-list-timeline__badge.m-list-timeline__badge--state-success
+                %a.m-list-timeline__text{:href => ""}
+                  12 new users registered
+                %span.m-list-timeline__time
+                  Just now
+              .m-list-timeline__item
+                %span.m-list-timeline__badge.m-list-timeline__badge--state-info
+                %a.m-list-timeline__text{:href => ""}
+                  System shutdown
+                %span.m-list-timeline__time
+                  11 mins
+              .m-list-timeline__item
+                %span.m-list-timeline__badge.m-list-timeline__badge--state-danger
+                %a.m-list-timeline__text{:href => ""}
+                  New invoices received
+                %span.m-list-timeline__time
+                  20 mins
+              .m-list-timeline__item
+                %span.m-list-timeline__badge.m-list-timeline__badge--state-warning
+                %a.m-list-timeline__text{:href => ""}
+                  Database overloaded 89%
+                %span.m-list-timeline__time
+                  1 hr
+              .m-list-timeline__item
+                %span.m-list-timeline__badge.m-list-timeline__badge--state-success
+                %a.m-list-timeline__text{:href => ""}
+                  System error
+                  %span.m-badge.m-badge--info.m-badge--wide
+                    pending
+                %span.m-list-timeline__time
+                  2 hrs
+              .m-list-timeline__item
+                %span.m-list-timeline__badge.m-list-timeline__badge--state-info
+                %a.m-list-timeline__text{:href => ""}
+                  Production server down
+                %span.m-list-timeline__time
+                  3 hrs
+          .m-list-timeline__group
+            .m-list-timeline__heading
+              Server Logs
+            .m-list-timeline__items
+              .m-list-timeline__item
+                %span.m-list-timeline__badge.m-list-timeline__badge--state-success
+                %a.m-list-timeline__text{:href => ""}
+                  Production server up
+                %span.m-list-timeline__time
+                  5 hrs
+              .m-list-timeline__item
+                %span.m-list-timeline__badge.m-list-timeline__badge--state-info
+                %a.m-list-timeline__text{:href => ""}
+                  New order received
+                %span.m-list-timeline__time
+                  7 hrs
+              .m-list-timeline__item
+                %span.m-list-timeline__badge.m-list-timeline__badge--state-success
+                %a.m-list-timeline__text{:href => ""}
+                  12 new users registered
+                %span.m-list-timeline__time
+                  Just now
+              .m-list-timeline__item
+                %span.m-list-timeline__badge.m-list-timeline__badge--state-info
+                %a.m-list-timeline__text{:href => ""}
+                  System shutdown
+                %span.m-list-timeline__time
+                  11 mins
+              .m-list-timeline__item
+                %span.m-list-timeline__badge.m-list-timeline__badge--state-danger
+                %a.m-list-timeline__text{:href => ""}
+                  New invoice received
+                %span.m-list-timeline__time
+                  20 mins
+              .m-list-timeline__item
+                %span.m-list-timeline__badge.m-list-timeline__badge--state-warning
+                %a.m-list-timeline__text{:href => ""}
+                  Database overloaded 89%
+                %span.m-list-timeline__time
+                  1 hr
+              .m-list-timeline__item
+                %span.m-list-timeline__badge.m-list-timeline__badge--state-success
+                %a.m-list-timeline__text{:href => ""}
+                  System error
+                %span.m-list-timeline__time
+                  2 hrs
+              .m-list-timeline__item
+                %span.m-list-timeline__badge.m-list-timeline__badge--state-info
+                %a.m-list-timeline__text{:href => ""}
+                  Production server down
+                %span.m-list-timeline__time
+                  3 hrs
+              .m-list-timeline__item
+                %span.m-list-timeline__badge.m-list-timeline__badge--state-success
+                %a.m-list-timeline__text{:href => ""}
+                  Production server up
+                %span.m-list-timeline__time
+                  5 hrs
+              .m-list-timeline__item
+                %span.m-list-timeline__badge.m-list-timeline__badge--state-info
+                %a.m-list-timeline__text{:href => ""}
+                  New order received
+                %span.m-list-timeline__time
+                  1117 hrs
+/ end::Quick Sidebar
+/ begin::Scroll Top
+#m_scroll_top.m-scroll-top
+  %i.la.la-arrow-up
+/ end::Scroll Top
+/ begin::Quick Nav
+%ul.m-nav-sticky{:style => "margin-top: 30px;"}
+  /
+    <li class="m-nav-sticky__item" data-toggle="m-tooltip" title="Showcase" data-placement="left">
+    <a href="">
+    <i class="la la-eye"></i>
+    </a>
+    </li>
+    <li class="m-nav-sticky__item" data-toggle="m-tooltip" title="Pre-sale Chat" data-placement="left">
+    <a href="" >
+    <i class="la la-comments-o"></i>
+    </a>
+    </li>
+  %li.m-nav-sticky__item{"data-placement" => "left", "data-toggle" => "m-tooltip", :title => "Purchase"}
+    %a{:href => "https://themeforest.net/item/metronic-responsive-admin-dashboard-template/4021469?ref=keenthemes", :target => "_blank"}
+      %i.la.la-cart-arrow-down
+  %li.m-nav-sticky__item{"data-placement" => "left", "data-toggle" => "m-tooltip", :title => "Documentation"}
+    %a{:href => "https://keenthemes.com/metronic/documentation.html", :target => "_blank"}
+      %i.la.la-code-fork
+  %li.m-nav-sticky__item{"data-placement" => "left", "data-toggle" => "m-tooltip", :title => "Support"}
+    %a{:href => "https://keenthemes.com/forums/forum/support/metronic5/", :target => "_blank"}
+      %i.la.la-life-ring
+
+:javascript
+  $(window).on('load', function() {
+      $('body').removeClass('m-page--loading');
+  });
+/ end::Page Loader
+/ end::Body

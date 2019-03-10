@@ -1,0 +1,148 @@
+:css
+  @media (max-width: 762px) {
+    .smart-banner {
+      display: none;
+    }
+    .footer {
+      display: none;
+    }
+    html, body, #wrapper {
+      height: 100%;
+    }
+    div#crisp-chatbox {
+      display: none !important;
+    }
+    .room #send-section {
+      border-bottom: none !important;
+      border-top: 1px solid #999999;
+    }
+    .room .body {
+      background: #ffffff !important;
+    }
+    nav.navbar.navbar-default {
+      position: fixed;
+      top: 0px;
+      width: 100%;
+    }
+  }
+.container.room.show.margin-bottom-offset-20.no-padding-mobile.full-height-mobile
+  - unless mobile_device?
+    .col-md-3.previews
+      = render 'rooms'
+
+      -# - @rooms.each do |room|
+      -#   - if room.pro && room.user
+      -#     = link_to [:interface, room] do
+      -#       .row.no-padding
+      -#         .col-md-3.no-padding
+      -#           = image_tag room.pro.avatar, class: 'avatar mini-avatar'
+      -#         .col-md-9.no-padding
+      -#           .sender= room.pro.nickname
+      -#           - if room.last_message.present?
+      -#             %xsall.message= "#{room.last_message.sender.nickname}: #{room.last_message.body[0...40]}.."
+
+        -# .margin-top-10
+  .col-md-9.no-padding-mobile.full-height-mobile
+    .col-md-12.header
+      .col-md-9.col-xs-8.no-padding
+        .pro-field
+          .col-md-8.infos.no-padding
+            .col-xs-4.col-md-4
+              = link_to @pro do
+                = image_tag @pro.avatar, class: 'avatar full-max-width'
+              %br
+              - if mobile_device?
+                %small= link_to 'Profil', @pro, class: 'white-text'
+            .col-xs-8.col-md-8
+              = @pro.nickname
+              %br
+              - avg_ratings(@pro)
+              %br
+              = @pro.statut
+              %br
+              = @pro.city
+              %br
+              - unless mobile_device?
+                = link_to 'Profil', @pro, class: 'white-text'
+
+      .col-md-3.col-xs-4.no-padding.text-center
+        %br
+        - if @booking.present?
+          = link_to 'Réservation', edit_interface_booking_path(@booking, confirm_booking: 'true'), class: 'btn btn-confirm', data: { confirm: (@messages.count == 0 ? 'La coiffeuse vous a-t-elle confirmé sa disponibilité ?' : nil) }
+        - else
+          = link_to 'Réservation', pro_path(@pro), class: 'btn btn-confirm'
+      .clear-both
+    .col-xs-12.no-padding.full-height-mobile
+      .body.full-height-mobile
+        - @messages.each do |message|
+          - if message.validated_by_us || message.sender == current_resource
+            - if message.sender.class.name == 'Pro'
+              .row.left
+                .col-md-1.col-xs-2
+                  = image_tag message.sender.avatar, class: 'avatar'
+                .col-md-5.col-xs-10
+                  .speech-bubble
+                    = message.body
+                    - if message.photo.present?
+                      %br
+                      = link_to message.photo_url, "data-lightbox":"#{@room.id}" do
+                        = image_tag message.photo, class: 'photo-message'
+                    %br
+                    %br
+                    %small #{I18n.l(message.created_at)} à #{message.created_at.strftime("%H : %M")}
+
+            - else
+              .row.right{class: (message.sender_type == 'AdminUser' ? 'sent-by-an-admin' : '')}
+                .col-md-5.col-md-offset-6.col-xs-10
+                  .speech-bubble
+                    - if message.sender_type == 'AdminUser'
+                      %u L'équipe Ma Coiffeuse Afro
+                      %br
+                    = message.body
+                    - if message.photo.present?
+                      %br
+                      = link_to message.photo_url, "data-lightbox":"#{@room.id}" do
+                        = image_tag message.photo, class: 'photo-message'
+                    %br
+                    %br
+                    %small #{I18n.l(message.created_at)} à #{message.created_at.strftime("%H : %M")}
+
+                .col-md-1.col-xs-2
+                  = image_tag message.sender.avatar, class: 'avatar'
+
+          %br
+          %br
+      = simple_form_for(@message, url: interface_room_messages_path(@room), html: { class: 'form-horizontal' }) do |form|
+        .row.no-margin.border-grey#send-section
+          .col-md-11.col-xs-9.no-padding
+            -# - if @booking.availability.present?
+            -#   - elsif @booking.availability.first_slot
+            -#   - elsif @booking.availability.second_slot
+            -#   - elsif @booking.availability.third_slot
+            - if params[:set_message].present? && @booking.present?
+              - if @booking.new_mission.present?
+                - mission_name = ", pour une prestation de #{@booking.new_mission.name}"
+              - else
+                - mission_name = ''
+              - if @booking.availability.present?
+                - if @booking.availability.first_slot
+                  - slot = 'entre 6h et 12h'
+                - elsif @booking.availability.second_slot
+                  - slot = 'entre 12h et 18h'
+                - elsif @booking.availability.third_slot
+                  - slot = 'entre 18h et 22h'
+              - else
+                - slot = ''
+
+              = form.input :body, label: false, placeholder: 'Tapez votre message...', autofocus: !mobile_device?, wrapper_html: { class: 'no-margin' }, input_html: { class: 'no-border no-resize', value: "Hello #{@pro.nickname}, êtes-vous disponible le #{I18n.l(@booking.start_time)} #{slot} #{mission_name} à Paris ?" }
+            - else
+              = form.input :body, label: false, placeholder: 'Tapez votre message...', autofocus: !mobile_device?, wrapper_html: { class: 'no-margin' }, input_html: { class: 'no-border no-resize' }
+          .col-md-1.col-xs-3.no-padding
+            #hide
+              = form.input :photo, label: false
+              %label.photo-btn{for: 'message_photo'}
+                %i.fa.fa-camera
+            = button_tag type: 'submit', class: "send-btn"do
+              %i.fa.fa-paper-plane{"aria-hidden" => "true"}
+          .col-xs-12
+            = image_tag 'http://placehold.it/180', id: 'photo-preview'

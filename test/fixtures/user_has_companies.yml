@@ -1,0 +1,20 @@
+# == Schema Information
+#
+# Table name: suppliers
+#
+#  id         :integer          not null, primary key
+#  user_id    :integer
+#  company_id :integer
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user: one
+  company: one
+
+two:
+  user: two
+  company: two

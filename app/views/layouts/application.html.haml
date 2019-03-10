@@ -1,0 +1,27 @@
+!!!
+%html{lang: "fr"}
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    %title NormSup
+    %meta{:content => "Latest updates and statistic charts", :name => "description"}/
+    %meta{:content => "IE=edge", "http-equiv" => "X-UA-Compatible"}/
+    %meta{:content => "width=device-width, initial-scale=1, shrink-to-fit=no", :name => "viewport"}/
+    / begin::Web font
+    %script{:src => "https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js"}
+    :javascript
+      WebFont.load({
+        google: {"families":["Poppins:300,400,500,600,700","Roboto:300,400,500,600,700","Asap+Condensed:500"]},
+        active: function() {
+            sessionStorage.fonts = true;
+        }
+      });
+    = csrf_meta_tags
+    = stylesheet_link_tag    'application', media: 'all'
+    = javascript_include_tag 'application'
+  %body.m-page--fluid.m-page--loading-enabled.m-page--loading.m-header--fixed.m-header--fixed-mobile.m-footer--push.m-aside--offcanvas-default
+    = render 'layouts/loader'
+    = yield
+    :javascript
+      $(window).on('load', function() {
+        $('body').removeClass('m-page--loading');
+      });

@@ -1,0 +1,134 @@
+%li.m-nav__item.m-nav__item--accent.m-dropdown.m-dropdown--large.m-dropdown--arrow.m-dropdown--align-center.m-dropdown--mobile-full-width{"m-dropdown-persistent" => "1", "m-dropdown-toggle" => "click"}
+  %a#m_topbar_notification_icon.m-nav__link.m-dropdown__toggle{:href => "#"}
+    %span.m-nav__link-badge.m-badge.m-badge--dot.m-badge--dot-small.m-badge--danger{class: 'notified'}
+    %span.m-nav__link-icon{class: 'notified'}
+      %span.m-nav__link-icon-wrapper
+        %i.flaticon-music-2
+  .m-dropdown__wrapper
+    %span.m-dropdown__arrow.m-dropdown__arrow--center
+    .m-dropdown__inner
+      .m-dropdown__header.m--align-center
+        %span.m-dropdown__header-title
+          9 New
+        %span.m-dropdown__header-subtitle
+          User Notifications
+      .m-dropdown__body
+        .m-dropdown__content
+          %ul.nav.nav-tabs.m-tabs.m-tabs-line.m-tabs-line--brand{:role => "tablist"}
+            %li.nav-item.m-tabs__item
+              %a.nav-link.m-tabs__link.active{"data-toggle" => "tab", :href => "#topbar_notifications_notifications", :role => "tab"}
+                Alerts
+            %li.nav-item.m-tabs__item
+              %a.nav-link.m-tabs__link{"data-toggle" => "tab", :href => "#topbar_notifications_events", :role => "tab"}
+                Events
+            %li.nav-item.m-tabs__item
+              %a.nav-link.m-tabs__link{"data-toggle" => "tab", :href => "#topbar_notifications_logs", :role => "tab"}
+                Logs
+          .tab-content
+            #topbar_notifications_notifications.tab-pane.active{:role => "tabpanel"}
+              .m-scrollable{"data-max-height" => "250", "data-mobile-max-height" => "200", "data-scrollable" => "true"}
+                .m-list-timeline.m-list-timeline--skin-light
+                  .m-list-timeline__items
+                    .m-list-timeline__item
+                      %span.m-list-timeline__badge.-m-list-timeline__badge--state-success
+                      %span.m-list-timeline__text
+                        12 new users registered
+                      %span.m-list-timeline__time
+                        Just now
+                    .m-list-timeline__item
+                      %span.m-list-timeline__badge
+                      %span.m-list-timeline__text
+                        System shutdown
+                        %span.m-badge.m-badge--success.m-badge--wide
+                          pending
+                      %span.m-list-timeline__time
+                        14 mins
+                    .m-list-timeline__item
+                      %span.m-list-timeline__badge
+                      %span.m-list-timeline__text
+                        New invoice received
+                      %span.m-list-timeline__time
+                        20 mins
+                    .m-list-timeline__item
+                      %span.m-list-timeline__badge
+                      %span.m-list-timeline__text
+                        DB overloaded 80%
+                        %span.m-badge.m-badge--info.m-badge--wide
+                          settled
+                      %span.m-list-timeline__time
+                        1 hr
+                    .m-list-timeline__item
+                      %span.m-list-timeline__badge
+                      %span.m-list-timeline__text
+                        System error -
+                        %a.m-link{:href => "#"}
+                          Check
+                      %span.m-list-timeline__time
+                        2 hrs
+                    .m-list-timeline__item.m-list-timeline__item--read
+                      %span.m-list-timeline__badge
+                      %span.m-list-timeline__text{:href => ""}
+                        New order received
+                        %span.m-badge.m-badge--danger.m-badge--wide
+                          urgent
+                      %span.m-list-timeline__time
+                        7 hrs
+                    .m-list-timeline__item.m-list-timeline__item--read
+                      %span.m-list-timeline__badge
+                      %span.m-list-timeline__text
+                        Production server down
+                      %span.m-list-timeline__time
+                        3 hrs
+                    .m-list-timeline__item
+                      %span.m-list-timeline__badge
+                      %span.m-list-timeline__text
+                        Production server up
+                      %span.m-list-timeline__time
+                        5 hrs
+            #topbar_notifications_events.tab-pane{:role => "tabpanel"}
+              .m-scrollable{"data-max-height" => "250", "data-mobile-max-height" => "200", "data-scrollable" => "true"}
+                .m-list-timeline.m-list-timeline--skin-light
+                  .m-list-timeline__items
+                    .m-list-timeline__item
+                      %span.m-list-timeline__badge.m-list-timeline__badge--state1-success
+                      %a.m-list-timeline__text{:href => ""}
+                        New order received
+                      %span.m-list-timeline__time
+                        Just now
+                    .m-list-timeline__item
+                      %span.m-list-timeline__badge.m-list-timeline__badge--state1-danger
+                      %a.m-list-timeline__text{:href => ""}
+                        New invoice received
+                      %span.m-list-timeline__time
+                        20 mins
+                    .m-list-timeline__item
+                      %span.m-list-timeline__badge.m-list-timeline__badge--state1-success
+                      %a.m-list-timeline__text{:href => ""}
+                        Production server up
+                      %span.m-list-timeline__time
+                        5 hrs
+                    .m-list-timeline__item
+                      %span.m-list-timeline__badge.m-list-timeline__badge--state1-info
+                      %a.m-list-timeline__text{:href => ""}
+                        New order received
+                      %span.m-list-timeline__time
+                        7 hrs
+                    .m-list-timeline__item
+                      %span.m-list-timeline__badge.m-list-timeline__badge--state1-info
+                      %a.m-list-timeline__text{:href => ""}
+                        System shutdown
+                      %span.m-list-timeline__time
+                        11 mins
+                    .m-list-timeline__item
+                      %span.m-list-timeline__badge.m-list-timeline__badge--state1-info
+                      %a.m-list-timeline__text{:href => ""}
+                        Production server down
+                      %span.m-list-timeline__time
+                        3 hrs
+            #topbar_notifications_logs.tab-pane{:role => "tabpanel"}
+              .m-stack.m-stack--ver.m-stack--general{:style => "min-height: 180px;"}
+                .m-stack__item.m-stack__item--center.m-stack__item--middle
+                  %span
+                    All caught up!
+                    %br/
+                    No new logs.
