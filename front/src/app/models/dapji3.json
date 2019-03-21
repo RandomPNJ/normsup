@@ -1,0 +1,164 @@
+{
+    "car": {
+        "dapji": "MASTER",
+        "status": "KO",
+        "inputChilds": [
+            "PROD001",
+            "PROD002"
+        ],
+        "vinPlantName": "Douai",
+        "vinPlantCode": "DO59"
+    },
+    "products": [{
+            "product": {
+                "batchComponent": "HIWEUOFGUI134",
+                "csrIDs": [
+                    "REQ-ID-2"
+                ],
+                "idNum": "PROD001",
+                "inputChilds": [
+                    "PROD001-1",
+                    "PROD001-2"
+                ],
+                "partNameF": "QWEFGWRG",
+                "partNameR": "SIEGEBC",
+                "partNumberF": "WFOHRGIO14",
+                "partNumberR": "FDWGHRET",
+                "status": "NKO",
+                "supplierCode": "CIWEHF234",
+                "supplierName": "RENAULT",
+                "supplierPlantCode": "DO59",
+                "supplierPlantName": "DOUAI",
+                "upperParents": [
+                    "MASTER"
+                ]
+            },
+            "requirement": [{
+                "csr100": true,
+                "csrCategory": "PRODUCT",
+                "csrDatetime": 1542639202,
+                "csrDescription": "Donec euismod sit amet eros quis faucibus.",
+                "csrID": "REQ-ID-2",
+                "csrMax": 123.03,
+                "csrMin": 122.02,
+                "csrRefID": "REQ-ID-2_PROD001",
+                "csrResult": "OK",
+                "csrType": "SR",
+                "csrVal": false,
+                "csrValueNum": 122.42,
+                "idNum": "PROD001"
+            }]
+        },
+        {
+            "product": {
+                "batchComponent": "JUVUVIGIU24",
+                "csrIDs": [
+                    "REQ-ID-4"
+                ],
+                "idNum": "PROD001-1",
+                "inputChilds": [],
+                "partNameF": "IGEFGIKLBWE",
+                "partNameR": "CUIRV",
+                "partNumberF": "VU2JBU45BV3",
+                "partNumberR": "IUVERVN",
+                "status": "",
+                "supplierCode": "WEFOUG786UV2",
+                "supplierName": "RENAULT",
+                "supplierPlantCode": "DO59",
+                "supplierPlantName": "DOUAI",
+                "upperParents": [
+                    "PROD001"
+                ]
+            },
+            "requirement": [{
+                "csr100": true,
+                "csrCategory": "PRODUCT",
+                "csrDatetime": 1542639204,
+                "csrDescription": "Donec euismod sit amet eros quis faucibus.",
+                "csrID": "REQ-ID-4",
+                "csrMax": 143.03,
+                "csrMin": 142.02,
+                "csrRefID": "REQ-ID-4_PROD001-1",
+                "csrResult": "KO",
+                "csrType": "SR",
+                "csrVal": false,
+                "csrValueNum": 131.01,
+                "idNum": "PROD001-1"
+            }]
+        },
+        {
+            "product": {
+                "batchComponent": "OIGOUG43423",
+                "csrIDs": [
+                    "REQ-ID-5"
+                ],
+                "idNum": "PROD001-2",
+                "inputChilds": [],
+                "partNameF": "POJHWEIFHFE",
+                "partNameR": "ARM-MET",
+                "partNumberF": "VIDW98UOVWBE3",
+                "partNumberR": "IHYOUGIBJ",
+                "status": "",
+                "supplierCode": "UGWUOFGEOUG234",
+                "supplierName": "RENAULT",
+                "supplierPlantCode": "DO59",
+                "supplierPlantName": "DOUAI",
+                "upperParents": [
+                    "PROD001"
+                ]
+            },
+            "requirement": [{
+                "csr100": true,
+                "csrCategory": "PRODUCT",
+                "csrDatetime": 1542639205,
+                "csrDescription": "Donec euismod sit amet eros quis faucibus.",
+                "csrID": "REQ-ID-5",
+                "csrMax": 153.03,
+                "csrMin": 152.02,
+                "csrRefID": "REQ-ID-5_PROD001-2",
+                "csrResult": "KO",
+                "csrType": "SR",
+                "csrVal": false,
+                "csrValueNum": 155.01,
+                "idNum": "PROD001-2"
+            }]
+        },
+        {
+            "product": {
+                "batchComponent": "GU134JKB",
+                "csrIDs": [
+                    "REQ-ID-3"
+                ],
+                "idNum": "PROD002",
+                "inputChilds": [],
+                "partNameF": "WEIGF3OWEG",
+                "partNameR": "APTETE",
+                "partNumberF": "OUG234AFOG",
+                "partNumberR": "IOGOU45FG",
+                "status": "",
+                "supplierCode": "WEFOUG786UV2",
+                "supplierName": "RENAULT",
+                "supplierPlantCode": "DO59",
+                "supplierPlantName": "DOUAI",
+                "upperParents": [
+                    "MASTER"
+                ]
+            },
+            "requirement": [{
+                "csr100": true,
+                "csrCategory": "PRODUCT",
+                "csrDatetime": 1542639203,
+                "csrDescription": "Donec euismod sit amet eros quis faucibus.",
+                "csrID": "REQ-ID-3",
+                "csrMax": 0,
+                "csrMin": 0,
+                "csrRefID": "REQ-ID-3_PROD002",
+                "csrResult": "KO",
+                "csrType": "SR",
+                "csrVal": false,
+                "csrValueNum": 0,
+                "idNum": "PROD002"
+            }]
+        }
+    ]
+}

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="14px" height="14px" viewBox="0 0 14 14" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.3 (67297) - http://www.bohemiancoding.com/sketch -->
+    <title>alert</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="50%" y1="96.4008309%" x2="50%" y2="2.41543903%" id="linearGradient-1">
+            <stop stop-color="#FFB347" offset="0%"></stop>
+            <stop stop-color="#FFCC33" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Artboard" fill-rule="nonzero">
+            <g id="alert">
+                <path d="M7,2.48689958e-16 C3.13400675,4.97379915e-16 4.97379915e-16,3.13400675 0,7 C-4.97379915e-16,10.8659932 3.13400675,14 7,14 C10.8659932,14 14,10.8659932 14,7 C14,5.14348457 13.2625021,3.36300718 11.9497475,2.05025253 C10.6369928,0.737497883 8.85651543,-4.97379915e-16 7,2.48689958e-16 Z" id="Path" fill="url(#linearGradient-1)"></path>
+                <path d="M7,11.2 C6.58247273,11.2 6.244,10.8615273 6.244,10.444 C6.244,10.0264727 6.58247273,9.688 7,9.688 C7.41752727,9.688 7.756,10.0264727 7.756,10.444 C7.756,10.8615273 7.41752727,11.2 7,11.2 Z" id="Path" fill="#FFFFFF"></path>
+                <path d="M7.756,7.924 C7.75599998,8.34152726 7.41752726,8.67999997 7,8.67999997 C6.58247274,8.67999997 6.24400002,8.34152726 6.244,7.924 L6.244,3.556 C6.244,3.13847273 6.58247273,2.8 7,2.8 C7.41752727,2.8 7.756,3.13847273 7.756,3.556 L7.756,7.924 Z" id="Path" fill="#FFFFFF"></path>
+            </g>
+        </g>
+    </g>
+</svg>

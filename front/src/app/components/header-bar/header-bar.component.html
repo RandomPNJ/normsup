@@ -1,0 +1,37 @@
+<div [ngClass]="getHeaderStyle()" class="navbar-fixed" style="z-index: 100000000;">
+    <nav>
+        <div class="nav-wrapper">
+            <a href="/search" class="brand-logo left"> <img src="../../../assets/img/IBM_mention.svg" alt=""></a>
+            <span class="logo-app"><img src="{{xceedLogo}}" alt=""></span>
+            <div class='logout' tabindex="0" (click)='dropbox()' (blur)='closeDropDown()'>
+                <span>
+                    <label>
+                        {{user.userName}}
+                    </label>
+                    &nbsp; &nbsp; &nbsp; &nbsp;
+                    <span class="glyphicon glyphicon-menu-down" style='color: #9e9e9e'></span>
+                </span>
+                <div *ngIf='isLogout' class="dropContent arrow_box">
+                    <div class='selectData' (click)='backToLogin()'>
+                        <p>Log out <img src="{{signOutLogo}}" style="padding-left: 15px;" alt="">
+                        </p>
+                    </div>
+                    <div class='selectData' (click)='secondBtn()'
+                        *ngIf='user.userName==="Renault" || user.userName==="Renault_validator" || user.userName==="Faurecia_siege"'>
+                        <p>{{dropdownSecondBtn}} <img src="{{addIcon}}" style="padding-left: 10px;"
+                                alt=""></p>
+                    </div>
+                </div>
+            </div>
+            <div class="right" style="width: 60px;">
+                <ul id="nav-mobile">
+
+                    <li class="li2">
+                        <img src="{{logoImg}}" alt="">
+                    </li>
+                </ul>
+            </div>
+            <br>
+        </div>
+    </nav>
+</div>

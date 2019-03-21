@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="20px" viewBox="0 0 24 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: sketchtool 52.3 (67297) - http://www.bohemiancoding.com/sketch -->
+    <title>44AF09AB-A8E0-47FE-AED7-3BDD318F1DB8</title>
+    <desc>Created with sketchtool.</desc>
+    <g id="Library" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="UI-Icons" transform="translate(-914.000000, -236.000000)">
+            <g id="folder1-icn" transform="translate(914.000000, 236.000000)">
+                <path d="M21.6,3.84615385 L12.32,3.84615385 C12,3.84615385 11.68,3.69230769 11.6,3.38461538 L10.8,1.46153846 C10.4,0.538461538 9.52,0 8.48,0 L2.4,0 C1.04,0 0,1 0,2.30769231 L0,17.6923077 C0,19 1.04,20 2.4,20 L21.6,20 C22.96,20 24,19 24,17.6923077 L24,6.15384615 C24,4.84615385 22.96,3.84615385 21.6,3.84615385 Z" id="Path" fill="#A3A6B6" fill-rule="nonzero"></path>
+                <path d="M22,17.2272727 C22,17.6909091 21.6923077,18 21.2307692,18 L2.76923077,18 C2.30769231,18 2,17.6909091 2,17.2272727 L2,1.77272727 C2,1.30909091 2.30769231,1 2.76923077,1 L8.61538462,1 C8.92307692,1 9.23076923,1.15454545 9.30769231,1.46363636 L10.0769231,3.39545455 C10.4615385,4.32272727 11.3076923,4.86363636 12.3076923,4.86363636 L21.2307692,4.86363636 C21.6923077,4.86363636 22,5.17272727 22,5.63636364 L22,17.2272727 Z" id="Path" fill="#A3A6B6" fill-rule="nonzero"></path>
+                <rect id="Rectangle" fill="#FFFFFF" x="11" y="7" width="2" height="10" rx="1"></rect>
+                <rect id="Rectangle" fill="#FFFFFF" transform="translate(12.000000, 12.000000) rotate(-270.000000) translate(-12.000000, -12.000000) " x="11" y="7" width="2" height="10" rx="1"></rect>
+            </g>
+        </g>
+    </g>
+</svg>

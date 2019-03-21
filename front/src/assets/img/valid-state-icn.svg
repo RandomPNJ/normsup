@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="14px" height="14px" viewBox="0 0 14 14" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.3 (67297) - http://www.bohemiancoding.com/sketch -->
+    <title>check</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-1">
+            <stop stop-color="#99F7DC" offset="0%"></stop>
+            <stop stop-color="#60EDB6" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Artboard">
+            <g id="check">
+                <circle id="cercle" fill="url(#linearGradient-1)" cx="7" cy="7" r="7"></circle>
+                <path d="M10.2083333,4.8125 L6.11041667,8.91041667 L4.025,6.825 C3.82083333,6.62083333 3.48541667,6.62083333 3.28125,6.825 C3.07708333,7.02916667 3.07708333,7.36458333 3.28125,7.56875 L5.73125,10.01875 C5.83333333,10.1208333 5.96458333,10.1791667 6.11041667,10.1791667 C6.25625,10.1791667 6.3875,10.1208333 6.48958333,10.01875 L10.9520833,5.55625 C11.15625,5.35208333 11.15625,5.01666667 10.9520833,4.8125 C10.7479167,4.60833333 10.4270833,4.60833333 10.2083333,4.8125 Z" id="Shape" fill="#FFFFFF" fill-rule="nonzero"></path>
+            </g>
+        </g>
+    </g>
+</svg>

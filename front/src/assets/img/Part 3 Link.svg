@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="55px" height="269px" viewBox="0 0 55 269" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.3 (67297) - http://www.bohemiancoding.com/sketch -->
+    <title>Link 4</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Library" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="UI-Library" transform="translate(-663.000000, -2153.000000)">
+            <g id="Tree-view-links" transform="translate(108.000000, 1807.000000)">
+                <g id="Links" transform="translate(2.000000, 90.000000)">
+                    <g id="Default-branch" transform="translate(444.000000, 40.000000)">
+                        <g id="Link-4" transform="translate(110.000000, 216.000000)">
+                            <circle id="Oval" fill="#A3A6B6" cx="49.5" cy="264.5" r="4.5"></circle>
+                            <path d="M0.5,265 L0.5,20.5024818 C0.5,9.45541616 9.45216813,0.5 20.5068178,0.5 L49,0.5" id="Path-2" stroke="#A3A6B6" stroke-width="2" transform="translate(24.750000, 132.750000) scale(1, -1) translate(-24.750000, -132.750000) "></path>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,69 @@
+<ng-template #template>
+    <div *ngIf='!isLoding' class="modal-body" [ngClass]='{"success": type === "success", "error": type === "error", "warning": type === "warning", "info":type=="info"}'>
+
+        <p>Do you want to change this part state from
+            <p>{{message}} </p>
+    </div>
+    <div *ngIf='isLoding' class="modal-body" [ngClass]='{"success": type === "success", "error": type === "error", "warning": type === "warning", "info":type=="info"}'>
+
+        <p>Please wait</p>
+    </div>
+    <div style='text-align: center'>
+        <button *ngIf='!isLoding' class="modalbtn" (click)='close()'>Cancel</button>
+        <button *ngIf='!isLoding' class="modalbtn accept" (click)="change()" style='text-transform:capitalize'>Yes,
+            change it</button>
+
+        <span *ngIf='isLoding'><img src="../../../assets/img/loder.gif" alt="" style='width: 55px'></span>
+    </div>
+</ng-template>
+
+<ng-template #logintemplate>
+    <div class="modal-body" [ngClass]='{"success": type === "success", "error": type === "error", "warning": type === "warning", "info":type=="info"}'>
+        <h1>{{title}}</h1>
+        <p>{{message}}</p>
+    </div>
+    <div style='text-align: center'>
+        <button class="modalbtn" (click)='close()'>Cancel</button>
+    </div>
+
+</ng-template>
+
+<ng-template #noresulttemp>
+    <div class="modal-body" [ngClass]='{"success": type === "success", "error": type === "error", "warning": type === "warning", "info":type=="info"}'>
+        <p>Error, no result found.</p>
+    </div>
+    <div style='text-align: center'>
+        <button class="modalbtn" (click)='close()'>Cancel</button>
+    </div>
+
+</ng-template>
+
+
+<ng-template #statustemp>
+    <div class="modal-body" [ngClass]='{"success": type === "success", "error": type === "error", "warning": type === "warning", "info":type=="info"}'>
+        <p>Status changed successfully</p>
+    </div>
+    <div style='text-align: center'>
+        <button class="modalbtn" (click)='refresh()'>ok</button>
+    </div>
+
+</ng-template>
+<ng-template #sessionTemplate>
+    <div class="modal-body" [ngClass]='{"success": type === "success", "error": type === "error", "warning": type === "warning", "info":type=="info"}'>
+        <p>Session time out.</p>
+        <p>Please login</p>
+    </div>
+    <div style='text-align: center'>
+        <button class="modalbtn" (click)='goToLogin()'>ok</button>
+    </div>
+
+</ng-template>
+<ng-template #successTemplate>
+    <div class="modal-body" [ngClass]='{"success": type === "success", "error": type === "error", "warning": type === "warning", "info":type=="info"}'>
+        <p>{{message}}</p>
+    </div>
+    <div style='text-align: center'>
+        <button class="modalbtn" (click)='goToLogin()'>ok</button>
+    </div>
+
+</ng-template>

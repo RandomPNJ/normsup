@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="36px" height="32px" viewBox="0 0 36 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.3 (67297) - http://www.bohemiancoding.com/sketch -->
+    <title>Aileron</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="26.6136456%" y1="17.2408249%" x2="100%" y2="100%" id="linearGradient-1">
+            <stop stop-color="#99F7DC" offset="0%"></stop>
+            <stop stop-color="#60EDB6" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Artboard">
+            <g id="Aileron">
+                <path d="M31.9865995,3.50741636e-31 L35.9708903,3.94430453e-31 L35.9999937,16.9865933 C36.0075328,25.2708611 29.2979185,31.9926987 21.0136507,32.0002379 C21.0091004,32.000242 21.0045501,32.0002441 20.9999999,32.0002441 L0,31.9865995 L0,31.9865995 C-2.16342565e-15,14.3208884 14.3208884,3.24513848e-15 31.9865995,0 Z" id="Rectangle" fill="url(#linearGradient-1)"></path>
+                <g id="check" transform="translate(15.000000, 14.000000)" fill="#FFFFFF" fill-rule="nonzero">
+                    <path d="M9.8710387,0.870086831 L4.23198875,6.50913678 L1.3622943,3.63944232 C1.08134519,3.35849321 0.619785939,3.35849321 0.338836831,3.63944232 C0.057887723,3.92039143 0.057887723,4.38195068 0.338836831,4.66289979 L3.71022613,8.03428908 C3.85070068,8.17476364 4.03131082,8.25503481 4.23198875,8.25503481 C4.43266669,8.25503481 4.61327683,8.17476364 4.75375138,8.03428908 L10.8944962,1.8935443 C11.1754453,1.61259519 11.1754453,1.15103594 10.8944962,0.870086831 C10.6135471,0.589137723 10.1720556,0.589137723 9.8710387,0.870086831 Z" id="Shape"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

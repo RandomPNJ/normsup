@@ -1,0 +1,233 @@
+
+// header scss
+nav {
+    background-color: #FFFFFF;
+    box-shadow: 0 10px 15px 5px rgba(0, 0, 0, 0.03);
+    height: 65px ! important;
+    // border-radius: 8px ! important;
+}
+
+nav .brand-logo {
+    color: black;
+    height: 36px;
+    width: 43px;
+    margin-left: 40px;
+}
+
+nav .brand-logo img {
+    vertical-align: middle;
+}
+
+nav .dropdown-trigger {
+    color: #484848;
+}
+
+nav .dropdown-trigger .arrowNavIcon {
+    color: #A3A6B6;
+}
+
+.navbar-fixed {
+    height: 50px;
+}
+
+
+.dropdown-content {
+    z-index: 1000;
+}
+
+.li1 {
+    list-style-type: none;
+    border-right: 1px solid #ffffff;
+    width: 200px;
+    text-align: center;
+}
+
+.li2 img {
+    width: 55px;
+}
+
+#dropdown1 .dropdown-content {
+    z-index: 1000;
+    display: none;
+}
+
+.hide {
+    display: none;
+}
+
+.signout {
+    position: relative;
+    float: left;
+    z-index: 1000;
+}
+
+.logout {
+    text-align: center;
+    width: 200px;
+    z-index: 1000;
+    right: 0;
+    margin-right: 60px;
+    position: fixed;
+    display: inline-block;
+}
+
+.logout:hover, .logout label:hover {
+    cursor: pointer;
+
+    transition: 0.3s;
+    
+}
+
+.logout:focus-within {
+    outline: none;
+}
+
+.logout label {
+    font-size: 16px !important;
+    color: #3C4051;
+    font-weight: normal;
+    margin-bottom: 0px;
+}
+
+.logout .dropContent {
+    color: #3C4051;
+    background: #ffffff;
+    cursor: pointer;
+    border-radius: 12px;
+
+    border-radius: 14px;
+    margin-top: 7px;
+    position: relative;
+    border-width: 1px;
+
+
+    -moz-box-shadow: 1px 1px 10px 0.5px #3C4051;
+    -webkit-box-shadow: 1px 1px 10px 0.5px #3C4051;
+    -o-box-shadow: 1px 1px 10px 0.5px #3C4051;
+    box-shadow: 1px 1px 10px 0.5px #3C4051;
+    filter:progid:DXImageTransform.Microsoft.Shadow(color=#3C4051, Direction=134, Strength=10);
+}
+
+
+.arrow_box:after, .arrow_box:before {
+	bottom: 100%;
+	left: 73%;
+	border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+}
+
+.arrow_box:after {
+	border-color: rgba(0, 0, 0, 0);
+	border-bottom-color: #ffff;
+	border-width: 6px;
+	margin-left: -6px;
+}
+.arrow_box:before {
+	border-color: rgba(0, 0, 0, 0);
+	border-bottom-color: #000000;
+	border-width: 7px;
+	margin-left: -7px;
+}
+
+hr {
+    margin: 0px 0;
+    border: 0.3px solid whitesmoke;
+}
+
+.selectData {
+    width: 100%;
+    height: 50%;
+    border-bottom: 1px solid #ececec;
+}
+
+.selectData:first-child {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.selectData:last-child{
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom: none;
+}
+
+.selectData:hover {
+    background: #ececec;
+    box-shadow: 12px 12px 12px 12px rgba(117, 117, 117, 0.03);
+    border-radius: 12px;
+}
+
+.selectData p {
+    margin: 0;
+    height: 100%;
+    line-height: 42px;
+}
+
+.logo-app {
+    display: inline-block;
+    height: 100%;
+    margin-left: 45%;
+    img {
+        height: 29px;
+        margin-top: auto;
+        margin-bottom: auto;
+    }
+}
+
+.whiteHeader {
+    nav {
+        background-color: #FFFFFF;
+    }
+}
+
+.blueHeader {
+    height: 65px;
+
+    nav{
+        background-color: #2E2D4C;
+    }
+
+    .logout label {
+        color: white;
+    }
+
+    .logout .dropContent {
+        color: #ffffff;
+        background: #414165;
+        margin-top: 0px;
+        
+        border-color: rgba(241, 241, 241, 0.884);
+    }
+
+    .selectData{
+        border-bottom: 1px solid #4E4E7B;
+    }
+
+    .selectData:last-child{
+        border-bottom: none;
+    }
+
+    .selectData:hover {
+        background: #353559;
+        box-shadow: 12px 12px 12px 12px rgba(117, 117, 117, 0.03);
+    }
+    
+    .arrow_box:after {
+        border-color: rgba(136, 183, 213, 0);
+        border-bottom-color: #414165;
+        border-width: 6px;
+        margin-left: -6px;
+    }
+    .arrow_box:before {
+        border-color: rgba(194, 225, 245, 0);
+        border-bottom-color: #414165;
+	    // border-bottom-color: #ffffff;
+        border-width: 7px;
+        margin-left: -7px;
+    }
+
+}
