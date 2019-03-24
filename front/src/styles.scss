@@ -1,1 +1,292 @@
 /* You can add global styles to this file, and also import other style files */
+
+
+/* ----- Globals ----- */
+
+html, body {
+    height: 100%;
+}
+
+.header h1 {
+    color: #3C4051;
+    font-size: 34px;
+    font-weight: bold;
+    line-height: 45px;
+    padding-top: 55px;
+}
+
+.ranges {
+    position: absolute;
+    bottom: 0;
+    right: 5px;
+}
+
+.daterangepicker.ltr .calendar.left .calendar-table,
+.daterangepicker.ltr .left .daterangepicker_input {
+    padding-bottom: 40px;
+}
+
+.daterangepicker .input-mini.active {
+    display: none;
+}
+
+.daterangepicker_input i {
+    display: none;
+}
+
+.daterangepicker .daterangepicker_input {
+    display: none;
+}
+
+.daterangepicker.ltr {
+    direction: ltr;
+    text-align: left;
+    background: #3E3E65;
+    border-radius: 10px;
+}
+
+.daterangepicker.ltr .calendar.left .calendar-table,
+.daterangepicker.ltr .left .daterangepicker_input {
+    padding-right: 12px;
+    background: #3E3E65;
+    color: #ffff;
+    border: 1px solid #3E3E65;
+}
+
+.daterangepicker td.off,
+.daterangepicker td.off.end-date,
+.daterangepicker td.off.in-range,
+.daterangepicker td.off.start-date {
+    background-color: #3E3E65 !important;
+    border-color: transparent;
+    color: #999;
+}
+
+.daterangepicker.ltr .calendar.right .calendar-table,
+.daterangepicker.rtl .calendar.left .calendar-table {
+    border-left: none;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    background: #3E3E65;
+    border: 1px solid #3E3E65;
+    color: #ffff;
+}
+
+.daterangepicker td.start-date.end-date {
+    border-radius: 50% !important;
+    background-color: #2255f9;
+}
+
+.daterangepicker td.active,
+.daterangepicker td.active {
+    background-color: #2255f9;
+    border-color: transparent;
+    color: #fff;
+}
+
+.daterangepicker td.active,
+.daterangepicker td.active:hover {
+    background-color: linear-gradient(to right, #2255f9, #089EFE) !important;
+    background-color: #2255f9 !important;
+    border-color: transparent;
+    color: #fff;
+    border-radius: 50%;
+}
+
+.daterangepicker td.start-date {
+    border-radius: 50% !important;
+}
+
+.daterangepicker td.end-date {
+    border-radius: 50% !important;
+}
+
+.daterangepicker td.in-range {
+    background-color: #ebf4f8;
+    border-color: transparent;
+    color: #000;
+}
+
+.daterangepicker .calendar td,
+.daterangepicker .calendar th:hover {
+    white-space: nowrap;
+    text-align: center;
+    min-width: 32px;
+    border-radius: 50% !important;
+}
+
+.daterangepicker .calendar td,
+.daterangepicker .calendar th {
+    white-space: nowrap;
+    text-align: center;
+    min-width: 32px;
+    border-radius: 50%;
+}
+
+.range_inputs .btn {
+    background: linear-gradient(to right, #2255f9, #089EFE) !important;
+}
+
+.daterangepicker td.in-range {
+    background-color: #8686A5 !important;
+    border-color: transparent;
+    color: #000;
+    // border-radius: 0;
+}
+
+.daterangepicker td.active,
+.daterangepicker td.active:hover {
+    background: linear-gradient(to right, #2255f9, #089EFE) !important;
+}
+
+.daterangepicker {
+    font-family: sans-serif
+}
+
+::-webkit-scrollbar {
+    background-color: #5d5d78;
+    width: 5px;
+}
+
+::-moz-horizontal-scrollbar {
+    background-color: #5d5d78;
+    width: 5px;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    left: 0;
+    right: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    margin: auto;
+    overflow-y: auto;
+    border-radius: 2px;
+    will-change: top, opacity;
+    background: transparent;
+}
+
+.z-depth-5,
+.modal {
+    -webkit-box-shadow: 0 0px 0px 0px rgba(0, 0, 0, 0.0), 0 0px 0px 0px rgba(0, 0, 0, 0.0), 0 0px 0px 0px rgba(0, 0, 0, 0.0);
+    box-shadow: 0 0px 0px 0px rgba(0, 0, 0, 0.0), 0 0px 0px 0px rgba(0, 0, 0, 0.0), 0 0px 0px 0px rgba(0, 0, 0, 0.0);
+}
+
+
+/* spinner style starts */
+
+.spinner-container {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    display: none;
+    z-index: 9999;
+}
+
+.spinner-text {
+    color: #fff;
+    display: block;
+    font-size: 18px;
+    font-weight: 400;
+    padding-top: 26%;
+    position: relative;
+    text-align: center;
+    text-transform: capitalize;
+}
+
+.cs-loader {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+}
+
+.cs-loader-inner {
+    transform: translateY(-50%);
+    top: 50%;
+    position: absolute;
+    width: 100%;
+    color: #FFF;
+    padding: 0 100px;
+    text-align: center;
+}
+
+.cs-loader-inner label {
+    font-size: 20px;
+    opacity: 0;
+    display: inline-block;
+}
+
+@keyframes lol {
+    0% {
+        opacity: 0;
+        transform: translateX(-300px);
+    }
+    33% {
+        opacity: 1;
+        transform: translateX(0px);
+    }
+    66% {
+        opacity: 1;
+        transform: translateX(0px);
+    }
+    100% {
+        opacity: 0;
+        transform: translateX(300px);
+    }
+}
+
+@-webkit-keyframes lol {
+    0% {
+        opacity: 0;
+        -webkit-transform: translateX(-300px);
+    }
+    33% {
+        opacity: 1;
+        -webkit-transform: translateX(0px);
+    }
+    66% {
+        opacity: 1;
+        -webkit-transform: translateX(0px);
+    }
+    100% {
+        opacity: 0;
+        -webkit-transform: translateX(300px);
+    }
+}
+
+.cs-loader-inner label:nth-child(6) {
+    -webkit-animation: lol 3s infinite ease-in-out;
+    animation: lol 3s infinite ease-in-out;
+}
+
+.cs-loader-inner label:nth-child(5) {
+    -webkit-animation: lol 3s 100ms infinite ease-in-out;
+    animation: lol 3s 100ms infinite ease-in-out;
+}
+
+.cs-loader-inner label:nth-child(4) {
+    -webkit-animation: lol 3s 200ms infinite ease-in-out;
+    animation: lol 3s 200ms infinite ease-in-out;
+}
+
+.cs-loader-inner label:nth-child(3) {
+    -webkit-animation: lol 3s 300ms infinite ease-in-out;
+    animation: lol 3s 300ms infinite ease-in-out;
+}
+
+.cs-loader-inner label:nth-child(2) {
+    -webkit-animation: lol 3s 400ms infinite ease-in-out;
+    animation: lol 3s 400ms infinite ease-in-out;
+}
+
+.cs-loader-inner label:nth-child(1) {
+    -webkit-animation: lol 3s 500ms infinite ease-in-out;
+    animation: lol 3s 500ms infinite ease-in-out;
+}

@@ -41,15 +41,15 @@ export class LoginPageComponent implements OnInit {
     this.isLoader = true;
     const username = user;
     const password = pwd;
-    if (this.username === '' && this.password === '') {
+    if (this.credentials['username'] === '' && this.credentials['password'] === '') {
       console.log('Here');
       this.iserror = '';
       this.iserror1 = '';
       this.isLoader = false;
-    } else if (this.username === '') {
+    } else if (this.credentials['username'] === '') {
       this.iserror = '';
       this.isLoader = false;
-    } else if (this.password === '') {
+    } else if (this.credentials['password'] === '') {
       this.iserror1 = '';
       this.isLoader = false;
     } else {

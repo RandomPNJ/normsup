@@ -15,6 +15,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { ShowHidePasswordModule } from 'ngx-show-hide-password';
 import { AccordionModule } from 'ngx-bootstrap/accordion';
+import { BrowserStorageService } from './services/storageService';
 import { HeaderBarComponent } from './components/header-bar/header-bar.component';
 import { LoginPageComponent } from './components/login-page/login-page.component';
 
@@ -46,7 +47,9 @@ import { LoginPageComponent } from './components/login-page/login-page.component
   exports: [
     ModalComponent,
   ],
-  providers: [],
+  providers: [
+    BrowserStorageService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
