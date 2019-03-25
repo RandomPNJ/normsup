@@ -290,3 +290,18 @@ html, body {
     -webkit-animation: lol 3s 500ms infinite ease-in-out;
     animation: lol 3s 500ms infinite ease-in-out;
 }
+
+.dataTables_length {
+    select {
+        display: inline-block !important;
+        width: auto;
+    }
+}
+
+#tableComp_filter {
+    input {
+        width: auto;
+        color: black;
+        font-weight: 400;
+    }
+}

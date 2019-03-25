@@ -1,12 +1,12 @@
 <div [ngClass]="getHeaderStyle()" class="navbar-fixed" style="z-index: 100000000;">
     <nav>
         <div class="nav-wrapper">
-            <a href="/search" class="brand-logo left"> <img src="../../../assets/img/IBM_mention.svg" alt=""></a>
-            <span class="logo-app"><img src="{{xceedLogo}}" alt=""></span>
+            <a href="/dashboard/main" class="brand-logo left"> <img style="height: 50px;" src="../../../assets/img/normsup-logo.png" alt=""></a>
             <div class='logout' tabindex="0" (click)='dropbox()' (blur)='closeDropDown()'>
                 <span>
                     <label>
-                        {{user.userName}}
+                        <!-- {{user.userName}} -->
+                        Yassin El Fahim
                     </label>
                     &nbsp; &nbsp; &nbsp; &nbsp;
                     <span class="glyphicon glyphicon-menu-down" style='color: #9e9e9e'></span>
@@ -16,10 +16,8 @@
                         <p>Log out <img src="{{signOutLogo}}" style="padding-left: 15px;" alt="">
                         </p>
                     </div>
-                    <div class='selectData' (click)='secondBtn()'
-                        *ngIf='user.userName==="Renault" || user.userName==="Renault_validator" || user.userName==="Faurecia_siege"'>
-                        <p>{{dropdownSecondBtn}} <img src="{{addIcon}}" style="padding-left: 10px;"
-                                alt=""></p>
+                    <div class='selectData' (click)='secondBtn()'>
+                        <p>Profil <img src="{{addIcon}}" style="padding-left: 10px;"alt=""></p>
                     </div>
                 </div>
             </div>
