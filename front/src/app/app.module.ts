@@ -18,6 +18,13 @@ import { AccordionModule } from 'ngx-bootstrap/accordion';
 import { BrowserStorageService } from './services/storageService';
 import { HeaderBarComponent } from './components/header-bar/header-bar.component';
 import { LoginPageComponent } from './components/login-page/login-page.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { MainDashboardComponent } from './components/main-dashboard/main-dashboard.component';
+import { SupplierComponent } from './components/supplier/supplier.component';
+import { GroupsComponent } from './components/groups/groups.component';
+import { StatsComponent } from './components/stats/stats.component';
+import { AlertsComponent } from './components/alerts/alerts.component';
+import { ReminderComponent } from './components/reminder/reminder.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +32,13 @@ import { LoginPageComponent } from './components/login-page/login-page.component
     HeaderBarComponent,
     LoginPageComponent,
     ModalComponent,
+    DashboardComponent,
+    MainDashboardComponent,
+    SupplierComponent,
+    GroupsComponent,
+    StatsComponent,
+    AlertsComponent,
+    ReminderComponent,
   ],
   imports: [
     BrowserModule,
