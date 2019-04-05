@@ -23,7 +23,6 @@ const routes: Routes = [
       { path: '', pathMatch: 'full', redirectTo: 'supplier'},
     ]
   },
-  { path: 'headerBar', component: HeaderBarComponent },
   { path: '',
     redirectTo: '/login',
     pathMatch: 'full'
