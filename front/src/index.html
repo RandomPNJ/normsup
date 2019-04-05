@@ -21,8 +21,10 @@
     <!-- Compiled and minified Materialize CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <!-- Material Design Bootstrap -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.7.5/css/mdb.min.css" rel="stylesheet">
+    <!-- JQuery CSS -->
+    <link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet">
+    <!-- Material Design Bootstrap
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.7.5/css/mdb.min.css" rel="stylesheet"> -->
 </head>
 
 <body>
@@ -40,16 +42,32 @@
     <script type="text/javascript"
         src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
-    <!-- Compiled and minified Materialize JavaScript -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-
-    <!-- MDB core JavaScript -->
+    <!-- Compiled and minified Materxialize JavaScript -->
     <script type="text/javascript"
-        src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.7.5/js/mdb.min.js"></script>
+        src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+
+
 
     <script>
         $(document).ready(function () {
-            $('#tableComp').DataTable();
+            $('#tableComp').DataTable({
+                stateSave: true,
+                language: {
+                    lengthMenu: "Voir _MENU_ résultats par page",
+                    zeroRecords: "Aucun résultat trouvé",
+                    info: "Page _PAGE_ sur _PAGES_",
+                    infoEmpty: "Aucun résultat disponible",
+                    search: "Rechercher:",
+                    infoFiltered: "(filtré sur un total de _MAX_ résultats)",
+                    paginate: {
+                        first:      "Premier",
+                        last:       "Dernier",
+                        next:       "Suivant",
+                        previous:   "Précedent"
+                    },
+                }
+            });
             $('.dataTables_length').addClass('bs-select');
         });
     </script>

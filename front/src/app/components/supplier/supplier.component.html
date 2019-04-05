@@ -18,23 +18,26 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>Tiger Nixon</td>
-              <td>System Architect</td>
-              <td>Edinburgh</td>
-              <td>61</td>
-            </tr>
-            <tr>
-              <td>Garrett Winters</td>
-              <td>Accountant</td>
-              <td>Tokyo</td>
-              <td>63</td>
-            </tr>
-            <tr>
-              <td>Ashton Cox</td>
-              <td>Junior Technical Author</td>
-              <td>San Francisco</td>
-              <td>66</td>
+            <tr *ngFor="let item of items">
+                <td style="padding:0;">
+                  <div *ngIf="item.status"><span  class="glyphicon glyphicon-ok status-icn" aria-hidden="true"></span></div>
+                  <div style="height:100%; width:100%; background-color:#abc; position:relative;overflow:auto;"><span *ngIf="!item.status" class="glyphicon glyphicon-remove status-icn" aria-hidden="true"></span></div>
+                </td>
+                <td>
+                  <span>{{item.name}}</span><br/>
+                  <span>{{item.number}}</span><br/>
+                  <span>Ajouté le {{item.date}}</span><br/>
+                  <span>Invalide depuis le {{item.dateInv}}</span>
+                </td>
+                <td>
+                  <span class="badge badge-style">Urssaf</span>
+                  <span class="badge badge-style">Kbis</span>
+                  <span class="badge badge-style">Lnte</span>
+                </td>
+                <td>
+                  <span class="glyphicon glyphicon-pencil edit-icn" aria-hidden="true"></span>
+                  <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                </td>
             </tr>
           </tbody>
           <tfoot>

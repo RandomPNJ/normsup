@@ -1,7 +1,31 @@
 <div [ngClass]="getHeaderStyle()" class="navbar-fixed" style="z-index: 100000000;">
     <nav>
-        <div class="nav-wrapper">
-            <a href="/dashboard/main" class="brand-logo left"> <img style="height: 50px;" src="../../../assets/img/normsup-logo.png" alt=""></a>
+        <div class="nav-wrapper" role="navigation">
+            <div class="brand-logo left">
+                <span>
+                    <a href="/dashboard/main" class=""> <img style="height: 50px;" src="../../../assets/img/normsup-logo.png" alt=""></a>
+                </span>
+            </div>
+            <ul class="nav navigation-bar">
+                <li class="nav-item navigation-item">
+                    <a class="nav-link active  navigation-item" href="/dashboard/main">Tableau de bord</a>
+                </li>
+                <li class="nav-item navigation-item">
+                    <a class="nav-link  navigation-item" href="/dashboard/supplier">Fournisseurs</a>
+                </li>
+                <li class="nav-item navigation-item">
+                    <a class="nav-link  navigation-item" href="/dashboard/groups">Groupes</a>
+                </li>
+                <li class="nav-item navigation-item">
+                    <a class="nav-link disabled navigation-item" href="/dashboard/stats">Statistiques</a>
+                </li>
+                <li class="nav-item navigation-item">
+                    <a class="nav-link disabled  navigation-item" href="/dashboard/alerts">Alertes</a>
+                </li>
+                <li class="nav-item navigation-item">
+                    <a class="nav-link disabled  navigation-item" href="/dashboard/reminder">Relances</a>
+                </li>
+            </ul>
             <div class='logout' tabindex="0" (click)='dropbox()' (blur)='closeDropDown()'>
                 <span>
                     <label>
