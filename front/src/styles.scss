@@ -292,9 +292,15 @@ html, body {
 }
 
 .dataTables_length {
+    label {
+        color: #333;
+        font-family: Roboto;
+        font-size: 12px;
+    }
     select {
         display: inline-block !important;
         width: auto;
+        color: #333;
     }
 }
 
@@ -304,8 +310,16 @@ html, body {
         color: black;
         font-weight: 400;
     }
+    label {
+        color: #333;
+        font-family: Roboto;
+        font-size: 13px;
+    }
 }
-
+.dataTables_info {
+    color: #333 !important;
+    font-family: Roboto !important;
+}
 .paginate_button {
     border: 0px solid black !important;
     border-radius: 20px !important;
@@ -315,4 +329,12 @@ html, body {
 .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
     background-color: lightskyblue !important;
     color: white !important;
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+    background-color: lightskyblue !important;
+    color: white !important;
+}
+.dataTables_paginate .paginate_button.disabled:hover {
+    background-color: white !important;
+    color: #333 !important;
 }
