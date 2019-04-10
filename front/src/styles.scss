@@ -307,5 +307,12 @@ html, body {
 }
 
 .paginate_button {
+    border: 0px solid black !important;
     border-radius: 20px !important;
+    background: white !important;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
+    background-color: lightskyblue !important;
+    color: white !important;
 }
