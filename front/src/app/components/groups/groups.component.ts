@@ -7,9 +7,31 @@ import { Component, OnInit } from '@angular/core';
 })
 export class GroupsComponent implements OnInit {
 
+  selectedItem: string;
+  items = [
+    {
+      name: 'name one',
+      desc: 'Blablabla  odezkfeklnzfezklk'
+    },
+    {
+      name: 'name two',
+      desc: 'Lorem ispum d,ken'
+    }
+  ];
+  itemPluralMapping = {
+    'group': {
+      '=0': 'n\'avez aucun groupe',
+      '=1': 'un groupe',
+      'other': '# groupes'
+    }
+  };
   constructor() { }
 
   ngOnInit() {
   }
 
+
+  selectItem(item) {
+    this.selectedItem = item.name;
+  }
 }
