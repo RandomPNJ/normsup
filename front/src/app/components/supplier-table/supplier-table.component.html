@@ -1,0 +1,40 @@
+<table id="tableComp" class="table table-striped" cellspacing="0" width="100%" style="height: 100%;">
+  <thead>
+    <tr>
+      <th class="th-sm">Statut</th>
+      <th class="th-sm">Société</th>
+      <th class="th-sm">Documents</th>
+      <th class="th-sm">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of items">
+      <td style="padding:0;">
+        <div class="badge-container" style="color: green;" *ngIf="item.status"><span
+            class="glyphicon glyphicon-ok status-icn fix-middle" aria-hidden="true"></span></div>
+        <div class="badge-container" style="color: red;" *ngIf="!item.status"><span
+            class="glyphicon glyphicon-remove status-icn fix-middle" aria-hidden="true"></span></div>
+      </td>
+      <td>
+        <span>{{item.name}}</span><br />
+        <span>{{item.number}}</span><br />
+        <span>Ajouté le {{item.date}}</span><br />
+        <span>Invalide depuis le {{item.dateInv}}</span>
+      </td>
+      <td>
+        <div class="badge-container">
+          <span [ngClass]="{'badge-red': !item.urssaf}" class="badge badge-style fix-middle">Urssaf</span>
+          <span [ngClass]="{'badge-red': !item.kbis}" class="badge badge-style fix-middle">Kbis</span>
+          <span [ngClass]="{'badge-red': !item.lnte}" class="badge badge-style fix-middle">Lnte</span>
+        </div>
+      </td>
+      <td>
+        <div id="util-btns" class="badge-container">
+          <span (click)="edit(item)" class="glyphicon glyphicon-pencil edit-icn fix-middle" aria-hidden="true"></span>
+          <span style="padding: 0px 5px;" class="fix-middle"></span>
+          <span (click)="delete(item)" class="glyphicon glyphicon-trash fix-middle" aria-hidden="true"></span>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>

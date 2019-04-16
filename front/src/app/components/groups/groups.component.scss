@@ -46,8 +46,12 @@ hr {
     height: 100%;
     margin: 0px;
     border-radius: 5px;
+    // border-top-left-radius: 5px;
+    // border-top-right-radius: 5px;
+    padding: 10px 0px 10px 15px;
     border: none;
     display: block;
+    color: #333;
     text-align: left;
 
     &:hover, &:focus {
@@ -68,4 +72,18 @@ hr {
     font-size: 2.5em;
     top: -45px;
     bottom: 0px;
+}
+
+.icon-down {
+    float: right;
+    padding-right: 20px;
+    opacity: 0.9;
+    font-size: 1.5em;
+}
+
+.card-body {
+    padding: 10px;
+}
+h2 {
+    margin-bottom: 0px !important;
 }
