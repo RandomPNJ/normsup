@@ -4,19 +4,23 @@
           <span class="title">Mes Groupes</span>
         </div>
         <div class="sub-cont">
-          <span class="table-header">Vous avez {{items.length | i18nPlural: itemPluralMapping['group']}}.</span>
+          <div>
+            <span class="table-header">Vous avez {{items.length | i18nPlural: itemPluralMapping['group']}}.</span>
+            <div style="position: relative;"><span class="glyphicon glyphicon-plus-sign plus-icn"></span></div>
+          </div>
           <hr />
           <div class="accordion" id="accordionExample">
               <div *ngFor="let item of items; let i=index" class="card card-style">
                 <div class="card-header" [attr.id]="'accordion' + i">
                   <h2 class="mb-0">
-                    <button (click)="selectItem(item)" class="btn btn-link" type="button" data-toggle="collapse" [attr.data-target]="'#collapse' + i" aria-expanded="true" [attr.aria-controls]="'collapse' + i">
+                    <!-- <a (click)="selectItem(item)" class="button-style" type="button" data-toggle="collapse" [attr.data-target]="'#collapse' + i" aria-expanded="false" [attr.aria-controls]="'collapse' + i">{{item.name}}</a> -->
+                    <button (click)="selectItem(item)" class="btn btn-link button-style" type="button" data-toggle="collapse" [attr.data-target]="'#collapse' + i" aria-expanded="false" [attr.aria-controls]="'collapse' + i">
                       {{item.name}}
                     </button>
                   </h2>
                 </div>
                 
-                <div [attr.id]="'collapse' + i" class="collapse show" [attr.aria-labelledby]="'accordion' + i" data-parent="#accordionExample">
+                <div id="collapse{{ i }}" class="collapse" [attr.aria-labelledby]="'accordion' + i" data-parent="#accordionExample">
                   <!-- <hr *ngIf="selectedItem === item.name"> -->
                   <div class="card-body">
                     {{item.desc}}

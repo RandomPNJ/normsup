@@ -10,10 +10,12 @@ export class GroupsComponent implements OnInit {
   selectedItem: string;
   items = [
     {
-      name: 'name one'
+      name: 'name one',
+      desc: 'Blablabla  odezkfeklnzfezklk'
     },
     {
-      name: 'name two'
+      name: 'name two',
+      desc: 'Lorem ispum d,ken'
     }
   ];
   itemPluralMapping = {

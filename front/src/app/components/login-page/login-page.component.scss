@@ -9,6 +9,7 @@
     width: 100%;
     height: 100%;
     margin: 0px !important;
+    position: absolute;
 }
 
 .loginContainer a {
@@ -43,7 +44,7 @@ form .input-field {
     border: 1px solid #EEF3F8;
     border-radius: 52px;
     box-shadow: 0 10px 15px 5px rgba(0, 0, 0, 0.03);
-    height: 60px;
+    // height: 60px;
     border: 1px solid #EEF3F8;
     margin-bottom: 20px;
     text-align: center;
@@ -59,6 +60,7 @@ form .input-field input {
     border-bottom: none;
     padding-top: 5px;
     margin-left: 75px;
+    margin-bottom: 10px !important;
     width: -webkit-fill-available;
     width: -moz-available;
     width: stretch;

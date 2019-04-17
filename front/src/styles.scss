@@ -3,8 +3,13 @@
 
 /* ----- Globals ----- */
 
-html, body {
-    height: 100%;
+html {
+    min-height: 100%;
+    margin: 0;
+}
+body {
+    margin: 0px;
+   min-height: 100%;
 }
 
 .header h1 {
