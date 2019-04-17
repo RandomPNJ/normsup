@@ -1,20 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-supplier-table',
-  templateUrl: './supplier-table.component.html',
-  styleUrls: ['./supplier-table.component.scss']
+  selector: 'app-groups-table',
+  templateUrl: './groups-table.component.html',
+  styleUrls: ['./groups-table.component.scss']
 })
-export class SupplierTableComponent implements OnInit {
-
-  // supplierNmb = 7;
+export class GroupsTableComponent implements OnInit {
+  
   items = [
     {
       status: true,
       name: 'vert',
-      siret: '92343843284',
-      loc: 'paris',
-      country: 'fr',
+      number: '92343843284',
       date: 1511950620,
       dateInv: 1511950620,
       urssaf: true,
@@ -24,9 +21,7 @@ export class SupplierTableComponent implements OnInit {
     {
       status: true,
       name: 'Orange',
-      siret: '92343843284',
-      loc: 'paris',
-      country: 'fr',
+      number: '92343843284',
       date: 1511950620,
       dateInv: 1511950620,
       urssaf: true,
@@ -36,9 +31,7 @@ export class SupplierTableComponent implements OnInit {
     {
       status: true,
       name: 'Orange',
-      siret: '92343843284',
-      loc: 'paris',
-      country: 'fr',
+      number: '92343843284',
       date: 1511950620,
       dateInv: 1511950620,
       urssaf: true,
@@ -48,9 +41,7 @@ export class SupplierTableComponent implements OnInit {
     {
       status: true,
       name: 'Orange',
-      siret: '92343843284',
-      loc: 'paris',
-      country: 'fr',
+      number: '92343843284',
       date: 1511950620,
       dateInv: 1511950620,
       urssaf: true,
@@ -59,9 +50,7 @@ export class SupplierTableComponent implements OnInit {
     },{
       status: true,
       name: 'Orange',
-      siret: '92343843284',
-      loc: 'paris',
-      country: 'fr',
+      number: '92343843284',
       date: 1511950620,
       dateInv: 1511950620,
       urssaf: true,
@@ -71,9 +60,7 @@ export class SupplierTableComponent implements OnInit {
     {
       status: true,
       name: 'Orange',
-      siret: '92343843284',
-      loc: 'paris',
-      country: 'fr',
+      number: '92343843284',
       date: 1511950620,
       dateInv: 1511950620,
       urssaf: true,
@@ -82,9 +69,7 @@ export class SupplierTableComponent implements OnInit {
     },{
       status: true,
       name: 'Orange',
-      siret: '92343843284',
-      loc: 'paris',
-      country: 'fr',
+      number: '92343843284',
       date: 1511950620,
       dateInv: 1511950620,
       urssaf: true,
@@ -94,9 +79,7 @@ export class SupplierTableComponent implements OnInit {
     {
       status: true,
       name: 'Orange',
-      siret: '92343843284',
-      loc: 'paris',
-      country: 'fr',
+      number: '92343843284',
       date: 1511950620,
       dateInv: 1511950620,
       urssaf: true,
@@ -105,9 +88,7 @@ export class SupplierTableComponent implements OnInit {
     },{
       status: true,
       name: 'Orange',
-      siret: '92343843284',
-      loc: 'paris',
-      country: 'fr',
+      number: '92343843284',
       date: 1511950620,
       dateInv: 1511950620,
       urssaf: true,
@@ -117,9 +98,7 @@ export class SupplierTableComponent implements OnInit {
     {
       status: true,
       name: 'Orange',
-      siret: '92343843284',
-      loc: 'paris',
-      country: 'fr',
+      number: '92343843284',
       date: 1511950620,
       dateInv: 1511950620,
       urssaf: true,
@@ -128,9 +107,7 @@ export class SupplierTableComponent implements OnInit {
     },{
       status: true,
       name: 'Orange',
-      siret: '92343843284',
-      loc: 'paris',
-      country: 'fr',
+      number: '92343843284',
       date: 1511950620,
       dateInv: 1511950620,
       urssaf: true,
@@ -140,9 +117,7 @@ export class SupplierTableComponent implements OnInit {
     {
       status: true,
       name: 'Orange',
-      siret: '92343843284',
-      loc: 'paris',
-      country: 'fr',
+      number: '92343843284',
       date: 1511950620,
       dateInv: 1511950620,
       urssaf: true,
@@ -151,9 +126,7 @@ export class SupplierTableComponent implements OnInit {
     },{
       status: true,
       name: 'Orange',
-      siret: '92343843284',
-      loc: 'paris',
-      country: 'fr',
+      number: '92343843284',
       date: 1511950620,
       dateInv: 1511950620,
       urssaf: true,
@@ -163,9 +136,7 @@ export class SupplierTableComponent implements OnInit {
     {
       status: true,
       name: 'Orange',
-      siret: '92343843284',
-      loc: 'paris',
-      country: 'fr',
+      number: '92343843284',
       date: 1511950620,
       dateInv: 1511950620,
       urssaf: true,
@@ -173,19 +144,13 @@ export class SupplierTableComponent implements OnInit {
       lnte: false
     }
   ];
-
   constructor() { }
 
   ngOnInit() {
   }
 
 
-  edit(item) {
-    console.log(item);
+  assign(item) {
+    console.log('Item = ', item);
   }
-
-  delete(item) {
-    console.log(item);
-  }
-
 }

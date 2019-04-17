@@ -27,6 +27,7 @@ import { AlertsComponent } from './components/alerts/alerts.component';
 import { ReminderComponent } from './components/reminder/reminder.component';
 import { GroupTableComponent } from './components/groups/group-table/group-table.component';
 import { SupplierTableComponent } from './components/supplier-table/supplier-table.component';
+import { GroupsTableComponent } from './components/groups/groups-table/groups-table.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { SupplierTableComponent } from './components/supplier-table/supplier-tab
     ReminderComponent,
     GroupTableComponent,
     SupplierTableComponent,
+    GroupsTableComponent,
   ],
   imports: [
     BrowserModule,

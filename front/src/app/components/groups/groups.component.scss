@@ -37,7 +37,7 @@ hr {
     height: 1px;
     border: 0;
     border-top: 1px solid #ccc;
-    margin: 2em 0;
+    margin: 2em 0 1em 0;
     padding: 0;
 }
 
@@ -86,4 +86,11 @@ hr {
 }
 h2 {
     margin-bottom: 0px !important;
+}
+
+.assign-link {
+    padding-bottom: 10px;
+    display: inline-block;
+    text-decoration: underline;
+    cursor: pointer;
 }
