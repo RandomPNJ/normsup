@@ -21,13 +21,13 @@
                   </h2>
                 </div>
                 
-                <div id="collapse{{ i }}" class="collapse" [attr.aria-labelledby]="'accordion' + i" data-parent="#accordionExample">
+                <div id="collapse{{ i }}" class="collapse show" [attr.aria-labelledby]="'accordion' + i" data-parent="#accordionExample">
                   <!-- <hr *ngIf="selectedItem === item.name"> -->
                   <div class="card-body">
                     <hr/>
-                    <span>Assigner le groupe à un utilisateur</span> | <span>Géré par {{item.user}}</span>
+                    <span class="assign-link" (click)="assign(item)">Assigner le groupe à un utilisateur</span> | <span>Géré par {{item.user}}</span>
                     <div class="table-cont">
-                        <app-supplier-table></app-supplier-table>
+                        <app-groups-table></app-groups-table>
                     </div>
                   </div>
                 </div>
