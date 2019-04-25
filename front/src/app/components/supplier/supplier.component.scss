@@ -4,6 +4,16 @@
   box-shadow: 0 7px 15px 0 rgba(0, 51, 90, 0.04);
   border-radius: 6px;
 }
+.plus-icn {
+  float: right;
+  color: lightblue;
+  position: absolute;
+  right: 20px;
+  cursor: pointer;
+  font-size: 2.5em;
+  top: -45px;
+  bottom: 0px;
+}
 
 hr {
   display: block;
@@ -24,6 +34,7 @@ hr {
   font-size: 16px;
   font-weight: 500;
   font-family: Roboto;
+  display: inline-block;
 }
 
 .sub-cont {

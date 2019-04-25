@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, TemplateRef, ElementRef } from '@angular/core';
+import { AddSupplierModalComponent } from './add-supplier-modal/add-supplier-modal.component';
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-supplier',
@@ -7,7 +9,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SupplierComponent implements OnInit {
 
+  @ViewChild(AddSupplierModalComponent) appAddSupplierModal: AddSupplierModalComponent;
+  @ViewChild('content') private modalRef: TemplateRef<any>;
   supplierNmb = 7;
+
+  itemPluralMapping = {
+    'supplier': {
+      '=0': 'n\'avez aucun fournisseur',
+      '=1': 'un fournisseur',
+      'other': '# fournisseurs'
+    }
+  };
+
   items = [
     {
       status: true,
@@ -145,9 +158,19 @@ export class SupplierComponent implements OnInit {
       lnte: false
     }
   ];
-  constructor() { }
+  
+  constructor(private modalService: NgbModal) { }
 
   ngOnInit() {
   }
 
+  openModal(content) {
+    this.modalService.open(this.modalRef, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+      // this.closeResult = `Closed with: ${result}`;
+      console.log('Clone result = ', result);
+    }, (reason) => {
+      console.log('Clone reason = ', reason);
+      // this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+  }
 }

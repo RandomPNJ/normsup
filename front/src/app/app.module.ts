@@ -25,9 +25,9 @@ import { GroupsComponent } from './components/groups/groups.component';
 import { StatsComponent } from './components/stats/stats.component';
 import { AlertsComponent } from './components/alerts/alerts.component';
 import { ReminderComponent } from './components/reminder/reminder.component';
-import { GroupTableComponent } from './components/groups/group-table/group-table.component';
 import { SupplierTableComponent } from './components/supplier-table/supplier-table.component';
 import { GroupsTableComponent } from './components/groups/groups-table/groups-table.component';
+import { AddSupplierModalComponent } from './components/supplier/add-supplier-modal/add-supplier-modal.component';
 
 @NgModule({
   declarations: [
@@ -42,9 +42,9 @@ import { GroupsTableComponent } from './components/groups/groups-table/groups-ta
     StatsComponent,
     AlertsComponent,
     ReminderComponent,
-    GroupTableComponent,
     SupplierTableComponent,
     GroupsTableComponent,
+    AddSupplierModalComponent,
   ],
   imports: [
     BrowserModule,
@@ -65,7 +65,10 @@ import { GroupsTableComponent } from './components/groups/groups-table/groups-ta
     ModalModule.forRoot(),
   ],
   exports: [
-    ModalComponent,
+    AddSupplierModalComponent,
+  ],
+  entryComponents: [
+    AddSupplierModalComponent
   ],
   providers: [
     BrowserStorageService
