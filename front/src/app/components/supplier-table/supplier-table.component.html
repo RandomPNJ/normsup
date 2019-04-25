@@ -32,11 +32,19 @@
             class="glyphicon glyphicon-remove status-icn fix-middle" aria-hidden="true"></span></div>
       </td> -->
       <td>
-        <div class="badge-container content-cont">
-          <span [ngClass]="{'badge-red': !item.urssaf}" class="badge badge-style fix-middle">Urssaf</span>
-          <span [ngClass]="{'badge-red': !item.kbis}" class="badge badge-style fix-middle">Kbis</span>
-          <span [ngClass]="{'badge-red': !item.lnte}" class="badge badge-style fix-middle">Lnte</span>
-        </div>
+        <div class="badge-container content-cont container">
+          <div class="row" style="margin-bottom: 0px;">
+            <div style="padding-right: 5px;" class="doc-cont">
+              <i style="display: block;" class="fas fa-file-alt doc-icn"></i>
+              <span [ngClass]="{'badge-red': !item.urssaf}" class="badge badge-style fix-middle">Légal</span>
+            </div>
+            <div class="doc-cont">
+              <i style="display: block;" class="fas fa-file-alt doc-icn"></i>
+              <span [ngClass]="{'badge-red': !item.kbis}" class="badge badge-style fix-middle">Complémentaire</span>
+            </div>
+            <!-- <span [ngClass]="{'badge-red': !item.lnte}" class="badge badge-style fix-middle"><i class="fas fa-file-alt doc-icn"></i>Lnte</span> -->
+          </div>
+          </div>
       </td>
       <td>
         <div id="util-btns" class="badge-container content-cont">

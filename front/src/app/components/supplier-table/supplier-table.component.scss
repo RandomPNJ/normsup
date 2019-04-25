@@ -16,6 +16,7 @@ th {
   // background-color: #EFF5FC;
   background-color: #bdbdbd;
   border-radius: 0px;
+  text-align: center;
 
   &:first-child {
     border-top-left-radius: 2px;
@@ -136,7 +137,16 @@ hr {
   // position: relative;
   // display: table-cell;
 }
-
+.doc-cont {
+  display: inline-block;
+  height: 100%;
+  padding: 10px 0px;
+}
+.doc-icn {
+  font-size: 50px;
+  display: block;
+  padding-bottom: 5px;
+}
 .assign-link {
   display: inline-block;
   text-decoration: underline;
