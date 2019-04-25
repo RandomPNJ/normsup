@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-supplier',
-  templateUrl: './supplier.component.html',
-  styleUrls: ['./supplier.component.scss']
+  selector: 'app-supplier-table',
+  templateUrl: './supplier-table.component.html',
+  styleUrls: ['./supplier-table.component.scss']
 })
-export class SupplierComponent implements OnInit {
+export class SupplierTableComponent implements OnInit {
 
   supplierNmb = 7;
   items = [
@@ -145,9 +145,19 @@ export class SupplierComponent implements OnInit {
       lnte: false
     }
   ];
+
   constructor() { }
 
   ngOnInit() {
+  }
+
+
+  edit(item) {
+    console.log(item);
+  }
+
+  delete(item) {
+    console.log(item);
   }
 
 }

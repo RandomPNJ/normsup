@@ -11,11 +11,13 @@ export class GroupsComponent implements OnInit {
   items = [
     {
       name: 'name one',
-      desc: 'Blablabla  odezkfeklnzfezklk'
+      desc: 'Blablabla  odezkfeklnzfezklk',
+      user: 'User1'
     },
     {
       name: 'name two',
-      desc: 'Lorem ispum d,ken'
+      desc: 'Lorem ispum d,ken',
+      user: 'User1'
     }
   ];
   itemPluralMapping = {
