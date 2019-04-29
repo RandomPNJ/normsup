@@ -25,10 +25,8 @@
       <div class="modal-body">
           <div class="row">
             <div class="input-field col s12">
-              <input [(ngModel)]="searchCompanyID" (keydown.enter)="searchCompany(searchCompanyID)" #companyInput id="company-input" type="text" data-length="10">
+              <input [(ngModel)]="searchCompanyID" (keydown.enter)="searchCompany(searchCompanyID)" #companyInput id="company-input" type="text" data-length="10" appFocus>
               <label for="company-input">Société</label>
-              <!-- <textarea [(ngModel)]="searchCompanyID" id="textarea1" class="materialize-textarea"></textarea>
-              <label for="textarea1">Société</label> -->
               <span class="helper-text">Dénomination, Sirene ou Siret</span>
             </div>
             <button (click)="searchCompany(searchCompanyID)" [disabled]="!searchCompanyID" class="btn waves-effect waves-light submit-btn" type="submit" name="action">Rechercher

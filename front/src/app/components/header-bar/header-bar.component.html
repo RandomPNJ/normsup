@@ -36,12 +36,20 @@
                     <span class="glyphicon glyphicon-menu-down" style='color: #9e9e9e'></span>
                 </span>
                 <div *ngIf='isLogout' class="dropContent arrow_box">
-                    <div class='selectData' (click)='backToLogin()'>
-                        <p>Log out <img src="{{signOutLogo}}" style="padding-left: 15px;" alt="">
-                        </p>
+                    <div class='selectData' (click)='secondBtn()'>
+                        <p>Mon Compte<img src="{{profileIcon}}" style="padding-left: 10px;"alt=""></p>
                     </div>
                     <div class='selectData' (click)='secondBtn()'>
-                        <p>Profil <img src="{{addIcon}}" style="padding-left: 10px;"alt=""></p>
+                        <p>Gestion des utilisateurs<img src="{{usersIcon}}" style="padding-left: 10px;"alt=""></p>
+                    </div>
+                    <div class='selectData' (click)='secondBtn()'>
+                        <p>Générer un reporting<img src="{{reportingIcon}}" style="padding-left: 10px;"alt=""></p>
+                    </div>
+                    <div class='selectData' (click)='secondBtn()'>
+                        <p>Contactez-nous<img src="{{contactIcon}}" style="padding-left: 10px;"alt=""></p>
+                    </div>
+                    <div class='selectData' (click)='backToLogin()'>
+                        <p>Log out <img src="{{signOutLogo}}" style="padding-left: 15px;" alt=""></p>
                     </div>
                 </div>
             </div>

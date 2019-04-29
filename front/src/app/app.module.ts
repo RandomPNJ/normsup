@@ -28,6 +28,7 @@ import { ReminderComponent } from './components/reminder/reminder.component';
 import { SupplierTableComponent } from './components/supplier-table/supplier-table.component';
 import { GroupsTableComponent } from './components/groups/groups-table/groups-table.component';
 import { AddSupplierModalComponent } from './components/supplier/add-supplier-modal/add-supplier-modal.component';
+import { FocusDirective } from './directives/focus.directive';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { AddSupplierModalComponent } from './components/supplier/add-supplier-mo
     SupplierTableComponent,
     GroupsTableComponent,
     AddSupplierModalComponent,
+    FocusDirective,
   ],
   imports: [
     BrowserModule,

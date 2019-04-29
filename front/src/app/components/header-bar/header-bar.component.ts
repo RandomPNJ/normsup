@@ -12,6 +12,10 @@ export class HeaderBarComponent implements OnInit {
   xceedLogo = '../../../assets/img/Logo_XCEED_color.svg';
   signOutLogo = '../../../assets/img/sign-out2-icn_black.svg';
   addIcon = '../../../assets/img/Add2-icn_black.svg';
+  profileIcon = '';
+  usersIcon = '';
+  reportingIcon = '';
+  contactIcon = '';
   user;
   isLogout = false;
   dropdownSecondBtn = 'Add data';
