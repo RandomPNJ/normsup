@@ -17,9 +17,8 @@ export class SupplierComponent implements OnInit {
   searchCompanyID: string;
   modalRef: BsModalRef;
   supplierNmb = 7;
-
-  // @ViewChild(AddSupplierModalComponent) appAddSupplierModal: AddSupplierModalComponent;
-  @ViewChild('companyInput') companyInputRef: ElementRef;
+  searchState: Boolean = true;
+  selectedCompany: any = null;
 
   itemPluralMapping = {
     'supplier': {
@@ -191,6 +190,7 @@ export class SupplierComponent implements OnInit {
 
     this.subscriptions.push(
       this.modalService.onHidden.subscribe(() => {
+        this.searchState = true;
         this.companies.length = 0;
         this.searchCompanyID = '';
         this.unsubscribe();
@@ -199,7 +199,6 @@ export class SupplierComponent implements OnInit {
 
     this.subscriptions.push(_combine);
     this.modalRef = this.modalService.show(template, this.modalConfig);
-    this.companyInputRef.nativeElement.focus();
   }
 
   unsubscribe() {
@@ -213,6 +212,7 @@ export class SupplierComponent implements OnInit {
     const params = '&q=' + id;
     this.apiService.getCompany(params)
     .subscribe(res => {
+      this.searchState = false;
       console.log('Res ', res);
       if(res && res.records) {
         this.companies = res.records;
@@ -220,5 +220,15 @@ export class SupplierComponent implements OnInit {
     }, err => {
       console.log('Error, ', err);
     });
+  }
+
+  onCompanySelection(company: any) {
+    if(company !== null) {
+      this.selectedCompany = company;
+    }
+  }
+
+  addCompany(company: any) {
+    
   }
 }

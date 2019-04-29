@@ -15,7 +15,7 @@
 
       </div>
     </div>
-    <ng-template #template>
+    <ng-template class="test" #template>
       <div class="modal-header">
         <h4 class="modal-title pull-left">Ajouter un fournisseur</h4>
         <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
@@ -23,7 +23,8 @@
         </button>
       </div>
       <div class="modal-body">
-          <div class="row">
+          <div class="row search-company" *ngIf="searchState" [ngClass]="{'fade-in': searchState, 'fade-away': !searchState}">
+            <!-- <span class="title-add-sup">Information sur l'entreprise recherchée</span> -->
             <div class="input-field col s12">
               <input [(ngModel)]="searchCompanyID" (keydown.enter)="searchCompany(searchCompanyID)" #companyInput id="company-input" type="text" data-length="10" appFocus>
               <label for="company-input">Société</label>
@@ -33,11 +34,25 @@
               <i class="material-icons right">send</i>
             </button>
           </div>
-          <div class="row" *ngIf="companies.length > 0">
-            <span *ngFor="let company of companies; index as i">
-                index = {{i}}
-               {{company.fields.denominationunitelegale ? company.fields.denominationunitelegale : null}} <br/>
-            </span>
+          <div class="row" *ngIf="companies.length > 0" [ngClass]="{'fade-in': !searchState, 'fade-away': searchState}">
+            <span class="title-add-sup">Séléctionnez l'entreprise recherchée : </span>
+            <form action="#" class="">
+                <p *ngFor="let company of companies; index as i">
+                  <label for="company-{{i}}">
+                    <input class="with-gap" name="radio-group" id="company-{{i}}" type="radio"
+                    (change)="onCompanySelection(company)" [ngModel]="selectedCompany" [value]="company" />
+                    <span class="select-company">{{company.fields?.denominationunitelegale ? company.fields?.denominationunitelegale : 'Pas de dénomination légale'}} - Siret: {{company.fields?.siret}}</span>
+                  </label>
+                </p>
+              <div class="select-comp-but">
+                <button (click)="addCompany(comp)" [disabled]="!selectedCompany" class="btn waves-effect waves-light submit-btn" type="submit" name="action">Ajouter
+                  <i class="material-icons right">send</i>
+                </button>
+                <button (click)="searchState = true; companies.length = 0;" class="btn waves-effect waves-light submit-btn" type="submit" name="action">Retour
+                  <i class="material-icons right">send</i>
+                </button>
+              </div>
+            </form>
           </div>
       </div>
     </ng-template>

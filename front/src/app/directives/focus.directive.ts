@@ -9,9 +9,9 @@ export class FocusDirective implements AfterViewInit {
     constructor(private element: ElementRef) {}
 
     ngAfterViewInit() {
-        if (this.focus) {
+        // if(this.focus) {
             this.element.nativeElement.focus();
-        }
+        // }
     }
 
 }
