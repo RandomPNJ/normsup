@@ -41,8 +41,7 @@ export class HttpService implements OnDestroy {
       responseType: 'json',
       observe: 'response',
       headers: {
-        'Content-Type': 'application/json',
-        'X-access-token': this.bsService.getLocalStorage('token')
+        'Content-Type': 'application/json'
       }
     })
       .pipe(

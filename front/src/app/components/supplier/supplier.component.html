@@ -6,7 +6,7 @@
     <div class="sub-cont">
       <span class="table-header">Vous avez {{items.length | i18nPlural: itemPluralMapping['supplier']}}.</span>
       <div style="position: relative;">
-        <span (click)="openModal(content)" class="glyphicon glyphicon-plus-sign plus-icn" role="button"></span>
+        <span (click)="openModal(template)" class="glyphicon glyphicon-plus-sign plus-icn" role="button"></span>
       </div>
       <hr />
       <div class="table-cont">
@@ -15,30 +15,32 @@
 
       </div>
     </div>
-    <ng-template #content let-modal>
-      fe,ipfeapifeazpianzefaizpfainpp
+    <ng-template #template>
       <div class="modal-header">
-        <h4 class="modal-title" id="modal-basic-title">Profile update</h4>
-        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <h4 class="modal-title pull-left">Ajouter un fournisseur</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <form>
-          <div class="form-group">
-            <label for="dateOfBirth">Date of birth</label>
-            <div class="input-group">
-              <input id="dateOfBirth" class="form-control" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker
-                #dp="ngbDatepicker">
-              <div class="input-group-append">
-                <button class="btn btn-outline-secondary calendar" (click)="dp.toggle()" type="button"></button>
-              </div>
+          <div class="row">
+            <div class="input-field col s12">
+              <input [(ngModel)]="searchCompanyID" (keydown.enter)="searchCompany(searchCompanyID)" #companyInput id="company-input" type="text" data-length="10">
+              <label for="company-input">Société</label>
+              <!-- <textarea [(ngModel)]="searchCompanyID" id="textarea1" class="materialize-textarea"></textarea>
+              <label for="textarea1">Société</label> -->
+              <span class="helper-text">Dénomination, Sirene ou Siret</span>
             </div>
+            <button (click)="searchCompany(searchCompanyID)" [disabled]="!searchCompanyID" class="btn waves-effect waves-light submit-btn" type="submit" name="action">Rechercher
+              <i class="material-icons right">send</i>
+            </button>
           </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
+          <div class="row" *ngIf="companies.length > 0">
+            <span *ngFor="let company of companies; index as i">
+                index = {{i}}
+               {{company.fields.denominationunitelegale ? company.fields.denominationunitelegale : null}} <br/>
+            </span>
+          </div>
       </div>
     </ng-template>
   </div>

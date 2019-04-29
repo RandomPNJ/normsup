@@ -35,14 +35,19 @@ export class ProductService {
       };
    }
 
-  getProducts(params): Observable<any> {
-    this.getToken();
+  getCompany(params): Observable<any> {
+    // this.getToken();
     console.log(this.httpOptions);
-      return this.http.get(Configuration.serverUrl + '/api/product?' + params, this.httpOptions)
-      .pipe(map((response: Response) => {
-        console.log('Res ', response);
-        return response;
-      }), catchError(this.handleError));
+    return this.http.get('https://data.opendatasoft.com/api/records/1.0/search/?dataset=sirene_v3%40public' + params, this.httpOptions)
+    .pipe(map((response: Response) => {
+      console.log('Res ', response);
+      return response;
+    }), catchError(this.handleError));
+      // return this.http.get(Configuration.serverUrl + '/api/product?' + params, this.httpOptions)
+      // .pipe(map((response: Response) => {
+      //   console.log('Res ', response);
+      //   return response;
+      // }), catchError(this.handleError));
   }
 
   putData(idNum, url, data) {
