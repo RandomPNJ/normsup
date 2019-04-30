@@ -1,0 +1,29 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "target": "es2015",
+        "allowJs": true,
+        "declaration": false,
+        "removeComments": true,
+        "sourceMap": true,
+        "noLib": false,
+        "skipLibCheck": true,
+        "outDir": "dist",
+        "rootDir": "server",
+        "noImplicitAny": false,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true
+    },
+    "include": [
+        "./server/**/*.ts"
+    ],
+    "exclude": [
+        "node_modules",
+        "typings/**/*.d.ts",
+        "./server/config/amqp/**/*",
+        "./server/config/amqp.ts",
+        "./server/config/couchdb/**/*",
+        "./server/config/sqldb/**/*",
+        "./server/config/api/**/*"
+    ]
+}

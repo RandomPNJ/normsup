@@ -3,15 +3,11 @@
 
 /* ----- Globals ----- */
 
-html {
+html, body {
     min-height: 100%;
     height: 100%;
     margin: 0;
-}
-body {
-    margin: 0px;
-   min-height: 100%;
-   height: 100%;
+    overflow: auto;
 }
 
 .header h1 {

@@ -1,0 +1,101 @@
+{
+    "rules": {
+      "class-name": true,
+      "curly": true,
+      "eofline": false,
+      "forin": true,
+      "indent": [
+        true,
+        "spaces"
+      ],
+      "label-position": true,
+      "linebreak-style": [
+        true,
+        "LF"
+      ],
+      "max-line-length": [
+        true,
+        400
+      ],
+      "no-arg": true,
+      "no-bitwise": false,
+      "no-console": false,
+      "no-consecutive-blank-lines": [true, 3],
+      "no-construct": true,
+      "no-debugger": true,
+      "no-duplicate-variable": true,
+      "no-empty": false, // constructor can be empty in models
+      "no-eval": true,
+      "no-string-literal": false,
+      "no-switch-case-fall-through": true,
+      "no-trailing-whitespace": true,
+      "no-unused-expression": [true, "allow-fast-null-checks"],
+      "no-use-before-declare": true,
+      "no-var-requires": false,
+      "no-namespace": true,
+      "no-internal-module": true,
+      "no-reference": true,
+      // "only-arrow-functions": true,
+      "new-parens": true,
+      "one-line": [
+        true,
+        "check-catch",
+        "check-whitespace"
+      ],
+      "semicolon": true,
+      "triple-equals": [
+        true,
+        "allow-null-check"
+      ],
+      // "typedef": [
+      //   true,
+      //   "call-signature",
+      //   "parameter",
+      //   "property-declaration",
+      //   "parameter",
+      //   "member-variable-declaration"
+      // ],
+      "variable-name": [
+        true,
+        "allow-leading-underscore",
+        "allow-pascal-case"
+      ],
+      "typedef-whitespace": [
+        true,
+        {
+          "call-signature": "nospace",
+          "property-declaration": "nospace",
+          "index-signature": "nospace",
+          "parameter": "nospace",
+          "variable-declaration": "nospace"
+        },
+        {
+          "call-signature": "space",
+          "property-declaration": "space",
+          "index-signature": "space",
+          "parameter": "space",
+          "variable-declaration": "space"
+        }
+      ],
+      "whitespace": [
+        true,
+        "check-branch",
+        "check-decl",
+        "check-operator",
+        "check-separator",
+        "check-type"
+      ],
+      "member-access": [
+        true,
+        "check-accessor",
+        "check-constructor"
+      ],
+      "no-inferrable-types": [true, "ignore-params", "ignore-properties"]
+    },
+    "compilerOptions": {
+      "allowUnusedLabels": false,
+      "noImplicitReturns": true,
+      "noUnusedParameters": true,
+      "noUnusedLocals": true
+    }
+  }
