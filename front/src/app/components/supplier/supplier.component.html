@@ -10,7 +10,14 @@
       </div>
       <hr />
       <div class="table-cont">
-
+        <div style="max-width: 200px;" class="form-group">
+          <label style="color: #333;" for="groupSelect">Choisir un secteur d'activité</label>
+          <select class="form-control" id="groupSelect" (change)="filterByGroup($event.target.value)">
+            <option>A</option>
+            <option>B</option>
+            <option>C</option>
+          </select>
+        </div>
         <app-supplier-table></app-supplier-table>
 
       </div>

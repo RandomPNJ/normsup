@@ -1,6 +1,7 @@
 import { ChangeDetectorRef, Component, OnInit, ViewChild, TemplateRef, ElementRef, Input } from '@angular/core';
 import { AddSupplierModalComponent } from './add-supplier-modal/add-supplier-modal.component';
 // import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { filter as lodashFilter } from 'lodash';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { combineLatest, Subscription } from 'rxjs';
 import { map, filter, catchError, mergeMap } from 'rxjs/operators';
@@ -31,7 +32,7 @@ export class SupplierComponent implements OnInit {
   modalConfig = {
     animated: true
   };
-
+  itemsDisplay: Array<any>;
   items = [
     {
       status: true,
@@ -178,6 +179,7 @@ export class SupplierComponent implements OnInit {
     private changeDetection: ChangeDetectorRef) { }
 
   ngOnInit() {
+    this.itemsDisplay = this.items;
   }
 
   openModal(template: TemplateRef<any>) {
@@ -206,6 +208,12 @@ export class SupplierComponent implements OnInit {
       subscription.unsubscribe();
     });
     this.subscriptions = [];
+  }
+
+  filterByGroup(value: any) {
+    lodashFilter(items, (value) => {
+
+    });
   }
 
   searchCompany(id: any) {
