@@ -4,22 +4,13 @@
       <span class="title">Mes Fournisseurs</span>
     </div>
     <div class="sub-cont">
-      <span class="table-header">Vous avez {{items.length | i18nPlural: itemPluralMapping['supplier']}}.</span>
+      <span class="table-header">Vous avez {{itemsDisplay.length | i18nPlural: itemPluralMapping['supplier']}}.</span>
       <div style="position: relative;">
         <span (click)="openModal(template)" class="glyphicon glyphicon-plus-sign plus-icn" role="button"></span>
       </div>
       <hr />
       <div class="table-cont">
-        <div style="max-width: 200px;" class="form-group">
-          <label style="color: #333;" for="groupSelect">Choisir un secteur d'activité</label>
-          <select class="form-control" id="groupSelect" (change)="filterByGroup($event.target.value)">
-            <option>A</option>
-            <option>B</option>
-            <option>C</option>
-          </select>
-        </div>
-        <app-supplier-table></app-supplier-table>
-
+        <app-supplier-table #supplierTableComp [itemsToDisplay]="itemsDisplay"></app-supplier-table>
       </div>
     </div>
     <ng-template class="test" #template>
@@ -35,7 +26,7 @@
             <div class="input-field col s12">
               <input [(ngModel)]="searchCompanyID" (keydown.enter)="searchCompany(searchCompanyID)" #companyInput id="company-input" type="text" data-length="10" appFocus>
               <label for="company-input">Société</label>
-              <span class="helper-text">Dénomination, Sirene ou Siret</span>
+              <span class="helper-text">Sirene ou Siret</span>
             </div>
             <button (click)="searchCompany(searchCompanyID)" [disabled]="!searchCompanyID" class="btn waves-effect waves-light submit-btn" type="submit" name="action">Rechercher
               <i class="material-icons right">send</i>

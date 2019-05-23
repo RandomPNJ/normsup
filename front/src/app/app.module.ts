@@ -7,7 +7,7 @@ import { Daterangepicker } from 'ng2-daterangepicker';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ModalModule } from 'ngx-bootstrap/modal';
-import { BsModalService } from 'ngx-bootstrap/modal';
+import { DataTablesModule } from 'angular-datatables';
 import { ModalComponent } from './components/modal/modal.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -65,6 +65,7 @@ import { FocusDirective } from './directives/focus.directive';
     ModalModule.forRoot(),
     AccordionModule.forRoot(),
     ModalModule.forRoot(),
+    DataTablesModule
   ],
   exports: [
     AddSupplierModalComponent,

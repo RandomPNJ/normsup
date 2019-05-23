@@ -1,7 +1,17 @@
-<table id="tableComp" class="table table-striped" cellspacing="0" width="100%" style="height: 100%;">
+<div style="max-width: 200px;" class="form-group">
+    <label style="color: #333;" for="groupSelect">Choisir un secteur d'activité</label>
+    <select class="form-control" id="groupSelect" [(ngModel)]="groupSelect" (change)="filterByGroup($event.target.value)">
+      <option> </option>
+      <option>A</option>
+      <option>B</option>
+      <option>C</option>
+    </select>
+  </div>
+<table datatable [dtOptions]="dtOptions" id="tableComp" class="table table-striped" cellspacing="0" width="100%" style="height: 100%;">
   <thead>
     <tr>
       <th class="th-sm">Nom du fournisseur</th>
+      <th class="th-sm">Groupe</th>
       <th class="th-sm">Siret</th>
       <th class="th-sm">Localisation</th>
       <th class="th-sm">Status des documents</th>
@@ -9,10 +19,15 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let item of items">
+    <tr *ngFor="let item of itemsToDisplay">
       <td>
         <div class="content-cont">
           <span class="assign-link">{{item.name}}</span>
+        </div>
+      </td>
+      <td>
+        <div class="content-cont">
+          <span>{{item.groupName}}</span>
         </div>
       </td>
       <td>

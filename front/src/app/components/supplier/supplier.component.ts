@@ -4,7 +4,9 @@ import { AddSupplierModalComponent } from './add-supplier-modal/add-supplier-mod
 import { filter as lodashFilter } from 'lodash';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { combineLatest, Subscription } from 'rxjs';
+import { SupplierTableComponent } from '../supplier-table/supplier-table.component';
 import { map, filter, catchError, mergeMap } from 'rxjs/operators';
+import fakeData from './fakeData.json';
 import { ProductService } from 'src/app/services/product.service';
 
 @Component({
@@ -14,13 +16,16 @@ import { ProductService } from 'src/app/services/product.service';
 })
 export class SupplierComponent implements OnInit {
 
+  @ViewChild('supplierTableComp') child: SupplierTableComponent;
   subscriptions: Subscription[] = [];
   searchCompanyID: string;
   modalRef: BsModalRef;
   supplierNmb = 7;
+  groupSelect: String;
   searchState: Boolean = true;
   selectedCompany: any = null;
-
+  isLoading: Boolean = false;
+  filteredList: Array<any>;
   itemPluralMapping = {
     'supplier': {
       '=0': 'n\'avez aucun fournisseur',
@@ -33,153 +38,18 @@ export class SupplierComponent implements OnInit {
     animated: true
   };
   itemsDisplay: Array<any>;
-  items = [
-    {
-      status: true,
-      name: 'vert',
-      number: '92343843284',
-      date: 1511950620,
-      dateInv: 1511950620,
-      urssaf: true,
-      kbis: true,
-      lnte: true
-    },
-    {
-      status: true,
-      name: 'Orange',
-      number: '92343843284',
-      date: 1511950620,
-      dateInv: 1511950620,
-      urssaf: true,
-      kbis: false,
-      lnte: false
-    },
-    {
-      status: true,
-      name: 'Orange',
-      number: '92343843284',
-      date: 1511950620,
-      dateInv: 1511950620,
-      urssaf: true,
-      kbis: true,
-      lnte: true
-    },
-    {
-      status: true,
-      name: 'Orange',
-      number: '92343843284',
-      date: 1511950620,
-      dateInv: 1511950620,
-      urssaf: true,
-      kbis: false,
-      lnte: false
-    },{
-      status: true,
-      name: 'Orange',
-      number: '92343843284',
-      date: 1511950620,
-      dateInv: 1511950620,
-      urssaf: true,
-      kbis: true,
-      lnte: true
-    },
-    {
-      status: true,
-      name: 'Orange',
-      number: '92343843284',
-      date: 1511950620,
-      dateInv: 1511950620,
-      urssaf: true,
-      kbis: false,
-      lnte: false
-    },{
-      status: true,
-      name: 'Orange',
-      number: '92343843284',
-      date: 1511950620,
-      dateInv: 1511950620,
-      urssaf: true,
-      kbis: true,
-      lnte: true
-    },
-    {
-      status: true,
-      name: 'Orange',
-      number: '92343843284',
-      date: 1511950620,
-      dateInv: 1511950620,
-      urssaf: true,
-      kbis: false,
-      lnte: false
-    },{
-      status: true,
-      name: 'Orange',
-      number: '92343843284',
-      date: 1511950620,
-      dateInv: 1511950620,
-      urssaf: true,
-      kbis: true,
-      lnte: true
-    },
-    {
-      status: true,
-      name: 'Orange',
-      number: '92343843284',
-      date: 1511950620,
-      dateInv: 1511950620,
-      urssaf: true,
-      kbis: false,
-      lnte: false
-    },{
-      status: true,
-      name: 'Orange',
-      number: '92343843284',
-      date: 1511950620,
-      dateInv: 1511950620,
-      urssaf: true,
-      kbis: true,
-      lnte: true
-    },
-    {
-      status: true,
-      name: 'Orange',
-      number: '92343843284',
-      date: 1511950620,
-      dateInv: 1511950620,
-      urssaf: true,
-      kbis: false,
-      lnte: false
-    },{
-      status: true,
-      name: 'Orange',
-      number: '92343843284',
-      date: 1511950620,
-      dateInv: 1511950620,
-      urssaf: true,
-      kbis: true,
-      lnte: true
-    },
-    {
-      status: true,
-      name: 'Orange',
-      number: '92343843284',
-      date: 1511950620,
-      dateInv: 1511950620,
-      urssaf: true,
-      kbis: false,
-      lnte: false
-    }
-  ];
+  items = fakeData.items;
 
   companies: any[] = [];
 
   constructor(
     private modalService: BsModalService,
     private apiService: ProductService,
-    private changeDetection: ChangeDetectorRef) { }
+    private changeDetection: ChangeDetectorRef) {
+    }
 
   ngOnInit() {
-    this.itemsDisplay = this.items;
+    this.itemsDisplay = [...this.items];
   }
 
   openModal(template: TemplateRef<any>) {
@@ -208,12 +78,6 @@ export class SupplierComponent implements OnInit {
       subscription.unsubscribe();
     });
     this.subscriptions = [];
-  }
-
-  filterByGroup(value: any) {
-    lodashFilter(items, (value) => {
-
-    });
   }
 
   searchCompany(id: any) {

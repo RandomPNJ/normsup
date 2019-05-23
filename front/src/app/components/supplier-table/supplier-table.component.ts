@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild, Input } from '@angular/core';
+import { DataTableDirective } from 'angular-datatables';
 
 @Component({
   selector: 'app-supplier-table',
@@ -8,178 +9,67 @@ import { Component, OnInit } from '@angular/core';
 export class SupplierTableComponent implements OnInit {
 
   // supplierNmb = 7;
-  items = [
-    {
-      status: true,
-      name: 'vert',
-      siret: '92343843284',
-      loc: 'paris',
-      country: 'fr',
-      date: 1511950620,
-      dateInv: 1511950620,
-      urssaf: true,
-      kbis: true,
-      lnte: true
-    },
-    {
-      status: true,
-      name: 'Orange',
-      siret: '92343843284',
-      loc: 'paris',
-      country: 'fr',
-      date: 1511950620,
-      dateInv: 1511950620,
-      urssaf: true,
-      kbis: false,
-      lnte: false
-    },
-    {
-      status: true,
-      name: 'Orange',
-      siret: '92343843284',
-      loc: 'paris',
-      country: 'fr',
-      date: 1511950620,
-      dateInv: 1511950620,
-      urssaf: true,
-      kbis: true,
-      lnte: true
-    },
-    {
-      status: true,
-      name: 'Orange',
-      siret: '92343843284',
-      loc: 'paris',
-      country: 'fr',
-      date: 1511950620,
-      dateInv: 1511950620,
-      urssaf: true,
-      kbis: false,
-      lnte: false
-    },{
-      status: true,
-      name: 'Orange',
-      siret: '92343843284',
-      loc: 'paris',
-      country: 'fr',
-      date: 1511950620,
-      dateInv: 1511950620,
-      urssaf: true,
-      kbis: true,
-      lnte: true
-    },
-    {
-      status: true,
-      name: 'Orange',
-      siret: '92343843284',
-      loc: 'paris',
-      country: 'fr',
-      date: 1511950620,
-      dateInv: 1511950620,
-      urssaf: true,
-      kbis: false,
-      lnte: false
-    },{
-      status: true,
-      name: 'Orange',
-      siret: '92343843284',
-      loc: 'paris',
-      country: 'fr',
-      date: 1511950620,
-      dateInv: 1511950620,
-      urssaf: true,
-      kbis: true,
-      lnte: true
-    },
-    {
-      status: true,
-      name: 'Orange',
-      siret: '92343843284',
-      loc: 'paris',
-      country: 'fr',
-      date: 1511950620,
-      dateInv: 1511950620,
-      urssaf: true,
-      kbis: false,
-      lnte: false
-    },{
-      status: true,
-      name: 'Orange',
-      siret: '92343843284',
-      loc: 'paris',
-      country: 'fr',
-      date: 1511950620,
-      dateInv: 1511950620,
-      urssaf: true,
-      kbis: true,
-      lnte: true
-    },
-    {
-      status: true,
-      name: 'Orange',
-      siret: '92343843284',
-      loc: 'paris',
-      country: 'fr',
-      date: 1511950620,
-      dateInv: 1511950620,
-      urssaf: true,
-      kbis: false,
-      lnte: false
-    },{
-      status: true,
-      name: 'Orange',
-      siret: '92343843284',
-      loc: 'paris',
-      country: 'fr',
-      date: 1511950620,
-      dateInv: 1511950620,
-      urssaf: true,
-      kbis: true,
-      lnte: true
-    },
-    {
-      status: true,
-      name: 'Orange',
-      siret: '92343843284',
-      loc: 'paris',
-      country: 'fr',
-      date: 1511950620,
-      dateInv: 1511950620,
-      urssaf: true,
-      kbis: false,
-      lnte: false
-    },{
-      status: true,
-      name: 'Orange',
-      siret: '92343843284',
-      loc: 'paris',
-      country: 'fr',
-      date: 1511950620,
-      dateInv: 1511950620,
-      urssaf: true,
-      kbis: true,
-      lnte: true
-    },
-    {
-      status: true,
-      name: 'Orange',
-      siret: '92343843284',
-      loc: 'paris',
-      country: 'fr',
-      date: 1511950620,
-      dateInv: 1511950620,
-      urssaf: true,
-      kbis: false,
-      lnte: false
-    }
-  ];
+  @ViewChild(DataTableDirective)
+  dtElement: DataTableDirective;
+  @Input() itemsToDisplay: Array<any>;
+  groupSelect: String;
+  dtOptions: DataTables.Settings = {};
+  first = true;
 
   constructor() { }
 
   ngOnInit() {
+    $.fn['dataTable'].ext.search.push((settings, itemsToDisplay, dataIndex) => {
+      const groupName = itemsToDisplay[1] || ''; // use data for the id column
+      if(!this.groupSelect) {
+        this.groupSelect = '';
+      }
+      if (this.groupSelect === groupName || this.groupSelect === '') {
+        // console.log('data === ' + itemsToDisplay[0] + ' group ==== ' + itemsToDisplay[1]);
+        return true;
+      }
+      return false;
+    });
+    this.dtOptions = {
+      stateSave: false,
+      // lengthMenu: [10, 25, 50, -1],
+      // serverSide: true,
+      language: {
+          lengthMenu: 'Voir _MENU_ résultats par page',
+          zeroRecords: 'Aucun résultat trouvé',
+          info: 'Page _PAGE_ sur _PAGES_',
+          infoEmpty: 'Aucun résultat disponible',
+          search: 'Rechercher:',
+          infoFiltered: '(filtré sur un total de _MAX_ résultats)',
+          paginate: {
+              first:      'Premier',
+              last:       'Dernier',
+              next:       'Suivant',
+              previous:   'Précedent'
+          },
+      },
+      columns: [
+        {
+          title: 'Name',
+          data: 'name'
+        },
+        {
+          title: 'Group',
+          data: 'groupName'
+        },
+        null,
+        null,
+        null,
+        null
+      ]
+    };
   }
 
-
+  filterByGroup(): void {
+    this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+      dtInstance.draw();
+    });
+  }
   edit(item) {
     console.log(item);
   }
