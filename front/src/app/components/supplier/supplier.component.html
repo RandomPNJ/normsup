@@ -15,7 +15,8 @@
     </div>
     <ng-template class="test" #template>
       <div class="modal-header">
-        <h4 class="modal-title pull-left">Ajouter un fournisseur</h4>
+        <h4 class="modal-title pull-left" *ngIf="searchState">Ajouter un fournisseur</h4>
+        <h4 class="modal-title pull-left" *ngIf="company">Information sur l'entreprise </h4>
         <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -32,18 +33,32 @@
               <i class="material-icons right">send</i>
             </button>
           </div>
-          <div class="row" *ngIf="companies.length > 0" [ngClass]="{'fade-in': !searchState, 'fade-away': searchState}">
-            <span class="title-add-sup">Séléctionnez l'entreprise recherchée : </span>
+          <div class="row" *ngIf="company" [ngClass]="{'fade-in': !searchState, 'fade-away': searchState}">
+            <!-- <span class="title-add-sup">Séléctionnez l'entreprise recherchée : </span> -->
+            <!-- <span class="title-add-sup">Information sur l'entreprise recherchée : </span> -->
             <form action="#" class="">
-                <p *ngFor="let company of companies; index as i">
+                <!-- <p *ngFor="let company of companies; index as i">
                   <label for="company-{{i}}">
                     <input class="with-gap" name="radio-group" id="company-{{i}}" type="radio"
                     (change)="onCompanySelection(company)" [ngModel]="selectedCompany" [value]="company" />
                     <span class="select-company">{{company.fields?.denominationunitelegale ? company.fields?.denominationunitelegale : 'Pas de dénomination légale'}} - Siret: {{company.fields?.siret}}</span>
                   </label>
-                </p>
+                </p> -->
+                <div>
+                  <div class="row">
+                    <div class="input-field  col s6">
+                      <input id="denom-legale" type="text" class="form-control" [(ngModel)]="company.fields.denominationunitelegale" [value]="company.fields?.denominationunitelegale ? company.fields.denominationunitelegale : ''" placeholder="Dénomination légale">
+                      <label class="active" for="denom-legale">Dénomination légale</label>
+                      <!-- <span class="helper-text" data-error="wrong" data-success="right">Veuillez entrer une dénomitation</span> -->
+                    </div>
+                    <div class="input-field  col s6">
+                      <input id="siret" type="text" class="form-control" [(ngModel)]="company.fields.siret" [value]="company.fields?.siret" placeholder="Siret">
+                      <label class="active" for="siret">Siret</label>
+                    </div>
+                  </div>
+                </div>
               <div class="select-comp-but">
-                <button (click)="addCompany(comp)" [disabled]="!selectedCompany" class="btn waves-effect waves-light submit-btn" type="submit" name="action">Ajouter
+                <button (click)="addCompany(comp)" [disabled]="company.fields?.denominationunitelegale === '' || !company.fields?.siret === ''" class="btn waves-effect waves-light submit-btn" type="submit" name="action">Ajouter
                   <i class="material-icons right">send</i>
                 </button>
                 <button (click)="searchState = true; companies.length = 0;" class="btn waves-effect waves-light submit-btn" type="submit" name="action">Retour
