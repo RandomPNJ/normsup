@@ -13,6 +13,8 @@
         <app-supplier-table #supplierTableComp [itemsToDisplay]="itemsDisplay"></app-supplier-table>
       </div>
     </div>
+
+  
     <ng-template class="test" #template>
       <div class="modal-header">
         <h4 class="modal-title pull-left" *ngIf="searchState">Ajouter un fournisseur</h4>
@@ -33,7 +35,7 @@
               <i class="material-icons right">send</i>
             </button>
           </div>
-          <div class="row" *ngIf="company" [ngClass]="{'fade-in': !searchState, 'fade-away': searchState}">
+          <div class="row" *ngIf="company" [ngClass]="{'fade-in': modalState === 'compInfo', 'fade-away': modalState === 'searchState'}">
             <!-- <span class="title-add-sup">Séléctionnez l'entreprise recherchée : </span> -->
             <!-- <span class="title-add-sup">Information sur l'entreprise recherchée : </span> -->
             <form action="#" class="">
@@ -45,23 +47,33 @@
                   </label>
                 </p> -->
                 <div>
-                  <div class="row">
+                  <div style="padding-top: 10px;" class="row">
                     <div class="input-field  col s6">
-                      <input id="denom-legale" type="text" class="form-control" [(ngModel)]="company.fields.denominationunitelegale" [value]="company.fields?.denominationunitelegale ? company.fields.denominationunitelegale : ''" placeholder="Dénomination légale">
+                      <input id="denom-legale" name="denom" type="text" class="form-control" [(ngModel)]="companyToAdd.denom" placeholder="Dénomination légale">
                       <label class="active" for="denom-legale">Dénomination légale</label>
-                      <!-- <span class="helper-text" data-error="wrong" data-success="right">Veuillez entrer une dénomitation</span> -->
                     </div>
                     <div class="input-field  col s6">
-                      <input id="siret" type="text" class="form-control" [(ngModel)]="company.fields.siret" [value]="company.fields?.siret" placeholder="Siret">
-                      <label class="active" for="siret">Siret</label>
+                      <input id="siret" type="text" name="siren" class="form-control" [(ngModel)]="companyToAdd.siren" placeholder="Siren" [disabled]="true">
+                      <label class="active" for="siren">Siren</label>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div *ngIf="company.fields.datecreationetablissement" class="input-field  col s6">
+                      <input id="denom-legale" name="date-crea" type="text" class="form-control" [(ngModel)]="companyToAdd.dateCrea" [disabled]="true">
+                      <label class="active" for="denom-legale">Date de création</label>
+                    </div>
+                    <div class="input-field  col s6">
+                      <input id="denom-legale" name="adress" type="text" class="form-control" [(ngModel)]="companyToAdd.adress" placeholder="Adresse de l'établissement">
+                      <label class="active" for="denom-legale">Adresse</label>
                     </div>
                   </div>
                 </div>
+                <a class="btn-floating btn-large waves-effect waves-light blue"><i class="material-icons">add</i></a>
               <div class="select-comp-but">
-                <button (click)="addCompany(comp)" [disabled]="company.fields?.denominationunitelegale === '' || !company.fields?.siret === ''" class="btn waves-effect waves-light submit-btn" type="submit" name="action">Ajouter
+                <button (click)="addCompany(companyToAdd)" [disabled]="company.fields?.denominationunitelegale === '' || !company.fields?.siret === ''" class="btn waves-effect waves-light submit-btn" type="submit" name="action">Ajouter
                   <i class="material-icons right">send</i>
                 </button>
-                <button (click)="searchState = true; companies.length = 0;" class="btn waves-effect waves-light submit-btn" type="submit" name="action">Retour
+                <button (click)="modalState = 'searchState'; companies.length = 0;" class="btn waves-effect waves-light submit-btn" type="submit" name="action">Retour
                   <i class="material-icons right">send</i>
                 </button>
               </div>
