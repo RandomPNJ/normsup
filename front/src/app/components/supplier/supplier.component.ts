@@ -105,7 +105,6 @@ export class SupplierComponent implements OnInit {
   }
 
   hideModal() {
-
     if (!this.modalRef) {
       return;
     }
@@ -135,6 +134,10 @@ export class SupplierComponent implements OnInit {
     this.companyToAdd.siren = record.siren;
     this.companyToAdd.adress = record.adresseetablissement;
     this.companyToAdd.dateCrea = moment(record.datecreationetablissement, 'YYYY/MM/DD').format('DD/MM/YYYY');
+  }
+
+  openSupplierInfo(event) {
+    console.log(event);
   }
 
   onCompanySelection(company: any) {

@@ -38,7 +38,8 @@
     "ngx-bootstrap-modal": "^2.0.1",
     "ngx-show-hide-password": "^1.2.6",
     "rxjs": "~6.2.0",
-    "zone.js": "^0.8.29"
+    "zone.js": "^0.8.29",
+    "angular-bootstrap-md": "file:angular-bootstrap-md-7.5.4.tgz"
   },
   "peerDependencies": {
     "@types/jquery": "^3.2.12",

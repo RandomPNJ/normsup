@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild, Input } from '@angular/core';
+import { EventEmitter, Component, OnInit, ViewChild, Input, Output } from '@angular/core';
 import { DataTableDirective } from 'angular-datatables';
 
 @Component({
@@ -12,6 +12,7 @@ export class SupplierTableComponent implements OnInit {
   @ViewChild(DataTableDirective)
   dtElement: DataTableDirective;
   @Input() itemsToDisplay: Array<any>;
+  @Output() suppInfo = new EventEmitter<string>();
   groupSelect: String;
   dtOptions: DataTables.Settings = {};
   first = true;
@@ -76,6 +77,11 @@ export class SupplierTableComponent implements OnInit {
 
   delete(item) {
     console.log(item);
+  }
+
+  openSupplierInfo(name) {
+    console.log('first ', name);
+    this.suppInfo.emit(name);
   }
 
 }

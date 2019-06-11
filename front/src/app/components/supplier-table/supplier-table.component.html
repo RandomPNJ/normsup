@@ -22,7 +22,7 @@
     <tr *ngFor="let item of itemsToDisplay">
       <td>
         <div class="content-cont">
-          <span class="assign-link">{{item.name}}</span>
+          <span class="assign-link" (click)="openSupplierInfo(item)">{{item.name}}</span>
         </div>
       </td>
       <td>

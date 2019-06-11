@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {HttpModule} from '@angular/http';
@@ -16,10 +17,14 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { ShowHidePasswordModule } from 'ngx-show-hide-password';
 import { AccordionModule } from 'ngx-bootstrap/accordion';
 import { BrowserStorageService } from './services/storageService';
+import { StatsCardComponent } from './components/dashboards/common/stats-card/stats-card.component';
+import { StatsCard2Component } from './components/dashboards/common/stats-card2/stats-card2.component';
+
 import { HeaderBarComponent } from './components/header-bar/header-bar.component';
 import { LoginPageComponent } from './components/login-page/login-page.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { MainDashboardComponent } from './components/main-dashboard/main-dashboard.component';
+import { Dashboard1Component } from './components/dashboards/dashboard1/dashboard1.component';
 import { SupplierComponent } from './components/supplier/supplier.component';
 import { GroupsComponent } from './components/groups/groups.component';
 import { StatsComponent } from './components/stats/stats.component';
@@ -38,9 +43,12 @@ import { FocusDirective } from './directives/focus.directive';
     ModalComponent,
     DashboardComponent,
     MainDashboardComponent,
+    Dashboard1Component,
     SupplierComponent,
     GroupsComponent,
     StatsComponent,
+    StatsCardComponent,
+    StatsCard2Component,
     AlertsComponent,
     ReminderComponent,
     SupplierTableComponent,
@@ -50,6 +58,7 @@ import { FocusDirective } from './directives/focus.directive';
   ],
   imports: [
     BrowserModule,
+    MDBBootstrapModule.forRoot(),
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,

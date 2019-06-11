@@ -10,7 +10,7 @@
       </div>
       <hr />
       <div class="table-cont">
-        <app-supplier-table #supplierTableComp [itemsToDisplay]="itemsDisplay"></app-supplier-table>
+        <app-supplier-table #supplierTableComp [itemsToDisplay]="itemsDisplay" (suppInfo)="openSupplierInfo($event)"></app-supplier-table>
       </div>
     </div>
 
@@ -109,5 +109,14 @@
           </div>
       </div>
     </ng-template>
+    <ng-template #supplierinfo>
+      <div class="modal-header">
+        <h4 class="modal-title pull-left" *ngIf="modalState === 'compInfo'">Information fournisseur</h4>
+      </div>
+      <div class="modal-body">
+        
+      </div>
+    </ng-template>
+    
   </div>
 </div>
