@@ -17,14 +17,14 @@
   
     <ng-template class="test" #template>
       <div class="modal-header">
-        <h4 class="modal-title pull-left" *ngIf="searchState">Ajouter un fournisseur</h4>
-        <h4 class="modal-title pull-left" *ngIf="company">Information sur l'entreprise </h4>
+        <h4 class="modal-title pull-left" *ngIf="modalState === 'enterSiret'">Ajouter un fournisseur</h4>
+        <h4 class="modal-title pull-left" *ngIf="modalState === 'compInfo'">Information sur l'entreprise </h4>
         <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-          <div class="row search-company" *ngIf="searchState" [ngClass]="{'fade-in': searchState, 'fade-away': !searchState}">
+          <div class="row search-company" *ngIf="modalState === 'enterSiret'" [ngClass]="{'fade-in': modalState === 'enterSiret', 'fade-away': modalState !== 'enterSiret'}">
             <!-- <span class="title-add-sup">Information sur l'entreprise recherchée</span> -->
             <div class="input-field col s12">
               <input [(ngModel)]="searchCompanyID" (keydown.enter)="searchCompany(searchCompanyID)" #companyInput id="company-input" type="text" data-length="10" appFocus>
@@ -35,7 +35,7 @@
               <i class="material-icons right">send</i>
             </button>
           </div>
-          <div class="row" *ngIf="company" [ngClass]="{'fade-in': modalState === 'compInfo', 'fade-away': modalState === 'searchState'}">
+          <div class="row" *ngIf="modalState === 'compInfo'" [ngClass]="{'fade-in': modalState === 'compInfo', 'fade-away': modalState !== 'compInfo'}">
             <!-- <span class="title-add-sup">Séléctionnez l'entreprise recherchée : </span> -->
             <!-- <span class="title-add-sup">Information sur l'entreprise recherchée : </span> -->
             <form action="#" class="">
@@ -68,12 +68,40 @@
                     </div>
                   </div>
                 </div>
-                <a class="btn-floating btn-large waves-effect waves-light blue"><i class="material-icons">add</i></a>
+                <div class="plus-btn-container">
+                  <div class="add-interloc-cont">
+                    <span class="add-interloc-txt">Ajouter un interlocuteur</span>
+                    <a style="display: inline-block; background-color: lightblue;" class="btn-floating waves-effect waves-light" (click)="this.addInterloc = !this.addInterloc;"><i style="font-size: 2.5rem;" class="material-icons">add</i></a>
+                  </div>
+                </div>
+                <div class="add-interloc" *ngIf="addInterloc">
+                  <h4 style="padding-bottom: 15px;color: #333;">Information sur l'interlocuteur</h4>
+                  <div class="row">
+                    <div class="input-field  col s6">
+                        <input id="interloc-name" name="interloc-name" type="text" class="form-control" [(ngModel)]="interloc.name" placeholder="Prénom">
+                        <label class="active" for="interloc-name">Prénom</label>
+                    </div>
+                    <div class="input-field col s6">
+                        <input id="interloc-lastname" name="interloc-lastname" type="text" class="form-control" [(ngModel)]="interloc.lastname" placeholder="Nom de famille">
+                        <label class="active" for="interloc-lastname">Nom</label>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="input-field col s6">
+                        <input id="interloc-phone" name="interloc-phone" type="text" class="form-control" [(ngModel)]="interloc.phone" placeholder="Numéro de téléphone">
+                        <label class="active" for="interloc-phone">Téléphone</label>
+                    </div>
+                      <div class="input-field col s6">
+                          <input id="interloc-mail" name="interloc-mail" type="text" class="form-control" [(ngModel)]="interloc.mail" placeholder="Adresse mail">
+                          <label class="active" for="interloc-mail">Email</label>
+                      </div>
+                  </div>
+                </div>
               <div class="select-comp-but">
-                <button (click)="addCompany(companyToAdd)" [disabled]="company.fields?.denominationunitelegale === '' || !company.fields?.siret === ''" class="btn waves-effect waves-light submit-btn" type="submit" name="action">Ajouter
+                <button (click)="addCompany({comp: companyToAdd, interloc: interloc})" [disabled]="(companyToAdd.denom === '' || companyToAdd.adress === '' || companyToAdd.siren === '' || companyToAdd.dateCrea === '') || (addInterloc === true && (interloc.name === '' || interloc.lastname === '' || interloc.phone === '' || interloc.mail === ''))" class="btn waves-effect waves-light submit-btn" type="submit" name="action">Ajouter
                   <i class="material-icons right">send</i>
                 </button>
-                <button (click)="modalState = 'searchState'; companies.length = 0;" class="btn waves-effect waves-light submit-btn" type="submit" name="action">Retour
+                <button (click)="hideModal()" class="btn waves-effect waves-light submit-btn" type="submit" name="action">Retour
                   <i class="material-icons right">send</i>
                 </button>
               </div>

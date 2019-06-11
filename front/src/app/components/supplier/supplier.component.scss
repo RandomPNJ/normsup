@@ -28,6 +28,20 @@ hr {
   border-bottom: 0px solid black;
 }
 
+.plus-btn-container {
+  width: 100%;
+  height: 50px;
+}
+.add-interloc-cont {
+
+  float: right;
+  .add-interloc-txt {
+    display: inline-block;
+    margin-right: 20px;
+  }
+
+}
+
 .table-header {
   display: table-cell;
   vertical-align: middle;
