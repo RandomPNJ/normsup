@@ -7,7 +7,7 @@
       <option>C</option>
     </select>
   </div>
-<table datatable [dtOptions]="dtOptions" id="tableComp" class="table table-striped" cellspacing="0" width="100%" style="height: 100%;">
+<table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"  id="tableComp" class="table table-striped" cellspacing="0" width="100%" style="height: 100%;">
   <thead>
     <tr>
       <th class="th-sm">Nom du fournisseur</th>
@@ -20,9 +20,9 @@
   </thead>
   <tbody>
     <tr *ngFor="let item of itemsToDisplay">
-      <td>
+      <td style="cursor: pointer;" (click)="openSupplierInfo(item)">
         <div class="content-cont">
-          <span class="assign-link" (click)="openSupplierInfo(item)">{{item.name}}</span>
+          <span class="assign-link">{{item.denom}}</span>
         </div>
       </td>
       <td>
@@ -32,14 +32,14 @@
       </td>
       <td>
         <div class="content-cont">
-          <span>{{item.siret}}</span>
+          <span>{{item.siren}}</span>
         </div>
       </td>
       <td>
         <div class="content-cont">
           <div>
             <span [ngClass]="item.country != '' ? 'flag-icon-' + item.country : ''" class="flag-icon flag-icon-squared"></span>
-            <span class="localisation">{{item.loc}}</span>
+            <span class="localisation">{{item.adress}}</span>
           </div>
         </div>
       </td>
@@ -65,7 +65,7 @@
             <!-- <div></div> -->
             <!-- <span [ngClass]="{'badge-red': !item.lnte}" class="badge badge-style fix-middle"><i class="fas fa-file-alt doc-icn"></i>Lnte</span> -->
           </div>
-          </div>
+        </div>
       </td>
       <td>
         <div id="util-btns" class="badge-container content-cont">

@@ -8,9 +8,6 @@
     "npm": "5.6.0"
   },
   "scripts": {
-    "install-blockchain-ibm-fr": "mkdir -p node_modules/@blockchain-ibm-fr/ && cp ./resources/dependencies/blockchain-ibm* node_modules/@blockchain-ibm-fr && cd node_modules/@blockchain-ibm-fr/ && tar -zxvf blockchain-ibm-fr-blocknjser-access-*.tgz && mv package blocknjser-access && tar -zxvf blockchain-ibm-fr-blocknjser-common-*.tgz && mv package blocknjser-common && rm *.tgz",
-    "docker-install-blockchain-ibm-fr": "set-x ; ls -al ./resources/dependencies/ ; mkdir -p node_modules/@blockchain-ibm-fr/ && cp ./resources/dependencies/blockchain-ibm* node_modules/@blockchain-ibm-fr && cd node_modules/@blockchain-ibm-fr/ && tar -zxvf blockchain-ibm-fr-blocknjser-access-*.tgz && mv package blocknjser-access && tar -zxvf blockchain-ibm-fr-blocknjser-common-*.tgz && mv package blocknjser-common && rm *.tgz ; set +x",
-    "docker-install-blockchain-ibm-fr-common": "mkdir -p node_modules/@blockchain-ibm-fr/ && cp ./resources/dependencies/blockchain-ibm* node_modules/@blockchain-ibm-fr && cd node_modules/@blockchain-ibm-fr/ && tar -zxvf blockchain-ibm-fr-blocknjser-common-*.tgz && mv package blocknjser-common && rm *.tgz",
     "start": "node server/index.js",
     "dev": "nodemon",
     "test": "cross-env NODE_ENV=test mocha -r  ts-node/register ./server/mocha.conf.ts ./server/mocha.global.ts ./server/**/*.spec.ts --recursive",

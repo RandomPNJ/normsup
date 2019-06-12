@@ -98,7 +98,7 @@
                   </div>
                 </div>
               <div class="select-comp-but">
-                <button (click)="addCompany({comp: companyToAdd, interloc: interloc})" [disabled]="(companyToAdd.denom === '' || companyToAdd.adress === '' || companyToAdd.siren === '' || companyToAdd.dateCrea === '') || (addInterloc === true && (interloc.name === '' || interloc.lastname === '' || interloc.phone === '' || interloc.mail === ''))" class="btn waves-effect waves-light submit-btn" type="submit" name="action">Ajouter
+                <button (click)="addCompany({comp: companyToAdd, interloc: interloc})" [disabled]="(!companyToAdd.denom || !companyToAdd.adress || !companyToAdd.siren || !companyToAdd.dateCrea) || (addInterloc === true && (interloc.name === '' || interloc.lastname === '' || interloc.phone === '' || interloc.mail === ''))" class="btn waves-effect waves-light submit-btn" type="submit" name="action">Ajouter
                   <i class="material-icons right">send</i>
                 </button>
                 <button (click)="hideModal()" class="btn waves-effect waves-light submit-btn" type="submit" name="action">Retour
@@ -111,10 +111,21 @@
     </ng-template>
     <ng-template #supplierinfo>
       <div class="modal-header">
-        <h4 class="modal-title pull-left" *ngIf="modalState === 'compInfo'">Information fournisseur</h4>
+        <h4 class="modal-title pull-left">Information fournisseur</h4>
       </div>
       <div class="modal-body">
-        
+        <div class="card card-style">
+          <div class="card-body"><span class="card-text">Nom</span> <span class="supplier-info-text">{{supplierInfo.name}}</span></div>
+        </div>
+        <div class="card card-style">
+          <div class="card-body"><span class="card-text">Siren</span> <span class="supplier-info-text">{{supplierInfo.siren}}</span></div>
+        </div>
+        <div class="card card-style">
+          <div class="card-body"><span class="card-text">Adresse</span> <span class="supplier-info-text">{{supplierInfo.adress}}</span></div>
+        </div>
+        <div class="card card-style">
+          <div class="card-body"><span class="card-text">Date d'ajout</span> <span class="supplier-info-text">{{supplierInfo.dateCrea}}</span></div>
+        </div>
       </div>
     </ng-template>
     

@@ -26,36 +26,11 @@ export default {
 
   model: {
     product: {
-      uri : '/api/product',
+      uri : '/api/supplier',
       actions: [
-        /*
-          Dapji
-          Daterange
-          PartNumberF
-          PartNumberR !
-          Multiple : PartNumberF + DateRange
-        */
-        { name: 'getProducts', uriPattern: '', method: 'get' },
-        { name: 'createProduct', uriPattern: '/define_product', method: 'post' },
-        { name: 'createProductBulk', uriPattern: '/define_product_bulk', method: 'post' },
-        { name: 'createCar', uriPattern: '/define_car', method: 'post' },
-        { name: 'createCarBulk', uriPattern: '/define_car_bulk', method: 'post' },
-        { name: 'validate', uriPattern: '/validate/:idNum', method: 'put' },
-        { name: 'unvalidate', uriPattern: '/unvalidate/:idNum', method: 'put' },
-        { name: 'getProductByDapji', uriPattern: '/queryCar/:dapji', method: 'get' },
-        { name: 'addDataToProduct', uriPattern: '/add_data_product', method: 'put' },
-        { name: 'addDataToCar', uriPattern: '/add_data_car', method: 'put' },
-        // { name: 'queryProduct', uriPattern: '/queryProduct/:product', method: 'get' },
-        // { name: 'queryCsr', uriPattern: '/queryCsr/:csr', method: 'get' },
-        // { name: 'setStatus', uriPattern:'/set_status', method: 'post' },
-      ],
-    },
-    requirement: {
-      uri : '/api/csr',
-      actions: [
-        // { name: 'getCsr', uriPattern:'', method: 'get'},
-        {name: 'createCsr', uriPattern: '/define_requirement', method: 'post' },
-        {name: 'createCsrBulk', uriPattern: '/define_requirement_bulk', method: 'post' },
+        { name: 'getSuppliers', uriPattern: '', method: 'get' },
+        { name: 'createSupplier', uriPattern: '/define_supplier', method: 'post' },
+        { name: 'modifySupplier', uriPattern: '/modify_supplier/:id', method: 'put' },
       ],
     },
     auth: {

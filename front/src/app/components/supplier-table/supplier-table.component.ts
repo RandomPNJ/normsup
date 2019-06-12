@@ -1,4 +1,5 @@
-import { EventEmitter, Component, OnInit, ViewChild, Input, Output } from '@angular/core';
+import { AfterViewInit, EventEmitter, Component, OnInit, ViewChild, Input, Output } from '@angular/core';
+import { Subject } from 'rxjs';
 import { DataTableDirective } from 'angular-datatables';
 
 @Component({
@@ -6,20 +7,21 @@ import { DataTableDirective } from 'angular-datatables';
   templateUrl: './supplier-table.component.html',
   styleUrls: ['./supplier-table.component.scss']
 })
-export class SupplierTableComponent implements OnInit {
+export class SupplierTableComponent implements OnInit, AfterViewInit {
 
   // supplierNmb = 7;
-  @ViewChild(DataTableDirective)
-  dtElement: DataTableDirective;
+  @ViewChild(DataTableDirective, {read: false})
   @Input() itemsToDisplay: Array<any>;
   @Output() suppInfo = new EventEmitter<string>();
-  groupSelect: String;
+  dtElement: DataTableDirective;
+  dtTrigger: Subject<any> = new Subject();
   dtOptions: DataTables.Settings = {};
-  first = true;
+  groupSelect: String;
 
   constructor() { }
 
   ngOnInit() {
+    // const that = this;
     $.fn['dataTable'].ext.search.push((settings, itemsToDisplay, dataIndex) => {
       const groupName = itemsToDisplay[1] || ''; // use data for the id column
       if(!this.groupSelect) {
@@ -35,6 +37,7 @@ export class SupplierTableComponent implements OnInit {
       stateSave: false,
       // lengthMenu: [10, 25, 50, -1],
       // serverSide: true,
+      // processing: true,
       language: {
           lengthMenu: 'Voir _MENU_ résultats par page',
           zeroRecords: 'Aucun résultat trouvé',
@@ -49,6 +52,21 @@ export class SupplierTableComponent implements OnInit {
               previous:   'Précedent'
           },
       },
+      // ajax: (dataTablesParameters: any, callback) => {
+      //   that.http
+      //     .post<DataTablesResponse>(
+      //       'https://angular-datatables-demo-server.herokuapp.com/',
+      //       dataTablesParameters, {}
+      //     ).subscribe(resp => {
+      //       that.persons = resp.data;
+
+      //       callback({
+      //         recordsTotal: resp.recordsTotal,
+      //         recordsFiltered: resp.recordsFiltered,
+      //         data: []
+      //       });
+      //     });
+      // },
       columns: [
         {
           title: 'Name',
@@ -65,6 +83,9 @@ export class SupplierTableComponent implements OnInit {
       ]
     };
   }
+  ngAfterViewInit(): void {
+    this.dtTrigger.next();
+  }
 
   filterByGroup(): void {
     this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
@@ -79,9 +100,17 @@ export class SupplierTableComponent implements OnInit {
     console.log(item);
   }
 
-  openSupplierInfo(name) {
-    console.log('first ', name);
-    this.suppInfo.emit(name);
+  reload(dataInput: any) {
+    this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+      // Destroy the table first
+      dtInstance.destroy();
+      // Call the dtTrigger to rerender again
+      this.dtTrigger.next();
+    });
+  }
+
+  openSupplierInfo(item) {
+    this.suppInfo.emit(item);
   }
 
 }

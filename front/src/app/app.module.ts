@@ -34,6 +34,7 @@ import { SupplierTableComponent } from './components/supplier-table/supplier-tab
 import { GroupsTableComponent } from './components/groups/groups-table/groups-table.component';
 import { AddSupplierModalComponent } from './components/supplier/add-supplier-modal/add-supplier-modal.component';
 import { FocusDirective } from './directives/focus.directive';
+import { SupplierInfoModalComponent } from './components/supplier/supplier-info-modal/supplier-info-modal.component';
 
 @NgModule({
   declarations: [
@@ -55,6 +56,7 @@ import { FocusDirective } from './directives/focus.directive';
     GroupsTableComponent,
     AddSupplierModalComponent,
     FocusDirective,
+    SupplierInfoModalComponent,
   ],
   imports: [
     BrowserModule,

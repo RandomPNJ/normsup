@@ -13,14 +13,8 @@ import configRoutes from './config/controllers/index';
 import { getAppVersion } from './config/environment/version';
 // import HLFCONF from './config/environment/hlfConfig';
 
-import { Notarization } from './components/blockchain/Notarization';
-import ProductRegistry from './components/product/productRegistry';
-import RequirementRegistry from './components/requirement/requirementRegistry';
-
-
-// import { AccessServiceFactory } from '@blockchain-ibm-fr/blocknjser-access';
-const access = require('@blockchain-ibm-fr/blocknjser-access');
-const AccessServiceFactory = access.AccessServiceFactory;
+import ProductRegistry from './components/supplier/supplierRegistry';
+import SupplierRegistry from './components/supplier/supplierRegistry';
 
 const app = global['app'] || new ServiceManager({ retryUpAndRunning: -1 });
 
@@ -37,24 +31,12 @@ function start(app: any, config: any): any {
   loggers.init(config.env, config.LOG_DIR, config.loggers, app);
   app.set('loggerT', loggerT, { private: true });
   app.set('loggerIO', loggerIO, { private: true });
-  let HLFCONF: any;
 
-  // if (fs.existsSync(__dirname + '/../resources/conf/renaultConfiguration.json')) {
-  //   HLFCONF = JSON.parse(fs.readFileSync(__dirname + '/../resources/conf/renaultConfiguration.json', 'utf8'));
-  // }
-  if (fs.existsSync(process.env.CONFIGURATION_PATH)) {
-    HLFCONF = JSON.parse(fs.readFileSync(process.env.CONFIGURATION_PATH, 'utf8'));
-  }
   app.setOptions({
     logger: loggerT,
   });
 
   loggerT.info(`Démarrage du module ${config.appName}`);
-
-  // Setting access service for authentification
-  const accessFactory = new AccessServiceFactory();
-  const accessService = accessFactory.create();
-  app.set('AccessService', accessService, {onLoad: false, private: true});
 
 
   // init static config
@@ -88,21 +70,14 @@ function start(app: any, config: any): any {
   });
   app.set('swagger', swagger, { private: true });
 
-  // Service that notarizes the blockchain
-  const notarizationSDK = new Notarization(HLFCONF);
-  app.set('Notarization', notarizationSDK, {onLoad: true, private: true});
 
   // Registries to interface with products/requirements
-  const productRegistry = new ProductRegistry(notarizationSDK);
-  app.set('ProductRegistry', productRegistry, {onLoad: false, private: true});
-  const requirementRegistry = new RequirementRegistry(notarizationSDK);
-  app.set('RequirementRegistry', requirementRegistry, {onLoad: false, private: true});
+  const supplierRegistry = new SupplierRegistry();
+  app.set('SupplierRegistry', supplierRegistry, {onLoad: false, private: true});
 
   return app.waitForUpAndRunning()
     .then(() => Promise.all([
       getAppVersion(config),
-      notarizationSDK.deploy(),
-      accessService.deploy(),
     ]), (err) => {
         loggerT.error(`L'application va s'arrêter pour ne pas provoquer d'erreur suite à: ${err.message}`);
         loggerT.verbose('Erreur critique', err);
@@ -112,8 +87,6 @@ function start(app: any, config: any): any {
         process.exit(-1);
     })
     .then(() => Promise.all([
-      notarizationSDK.init(),
-      accessService.init(),
       server.start(),
     ]), (err) => {
         loggerT.error(`L'application va s'arrêter pour ne pas provoquer d'erreur suite à: ${err.message}`);

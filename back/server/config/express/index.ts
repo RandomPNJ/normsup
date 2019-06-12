@@ -6,7 +6,6 @@
 import * as helmet from 'helmet';
 import * as compression from 'compression';
 import * as bodyParser from 'body-parser';
-import {AuthenticatorMiddleware} from '@blockchain-ibm-fr/blocknjser-access';
 import {useExpressServer, useContainer} from 'routing-controllers';
 
 declare var loggerT: any;
@@ -51,12 +50,12 @@ export default (expressApp) => {
   });
 
   // Authentification middleware
-  const AuthentMiddleware = new AuthenticatorMiddleware();
-  expressApp.use('/api', (req, res, next) => {
-    if (req.url === '/auth/login') {
-      return next();
-    }
-    AuthentMiddleware.use(req, res, next);
-  });
+  // const AuthentMiddleware = new AuthenticatorMiddleware();
+  // expressApp.use('/api', (req, res, next) => {
+  //   if (req.url === '/auth/login') {
+  //     return next();
+  //   }
+  //   AuthentMiddleware.use(req, res, next);
+  // });
 
 };
