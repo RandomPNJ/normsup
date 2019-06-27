@@ -68,13 +68,13 @@ export class SupplierComponent implements OnInit {
     }
 
   ngOnInit() {
-    this.httpService.get('http://localhost:8080/api/supplier')
-      .subscribe(res => {
+    // this.httpService.get('http://localhost:8091/api/supplier')
+    //   .subscribe(res => {
 
-        this.itemsDisplay = res.body['items'];
-        console.log(this.itemsDisplay);
-      })
-    ;
+    //     this.itemsDisplay = res.body['items'];
+    //     this.child.reload();
+    //   })
+    // ;
     // this.itemsDisplay = [...this.items];
     // this.modalState = 'compInfo';
     // this.companyToAdd.denom = this.company.fields.denominationunitelegale;

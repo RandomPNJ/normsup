@@ -4,7 +4,7 @@ import * as _ from 'lodash';
 export default {
   appName: 'Roger back',
   env: process.env.NODE_ENV || 'local',
-  port: process.env.PORT || 8080,
+  port: process.env.PORT || 8091,
   ip: process.env.IP || '0.0.0.0',
 
   // couchDB: {uri, db, maxResults}, // if using couchDB

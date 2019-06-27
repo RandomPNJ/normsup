@@ -7,7 +7,7 @@
       <option>C</option>
     </select>
   </div>
-<table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"  id="tableComp" class="table table-striped" cellspacing="0" width="100%" style="height: 100%;">
+<table datatable [dtOptions]="dtOptions" id="tableComp" class="table table-striped" cellspacing="0" width="100%" style="height: 100%;">
   <thead>
     <tr>
       <th class="th-sm">Nom du fournisseur</th>
@@ -18,7 +18,7 @@
       <th class="th-sm">Actions</th>
     </tr>
   </thead>
-  <tbody>
+  <tbody *ngIf="myTable">
     <tr *ngFor="let item of itemsToDisplay">
       <td style="cursor: pointer;" (click)="openSupplierInfo(item)">
         <div class="content-cont">
@@ -32,14 +32,14 @@
       </td>
       <td>
         <div class="content-cont">
-          <span>{{item.siren}}</span>
+          <span>{{item.siret}}</span>
         </div>
       </td>
       <td>
         <div class="content-cont">
           <div>
             <span [ngClass]="item.country != '' ? 'flag-icon-' + item.country : ''" class="flag-icon flag-icon-squared"></span>
-            <span class="localisation">{{item.adress}}</span>
+            <span class="localisation">{{item.loc}}</span>
           </div>
         </div>
       </td>
