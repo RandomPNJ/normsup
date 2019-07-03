@@ -7,7 +7,6 @@ export default {
   port: process.env.PORT || 8091,
   ip: process.env.IP || '0.0.0.0',
 
-  // couchDB: {uri, db, maxResults}, // if using couchDB
   // api: {apiName: { url, routes}} // if using API
 
   LOG_DIR: process.env.LOG_DIR || 'logs',
@@ -24,6 +23,15 @@ export default {
     },
   },
 
+  mysqlParams: {
+    host: 'localhost',
+    user: 'admin',
+    password : 'Jesuisla1!',
+    database: 'normsup',
+    waitForConnections: true,
+    connectionLimit: 10,
+    queueLimit: 0
+  },
   model: {
     product: {
       uri : '/api/supplier',
@@ -42,77 +50,17 @@ export default {
     }
   },
 
-  genericConfig: {
-    csr: {
-        CsrTypes: ['S', 'R', 'SR', 'NONE'],
-        CsrCategory: ['PROCESS', 'PRODUCT'],
+
+  repositories: {
+    product: {
+      db: 'db:sqlDB',
+      aliases: ['user', 'users'],
     },
-    accessControl: {
-      getProductsParams: {
-        Renault: ['dapji', 'partNumberR'],
-        Faurecia: ['partNumberF', 'partNumberR'],
-      }
+    suppliers: {
+      db: 'db:sqlDB',
+      aliases: ['supplier', 'suppliers'],
     },
-    /* We get the chaincode function name by
-     * concatenation of the query params initials in asc order
-     * ex : Dapji with dateStart and dateEnd => D_DE_DS
-    **/
-    chaincodeFn: {
-      createProd: 'createProduct',
-      createProdBulk: 'createProductBulk',
-      createCsr: 'createCsr',
-      createCsrBulk: 'createCsrBulk',
-      createCar: 'createCar',
-      createCarBulk: 'createCarBulk',
-      validateProduct: 'validateProduct',
-      unvalidateProduct: 'unvalidateProduct',
-      addDataToProduct: 'addDataToProduct',
-      addDataToCar: 'addDataToCar',
-
-      // Recherche simple
-      D: 'queryByDapji',
-      PNR: 'queryByPartNumberR',
-      PNF: 'queryByPartNumberF',
-      DS: 'queryByDatetime',
-      DE_DS: 'queryByDatetime',
-      FAC: 'queryBySupplierPlantName',
-      IDN: 'queryByIDNum',
-      ST: 'queryByStatus',
-
-      // Recherche multiple
-      D_DE_DS: 'queryByDapji',
-      D_DS: 'queryByDapji',
-      D_FAC: 'queryByDapji',
-      D_DE_DS_FAC: 'queryByDapji',
-      D_DS_FAC: 'queryByDapji',
-      DE_DS_FAC: 'queryByDatetime',
-      DE_DS_IDN: '',
-
-      // Renault
-      DE_DS_PNR: 'queryByPartNumberR',
-      FAC_PNR: 'queryByPartNumberR',
-      DE_DS_FAC_PNR: 'queryByPartNumberR',
-      DE_DS_FAC_IDN: '',
-
-      // Faurecia
-      DE_DS_PNF: 'queryByPartNumberF',
-      FAC_PNF: 'queryByPartNumberF',
-      DE_DS_FAC_PNF: 'queryByPartNumberF',
-    }
-
-  },
-
-
-  // repositories: {
-  //   product: {
-  //     db: 'db:sqlDB',
-  //     aliases: ['product', 'products'],
-  //   },
-  //   requirement: {
-  //     db: 'db:sqlDB',
-  //     aliases: ['requirement', 'requirements'],
-  //   },
-  // }, // if using a DB
+  }, // if using a DB
   AUTOSTART: _.isBoolean(process.env.AUTOSTART) ? process.env.AUTOSTART : true,
   SELF_SIGNED_SSL: process.env.SELF_SIGNED_SSL ? isTrue(process.env.SELF_SIGNED_SSL) : true,
 };

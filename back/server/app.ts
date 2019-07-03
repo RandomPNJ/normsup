@@ -10,6 +10,7 @@ import expressConfig from './config/express/index';
 import Server from './config/server/index';
 import initRepositories from './config/repositories/index'; // if using a DB
 import configRoutes from './config/controllers/index';
+import SqlDB from './config/sqldb'; // if using sqlDB
 import { getAppVersion } from './config/environment/version';
 // import HLFCONF from './config/environment/hlfConfig';
 
@@ -58,6 +59,10 @@ function start(app: any, config: any): any {
   const server = new Server(expressApp, config, loggerT);
   app.set('server', server, { private: true });
 
+  // Initialisation de SqlDB
+  const sqlDB = new SqlDB(config.mysqlParams, loggerT);
+  app.set('db:sqlDB', sqlDB, { onLoad: true });
+
   // Initialisation des repositories
   initRepositories(app, config.repositories);
 
@@ -72,8 +77,8 @@ function start(app: any, config: any): any {
 
 
   // Registries to interface with products/requirements
-  const supplierRegistry = new SupplierRegistry();
-  app.set('SupplierRegistry', supplierRegistry, {onLoad: false, private: true});
+  const supplierRegistry = new SupplierRegistry(sqlDB);
+  app.set('SupplierRegistry', supplierRegistry, {onLoad: true});
 
   return app.waitForUpAndRunning()
     .then(() => Promise.all([

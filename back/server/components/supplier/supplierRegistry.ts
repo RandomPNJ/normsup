@@ -8,12 +8,19 @@ declare var loggerT: any;
 
 export default class SupplierRegistry {
 
+    mysql: any;
 
-    public constructor() {
+    public constructor(mysql) {
+        this.mysql = mysql;
     }
 
     public getSuppliers() {
         return fakeData;
+    }
+
+
+    public createSupplier(body) {
+
     }
 
     private throwError(message?: string): void {
