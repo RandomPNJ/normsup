@@ -43,11 +43,6 @@ export class ProductService {
       console.log('Res ', response);
       return response;
     }), catchError(this.handleError));
-      // return this.http.get(Configuration.serverUrl + '/api/product?' + params, this.httpOptions)
-      // .pipe(map((response: Response) => {
-      //   console.log('Res ', response);
-      //   return response;
-      // }), catchError(this.handleError));
   }
 
   putData(idNum, url, data) {
@@ -60,9 +55,9 @@ export class ProductService {
   }
 
   postData(url, data) {
-    this.getToken();
+    // this.getToken();
     console.log(this.httpOptions);
-    return this.http.post(Configuration.serverUrl + url, data , this.httpOptions)
+    return this.http.post(Configuration.serverUrl + url, data, this.httpOptions)
         .pipe(map((response: Response) => {
          return response;
         }), catchError(this.handleError));

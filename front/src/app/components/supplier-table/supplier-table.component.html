@@ -22,12 +22,12 @@
     <tr *ngFor="let item of itemsToDisplay">
       <td style="cursor: pointer;" (click)="openSupplierInfo(item)">
         <div class="content-cont">
-          <span class="assign-link">{{item.denom}}</span>
+          <span class="assign-link">{{item.denomination | titlecase }}</span>
         </div>
       </td>
       <td>
         <div class="content-cont">
-          <span>{{item.groupName}}</span>
+          <span>{{item.group | titlecase }}</span>
         </div>
       </td>
       <td>
@@ -39,7 +39,7 @@
         <div class="content-cont">
           <div>
             <span [ngClass]="item.country != '' ? 'flag-icon-' + item.country : ''" class="flag-icon flag-icon-squared"></span>
-            <span class="localisation">{{item.loc}}</span>
+            <span class="localisation">{{item.city | titlecase }}</span>
           </div>
         </div>
       </td>

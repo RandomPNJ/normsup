@@ -11,7 +11,6 @@ import * as moment from 'moment';
 import { HttpService } from 'src/app/services/http.service';
 
 declare var require: any;
-const fakeData = require('./fakeData.json');
 
 @Component({
   selector: 'app-supplier',
@@ -30,7 +29,6 @@ export class SupplierComponent implements OnInit {
   selectedCompany: any = null;
   isLoading: Boolean = false;
   filteredList: Array<any>;
-  // company: any = {"datasetid": "sirene_v3@public", "recordid": "baa8f969f38538021650304a70329a7fbfaa9585", "fields": {"siretsiegeunitelegale": "38793642000034", "soussectionetablissement": "Travaux de construction specialises", "trancheeffectifsunitelegale": "NN", "activiteprincipaleunitelegale": "43.34Z", "sexeunitelegale": "Masculin", "adresseetablissement": "GRAND CUL DE SAC", "groupeunitelegale": "Travaux de peinture et vitrerie", "classeetablissement": "Travaux de peinture et vitrerie", "prenomusuelunitelegale": "RAYMOND", "prenom1unitelegale": "RAYMOND", "activiteprincipaleetablissement": "43.34Z", "datederniertraitementetablissement": "2019-05-22T21:05:51+00:00", "siren": "387936420", "naturejuridiqueunitelegale": "Entrepreneur individuel", "nomenclatureactiviteprincipaleunitelegale": "NAFRev2", "nomunitelegale": "MEPHARA", "nomenclatureactiviteprincipaleetablissement": "NAFRev2", "divisionunitelegale": "Travaux de finition", "nombreperiodesetablissement": 1, "sectionunitelegale": "Construction", "nic": "00034", "siret": "38793642000034", "prenom2unitelegale": "CELESTIN", "nicsiegeunitelegale": "00034", "libellevoieetablissement": "GRAND CUL DE SAC", "etatadministratifetablissement": "Actif", "groupeetablissement": "Travaux de peinture et vitrerie", "datecreationunitelegale": "1992-04-27", "sectionetablissement": "Construction", "etatadministratifunitelegale": "Active", "categorieentreprise": "PME", "categoriejuridiqueunitelegale": "1000", "etablissementsiege": "oui", "codecommuneetablissement": "97701", "divisionetablissement": "Travaux de finition", "datecreationetablissement": "2019-05-16", "caractereemployeuretablissement": "Non", "soussectionunitelegale": "Travaux de construction specialises", "libellecommuneetablissement": "SAINT BARTHELEMY", "caractereemployeurunitelegale": "Non", "anneecategorieentreprise": "2016", "statutdiffusionetablissement": "O", "codepostaletablissement": "97133", "datederniertraitementunitelegale": "2019-05-22T21:05:51+00:00", "datedebutetablissement": "2019-05-16", "classeunitelegale": "Travaux de peinture et vitrerie", "statutdiffusionunitelegale": "O"}, "record_timestamp": "2019-05-23T00:04:00+00:00"}
   company: any = {};
   companyToAdd: any = {};
   supplierInfo: any;
@@ -119,7 +117,7 @@ export class SupplierComponent implements OnInit {
     if (!this.modalRef) {
       return;
     }
-    
+
     this.modalService.hide(1);
     this.modalState = 'enterSiret';
     this.company = {};
@@ -148,10 +146,12 @@ export class SupplierComponent implements OnInit {
   }
 
   fillCompany(record: any) {
-    this.companyToAdd.denom = record.denominationunitelegale;
+    this.companyToAdd.denomination = record.denominationunitelegale;
     this.companyToAdd.siren = record.siren;
-    this.companyToAdd.adress = record.adresseetablissement;
-    this.companyToAdd.dateCrea = moment(record.datecreationetablissement, 'YYYY/MM/DD').format('DD/MM/YYYY');
+    this.companyToAdd.address = record.adresseetablissement;
+    this.companyToAdd.dateCreation = moment(record.datecreationetablissement, 'YYYY/MM/DD').format('DD/MM/YYYY');
+    this.companyToAdd.siret = record.siret;
+    this.companyToAdd.client = 'Fakeclient';
   }
 
   openSupplierInfo(item) {
@@ -172,9 +172,15 @@ export class SupplierComponent implements OnInit {
 
   addCompany(data: any) {
     console.log('Company', data);
-    data.comp.denom = data.comp.denom.charAt(0).toUpperCase() + data.comp.denom.toLowerCase().slice(1);
-    this.itemsDisplay.push(data.comp);
-    this.child.reload(data.comp);
-    this.hideModal();
+    data.comp.denomination = data.comp.denomination.charAt(0).toUpperCase() + data.comp.denomination.toLowerCase().slice(1);
+    this.apiService.postData('/api/supplier/define_supplier', data.comp)
+    .subscribe(res => {
+      this.hideModal();
+      console.log('Res ', res);
+    }, err => {
+      console.log('Error, ', err);
+    });
+    // this.itemsDisplay.push(data.comp);
+    // this.child.reload(data.comp);
   }
 }

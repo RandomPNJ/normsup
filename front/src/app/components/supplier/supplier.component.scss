@@ -1,5 +1,5 @@
 .main-cont {
-  // margin-top: 50px;
+  margin-top: 20px;
   background-color: white;
   box-shadow: 0 7px 15px 0 rgba(0, 51, 90, 0.04);
   border-radius: 6px;
@@ -12,8 +12,14 @@
   right: 20px;
   cursor: pointer;
   font-size: 2.5em;
-  top: -45px;
+  top: -25px;
   bottom: 0px;
+}
+
+.searchText {
+  height: 100%;
+  display: inline-block;
+  padding-top: 3px;
 }
 
 hr {
@@ -88,6 +94,12 @@ hr {
   display: flex;
   justify-content: center;
   background-color: lightblue;
+  color: white;
+  border-radius: 5px;
+}
+
+.form-style {
+  width: 100%;
 }
 
 input[type=text]:not(.browser-default):focus:not([readonly]) {

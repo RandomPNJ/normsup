@@ -11,6 +11,7 @@
   },
   "private": true,
   "dependencies": {
+    "@agm/core": "~1.0.0-beta.3",
     "@angular/animations": "^6.1.10",
     "@angular/cdk": "^7.3.3",
     "@angular/common": "^6.1.0",
@@ -23,7 +24,9 @@
     "@angular/platform-browser-dynamic": "^6.1.0",
     "@angular/router": "^6.1.0",
     "@ng-bootstrap/ng-bootstrap": "^4.0.4",
+    "angular-bootstrap-md": "file:angular-bootstrap-md-7.5.4.tgz",
     "angular-datatables": "^7.0.0",
+    "chart.js": "2.5.x",
     "core-js": "^2.6.5",
     "datatables.net": "^1.10.19",
     "datatables.net-dt": "^1.10.19",
@@ -38,8 +41,7 @@
     "ngx-bootstrap-modal": "^2.0.1",
     "ngx-show-hide-password": "^1.2.6",
     "rxjs": "~6.2.0",
-    "zone.js": "^0.8.29",
-    "angular-bootstrap-md": "file:angular-bootstrap-md-7.5.4.tgz"
+    "zone.js": "^0.8.29"
   },
   "peerDependencies": {
     "@types/jquery": "^3.2.12",

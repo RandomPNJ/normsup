@@ -8,7 +8,7 @@ import { setTheme } from 'ngx-bootstrap/utils';
 })
 export class AppComponent {
   title = 'normsup-app';
-  loggedIn = false;
+  loggedIn = true;
 
   constructor() {
     setTheme('bs3');

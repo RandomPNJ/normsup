@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { LoginPageComponent } from './components/login-page/login-page.component';
 import { HeaderBarComponent } from './components/header-bar/header-bar.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { Dashboard1Component } from './components/dashboards/dashboard1/dashboard1.component';
+import { Dashboard1Component } from './views/dashboards/dashboard1/dashboard1.component';
 import { SupplierComponent } from './components/supplier/supplier.component';
 import { GroupsComponent } from './components/groups/groups.component';
 import { StatsComponent } from './components/stats/stats.component';

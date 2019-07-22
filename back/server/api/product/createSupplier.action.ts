@@ -1,5 +1,4 @@
-import {includes} from 'lodash';
-import * as fs from 'fs';
+import { SupplierSchema }from '../../components/supplier/supplierSchema';
 import { trim, replace } from 'lodash';
 import * as moment from 'moment';
 
@@ -13,9 +12,21 @@ export default {
 };
 
 export function createSupplier(req, SupplierRegistry) {
-    const body = req.body;
+    let data;
 
-    return SupplierRegistry.createSupplier(body)
+    SupplierSchema.validate(req.body, (err, val) => {
+        if (err && err.details[0].message) {
+            const error = new Error(`Invalid request, error message: ${err.details[0].message}.`);
+            error['statusCode'] = 400;
+            throw error;
+        }
+        data = val;
+    });
+
+    if(data.dateCreation) {
+        data.dateCreation = new Date(data.dateCreation);
+    }
+    return SupplierRegistry.createSupplier(data)
         .then(res => {
             return res;
         })

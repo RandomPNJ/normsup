@@ -19,15 +19,28 @@ export function getSuppliers(req, res, SupplierRegistry) {
 
     const params = req.query;
     loggerT.verbose('Getting the suppliers.');
-
-    return SupplierRegistry.getSuppliers();
-    // return SupplierRegistry.getSuppliers(params)
-    //     .then(res => {
-    //         return res;
-    //     })
-    //     .catch(err => {
-    //         delete err.stackTrace;
-    //         throw err;
-    //     })
-    // ;
+    if(!params.length) {
+        params.length = 10;
+    } else {
+        params.length = parseInt(params.length, 10);
+    }
+    let data = {
+        company: params.company,
+        limit: params.length
+    };
+    if(params.start) {
+        data['start'] = parseInt(params.start, 10);
+    }
+    return SupplierRegistry.getSuppliers(data)
+        .then(res => {
+            let result = {
+                items: res
+            };
+            return result;
+        })
+        .catch(err => {
+            delete err.stackTrace;
+            throw err;
+        })
+    ;
 }

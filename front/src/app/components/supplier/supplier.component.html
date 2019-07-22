@@ -31,14 +31,15 @@
               <label for="company-input">Société</label>
               <span class="helper-text">Sirene ou Siret</span>
             </div>
-            <button (click)="searchCompany(searchCompanyID)" [disabled]="!searchCompanyID" class="btn waves-effect waves-light submit-btn" type="submit" name="action">Rechercher
+            <button (click)="searchCompany(searchCompanyID)" [disabled]="!searchCompanyID" class="btn waves-effect waves-light submit-btn" type="submit" name="action">
+              <span class="searchText">Rechercher</span>
               <i class="material-icons right">send</i>
             </button>
           </div>
           <div class="row" *ngIf="modalState === 'compInfo'" [ngClass]="{'fade-in': modalState === 'compInfo', 'fade-away': modalState !== 'compInfo'}">
             <!-- <span class="title-add-sup">Séléctionnez l'entreprise recherchée : </span> -->
             <!-- <span class="title-add-sup">Information sur l'entreprise recherchée : </span> -->
-            <form action="#" class="">
+            <form action="#" class="form-style">
                 <!-- <p *ngFor="let company of companies; index as i">
                   <label for="company-{{i}}">
                     <input class="with-gap" name="radio-group" id="company-{{i}}" type="radio"
@@ -49,7 +50,7 @@
                 <div>
                   <div style="padding-top: 10px;" class="row">
                     <div class="input-field  col s6">
-                      <input id="denom-legale" name="denom" type="text" class="form-control" [(ngModel)]="companyToAdd.denom" placeholder="Dénomination légale">
+                      <input id="denom-legale" name="denom" type="text" class="form-control" [(ngModel)]="companyToAdd.denomination" placeholder="Dénomination légale">
                       <label class="active" for="denom-legale">Dénomination légale</label>
                     </div>
                     <div class="input-field  col s6">
@@ -59,12 +60,12 @@
                   </div>
                   <div class="row">
                     <div *ngIf="company.fields.datecreationetablissement" class="input-field  col s6">
-                      <input id="denom-legale" name="date-crea" type="text" class="form-control" [(ngModel)]="companyToAdd.dateCrea" [disabled]="true">
-                      <label class="active" for="denom-legale">Date de création</label>
+                      <input id="date-creation" name="date-creation" type="text" class="form-control" [(ngModel)]="companyToAdd.dateCreation" [disabled]="true">
+                      <label class="active" for="date-creation">Date de création</label>
                     </div>
                     <div class="input-field  col s6">
-                      <input id="denom-legale" name="adress" type="text" class="form-control" [(ngModel)]="companyToAdd.adress" placeholder="Adresse de l'établissement">
-                      <label class="active" for="denom-legale">Adresse</label>
+                      <input id="address" name="address" type="text" class="form-control" [(ngModel)]="companyToAdd.address" placeholder="Adresse de l'établissement">
+                      <label class="active" for="address">Adresse</label>
                     </div>
                   </div>
                 </div>
@@ -98,10 +99,12 @@
                   </div>
                 </div>
               <div class="select-comp-but">
-                <button (click)="addCompany({comp: companyToAdd, interloc: interloc})" [disabled]="(!companyToAdd.denom || !companyToAdd.adress || !companyToAdd.siren || !companyToAdd.dateCrea) || (addInterloc === true && (interloc.name === '' || interloc.lastname === '' || interloc.phone === '' || interloc.mail === ''))" class="btn waves-effect waves-light submit-btn" type="submit" name="action">Ajouter
+                <button (click)="addCompany({comp: companyToAdd, interloc: interloc})" [disabled]="(!companyToAdd.denomination || !companyToAdd.address || !companyToAdd.siren || !companyToAdd.dateCreation) || (addInterloc === true && (interloc.name === '' || interloc.lastname === '' || interloc.phone === '' || interloc.mail === ''))" class="btn waves-effect waves-light submit-btn" type="submit" name="action">
+                  <span class="searchText">Ajouter</span>
                   <i class="material-icons right">send</i>
                 </button>
-                <button (click)="hideModal()" class="btn waves-effect waves-light submit-btn" type="submit" name="action">Retour
+                <button (click)="hideModal()" class="btn waves-effect waves-light submit-btn" type="submit" name="action">
+                  <span class="searchText">Retour</span>
                   <i class="material-icons right">send</i>
                 </button>
               </div>

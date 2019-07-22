@@ -4,7 +4,7 @@
  */
 
 import * as mysql from 'mysql2';
-import * as Promise from 'bluebird';
+// import * as Promise from 'bluebird';
 
 import SqlDBRepository from './sqldbRepository';
 
@@ -20,7 +20,7 @@ export default class SqlDB {
   public constructor(params, logger) {
     this.logger = logger;
     this.params = params || {};
-    params['Promise'] = Promise;
+    // params['Promise'] = Promise;
 
     this.logger.info(`[DB] Connexion au serveur MySQL.`);
     this.pool = mysql.createPool(params);
@@ -31,13 +31,21 @@ export default class SqlDB {
   public check() {
 
     return this.pool.getConnection((error, connection) => {
-      if (error) {
+      if(error) {
           this.logger.error('Connection error.', error);
-          return false;
+          return Promise.reject(error);
       }
 
       this.logger.verbose('[DB] Toutes les bases de données sont bien présentes.');
       connection.release();
   });
   }
+
+  public async query(options: any) {
+    const promisePool = this.pool.promise();
+    const res = await promisePool.query(options);
+    return res[0];
+
+  }
+
 }

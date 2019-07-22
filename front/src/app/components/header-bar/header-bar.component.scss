@@ -89,7 +89,6 @@ nav .dropdown-trigger .arrowNavIcon {
     cursor: pointer;
 
     transition: 0.3s;
-    
 }
 
 .logout:focus-within {
@@ -202,7 +201,7 @@ hr {
     height: 65px;
 
     nav{
-        background-color: #2E2D4C;
+        background-color: #002651;
     }
 
     .logout label {
@@ -211,9 +210,8 @@ hr {
 
     .logout .dropContent {
         color: #ffffff;
-        background: #414165;
+        background: #002651;
         margin-top: 0px;
-        
         border-color: rgba(241, 241, 241, 0.884);
     }
 
@@ -229,7 +227,7 @@ hr {
         background: #353559;
         box-shadow: 12px 12px 12px 12px rgba(117, 117, 117, 0.03);
     }
-    
+
     .arrow_box:after {
         border-color: rgba(136, 183, 213, 0);
         border-bottom-color: #414165;
