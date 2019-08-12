@@ -11,6 +11,4 @@ RUN apt-get update && apt-get install netcat -y && \
 ADD . /usr/src/app
 WORKDIR /usr/src/app
 
-RUN cd /usr/src/app && npm run docker-install-blockchain-ibm-fr
-
 # RUN grunt build

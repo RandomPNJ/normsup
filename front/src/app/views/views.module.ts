@@ -49,7 +49,7 @@ import { HelpComponent } from './help/help.component';
     ModalsComponent,
     Map1Component,
     StatsCardComponent,
-    StatsCard2Component,    
+    StatsCard2Component,
     Dashboard1Component
   ],
   schemas: [NO_ERRORS_SCHEMA]

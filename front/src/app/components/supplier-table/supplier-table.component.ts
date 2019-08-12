@@ -1,24 +1,22 @@
-import { AfterViewInit, EventEmitter, Component, OnInit, ViewChild, Input, Output, ChangeDetectorRef, ViewChildren } from '@angular/core';
+import { AfterViewInit, EventEmitter, Component, OnInit, ViewChild, Input, Output, ChangeDetectorRef, TemplateRef, ViewChildren } from '@angular/core';
 import { cloneDeep } from 'lodash';
 import { DataTableDirective } from 'angular-datatables';
 import { HttpService } from 'src/app/services/http.service';
 
-import * as $ from 'jquery';
 import 'datatables.net';
-import { query } from '@angular/core/src/render3/query';
 
 @Component({
   selector: 'app-supplier-table',
   templateUrl: './supplier-table.component.html',
   styleUrls: ['./supplier-table.component.scss']
 })
-export class SupplierTableComponent implements OnInit, AfterViewInit {
+export class SupplierTableComponent implements OnInit {
 
   // supplierNmb = 7;
   @ViewChild(DataTableDirective) datatableElement: DataTableDirective;
   itemsToDisplay: Array<any> = [];
   data: Array<any> = [];
-  @Output() suppInfo = new EventEmitter<string>();
+  @Output() infoModal = new EventEmitter<string>();
   items: Array<any> = [];
   dtElement: DataTableDirective;
   dataTable: any;
@@ -147,6 +145,7 @@ export class SupplierTableComponent implements OnInit, AfterViewInit {
     // }
 
   }
+
   filterByGroup(): void {
     console.log(this.dtElement);
     this.datatableElement.dtInstance.then((dtInstance: DataTables.Api) => {
@@ -172,7 +171,26 @@ export class SupplierTableComponent implements OnInit, AfterViewInit {
   // }
 
   openSupplierInfo(item) {
-    this.suppInfo.emit(item);
+    const data: any = {data: item, type: 'Supplier'};
+    this.infoModal.emit(item);
   }
 
+  openLegalDocModal(item) {
+    if(item) {
+      const data: any = {data: item, type: 'Legaldoc'};
+      this.infoModal.emit(data);
+    } else {
+      return;
+    }
+  }
+
+  openCompDocModal(item) {
+    if(item) {
+      // console.log(item);
+      const data: any = {data: item, type: 'Compdoc'};
+      this.infoModal.emit(data);
+    } else {
+      return;
+    }
+  }
 }

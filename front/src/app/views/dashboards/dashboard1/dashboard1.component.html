@@ -26,11 +26,62 @@
   
   <!-- <app-stats-card></app-stats-card> -->
   
-  <!--Grid row-->
-  <div class="row wow fadeIn">
   
+  <!--Grid row-->
+  <div class="row wow fadeIn justify-content-md-center">
       <!--Grid column-->
-      <div class="col-md-6 mb-4">
+      <div class="col-lg-auto col-md-auto mb-4">
+
+          <!--Card-->
+          <mdb-card class="canvaCard">
+
+              <!-- Card header -->
+              <div class="card-header box-title">Mon Entreprise</div>
+
+              <!--Card content-->
+              <mdb-card-body>
+                <div class="row">
+                  <div class="col" style="display: inline-block;">
+                      <div style="width: 120px; height: 120px; position: relative;">
+                        <div style="width: 100%; position: absolute; top: 50%; left: 0; margin-top: -20px; line-height:19px; text-align: center; z-index: 999999999999999">
+                            <span class="number-fourn">{{nbFourni}}</span>
+                              <br/>
+                            <span class="fourn-text">Fournisseurs</span>
+                        </div>
+                      <canvas mdbChart [chartType]="chart5Type" [datasets]="doughnutData"
+                              [colors]="chartColors" [options]="doughnutOpt"
+                              [legend]="true">
+                      </canvas>
+                    </div>
+                    <div class="details-link">Voir en détail >></div>
+                  </div>
+
+                  <div class="col" style="display: inline-block;">
+                      <div style="width: 120px; height: 120px; position: relative;">
+                        <div style="width: 100%; position: absolute; top: 50%; left: 0; margin-top: -20px; line-height:19px; text-align: center; z-index: 999999999999999">
+                          <span class="number-fourn">{{nbFourni}}</span>
+                          <br/>
+                          <span class="fourn-text">Groupes</span>
+                        </div>
+                      <canvas mdbChart [chartType]="chart5Type" [datasets]="doughnutData"
+                              [colors]="chartColors" [options]="doughnutOpt"
+                              [legend]="true">
+                      </canvas>
+                    </div>
+                    <div class="details-link">Voir en détail >></div>
+                  </div>
+                </div>
+            </mdb-card-body>
+
+        </mdb-card>
+        <!--/.Card-->
+      </div>
+  <!--Grid column-->
+  <div class="col">
+
+  </div>
+      <!--Grid column-->
+      <div class="col-md-6 mb-4 dashtable">
     
         <!--Card-->
         <div class="card">
@@ -43,10 +94,10 @@
               <!-- Table head -->
               <thead class="blue-grey lighten-4">
                 <tr>
-                  <th>#</th>
-                  <th>Lorem</th>
-                  <th>Ipsum</th>
-                  <th>Dolor</th>
+                  <!-- <th>#</th> -->
+                  <th>Relance n°</th>
+                  <th>Client</th>
+                  <th>Correspondant</th>
                 </tr>
               </thead>
               <!-- Table head -->
@@ -54,19 +105,19 @@
               <!-- Table body -->
               <tbody>
                 <tr>
-                  <th scope="row">1</th>
+                  <!-- <th scope="row">1</th> -->
                   <td>Cell 1</td>
                   <td>Cell 2</td>
                   <td>Cell 3</td>
                 </tr>
                 <tr>
-                  <th scope="row">2</th>
+                  <!-- <th scope="row">2</th> -->
                   <td>Cell 4</td>
                   <td>Cell 5</td>
                   <td>Cell 6</td>
                 </tr>
                 <tr>
-                  <th scope="row">3</th>
+                  <!-- <th scope="row">3</th> -->
                   <td>Cell 7</td>
                   <td>Cell 8</td>
                   <td>Cell 9</td>
@@ -76,32 +127,32 @@
             </table>
             <!-- Table  -->
     
-          </div>
+          <!-- </div> -->
     
-        </div>
+        <!-- </div> -->
         <!--/.Card-->
     
-      </div>
+      <!-- </div> -->
       <!--Grid column-->
     
       <!--Grid column-->
-      <div class="col-md-6 mb-4">
+      <!-- <div class="col-md-6 mb-4"> -->
     
         <!--Card-->
-        <div class="card">
+        <!-- <div class="card"> -->
     
           <!--Card content-->
-          <div class="card-body">
+          <!-- <div class="card-body"> -->
     
             <!-- Table  -->
             <table class="table table-hover">
               <!-- Table head -->
               <thead class="blue lighten-4">
                 <tr>
-                  <th>#</th>
-                  <th>Lorem</th>
-                  <th>Ipsum</th>
-                  <th>Dolor</th>
+                  <!-- <th>#</th> -->
+                  <th>Alerte n°</th>
+                  <th>Client</th>
+                  <th>Correspondant</th>
                 </tr>
               </thead>
               <!-- Table head -->
@@ -109,19 +160,19 @@
               <!-- Table body -->
               <tbody>
                 <tr>
-                  <th scope="row">1</th>
+                  <!-- <th scope="row">1</th> -->
                   <td>Cell 1</td>
                   <td>Cell 2</td>
                   <td>Cell 3</td>
                 </tr>
                 <tr>
-                  <th scope="row">2</th>
+                  <!-- <th scope="row">2</th> -->
                   <td>Cell 4</td>
                   <td>Cell 5</td>
                   <td>Cell 6</td>
                 </tr>
                 <tr>
-                  <th scope="row">3</th>
+                  <!-- <th scope="row">3</th> -->
                   <td>Cell 7</td>
                   <td>Cell 8</td>
                   <td>Cell 9</td>
@@ -139,7 +190,7 @@
       </div>
       <!--Grid column-->
     
-    </div>
+  </div>
     <!--Grid row-->
   
   <!--Grid row-->

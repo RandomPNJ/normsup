@@ -41,6 +41,14 @@ export default {
         { name: 'modifySupplier', uriPattern: '/modify_supplier/:id', method: 'put' },
       ],
     },
+    documents: {
+      uri : '/api/documents',
+      actions: [
+        { name: 'getDocuments', uriPattern: '', method: 'get' },
+        // { name: 'createSupplier', uriPattern: '/define_supplier', method: 'post' },
+        // { name: 'modifySupplier', uriPattern: '/modify_supplier/:id', method: 'put' },
+      ],
+    },
     auth: {
       uri: '/api/auth',
       actions: [

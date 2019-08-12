@@ -9,7 +9,9 @@ html, body {
     margin: 0;
     overflow: auto;
 }
-
+* {
+    font-family: Roboto;
+}
 .header h1 {
     color: #3C4051;
     font-size: 34px;
@@ -349,3 +351,21 @@ html, body {
 .dataTables_empty {
     display: none;
   }
+
+.canvaCard {
+    .card {
+        margin: 0px !important;
+    }
+}
+
+.legal-doc {
+
+    .btn-outline-secondary {
+        border: 2px solid #616161 !important;
+        color: #616161 !important;
+        &:hover {
+            border: 2px solid #616161 !important;
+            color: #616161 !important;
+        }
+    }
+}

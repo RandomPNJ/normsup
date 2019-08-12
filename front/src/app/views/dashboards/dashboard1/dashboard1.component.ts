@@ -18,13 +18,17 @@ export class Dashboard1Component implements OnInit {
 
   public chartType = 'line';
 
+  public nbFourni = 13;
+
   public chartDatasets: Array<any> = [
     {data: [50, 40, 60], label: 'Inscrit'},
     {data: [28, 80, 40], label: 'Non Inscrit'},
     {data: [28, 80, 40], label: 'Conforme'},
     {data: [28, 80, 40], label: 'Non Conforme'},
   ];
-
+  public doughnutData: Array<any> = [
+    {data: [110], label: 'Inscrit'}
+  ];
   public chartLabels: Array<any>;
 
   public chartColors: Array<any> = [
@@ -56,15 +60,26 @@ export class Dashboard1Component implements OnInit {
     },
     label: 'Taux de conformité fournisseurs'
   };
-
+  public doughnutOpt: any = {
+    responsive: true,
+    cutoutPercentage: 90,
+    maintainAspectRatio: false,
+    elements: {
+      arc: {
+          borderWidth: 0
+      }
+    },
+    tooltips: {
+      enabled: false
+    }
+  };
   constructor() {
 
   }
 
   ngOnInit() {
     this.chartLabels = [];
-    this.chartLabels.push(moment().startOf('month').format('MMM'));
-
+    this.chartLabels.push(moment().startOf('month').format('MMMM'));
   }
 
 }

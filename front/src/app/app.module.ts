@@ -34,6 +34,8 @@ import { GroupsTableComponent } from './components/groups/groups-table/groups-ta
 import { AddSupplierModalComponent } from './components/supplier/add-supplier-modal/add-supplier-modal.component';
 import { FocusDirective } from './directives/focus.directive';
 import { SupplierInfoModalComponent } from './components/supplier/supplier-info-modal/supplier-info-modal.component';
+import { LegalDocModalComponent } from './components/supplier/legal-doc-modal/legal-doc-modal.component';
+import { CompDocModalComponent } from './components/supplier/comp-doc-modal/comp-doc-modal.component';
 
 @NgModule({
   declarations: [
@@ -53,6 +55,8 @@ import { SupplierInfoModalComponent } from './components/supplier/supplier-info-
     AddSupplierModalComponent,
     FocusDirective,
     SupplierInfoModalComponent,
+    LegalDocModalComponent,
+    CompDocModalComponent,
   ],
   imports: [
     BrowserModule,

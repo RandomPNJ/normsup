@@ -6,11 +6,12 @@
     <div class="sub-cont">
       <span class="table-header">Vous avez {{itemsDisplay.length | i18nPlural: itemPluralMapping['supplier']}}.</span>
       <div style="position: relative;">
-        <span (click)="openModal(template)" class="glyphicon glyphicon-plus-sign plus-icn" role="button"></span>
+        <span (click)="openModal(template, 'Supplier')" class="glyphicon glyphicon-plus-sign plus-icn" role="button"></span>
       </div>
       <hr />
       <div class="table-cont">
-        <app-supplier-table #supplierTableComp (suppInfo)="openSupplierInfo($event)"></app-supplier-table>
+        <app-supplier-table #supplierTableComp 
+          (infoModal)="openInfoModal($event)"></app-supplier-table>
       </div>
     </div>
 
@@ -131,6 +132,21 @@
         </div>
       </div>
     </ng-template>
-    
+    <ng-template #legalDoc>
+        <div class="modal-header">
+          <h4 class="modal-title pull-left">Documents Légaux</h4>
+        </div>
+        <div class="modal-body">
+          <app-legal-doc-modal></app-legal-doc-modal>
+        </div>
+    </ng-template>
+    <ng-template #compDoc>
+        <div class="modal-header">
+          <h4 class="modal-title pull-left">Documents Complémentaires</h4>
+        </div>
+        <div class="modal-body">
+          <app-comp-doc-modal></app-comp-doc-modal>
+        </div>
+    </ng-template>
   </div>
 </div>

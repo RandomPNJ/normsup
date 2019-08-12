@@ -1,0 +1,55 @@
+<div>
+    <div>
+      <div class="row">
+          <!-- <div class="col-md-auto col-lg-auto"><span class="table-header">Vous avez {{documents.length | i18nPlural: itemPluralMapping['supplier']}}.</span></div> -->
+          <div class="col"><span class="table-header">Vous avez {{itemsToDisplay.length | i18nPlural: itemPluralMapping['documents']}}.</span></div>
+          <div class="col-md-auto col-lg-auto legal-doc">
+            <button type="button" class="btn btn-primary add-btn">
+              <object class="plus-icn" type="image/svg+xml" data="../../../../assets/img/plus-circle-solid.svg"></object>
+              <span class="button-txt">Ajouter un document</span>
+            </button>  
+            <button type="button" class="btn btn-outline-secondary add-btn">
+              <span class="glyphicon glyphicon-download-alt download-icn fix-middle-icn" aria-hidden="true"></span>
+              <span class="button-txt-dl">Télécharger les documents</span>
+            </button>
+          </div>
+      </div>
+      <table datatable [dtOptions]="dtOptions" id="tableComp" class="table table-striped" cellspacing="0" width="100%" style="height: 100%;">
+          <thead>
+            <tr>
+              <th class="th-sm">Fichier</th>
+              <th class="th-sm">Status</th>
+              <th class="th-sm">Date de validité</th>
+            </tr>
+          </thead>
+          <tbody *ngIf="myTable">
+            <tr *ngFor="let item of itemsToDisplay">
+              <td>
+                <div class="content-cont">
+                  <span>{{item.filename | uppercase }}</span>
+                </div>
+              </td>
+              <td>
+                <div class="content-cont">
+                  <div *ngIf="item.status">
+                    <span class="status-txt">À jour</span>
+                    <div class="badge-container" style="color: green;"><span
+                      class="glyphicon glyphicon-ok status-icn fix-middle" aria-hidden="true"></span></div>
+                  </div>
+                  <div *ngIf="!item.status">
+                    <span class="status-txt">Invalide</span>
+                    <div class="badge-container" style="color: red;"><span
+                      class="glyphicon glyphicon-remove status-icn fix-middle" aria-hidden="true"></span></div>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div class="content-cont">
+                  <span>{{item.expirationdate * 1000 | date:'dd-MM-yyyy HH:mm:ss'}}</span>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>      
+    </div>
+  </div>

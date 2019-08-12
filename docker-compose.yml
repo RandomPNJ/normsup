@@ -1,0 +1,39 @@
+
+version: '2.1'
+
+networks:
+  normsup:
+    name: normsup
+
+services:
+
+  server.normsup:
+    extends:
+      file: compose-default.yml
+      service: server_build
+    container_name: server.normsup
+    command: bash -c "(grunt build && npm run deploy;) && grunt"
+    volumes:
+      - ./back/server:/usr/src/app/server
+      - ./back/tsconfig.json:/usr/src/app/tsconfig.json # TS filenames get added automatically to this file on build
+    ports:
+      - 8080:8080 # API
+      - 127.0.0.1:5858:5858 # Debug
+    networks:
+      - normsup
+
+  client.normsup:
+    extends:
+      file: compose-default.yml
+      service: client_build
+    command: ng serve --host 0.0.0.0 --watch --poll=1000
+    container_name: client.renault
+    volumes:
+      - ./front/src:/usr/src/app/src
+      - ./front/angular.json:/usr/src/app/angular.json
+      - ./front/tslint.json:/usr/src/app/tslint.json
+      # - ./roger-front/config/environment.renault.local.ts:/usr/src/app/src/app/config/environment.ts
+    ports:
+      - 127.0.0.1:4200:4200
+    networks:
+      - normsup

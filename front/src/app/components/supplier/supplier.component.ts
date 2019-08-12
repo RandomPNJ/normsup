@@ -4,6 +4,7 @@ import { AddSupplierModalComponent } from './add-supplier-modal/add-supplier-mod
 import { filter as lodashFilter } from 'lodash';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { combineLatest, Subscription } from 'rxjs';
+import { cloneDeep } from 'lodash';
 import { SupplierTableComponent } from '../supplier-table/supplier-table.component';
 import { map, filter, catchError, mergeMap } from 'rxjs/operators';
 import { ProductService } from 'src/app/services/product.service';
@@ -21,6 +22,8 @@ export class SupplierComponent implements OnInit {
 
   @ViewChild('supplierTableComp') child: SupplierTableComponent;
   @ViewChild('supplierinfo') public infoModalRef: TemplateRef<any>;
+  @ViewChild('compDoc') public compModalRef: TemplateRef<any>;
+  @ViewChild('legalDoc') public legalModalRef: TemplateRef<any>;
   subscriptions: Subscription[] = [];
   searchCompanyID: string;
   modalRef: BsModalRef;
@@ -32,6 +35,8 @@ export class SupplierComponent implements OnInit {
   company: any = {};
   companyToAdd: any = {};
   supplierInfo: any;
+  legalDocInfo: any;
+  compDocInfo: any;
   modalState: String = 'enterSiret';
   addInterloc: Boolean = false;
   interloc: any = {
@@ -50,7 +55,7 @@ export class SupplierComponent implements OnInit {
   };
 
   modalConfig = {
-    animated: true
+    animated: true,
   };
   itemsDisplay: Array<any> = [];
   // items = fakeData.items;
@@ -81,7 +86,7 @@ export class SupplierComponent implements OnInit {
     // this.companyToAdd.dateCrea = moment(this.company.fields.datecreationetablissement, "YYYY/MM/DD").format('DD/MM/YYYY');
   }
 
-  openModal(template: TemplateRef<any>) {
+  openModal(template: TemplateRef<any>, modalType: String) {
     const _combine = combineLatest(
       this.modalService.onShow,
       this.modalService.onShown,
@@ -102,8 +107,12 @@ export class SupplierComponent implements OnInit {
       })
     );
 
+    const config = cloneDeep(this.modalConfig);
     this.subscriptions.push(_combine);
-    this.modalRef = this.modalService.show(template, this.modalConfig);
+    if(modalType !== 'Supplier') {
+      config.class = 'modal-lg';
+    }
+    this.modalRef = this.modalService.show(template, config);
   }
 
   unsubscribe() {
@@ -154,11 +163,23 @@ export class SupplierComponent implements OnInit {
     this.companyToAdd.client = 'Fakeclient';
   }
 
-  openSupplierInfo(item) {
-    if(item) {
-      console.log(item);
-      this.supplierInfo = item;
-      this.openModal(this.infoModalRef);
+  openInfoModal(event) {
+    if(event) {
+      switch(event.type) {
+        case 'Supplier':
+            console.log(event.data);
+            this.supplierInfo = event.data;
+            this.openModal(this.infoModalRef, 'Supplier');
+            break;
+        case 'Legaldoc':
+            this.legalDocInfo = event.data;
+            this.openModal(this.legalModalRef, 'Legaldoc');
+            break;
+        case 'Compdoc':
+            this.compDocInfo = event.data;
+            this.openModal(this.compModalRef, 'Compdoc');
+            break;
+      }
     } else {
       return;
     }

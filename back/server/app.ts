@@ -14,7 +14,8 @@ import SqlDB from './config/sqldb'; // if using sqlDB
 import { getAppVersion } from './config/environment/version';
 // import HLFCONF from './config/environment/hlfConfig';
 
-import ProductRegistry from './components/supplier/supplierRegistry';
+// import ProductRegistry from './components/supplier/supplierRegistry';
+import DocumentsRegistry from './components/documents/documentsRegistry';
 import SupplierRegistry from './components/supplier/supplierRegistry';
 
 const app = global['app'] || new ServiceManager({ retryUpAndRunning: -1 });
@@ -79,7 +80,9 @@ function start(app: any, config: any): any {
   // Registries to interface with products/requirements
   const supplierRegistry = new SupplierRegistry(sqlDB);
   app.set('SupplierRegistry', supplierRegistry, {onLoad: true});
-
+  const docRegistry = new DocumentsRegistry(sqlDB);
+  app.set('DocumentsRegistry', docRegistry, {onLoad: true});
+  
   return app.waitForUpAndRunning()
     .then(() => Promise.all([
       getAppVersion(config),

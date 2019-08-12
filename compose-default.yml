@@ -1,0 +1,14 @@
+
+version: '2.1'
+
+services:
+
+  server_build:
+    image: normsup_back
+    build: back
+    command: bash -c "(grunt build && npm run deploy;) && grunt"
+
+  client_build:
+    image: normsup_front
+    build: front
+    command: ng serve --env=compose --host 0.0.0.0
