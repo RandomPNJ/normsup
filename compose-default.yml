@@ -12,3 +12,6 @@ services:
     image: normsup_front
     build: front
     command: ng serve --env=compose --host 0.0.0.0
+
+  mysql_database:
+    image: mysql

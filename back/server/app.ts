@@ -12,7 +12,6 @@ import initRepositories from './config/repositories/index'; // if using a DB
 import configRoutes from './config/controllers/index';
 import SqlDB from './config/sqldb'; // if using sqlDB
 import { getAppVersion } from './config/environment/version';
-// import HLFCONF from './config/environment/hlfConfig';
 
 // import ProductRegistry from './components/supplier/supplierRegistry';
 import DocumentsRegistry from './components/documents/documentsRegistry';

@@ -4,7 +4,7 @@ import * as _ from 'lodash';
 export default {
   appName: 'Roger back',
   env: process.env.NODE_ENV || 'local',
-  port: process.env.PORT || 8091,
+  port: process.env.PORT || 8080,
   ip: process.env.IP || '0.0.0.0',
 
   // api: {apiName: { url, routes}} // if using API
@@ -24,8 +24,9 @@ export default {
   },
 
   mysqlParams: {
-    host: 'localhost',
+    host: 'database.normsup',
     user: 'admin',
+    port: '3306',
     password : 'Jesuisla1!',
     database: 'normsup',
     waitForConnections: true,

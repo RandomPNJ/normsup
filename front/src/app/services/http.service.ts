@@ -36,7 +36,7 @@ export class HttpService implements OnDestroy {
   }
 
   public get<t>(actionUrl: string, params?: HttpParams): Observable<HttpResponse<t>> {
-    return this._http.get<t>(actionUrl, {
+    return this._http.get<t>(Configuration.serverUrl + actionUrl, {
       params: params,
       responseType: 'json',
       observe: 'response',
@@ -50,7 +50,7 @@ export class HttpService implements OnDestroy {
   }
 
   public post<t>(actionUrl: string, body?: any): Observable<HttpResponse<t>> {
-    return this._http.post<t>(actionUrl, body, {
+    return this._http.post<t>(Configuration.serverUrl + actionUrl, body, {
       headers: this.headers,
       responseType: 'json',
       observe: 'response'

@@ -2,6 +2,7 @@ import { AfterViewInit, EventEmitter, Component, OnInit, ViewChild, Input, Outpu
 import { cloneDeep } from 'lodash';
 import { DataTableDirective } from 'angular-datatables';
 import { HttpService } from 'src/app/services/http.service';
+// import {Configuration} from '../../../../config/environment.local';
 
 import 'datatables.net';
 
@@ -74,7 +75,7 @@ export class SupplierTableComponent implements OnInit {
         dataTablesParameters.company = 'Fakeclient';
         if(action === 'query') {
           that.httpService
-            .get('http://localhost:8091/api/supplier', dataTablesParameters)
+            .get('/api/supplier', dataTablesParameters)
             .subscribe(resp => {
               console.log(resp);
               that.data = that.data.concat(resp.body['items']);
