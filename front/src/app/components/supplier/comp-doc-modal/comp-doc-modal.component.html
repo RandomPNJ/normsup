@@ -1,14 +1,15 @@
 <div>
     <div>
-      <div class="row">
+      <div><span class="table-header">Vous avez {{itemsToDisplay.length | i18nPlural: itemPluralMapping['documents']}}.</span></div>
+      <div [ngClass]="{'button-pad': !addCompDoc}" class="row">
           <!-- <div class="col-md-auto col-lg-auto"><span class="table-header">Vous avez {{documents.length | i18nPlural: itemPluralMapping['supplier']}}.</span></div> -->
-          <div class="col"><span class="table-header">Vous avez {{itemsToDisplay.length | i18nPlural: itemPluralMapping['documents']}}.</span></div>
+          <div class="col"></div>
           <div class="col-md-auto col-lg-auto legal-doc">
-            <button type="button" class="btn btn-primary add-btn">
+            <button type="button" class="btn btn-primary add-btn" (click)="addDoc()">
               <object class="plus-icn" type="image/svg+xml" data="../../../../assets/img/plus-circle-solid.svg"></object>
               <span class="button-txt">Ajouter un document</span>
             </button>  
-            <button type="button" class="btn btn-outline-secondary add-btn">
+            <button type="button" class="btn btn-outline-secondary add-btn dl-btn">
               <span class="glyphicon glyphicon-download-alt download-icn fix-middle-icn" aria-hidden="true"></span>
               <span class="button-txt-dl">Télécharger les documents</span>
             </button>
@@ -50,6 +51,86 @@
               </td>
             </tr>
           </tbody>
-        </table>      
+        </table>
     </div>
   </div>
+  
+  <ng-template #addDocModal>
+    <div class="modal-header own-modal-header">
+      <h4 class="modal-title pull-left">Ajouter un document</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="this.hideModal.emit('subModal')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-auto col-md-auto"></div>
+            <div class="col">
+              <div class="add-doc-head"><span class="table-header">Ajouter un document</span></div>
+              <div class="container">
+                <div class="file-upload">
+                  <span>Sélectionnez un fichier</span>
+                  <div>
+                    <div class="align-div">
+                      <!-- <button type="button" class="btn btn-upload add-btn">
+                        <span class="glyphicon glyphicon-download-alt download-icn fix-middle-icn" aria-hidden="true"></span>
+                        <span class="button-txt-dl">Envoyer un fichier</span>
+                      </button> -->
+                      <input type="file" ng2FileSelect [uploader]="uploader" />
+                      <div ng2FileDrop
+                        [ngClass]="{'nv-file-over': hasBaseDropZoneOver}"
+                        (fileOver)="fileOverBase($event)"
+                        [uploader]="uploader"
+                        class="well my-drop-zone">
+                        Déposez un fichier
+                    </div>
+                    </div>
+                    <div class="upload-txt align-div vert-align">
+                      <span style="display: block;">Aucun fichier selectionné</span>
+                      <span style="display: block;">Taille maximale: 200mb.</span>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <label for="filename">Titre du document *</label>
+                  <div class="input-group mb-3">
+                    <input  style="border-radius: 0.25rem;" type="text" class="form-control" id="filename" aria-describedby="basic-addon3" placeholder="Nom du document">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="filecategory">Catégorie *</label>
+                  <select class="form-control" id="filecategory">
+                    <option value="" disabled selected>Choisir une catégorie</option>
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-auto col-md-auto"></div>
+          </div>
+        </div>
+    </div>
+    <div class="own-modal-footer">
+      <div class="container">
+          <div class="row">
+            <div style="padding: 5px 0px;" class="col">
+              <button style="float: right" (click)="console.log('working')" class="btn btn-light submit-btn" type="button" name="action">
+                <span class="searchText">Annuler</span>
+                <!-- <i style="font-size: 22px !important;" class="material-icons right">send</i> -->
+              </button>
+            </div>
+            <div style="padding: 5px 0px;" class="col">
+              <button style="float: left" (click)="console.log('working')" class="btn btn-primary submit-btn" type="button" name="action">
+                <span class="searchText">Ajouter</span>
+                <!-- <i style="font-size: 22px !important;"  class="material-icons right">send</i> -->
+              </button>
+            </div>
+          </div>
+        </div>
+    </div>
+  </ng-template>

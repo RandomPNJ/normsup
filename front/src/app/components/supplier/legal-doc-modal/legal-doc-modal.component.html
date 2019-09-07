@@ -1,92 +1,205 @@
 <div>
-  <div>
-    <div class="row">
-        <!-- <div class="col-md-auto col-lg-auto"><span class="table-header">Vous avez {{documents.length | i18nPlural: itemPluralMapping['supplier']}}.</span></div> -->
-        <div class="col"><span class="table-header">Vous avez {{itemsToDisplay.length | i18nPlural: itemPluralMapping['documents']}}.</span></div>
-        <div class="col-md-auto col-lg-auto legal-doc">
-          <button type="button" class="btn btn-primary add-btn">
-            <object class="plus-icn" type="image/svg+xml" data="../../../../assets/img/plus-circle-solid.svg"></object>
-            <span class="button-txt">Ajouter un document</span>
-          </button>  
-          <button type="button" class="btn btn-outline-secondary add-btn">
-            <span class="glyphicon glyphicon-download-alt download-icn fix-middle-icn" aria-hidden="true"></span>
-            <span class="button-txt-dl">Télécharger les documents</span>
-          </button>
-        </div>
-    </div>
-    <div class="row">
-        <div class="add-doc-head"><span class="table-header">Ajouter un document</span></div>
-        <div class="container">
-          <div>
-            <span>Sélectionnez un fichier</span>
-            <div>
-              <div>
-                <button type="button" class="btn btn-primary add-btn">
-                  <span class="glyphicon glyphicon-download-alt download-icn fix-middle-icn" aria-hidden="true"></span>
-                  <span class="button-txt-dl">Envoyer un fichier</span>
-                </button>
-              </div>
-              <div>
-                <span>Aucun fichier selectionné</span>
-                <span>Taille maximale: 200mb.</span>
-              </div>
-            </div>
+    <div>
+      <div><span class="table-header">Vous avez {{itemsToDisplay.length | i18nPlural: itemPluralMapping['documents']}}.</span></div>
+      <div [ngClass]="{'button-pad': !addCompDoc}" class="row">
+          <!-- <div class="col-md-auto col-lg-auto"><span class="table-header">Vous avez {{documents.length | i18nPlural: itemPluralMapping['supplier']}}.</span></div> -->
+          <div class="col"></div>
+          <div class="col-md-auto col-lg-auto legal-doc">
+            <button type="button" class="btn btn-primary add-btn" (click)="addDoc()">
+              <object class="plus-icn" type="image/svg+xml" data="../../../../assets/img/plus-circle-solid.svg"></object>
+              <span class="button-txt">Ajouter un document</span>
+            </button>  
+            <button type="button" class="btn btn-outline-secondary add-btn dl-btn">
+              <span class="glyphicon glyphicon-download-alt download-icn fix-middle-icn" aria-hidden="true"></span>
+              <span class="button-txt-dl">Télécharger les documents</span>
+            </button>
           </div>
-          <div>
-              <label for="filename">Titre du document *</label>
-              <div class="input-group mb-3">
-                <input type="text" class="form-control" id="filename" aria-describedby="basic-addon3" placeholder="Nom du document">
-              </div>
-          </div>
-          <div class="form-group">
-              <label for="filecategory">Catégorie *</label>
-              <select class="form-control" id="filecategory">
-                <option value="" disabled selected>Choisir une catégorie</option>
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
-              </select>
-            </div>
-        </div>
+      </div>
+      <table datatable [dtOptions]="dtOptions" id="tableComp" class="table table-striped" cellspacing="0" width="100%" style="height: 100%;">
+          <thead>
+            <tr>
+              <th class="th-sm">Fichier</th>
+              <th class="th-sm">Status</th>
+              <th class="th-sm">Date de validité</th>
+            </tr>
+          </thead>
+          <tbody *ngIf="myTable">
+            <tr *ngFor="let item of itemsToDisplay">
+              <td>
+                <div class="content-cont">
+                  <span>{{item.filename | uppercase }}</span>
+                </div>
+              </td>
+              <td>
+                <div class="content-cont">
+                  <div *ngIf="item.status">
+                    <span class="status-txt">À jour</span>
+                    <div class="badge-container" style="color: green;"><span
+                      class="glyphicon glyphicon-ok status-icn fix-middle" aria-hidden="true"></span></div>
+                  </div>
+                  <div *ngIf="!item.status">
+                    <span class="status-txt">Invalide</span>
+                    <div class="badge-container" style="color: red;"><span
+                      class="glyphicon glyphicon-remove status-icn fix-middle" aria-hidden="true"></span></div>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div class="content-cont">
+                  <span>{{item.expirationdate * 1000 | date:'dd-MM-yyyy HH:mm:ss'}}</span>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
     </div>
-    <table datatable [dtOptions]="dtOptions" id="tableComp" class="table table-striped" cellspacing="0" width="100%" style="height: 100%;">
-        <thead>
-          <tr>
-            <th class="th-sm">Fichier</th>
-            <th class="th-sm">Status</th>
-            <th class="th-sm">Date de validité</th>
-          </tr>
-        </thead>
-        <tbody *ngIf="myTable">
-          <tr *ngFor="let item of itemsToDisplay">
-            <td>
-              <div class="content-cont">
-                <span>{{item.filename | uppercase }}</span>
-              </div>
-            </td>
-            <td>
-              <div class="content-cont">
-                <div *ngIf="item.status">
-                  <span class="status-txt">À jour</span>
-                  <div class="badge-container" style="color: green;"><span
-                    class="glyphicon glyphicon-ok status-icn fix-middle" aria-hidden="true"></span></div>
-                </div>
-                <div *ngIf="!item.status">
-                  <span class="status-txt">Invalide</span>
-                  <div class="badge-container" style="color: red;"><span
-                    class="glyphicon glyphicon-remove status-icn fix-middle" aria-hidden="true"></span></div>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="content-cont">
-                <span>{{item.expirationdate * 1000 | date:'dd-MM-yyyy HH:mm:ss'}}</span>
-              </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>      
   </div>
-</div>
+  
+  <ng-template #addDocModal>
+    <div class="modal-header own-modal-header">
+      <h4 class="modal-title pull-left">Ajouter un document</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="this.hideModal.emit('subModal')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-auto col-md-auto"></div>
+            <div class="col">
+              <div class="add-doc-head"><span class="table-header">Ajouter un document</span></div>
+              <div class="container">
+                <div class="file-upload">
+                  <span>Sélectionnez un fichier</span>
+                  <div>
+                    <div class="align-div">
+                      <!-- <button type="button" class="btn btn-upload add-btn">
+                        <span class="glyphicon glyphicon-download-alt download-icn fix-middle-icn" aria-hidden="true"></span>
+                        <span class="button-txt-dl">Envoyer un fichier</span>
+                      </button> -->
+                      <input type="file" ng2FileSelect [uploader]="uploader" />
+                      <div ng2FileDrop
+                        [ngClass]="{'nv-file-over': hasBaseDropZoneOver}"
+                        (fileOver)="fileOverBase($event)"
+                        [uploader]="uploader"
+                        class="well my-drop-zone">
+                        Déposez un fichier
+                    </div>
+                    </div>
+                    <div class="upload-txt align-div vert-align">
+                      <span style="display: block;">Aucun fichier selectionné</span>
+                      <span style="display: block;">Taille maximale: 200mb.</span>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <label for="filename">Titre du document *</label>
+                  <div class="input-group mb-3">
+                    <input  style="border-radius: 0.25rem;" type="text" class="form-control" id="filename" aria-describedby="basic-addon3" placeholder="Nom du document">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="filecategory">Catégorie *</label>
+                  <select class="form-control" id="filecategory">
+                    <option value="" disabled selected>Choisir une catégorie</option>
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-auto col-md-auto"></div>
+          </div>
+        </div>
+    </div>
+    <div class="col-md-9" style="margin-bottom: 40px">
+ 
+        <h3>Upload queue</h3>
+        <p>Queue length: {{ uploader?.queue?.length }}</p>
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th width="50%">Name</th>
+                <th>Size</th>
+                <th>Progress</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let item of uploader.queue">
+                <td><strong>{{ item?.file?.name }}</strong></td>
+                <td *ngIf="uploader['isHTML5']" nowrap>{{ item?.file?.size/1024/1024 | number:'.2' }} MB</td>
+                <td *ngIf="uploader['isHTML5']">
+                    <div class="progress" style="margin-bottom: 0;">
+                        <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': item.progress + '%' }"></div>
+                    </div>
+                </td>
+                <td class="text-center">
+                    <span *ngIf="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
+                    <span *ngIf="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
+                    <span *ngIf="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
+                </td>
+                <td nowrap>
+                    <button type="button" class="btn btn-success btn-xs"
+                            (click)="item.upload()" [disabled]="item.isReady || item.isUploading || item.isSuccess">
+                        <span class="glyphicon glyphicon-upload"></span> Upload
+                    </button>
+                    <button type="button" class="btn btn-warning btn-xs"
+                            (click)="item.cancel()" [disabled]="!item.isUploading">
+                        <span class="glyphicon glyphicon-ban-circle"></span> Cancel
+                    </button>
+                    <button type="button" class="btn btn-danger btn-xs"
+                            (click)="item.remove()">
+                        <span class="glyphicon glyphicon-trash"></span> Remove
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <div>
+            <div>
+                Queue progress:
+                <div class="progress" style="">
+                    <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': uploader.progress + '%' }"></div>
+                </div>
+            </div>
+            <button type="button" class="btn btn-success btn-s"
+                    (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length">
+                <span class="glyphicon glyphicon-upload"></span> Upload all
+            </button>
+            <button type="button" class="btn btn-warning btn-s"
+                    (click)="uploader.cancelAll()" [disabled]="!uploader.isUploading">
+                <span class="glyphicon glyphicon-ban-circle"></span> Cancel all
+            </button>
+            <button type="button" class="btn btn-danger btn-s"
+                    (click)="uploader.clearQueue()" [disabled]="!uploader.queue.length">
+                <span class="glyphicon glyphicon-trash"></span> Remove all
+            </button>
+        </div>
+
+    </div>
+    <div class="own-modal-footer">
+      <div class="container">
+          <div class="row">
+            <div style="padding: 5px 0px;" class="col">
+              <button style="float: right" (click)="console.log('working')" class="btn btn-light submit-btn" type="button" name="action">
+                <span class="searchText">Annuler</span>
+                <!-- <i style="font-size: 22px !important;" class="material-icons right">send</i> -->
+              </button>
+            </div>
+            <div style="padding: 5px 0px;" class="col">
+              <button style="float: left" (click)="console.log('working')" class="btn btn-primary submit-btn" type="button" name="action">
+                <span class="searchText">Ajouter</span>
+                <!-- <i style="font-size: 22px !important;"  class="material-icons right">send</i> -->
+              </button>
+            </div>
+          </div>
+        </div>
+    </div>
+  </ng-template>

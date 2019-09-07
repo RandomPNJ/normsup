@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute, ActivationEnd, ActivationStart, NavigationStart, ResolveStart } from '@angular/router';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-header-bar',
@@ -20,9 +21,12 @@ export class HeaderBarComponent implements OnInit {
   isLogout = false;
   dropdownSecondBtn = 'Add data';
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private route: ActivatedRoute) {
+  }
 
   ngOnInit() {
+    const currentActivatedRoute = this.route.pathFromRoot[this.route.pathFromRoot.length - 1];
+   currentActivatedRoute.data.subscribe((v) => console.log(v));
   }
 
   secondBtn() {
@@ -34,7 +38,8 @@ export class HeaderBarComponent implements OnInit {
   }
 
   backToLogin() {
-    this.router.navigate(['login']);
+    // this.router.navigate(['login']);
+    console.log(this.route.url);
   }
 
   dropbox() {

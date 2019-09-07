@@ -1,20 +1,30 @@
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, Output, EventEmitter, TemplateRef } from '@angular/core';
 import { DataTableDirective } from 'angular-datatables';
 import 'datatables.net';
+import { FileUploader } from 'ng2-file-upload';
 import { HttpService } from 'src/app/services/http.service';
 
 @Component({
   selector: 'app-legal-doc-modal',
   templateUrl: './legal-doc-modal.component.html',
-  styleUrls: ['./legal-doc-modal.component.scss']
+  styleUrls: ['./legal-doc-modal.component.scss'],
 })
 export class LegalDocModalComponent implements OnInit {
 
+  @Output() addDocModal = new EventEmitter<string>();
+  @Output() hideModal = new EventEmitter<string>();
   @ViewChild(DataTableDirective) datatableElement: DataTableDirective;
+  @ViewChild('addDocModal') addModalRef: TemplateRef<any>;
+
+  public uploader: FileUploader = new FileUploader(
+    { url: 'http://localhost:8080/api/document/upload', removeAfterUpload: false, autoUpload: false });
+  public hasBaseDropZoneOver: Boolean = false;
   itemsToDisplay: Array<any> = [];
   data: Array<any> = [];
   dtElement: DataTableDirective;
   dataTable: any;
+  currentState: String = 'false';
+  hideFirst = 0;
   tableParams: any = {
     start: 0,
     length: 9
@@ -30,21 +40,12 @@ export class LegalDocModalComponent implements OnInit {
     }
   };
 
-  constructor(private httpService: HttpService) { }
+  constructor(private httpService: HttpService) {
+    
+  }
 
   ngOnInit() {
     const that = this;
-    // $.fn['dataTable'].ext.search.push((settings, itemsToDisplay, dataIndex) => {
-    //   const groupName = itemsToDisplay[1] || ''; // use data for the id column
-    //   if(!this.groupSelect) {
-    //     this.groupSelect = '';
-    //   }
-    //   if (this.groupSelect === groupName || this.groupSelect === '') {
-    //     // console.log('data === ' + itemsToDisplay[0] + ' group ==== ' + itemsToDisplay[1]);
-    //     return true;
-    //   }
-    //   return false;
-    // });
     this.dtOptions = {
       searchDelay: 4500,
       ordering: false,
@@ -75,7 +76,7 @@ export class LegalDocModalComponent implements OnInit {
         dataTablesParameters.company = 'Fakeclient';
         // if(action === 'query') {
           that.httpService
-            .get('http://localhost:8091/api/documents', dataTablesParameters)
+            .get('/api/documents', dataTablesParameters)
             .subscribe(resp => {
               console.log(resp);
               that.data = that.data.concat(resp.body['items']);
@@ -88,9 +89,6 @@ export class LegalDocModalComponent implements OnInit {
                 data: []
               });
             });
-        // } else if(action === 'redraw') {
-        //   that.itemsToDisplay = that.data.slice(that.tableParams.start, that.tableParams.start + that.tableParams.length);
-        // }
       },
       preDrawCallback: function(settings) {
         that.tableParams.start = settings._iDisplayStart;
@@ -116,4 +114,12 @@ export class LegalDocModalComponent implements OnInit {
     };
   }
 
+  addDoc() {
+    const data: any = {data: this.addModalRef, type: 'AddDoc'};
+    this.addDocModal.emit(data);
+  }
+
+  public fileOverBase(e:any):void {
+    this.hasBaseDropZoneOver = e;
+  }
 }

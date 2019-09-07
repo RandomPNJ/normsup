@@ -1,20 +1,30 @@
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, Output, EventEmitter, TemplateRef } from '@angular/core';
 import { DataTableDirective } from 'angular-datatables';
 import 'datatables.net';
+import { FileUploader } from 'ng2-file-upload';
 import { HttpService } from 'src/app/services/http.service';
 
 @Component({
   selector: 'app-comp-doc-modal',
   templateUrl: './comp-doc-modal.component.html',
-  styleUrls: ['./comp-doc-modal.component.scss']
+  styleUrls: ['./comp-doc-modal.component.scss'],
 })
 export class CompDocModalComponent implements OnInit {
 
+  @Output() addDocModal = new EventEmitter<string>();
+  @Output() hideModal = new EventEmitter<string>();
   @ViewChild(DataTableDirective) datatableElement: DataTableDirective;
+  @ViewChild('addDocModal') addModalRef: TemplateRef<any>;
+
+  public uploader: FileUploader = new FileUploader(
+    { url: 'http://localhost:8080/api/document/upload', removeAfterUpload: false, autoUpload: true });
+  public hasBaseDropZoneOver: Boolean = false;
   itemsToDisplay: Array<any> = [];
   data: Array<any> = [];
   dtElement: DataTableDirective;
   dataTable: any;
+  currentState: String = 'false';
+  hideFirst = 0;
   tableParams: any = {
     start: 0,
     length: 9
@@ -34,28 +44,17 @@ export class CompDocModalComponent implements OnInit {
 
   ngOnInit() {
     const that = this;
-    // $.fn['dataTable'].ext.search.push((settings, itemsToDisplay, dataIndex) => {
-    //   const groupName = itemsToDisplay[1] || ''; // use data for the id column
-    //   if(!this.groupSelect) {
-    //     this.groupSelect = '';
-    //   }
-    //   if (this.groupSelect === groupName || this.groupSelect === '') {
-    //     // console.log('data === ' + itemsToDisplay[0] + ' group ==== ' + itemsToDisplay[1]);
-    //     return true;
-    //   }
-    //   return false;
-    // });
     this.dtOptions = {
       searchDelay: 4500,
       ordering: false,
       searching: false,
       responsive: true,
-      // pageLength: 10,
-      paging: false,
+      pageLength: 100,
       info: false,
       lengthChange: false,
       serverSide: false,
       processing: false,
+      paging: false,
       language: {
           lengthMenu: 'Voir _MENU_ résultats par page',
           zeroRecords: 'Aucun résultat trouvé',
@@ -73,14 +72,12 @@ export class CompDocModalComponent implements OnInit {
       ajax: (dataTablesParameters: any, callback: any) => {
         console.log('tableParams', dataTablesParameters);
         dataTablesParameters.company = 'Fakeclient';
-        // if(action === 'query') {
           that.httpService
-            .get('http://localhost:8091/api/documents', dataTablesParameters)
+            .get('/api/documents', dataTablesParameters)
             .subscribe(resp => {
               console.log(resp);
               that.data = that.data.concat(resp.body['items']);
               that.itemsToDisplay = that.data.slice(that.tableParams.start, that.tableParams.start + that.tableParams.length);
-  
               that.myTable = true;
               callback({
                 recordsTotal: that.data.length,
@@ -88,9 +85,6 @@ export class CompDocModalComponent implements OnInit {
                 data: []
               });
             });
-        // } else if(action === 'redraw') {
-        //   that.itemsToDisplay = that.data.slice(that.tableParams.start, that.tableParams.start + that.tableParams.length);
-        // }
       },
       preDrawCallback: function(settings) {
         that.tableParams.start = settings._iDisplayStart;
@@ -116,4 +110,12 @@ export class CompDocModalComponent implements OnInit {
     };
   }
 
+  addDoc() {
+    const data: any = {data: this.addModalRef, type: 'AddDoc'};
+    this.addDocModal.emit(data);
+  }
+
+  public fileOverBase(e: any): void {
+    this.hasBaseDropZoneOver = e;
+  }
 }

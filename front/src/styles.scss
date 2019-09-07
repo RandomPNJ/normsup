@@ -12,6 +12,9 @@ html, body {
 * {
     font-family: Roboto;
 }
+body {
+    overflow: hidden;
+}
 .header h1 {
     color: #3C4051;
     font-size: 34px;
@@ -313,6 +316,8 @@ html, body {
     input {
         width: auto;
         color: black;
+        border-radius: 4px;
+        border: 1px solid lightgray;
         font-weight: 400;
     }
     label {
@@ -321,9 +326,12 @@ html, body {
         font-size: 13px;
     }
 }
+
+
 .dataTables_info {
     color: #333 !important;
     font-family: Roboto !important;
+    font-size: 12px !important;
 }
 .paginate_button {
     border: 0px solid black !important;
@@ -331,17 +339,30 @@ html, body {
     background: white !important;
 }
 
+// Remove navbar border radius
+.navbar {
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+}
+
+.dataTables_paginate {
+    font-size: 12px !important;
+}
 .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
     background-color: lightskyblue !important;
     color: white !important;
+    font-size: 12px !important;
 }
 .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
     background-color: lightskyblue !important;
     color: white !important;
+    font-size: 12px !important;
 }
 .dataTables_paginate .paginate_button.disabled:hover {
     background-color: white !important;
     color: #333 !important;
+    font-size: 12px !important;
 }
 
 .modal-dialog {
@@ -368,4 +389,41 @@ html, body {
             color: #616161 !important;
         }
     }
+}
+.modal-content {
+    border-radius: 3px !important;
+}
+
+.align-div {
+    display: inline-block;
+}
+
+.vert-align {
+    vertical-align: middle;
+}
+
+.btn-upload {
+    
+}
+
+.own-modal-footer {
+    background-color: #F8F9FA;
+    border-top: 1px solid lightgray;
+    border-bottom-left-radius: 5px !important;
+    border-bottom-right-radius: 5px !important;
+}
+
+.own-modal-header {
+    background-color: #F8F9FA;
+    border-top-left-radius: 5px !important;
+    border-top-right-radius: 5px !important;
+}
+
+
+.red-err-txt {
+    display: block;
+    width: 100%;
+    text-align: center;
+    color: red;
+    font-weight: 400;
 }

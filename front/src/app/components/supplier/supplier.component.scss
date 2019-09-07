@@ -20,6 +20,8 @@
   height: 100%;
   display: inline-block;
   padding-top: 3px;
+  font-size: 12px;
+  padding-right: 4px;
 }
 
 hr {
@@ -42,11 +44,17 @@ hr {
 .add-interloc-cont {
 
   float: right;
+  padding-top: 10px;
+
   .add-interloc-txt {
     display: inline-block;
-    margin-right: 20px;
+    margin-right: 55px;
   }
 
+}
+
+.add-interloc {
+  padding-bottom: 15px;
 }
 
 .card-style {
@@ -94,6 +102,7 @@ hr {
   display: flex;
   justify-content: center;
   background-color: lightblue;
+  border-color: lightblue;
   color: white;
   border-radius: 5px;
 }
@@ -102,13 +111,13 @@ hr {
   width: 100%;
 }
 
-input[type=text]:not(.browser-default):focus:not([readonly]) {
-  border-bottom: 1px solid lightblue !important;
-  box-shadow: 0 1px 0 0 lightblue;
-}
-input[type=text]:not(.browser-default):focus:not([readonly])+label {
-  color: lightblue !important;
-}
+// input[type=text]:not(.browser-default):focus:not([readonly]) {
+//   border-bottom: 1px solid lightblue !important;
+//   box-shadow: 0 1px 0 0 lightblue;
+// }
+// input[type=text]:not(.browser-default):focus:not([readonly])+label {
+//   color: lightblue !important;
+// }
 .select-company {
   color: #333;
 }
@@ -175,12 +184,24 @@ input[type=text]:not(.browser-default):focus:not([readonly])+label {
 .select-comp-but {
   position: relative;
 
-  .submit-btn {
-    display: inline-block;
+}
 
-    &:first-child {
-      margin-left: 25%;
-      margin-right: 10px;
-    }
-  }
+
+.modal {
+  text-align: center;
+  padding: 0!important;
+}
+
+.modal:before {
+  content: '';
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+  margin-right: -4px; /* Adjusts for spacing */
+}
+
+.modal-dialog {
+  display: inline-block;
+  text-align: left;
+  vertical-align: middle;
 }

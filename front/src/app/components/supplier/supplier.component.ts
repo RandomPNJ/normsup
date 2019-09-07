@@ -1,6 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit, ViewChild, TemplateRef, ElementRef, Input } from '@angular/core';
 import { AddSupplierModalComponent } from './add-supplier-modal/add-supplier-modal.component';
-// import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { filter as lodashFilter } from 'lodash';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { combineLatest, Subscription } from 'rxjs';
@@ -26,7 +25,9 @@ export class SupplierComponent implements OnInit {
   @ViewChild('legalDoc') public legalModalRef: TemplateRef<any>;
   subscriptions: Subscription[] = [];
   searchCompanyID: string;
+  searchCompany404: Boolean = false;
   modalRef: BsModalRef;
+  subModalRef: BsModalRef;
   supplierNmb = 7;
   groupSelect: String;
   selectedCompany: any = null;
@@ -56,6 +57,7 @@ export class SupplierComponent implements OnInit {
 
   modalConfig = {
     animated: true,
+    class: 'modal-dialog-centered'
   };
   itemsDisplay: Array<any> = [];
   // items = fakeData.items;
@@ -106,13 +108,17 @@ export class SupplierComponent implements OnInit {
         this.unsubscribe();
       })
     );
-
+    
     const config = cloneDeep(this.modalConfig);
     this.subscriptions.push(_combine);
-    if(modalType !== 'Supplier') {
-      config.class = 'modal-lg';
+    if(modalType !== 'Supplier' && modalType !== 'AddDoc') {
+      config.class += ' modal-lg';
     }
-    this.modalRef = this.modalService.show(template, config);
+    if(modalType === 'AddDoc') {
+      this.subModalRef = this.modalService.show(template, config);
+    } else {
+      this.modalRef = this.modalService.show(template, config);
+    }
   }
 
   unsubscribe() {
@@ -122,35 +128,41 @@ export class SupplierComponent implements OnInit {
     this.subscriptions = [];
   }
 
-  hideModal() {
+  hideModal(type) {
+    console.log('type ===', type);
     if (!this.modalRef) {
       return;
     }
-
-    this.modalService.hide(1);
-    this.modalState = 'enterSiret';
-    this.company = {};
-    this.searchCompanyID = '';
-    this.companyToAdd = {};
-    this.addInterloc = false;
-    this.interloc = {name: '', lastname: '', phone: '', mail: ''};
-    this.supplierInfo = {};
-    this.modalRef = null;
+    if(type == 'subModal') {
+      this.subModalRef.hide(1);
+    } else {
+      this.modalService.hide(1);
+      this.modalState = 'enterSiret';
+      this.company = {};
+      this.searchCompanyID = '';
+      this.companyToAdd = {};
+      this.addInterloc = false;
+      this.interloc = {name: '', lastname: '', phone: '', mail: ''};
+      this.supplierInfo = {};
+      this.modalRef = null;
+    }
   }
 
   searchCompany(id: any) {
     const params = '&rows=1&q=' + id;
     this.apiService.getCompany(params)
     .subscribe(res => {
-      this.modalState = 'compInfo';
-      console.log('Res ', res);
-      if(res && res.records && res.records instanceof Array && res.records[0]) {
+      if(res && res.records && res.records instanceof Array && res.records[0] && res.records[0].siren !== '') {
         this.company = res.records[0];
         this.fillCompany(res.records[0].fields);
-        // console.log('this.company', this.company.fields);
+        this.modalState = 'compInfo';
+        this.searchCompany404 = false;
+      } else {
+        this.searchCompany404 = true;
       }
     }, err => {
       console.log('Error, ', err);
+      this.searchCompany404 = true;
     });
   }
 
@@ -167,7 +179,6 @@ export class SupplierComponent implements OnInit {
     if(event) {
       switch(event.type) {
         case 'Supplier':
-            console.log(event.data);
             this.supplierInfo = event.data;
             this.openModal(this.infoModalRef, 'Supplier');
             break;
@@ -178,6 +189,9 @@ export class SupplierComponent implements OnInit {
         case 'Compdoc':
             this.compDocInfo = event.data;
             this.openModal(this.compModalRef, 'Compdoc');
+            break;
+        case 'AddDoc':
+            this.openModal(event.data, 'AddDoc');
             break;
       }
     } else {

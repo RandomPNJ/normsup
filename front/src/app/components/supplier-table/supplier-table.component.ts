@@ -1,4 +1,5 @@
-import { AfterViewInit, EventEmitter, Component, OnInit, ViewChild, Input, Output, ChangeDetectorRef, TemplateRef, ViewChildren } from '@angular/core';
+import { AfterViewInit, EventEmitter, Component, OnInit, ViewChild, Input, Output, ChangeDetectorRef,
+        TemplateRef, ViewChildren } from '@angular/core';
 import { cloneDeep } from 'lodash';
 import { DataTableDirective } from 'angular-datatables';
 import { HttpService } from 'src/app/services/http.service';
@@ -13,7 +14,6 @@ import 'datatables.net';
 })
 export class SupplierTableComponent implements OnInit {
 
-  // supplierNmb = 7;
   @ViewChild(DataTableDirective) datatableElement: DataTableDirective;
   itemsToDisplay: Array<any> = [];
   data: Array<any> = [];
@@ -173,7 +173,7 @@ export class SupplierTableComponent implements OnInit {
 
   openSupplierInfo(item) {
     const data: any = {data: item, type: 'Supplier'};
-    this.infoModal.emit(item);
+    this.infoModal.emit(data);
   }
 
   openLegalDocModal(item) {

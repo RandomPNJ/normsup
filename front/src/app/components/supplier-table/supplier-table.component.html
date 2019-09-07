@@ -7,6 +7,7 @@
       <option>C</option>
     </select>
   </div>
+  <div class="table-responsive">
 <table datatable [dtOptions]="dtOptions" id="tableComp" class="table table-striped" cellspacing="0" width="100%" style="height: 100%;">
   <thead>
     <tr>
@@ -52,17 +53,14 @@
       <td>
         <div class="badge-container content-cont container">
           <div class="row" style="margin-bottom: 0px;">
-            <!-- <div></div> -->
-            <div style="padding-right: 5px;" class="doc-cont col-6" (click)="openLegalDocModal(item)">
+            <div style="padding-right: 5px;" class="doc-cont col-6" (click)="openLegalDocModal(item)" data-toggle="modal" data-target="#exampleModalCenter">
               <i style="display: block;" [ngClass]="{'invalid-doc': !item.urssaf}"  class="fas fa-file-alt doc-icn"></i>
               <span [ngClass]="{'badge-red': !item.urssaf}" class="badge badge-style fix-middle">Légal</span>
             </div>
-            <!-- <div class="w-100"></div> -->
             <div class="doc-cont col-6" (click)="openCompDocModal(item)">
               <i style="display: block;" [ngClass]="{'invalid-doc': !item.kbis}" class="fas fa-file-alt doc-icn"></i>
               <span [ngClass]="{'badge-red': !item.kbis}" class="badge badge-style fix-middle">Complémentaire</span>
             </div>
-            <!-- <div></div> -->
             <!-- <span [ngClass]="{'badge-red': !item.lnte}" class="badge badge-style fix-middle"><i class="fas fa-file-alt doc-icn"></i>Lnte</span> -->
           </div>
         </div>
@@ -77,3 +75,4 @@
     </tr>
   </tbody>
 </table>
+</div>

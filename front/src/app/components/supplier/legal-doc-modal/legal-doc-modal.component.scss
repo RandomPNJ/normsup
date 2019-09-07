@@ -1,26 +1,66 @@
 .plus-icn {
     height: 18px;
-    position: relative;
+    position: absolute;
+    -webkit-filter: brightness(0) invert(1);
     filter: brightness(0) invert(1);
+    left: 13px;
+    top: 8px;
 }
 
 .button-txt {
     display: inline-block;
-    padding-left: 7px;
-    height: 19px;
+    padding-left: 18px;
     font-size: 10px;
-    line-height: 6px;
     vertical-align: middle;
 }
 
+.submit-btn {
+  border-radius: 3px;
+}
+.button-pad {
+  padding-bottom: 10px;
+}
+// Style for upload file zone
+.my-drop-zone { 
+  border: dotted 3px lightgray;
+  min-width: 320px;
+  min-height: 100px !important;
+  text-align: center;
+  vertical-align: middle;
+  font-size: 15px;
+}
+.nv-file-over { border: dotted 3px red; } /* Default class applied to drop zones on over */
+.another-file-over-class { border: dotted 3px green; }
+
+.add-doc-head {
+  width: 100%;
+  text-align: center;
+  padding-bottom: 10px;
+  padding-top: 10px;
+}
 .button-txt-dl {
     height: 19px;
     padding-left: 7px;
     font-size: 10px;
 }
-
+.upload-txt {
+  display: inline-block;
+  vertical-align: middle;
+  padding-left: 10px;
+}
+.file-upload {
+  padding: 5px 0px 10px 25px;
+}
 .add-btn {
     border-radius: 4px;
+    position: relative;
+    height: 35px;
+    margin-left: 0px !important;
+}
+
+.dl-btn {
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 .table-header {
@@ -92,6 +132,7 @@
     padding: 25px 0px 20px 25px;
   }
   
+
   .title {
     color: #382244;
     font-family: "Montserrat", sans-serif;

@@ -7,16 +7,19 @@ nav {
     // border-radius: 8px ! important;
 }
 
-nav .brand-logo {
-    color: black;
-    height: 55px;
-    width: 43px;
-    margin-left: 40px;
+.brand-logo {
     position: relative;
+
+    .logo-img {
+        display: block;
+        top: -5px;
+        position: absolute;
+        height: 64px;
+    }
 }
 
 .navigation-bar {
-    height: 100%;
+    height: 65px;
     display: inline-block;
     padding-left: 120px;
 }
@@ -26,8 +29,30 @@ nav .brand-logo {
     padding-top: 0px;
     padding-bottom: 0px;
     font-size: 15px;
+    font-weight: 400;
+    min-width: 120px;
+    max-width: 150px;
+    text-align: center;
+
+    
+    &:hover, &.active {
+        color: #002651 !important;
+        background-color: #fff !important;
+    }
+    .disabled {
+        color: gray !important;
+        background-color: #002651 !important;
+    }
 }
 
+.align-anchor {
+    display: flex !important;
+    align-items: center;
+    display: -webkit-box !important;
+    display: -webkit-flex !important;
+    display: -ms-flexbox !important;
+    justify-content: center;
+}
 nav .brand-logo img {
     vertical-align: middle;
 }

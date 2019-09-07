@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
+import { FileUploadModule } from 'ng2-file-upload';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {HttpModule} from '@angular/http';
@@ -70,6 +71,7 @@ import { CompDocModalComponent } from './components/supplier/comp-doc-modal/comp
     FormsModule,
     NgbModule,
     SharedModule,
+    FileUploadModule,
     ViewsModule,
     ErrorModule,
     BrowserAnimationsModule,
