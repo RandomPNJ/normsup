@@ -7,12 +7,16 @@ import * as helmet from 'helmet';
 import * as compression from 'compression';
 import * as bodyParser from 'body-parser';
 import {useExpressServer, useContainer} from 'routing-controllers';
+import * as passport from 'passport';
+import * as passportJWT from 'passport-jwt';
+import config from '../environment';
 
 declare var loggerT: any;
 declare var loggerIO: any;
 
 const methodOverride = require('method-override');
 const moment = require('moment');
+const secret = config.secret;
 
 export default (expressApp) => {
   expressApp.use(helmet());
@@ -48,6 +52,27 @@ export default (expressApp) => {
     });
     next();
   });
+
+  let ExtractJwt = passportJWT.ExtractJwt;
+  let JwtStrategy = passportJWT.Strategy;
+  let jwtOptions = {};
+  jwtOptions['jwtFromRequest'] = ExtractJwt.fromAuthHeaderAsBearerToken();
+  jwtOptions['secretOrKey'] = secret;
+
+  // lets create our strategy for web token
+  // let strategy = new JwtStrategy(jwtOptions, function(jwt_payload, next) {
+  //   console.log('payload received', jwt_payload);
+  //   let user = getUser({ id: jwt_payload.id });
+  //   if (user) {
+  //     next(null, user);
+  //   } else {
+  //     next(null, false);
+  //   }
+  // });
+  // use the strategy
+  // passport.use(strategy);
+
+  // expressApp.use(passport.initialize());
 
   // Authentification middleware
   // const AuthentMiddleware = new AuthenticatorMiddleware();

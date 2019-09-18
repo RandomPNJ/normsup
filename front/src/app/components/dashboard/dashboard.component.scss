@@ -1,4 +1,19 @@
 .dash-container {
-    // height:100vh;
+    // height:100vh;    
+    height: 100%;
     // min-height:100vh;
 }
+
+.sidebar-padding {
+    width: calc(100% - 20rem);
+    margin-left: 20rem;
+    transition: all 0.4s;
+}
+
+@media (max-width: 768px) {
+    .sidebar-padding {
+        width: calc(100% - 4rem);
+        margin-left: 4rem;
+        transition: all 0.4s;
+    }
+  }

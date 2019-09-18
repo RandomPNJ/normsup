@@ -4,49 +4,35 @@ declare var loggerT: any;
 
 export default {
     method: 'post',
-    uriPattern: '',
+    uriPattern: '/login',
     services: [''],
-    handler: (req, res, app) => login(req.body, app.get('AccessService')),
+    handler: (req, res, app) => login(req.body, res, app.get('UsersRegistry')),
 };
 
-export function login(body, AccessService) {
-    loggerT.info(`Logging in user ${body.userName}.`);
+export function login(body, res, UserRegistry) {
+    const user = body;
 
-    if ((!body.userName || !body.password) || (body.userName === "" || body.password === "")) {
+    loggerT.info(`Logging in user ${user.username}.`);
+
+    if ((!user.username || !user.password) || (user.username === "" || user.password === "")) {
         const err = new Error(`Invalid login credentials.`);
         err['statusCode'] = 400;
         throw err;
     }
 
-    const userName = _.upperFirst(_.toLower(body.userName));
-
-    return AccessService.getUserByName(userName, process.env.WEB_APP_ACCESS_ADMIN)
-        .then(res => {
-            if (res.rc && res.rc === -1 ) {
-                throw new Error(`Error when getting user.`);
-            }
-            const user = res.attachedObj;
-            if (AccessService.validPassword(user, body.password)) {
-                const token = AccessService.generateToken(user);
-                const returnedUser = {
-                    userName: user.userName,
-                    userFirstName: user.userFirstName,
-                    userEmail: user.userEmail,
-                    company: user.company,
-                    organizationUnit: user.organizationUnit,
-                    roles: user.roles
-                };
-                return {
-                    token: token.attachedObj,
-                    user: returnedUser
-                };
-            } else {
-                return Promise.reject('Wrong password.');
-            }
-
+    return UserRegistry.login(user.username, user.password)
+        .then(result => {
+            let tok = UserRegistry.genToken(result);
+            return res.status(200).json({
+                data: result,
+                token: tok,
+                msg: 'Success'
+            });
         })
         .catch(err => {
-            return Promise.reject('Wrong credentials.');
+            loggerT.verbose('Final err', err);
+            res.status(err.statusCode).json({ data: {}, msg: err.msg });
+            return res;
         })
     ;
 }

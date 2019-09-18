@@ -6,10 +6,6 @@ import { BrowserStorageService } from 'src/app/services/storageService';
 import { Configuration } from '../config/environment';
 import { map, filter, catchError, mergeMap } from 'rxjs/operators';
 import { Observable, ObservableInput, throwError, Subject } from 'rxjs';
-import Tools from './tools';
-// Mock import
-import { Mock_Product as mock } from '../models/mock_product';
-import { HttpResponse } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'

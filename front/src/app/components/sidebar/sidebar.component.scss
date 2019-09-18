@@ -1,0 +1,116 @@
+/*
+*
+* ==========================================
+* CUSTOM UTIL CLASSES
+* ==========================================
+*
+*/
+
+.vertical-nav {
+    min-width: 20rem;
+    width: 20rem;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
+    transition: all 0.4s;
+  }
+  
+  .page-content {
+    width: calc(100% - 20rem);
+    margin-left: 20rem;
+    transition: all 0.4s;
+  }
+  
+  /* for toggle behavior */
+  
+  // #sidebar.active {
+  //   margin-left: -20rem;
+  // }
+  
+  // #content.active {
+  //   width: 100%;
+  //   margin: 0;
+  // }
+  
+  @media (max-width: 768px) {
+    // #sidebar {
+    //   margin-left: -20rem;
+    // }
+    // #sidebar.active {
+    //   margin-left: 0;
+    // }
+    // #content {
+    //   width: 100%;
+    //   margin: 0;
+    // }
+    // #content.active {
+    //   margin-left: 20rem;
+    //   width: calc(100% - 20rem);
+    // }
+    .vertical-nav {
+      min-width: 4rem;
+      width: 4rem;
+    }
+    .link-txt,.undisplay {
+      display: none
+    }
+    .reduce-nav {
+      height: 65px;
+      content: ' ';
+    }
+    .nav-item {
+      a {
+        height: 100%;
+        line-height: 40px;
+      }
+    }
+  }
+  
+.icn-style {
+  padding-left: 10px;
+  margin-right: 2rem;
+  color: white;
+}
+  
+.nav-link-s {
+  font-size: 13px;
+}
+
+.blueHeader {
+
+  background-color: #002651;
+}
+
+.nav-item {
+
+  background-color: #002651;
+  height: 40px;
+
+  a {
+    background-color: #002651;
+
+    &:hover, &.active {
+      background-color: white;
+
+      span {
+        color: #382244;
+      }
+      .icn-style {
+        color: #4285f4 !important;
+      }
+    }
+
+  }
+
+  .disabled {
+    color: gray !important;
+    background-color: #002651 !important;
+  }
+}
+
+.link-txt {
+  color: white;
+  line-height: 40px;
+}

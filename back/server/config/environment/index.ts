@@ -8,7 +8,7 @@ export default {
   ip: process.env.IP || '0.0.0.0',
 
   // api: {apiName: { url, routes}} // if using API
-
+  secret: 'eZyo2k4p',
   LOG_DIR: process.env.LOG_DIR || 'logs',
 
   loggers: {
@@ -31,15 +31,26 @@ export default {
     database: 'normsup',
     waitForConnections: true,
     connectionLimit: 10,
-    queueLimit: 0
+    queueLimit: 0,
+    charset: "utf8mb4",
   },
   model: {
-    product: {
+    users: {
+      uri: '/api/users',
+      actions: [
+        { name: 'createUser', uriPattern: '/register', method: 'post' },
+        { name: 'modifyUser', uriPattern: '/modify/:id', method: 'put' },
+        { name: 'deleteUser', uriPattern: '/delete/:id', method: 'post' },
+        { name: 'getUsers', uriPattern: '', method: 'get' },
+      ],
+    },
+    suppliers: {
       uri : '/api/supplier',
       actions: [
         { name: 'getSuppliers', uriPattern: '', method: 'get' },
         { name: 'createSupplier', uriPattern: '/define_supplier', method: 'post' },
         { name: 'modifySupplier', uriPattern: '/modify_supplier/:id', method: 'put' },
+        { name: 'countSuppliers', uriPattern: '/count', method: 'get' },
       ],
     },
     documents: {
@@ -53,8 +64,16 @@ export default {
     auth: {
       uri: '/api/auth',
       actions: [
-        { name: 'createUser', uriPattern: '/createUser', method: 'post' },
         { name: 'login', uriPattern: '/login', method: 'post' },
+      ]
+    },
+    settings: {
+      uri: '/api/settings',
+      actions: [
+        { name: 'manageAlerts', uriPattern: '/alerts/manage', method: 'post' },
+        { name: 'getAlerts', uriPattern: '/alerts/:id', method: 'get' },
+        { name: 'manageReminders', uriPattern: '/reminders/manage', method: 'post' },
+        { name: 'getReminders', uriPattern: '/reminders', method: 'get' },
       ]
     }
   },

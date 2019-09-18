@@ -1,0 +1,36 @@
+<table datatable [dtOptions]="dtOptions" id="tableComp" class="table table-striped" cellspacing="0" width="100%" style="height: 100%;">
+    <thead>
+      <tr>
+        <th class="th-sm">Nom</th>
+        <th class="th-sm">Email</th>
+        <th class="th-sm">Rôle</th>
+        <th class="th-sm"> </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of items">
+        <td class="groups-info">
+          <div class="content-container">
+            <span class="supplier-name">{{item.name}} {{item.lastname}}</span>
+          </div>
+        </td>
+        <td class="">
+          <div class="content-container">
+            <span class="supplier-name">{{item.email}}</span>
+          </div>
+        </td>
+        <td class="groups-info">
+          <div class="content-container">
+            <span class="supplier-name">{{item.role}}</span>
+          </div>
+        </td>
+        <td>
+          <div id="util-btns" class="badge-container content-container">
+            <span (click)="edit(item)" class="glyphicon glyphicon-pencil edit-icn fix-middle" aria-hidden="true"></span>
+            <span style="padding: 0px 5px;" class="fix-middle"></span>
+            <span (click)="delete(item)" class="glyphicon glyphicon-trash fix-middle" aria-hidden="true"></span>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>

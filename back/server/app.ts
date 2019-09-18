@@ -13,9 +13,10 @@ import configRoutes from './config/controllers/index';
 import SqlDB from './config/sqldb'; // if using sqlDB
 import { getAppVersion } from './config/environment/version';
 
-// import ProductRegistry from './components/supplier/supplierRegistry';
+import UserRegistry from './components/users/usersRegistry';
 import DocumentsRegistry from './components/documents/documentsRegistry';
 import SupplierRegistry from './components/supplier/supplierRegistry';
+import SettingsRegistry from './components/settings/settingsRegistry';
 
 const app = global['app'] || new ServiceManager({ retryUpAndRunning: -1 });
 
@@ -81,7 +82,11 @@ function start(app: any, config: any): any {
   app.set('SupplierRegistry', supplierRegistry, {onLoad: true});
   const docRegistry = new DocumentsRegistry(sqlDB);
   app.set('DocumentsRegistry', docRegistry, {onLoad: true});
-  
+  const userRegistry = new UserRegistry(sqlDB);
+  app.set('UsersRegistry', userRegistry, {onLoad: true});
+  const settingsRegistry = new SettingsRegistry(sqlDB);
+  app.set('SettingsRegistry', settingsRegistry, {onLoad: true});
+
   return app.waitForUpAndRunning()
     .then(() => Promise.all([
       getAppVersion(config),

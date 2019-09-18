@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, ActivationEnd, ActivationStart, NavigationStart, ResolveStart } from '@angular/router';
-import { filter } from 'rxjs/operators';
+import { BrowserStorageService } from 'src/app/services/storageService';
+import { Subscription } from 'rxjs';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-header-bar',
@@ -18,22 +20,30 @@ export class HeaderBarComponent implements OnInit {
   reportingIcon = '';
   contactIcon = '';
   user;
-  isLogout = false;
+  showHeader;
+  isLogout: Boolean = false;
   dropdownSecondBtn = 'Add data';
 
-  constructor(private router: Router, private route: ActivatedRoute) {
+  isLoggedIn: Subscription;
+
+  constructor(private router: Router,
+    private route: ActivatedRoute,
+    private bsService: BrowserStorageService,
+    private authService: AuthService) {
   }
 
   ngOnInit() {
-    const currentActivatedRoute = this.route.pathFromRoot[this.route.pathFromRoot.length - 1];
-   currentActivatedRoute.data.subscribe((v) => console.log(v));
+    this.isLoggedIn = this.authService.isLogged.subscribe(res => {
+      if(res !== false && res.data) {
+        this.user = res.data;
+      }
+      this.showHeader = !!res;
+    });
   }
 
-  secondBtn() {
-    if (this.router.url.includes('/dataEntry')) {
-      this.router.navigate(['search']);
-    } else {
-      this.router.navigate(['dataEntry']);
+  secondBtn(route) {
+    if (route && route !== '') {
+      this.router.navigate([route]);
     }
   }
 

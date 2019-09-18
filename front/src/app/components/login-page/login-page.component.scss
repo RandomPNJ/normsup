@@ -144,3 +144,60 @@ select:-webkit-autofill:focus {
   -webkit-text-fill-color: #A3A6B6;
   transition: background-color 5000s ease-in-out 0s;
 }
+
+
+/* enable absolute positioning */
+.inner-addon { 
+    position: relative; 
+}
+
+/* style icon */
+.inner-addon .material-icons {
+  position: absolute;
+  padding: 10px;
+  pointer-events: none;
+}
+
+/* align icon */
+.left-addon .material-icons  { left:  0px;}
+.right-addon .material-icons { right: 0px;}
+
+/* add padding  */
+.left-addon input  { padding-left:  30px; }
+.right-addon input { padding-right: 30px; }
+
+.searchText {
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+    color: white;
+    line-height: 22px;
+    font-size: 12px;
+    text-transform: capitalize;
+}
+
+.submit-btn {
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    background-color: lightblue;
+    border-color: lightblue;
+    color: white;
+    border-radius: 5px;
+}  
+
+.login-icn {
+    color: white;
+    position: absolute;
+    right: 9px;
+    top: 7px;
+}
+
+.input-style {
+    height: 35px;
+    border-radius: 10px !important;
+}
+
+.login-input-container {
+    padding: 0px 60px;
+}

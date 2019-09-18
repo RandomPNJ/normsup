@@ -9,10 +9,14 @@ import { GroupsComponent } from './components/groups/groups.component';
 import { StatsComponent } from './components/stats/stats.component';
 import { AlertsComponent } from './components/alerts/alerts.component';
 import { ReminderComponent } from './components/reminder/reminder.component';
+import { LoggedinGuard } from './auth/loggedin.guard';
+import { UsersManagementComponent } from './components/users-management/users-management.component';
+import { ProfileComponent } from './components/profile/profile.component';
+import { Configuration } from './config/environment';
 
 const routes: Routes = [
   { path: 'login', component: LoginPageComponent },
-  { path: 'dashboard', component: DashboardComponent,
+  { path: 'dashboard', component: DashboardComponent, canActivate: [LoggedinGuard],  data: { roles: Configuration.basicRoutesRoles },
     children: [
       { path: 'main', component: Dashboard1Component },
       { path: 'supplier', component: SupplierComponent },
@@ -20,9 +24,11 @@ const routes: Routes = [
       { path: 'stats', component: StatsComponent },
       { path: 'alerts', component: AlertsComponent },
       { path: 'reminder', component: ReminderComponent },
-      { path: '', pathMatch: 'full', redirectTo: 'supplier'},
+      { path: '', pathMatch: 'full', redirectTo: 'main'},
     ]
   },
+  { path: 'users', component: UsersManagementComponent },
+  { path: 'profile', component: ProfileComponent },
   { path: '',
     redirectTo: '/login',
     pathMatch: 'full'

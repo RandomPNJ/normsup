@@ -9,24 +9,26 @@
                     <img style='height: 95px;' src="../../../assets/img/normsup-logo.png" alt="">
                     <h1 class="col s12">Connexion</h1>
                     <div>
-                        <label for="username" class="error" [ngClass]="iserror"> <img src="../../../assets/img/error-icn.svg" alt="" >&nbsp;&nbsp; Please enter a valid email address.</label><br>
+                        <label for="username" class="error" [ngClass]="iserror"> <img src="../../../assets/img/error-icn.svg" alt="" >&nbsp;&nbsp; Please enter a valid username or email address.</label><br>
                         <label for="password" class="error" [ngClass]="iserror1"><img src="../../../assets/img/error-icn.svg" alt="">&nbsp;&nbsp;Please enter a valid password.</label><br>
                     </div>
-                    <div class="input-field col s12">
-                        <i class="material-icons prefix">account_circle</i>
-                        <input type="email" placeholder="Username" name="username" [(ngModel)]='credentials.username' (focus)='remove()' required>
-
+                    <div class="input-group has-feedback has-feedback-left mb-3 login-input-container">
+                        <input type="email" class="form-control input-style" placeholder="Username" name="username" [(ngModel)]='credentials.username' (focus)='remove()' required>
+                        <i style="z-index: 4;color: #2786C4;" class="material-icons prefix form-control-feedback">account_circle</i>
                     </div>
 
-                    <div class="input-field col s12">
-                        <i class="material-icons prefix">lock</i>
-                        <input type="password" placeholder="Password" name="password" [(ngModel)]='credentials.password' (focus)='remove()' required>
+                    <div class="input-group has-feedback has-feedback-left mb-3 login-input-container">
+                        <input type="password" class="form-control input-style" placeholder="Password" name="password" [(ngModel)]='credentials.password' (focus)='remove()' required>
+                        <i style="z-index: 4;color: #2786C4;" class="material-icons prefix form-control-feedback">lock</i>
                     </div>
 
                 </div>
 
                 <div class="col s12">
-                    <button type="submit" class="btn" name="submit" (click)='validate(username, password)'>Sign in<i class="material-icons right">navigate_next</i></button>
+                    <button style="position: relative;" type="submit" class="btn" name="submit" (click)='validate()'>
+                            <span class="searchText">Connexion</span>
+                        <i class="material-icons right login-icn">navigate_next</i>
+                    </button>
                 </div>
             </form>
         </div>

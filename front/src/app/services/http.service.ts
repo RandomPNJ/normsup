@@ -50,6 +50,7 @@ export class HttpService implements OnDestroy {
   }
 
   public post<t>(actionUrl: string, body?: any): Observable<HttpResponse<t>> {
+    console.log('there')
     return this._http.post<t>(Configuration.serverUrl + actionUrl, body, {
       headers: this.headers,
       responseType: 'json',

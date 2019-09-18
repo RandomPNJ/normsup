@@ -6,6 +6,7 @@ import { HttpService } from 'src/app/services/http.service';
 // import {Configuration} from '../../../../config/environment.local';
 
 import 'datatables.net';
+import { HttpParams } from '@angular/common/http';
 
 @Component({
   selector: 'app-supplier-table',
@@ -21,9 +22,12 @@ export class SupplierTableComponent implements OnInit {
   items: Array<any> = [];
   dtElement: DataTableDirective;
   dataTable: any;
+  nbOfRows: any;
+  firstDraw: Boolean = true;
   tableParams: any = {
     start: 0,
-    length: 9
+    length: 10,
+    search: '',
   };
   dtOptions: DataTables.Settings = {};
   groupSelect: String;
@@ -32,6 +36,15 @@ export class SupplierTableComponent implements OnInit {
   constructor(private httpService: HttpService, private chRef: ChangeDetectorRef) { }
 
   ngOnInit() {
+    // First query to get the number of rows
+    let firstQParams = new HttpParams();
+    firstQParams = firstQParams.set('client', 'Fakeclient');
+    this.httpService
+      .get('/api/supplier/count', firstQParams)
+      .subscribe(res => {
+        this.nbOfRows = res.body['count'];
+      })
+    ;
     const that = this;
     $.fn['dataTable'].ext.search.push((settings, itemsToDisplay, dataIndex) => {
       const groupName = itemsToDisplay[1] || ''; // use data for the id column
@@ -45,14 +58,13 @@ export class SupplierTableComponent implements OnInit {
       return false;
     });
     this.dtOptions = {
-      lengthMenu: [10, 25, 50, -1],
+      lengthMenu: [[10, 25, 50, -1], [10, 25, 50, 'Tout afficher']],
       searchDelay: 4500,
       ordering: false,
       searching: true,
       responsive: true,
-      // pageLength: 10,
       serverSide: true,
-      processing: true,
+      // processing: true,
       language: {
           lengthMenu: 'Voir _MENU_ résultats par page',
           zeroRecords: 'Aucun résultat trouvé',
@@ -64,37 +76,40 @@ export class SupplierTableComponent implements OnInit {
               first:      'Premier',
               last:       'Dernier',
               next:       'Suivant',
-              previous:   'Précedent'
+              previous:   'Précédent'
           },
       },
       ajax: (dataTablesParameters: any, callback: any) => {
         const action = this.compareParams(dataTablesParameters);
         // that.tableParams = dataTablesParameters;
         // if()
-        console.log('tableParams', dataTablesParameters);
-        dataTablesParameters.company = 'Fakeclient';
+        console.log('tableParams', this.tableParams);
+        this.tableParams.company = 'Fakeclient';
         if(action === 'query') {
           that.httpService
-            .get('/api/supplier', dataTablesParameters)
+            .get('/api/supplier', this.tableParams)
             .subscribe(resp => {
-              console.log(resp);
+              // console.log(resp);
               that.data = that.data.concat(resp.body['items']);
               that.itemsToDisplay = that.data.slice(that.tableParams.start, that.tableParams.start + that.tableParams.length);
-  
+              // console.log('length =', that.data);
               that.myTable = true;
               callback({
-                recordsTotal: that.data.length,
-                recordsFiltered: that.data.length,
+                recordsTotal: that.nbOfRows, // grand total avant filtre
+                recordsFiltered: that.nbOfRows, // Nb d'onglet pagination
                 data: []
               });
             });
         } else if(action === 'redraw') {
           that.itemsToDisplay = that.data.slice(that.tableParams.start, that.tableParams.start + that.tableParams.length);
+          callback({
+            recordsTotal: that.nbOfRows, // grand total avant filtre
+            recordsFiltered: that.nbOfRows, // Nb d'onglet pagination
+            data: []
+          });
         }
       },
       preDrawCallback: function(settings) {
-        that.tableParams.start = settings._iDisplayStart;
-        that.tableParams.length = settings._iDisplayLength;
       },
       columns: [
         {
@@ -114,6 +129,7 @@ export class SupplierTableComponent implements OnInit {
       ]
     };
   }
+
   ngAfterViewInit(): void {
     // this.dtElement.dtInstance.then((dtInstance: any) => {
     //   dtInstance.columns.adjust()
@@ -124,37 +140,56 @@ export class SupplierTableComponent implements OnInit {
 
   compareParams(datatableParams) {
     // TODO : Ordering with multiple columns
-    if(!this.tableParams.start) {
-      this.tableParams = cloneDeep(datatableParams);
-      return 'query';
-    }
-    if(this.tableParams.start !== datatableParams.start && this.data.length <= datatableParams.start) {
-      this.tableParams = cloneDeep(datatableParams);
-      return 'query';
-    } else if(this.tableParams.search !== datatableParams.search.value) {
-      this.tableParams = cloneDeep(datatableParams);
-      return 'query';
-    } else if(this.tableParams.length !== datatableParams.length) {
-      this.tableParams = cloneDeep(datatableParams);
+    let action = 'none';
 
-      return 'query';
+    if(this.firstDraw) {
+      action = 'query';
+      this.firstDraw = false;
+      return action;
     }
-    this.tableParams = cloneDeep(datatableParams);
-    return 'redraw';
-    // if(this.tableParams.order.col != datatableParams.order.col) {
-
-    // }
+    if(this.tableParams.start !== datatableParams.start) {
+      this.tableParams.start = datatableParams.start;
+      if(this.data.length <= datatableParams.start) {
+        action = 'query';
+      } else {
+        action = 'redraw';
+      }
+    }
+    if(this.tableParams.search !== datatableParams.search.value) {
+      this.data.length = 0;
+      this.tableParams.search = datatableParams.search.value;
+      this.recount(this.tableParams.search);
+      action = 'query';
+    }
+    if(this.tableParams.length !== datatableParams.length) {
+      this.tableParams.length = datatableParams.length;
+      action = 'query';
+    }
+    return action;
 
   }
 
+  recount(search?: string) {
+    const that = this;
+    let firstQParams = new HttpParams();
+    firstQParams = firstQParams.set('client', 'Fakeclient');
+    if(search) {
+      firstQParams = firstQParams.set('search', search);
+    }
+    return this.httpService
+      .get('/api/supplier/count', firstQParams)
+      .subscribe(res => {
+        that.nbOfRows = res.body['count'];
+      })
+    ;
+  }
   filterByGroup(): void {
-    console.log(this.dtElement);
+    // console.log(this.dtElement);
     this.datatableElement.dtInstance.then((dtInstance: DataTables.Api) => {
       dtInstance.draw();
     });
   }
   edit(item) {
-    console.log(item);
   }
 
   delete(item) {

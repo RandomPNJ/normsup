@@ -26,7 +26,7 @@
                   <div class="card-body">
                     <hr/>
                     <div class="assign-div">
-                      <span class="assign-link" (click)="assign(item)">Assigner le groupe à un utilisateur</span> | <span>Géré par {{item.user}}</span>
+                      <span class="assign-link" (click)="openModal()">Assigner le groupe à un utilisateur</span> | <span>Géré par {{item.user}}</span>
                     </div>
                     <div class="table-cont">
                         <app-groups-table></app-groups-table>
@@ -37,4 +37,15 @@
             </div>
         </div>
       </div>
+      <ng-template #addCompGroup>
+        <div class="modal-header own-modal-header">
+          <h4 class="modal-title pull-left">Documents Légaux</h4>
+          <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <app-add-comp-group (hideModal)="hideModal()"></app-add-comp-group>
+        </div>
+      </ng-template>
 </div>

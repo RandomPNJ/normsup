@@ -1,0 +1,92 @@
+<div [ngClass]="{'sidebar-padding': sidebarVisible}" style="height: 100vh; background-color: #F4FAFF; overflow-y: auto;">
+  <div class="container main-cont">
+      <div class="cont-wrapper">
+        <div>
+          <span class="title">Mes utilisateurs</span>
+        </div>
+        <div class="sub-cont">
+          <!-- <span class="table-header">Vous avez {{itemsDisplay.length | i18nPlural: itemPluralMapping['supplier']}}.</span> -->
+          <div class="container">
+            <div class="row justify-content-end">
+              <div class="col-lg-auto col-md-auto">
+                <button (click)="openModal(template, 'AddUser')" type="button" class="btn btn-primary btn-sm">Ajouter un utilisateur</button>
+              </div>
+            </div>
+            <!-- <span (click)="openModal(template, 'Supplier')" class="glyphicon glyphicon-plus-sign plus-icn" role="button"></span> -->
+          </div>
+          <hr />
+          <div class="table-cont">
+            <app-users-table (modifyUser)="fillUser($event)"></app-users-table>
+          </div>
+        </div>
+      </div>
+      <ng-template class="test" #template>
+          <div class="modal-header own-modal-header">
+            <h4 class="modal-title pull-left">Ajouter un utilisateur</h4>
+            <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="container">
+              <div class="row" class="fade-in">
+                <form autocomplete="new-password" action="#" class="form-style">
+                    <div class="container">
+                      <div style="padding-top: 10px;" class="row">
+                        <div class="form-group  col s6">
+                          <label class="active" for="name">Prénom</label>
+                          <input id="name" name="name" type="text" class="form-control" [(ngModel)]="userToAdd.name" placeholder="Prénom">
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="form-group  col s6">
+                          <label class="active" for="lastname">Nom</label>
+                          <input id="lastname" name="lastname" type="text" class="form-control" [(ngModel)]="userToAdd.lastname" placeholder="Nom">
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="form-group col s6">
+                          <label class="active" for="email">Email</label>
+                          <input autocomplete="new-password" id="email" type="email" name="email" class="form-control" [(ngModel)]="userToAdd.email" placeholder="Email">
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="form-group col s6">
+                          <label class="active" for="role">Role</label>
+                          <select class="form-control" id="role"  name="role" [(ngModel)]="userToAdd.role">
+                              <option *ngFor="let c of roles" [ngValue]="c.value" [disabled]="c.name === ' '">{{c.name}}</option>
+                            </select>
+                        </div>
+                      </div>
+                      <div class="row" *ngIf="modalState === 'AddUser'">
+                        <div class="form-group col s6">
+                          <label class="active" for="mot-de-passe">Mot de passe</label>
+                          <input autocomplete="new-password" id="mot-de-passe" name="mot-de-passe" type="password" class="form-control" [(ngModel)]="userToAdd.password">
+                        </div>
+                      </div>
+                    </div>
+                  <div class="select-comp-but">
+                    <div class="container">
+                      <div class="row">
+                        <div class="col">
+                          <button style="float: right" (click)="addUser(userToAdd)" [disabled]="(!userToAdd.name || !userToAdd.lastname || !userToAdd.email || !userToAdd.password)" class="mb-2  submit-btn" type="submit" name="action">
+                            <span class="searchText">Ajouter</span>
+                            <i style="font-size: 22px !important;" class="material-icons right">send</i>
+                          </button>
+                        </div>
+                        <div class="col">
+                          <button style="float: left" (click)="hideModal()" class="mb-2 submit-btn" type="submit" name="action">
+                            <span class="searchText">Retour</span>
+                            <i style="font-size: 22px !important;"  class="material-icons right">send</i>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+    </div>
+</div>

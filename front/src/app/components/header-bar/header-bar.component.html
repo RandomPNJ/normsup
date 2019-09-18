@@ -1,4 +1,4 @@
-<div [ngClass]="getHeaderStyle()" class="navbar-fixed" style="z-index: 100000000;">
+<div *ngIf="showHeader" [ngClass]="getHeaderStyle()" class="navbar-fixed" style="z-index: 100000000;">
     <nav role="navigation" style="padding-bottom: 0px;padding-top: 0px;" class="navbar navbar-expand-sm navbar-dark">
         <a href="/dashboard/main" class="navbar-brand brand-logo">
             <img class="logo-img" src="../../../assets/img/white_basic_logo.png" alt="Logo">
@@ -23,26 +23,25 @@
                 <a id="reminder"  routerLinkActive="active" class="nav-link align-anchor disabled  navigation-item" routerLink="/dashboard/reminder"  role="tab">Relances</a>
             </li>
         </ul>
-        <div class='logout' tabindex="0" (click)='dropbox()' (blur)='closeDropDown()'>
-            <span>
-                <label>
-                    <!-- {{user.userName}} -->
-                    Yassin El Fahim
+        <div class='logout' tabindex="0" (click)='dropbox()' (blur)="closeDropDown()">
+            <span class="login-logout-span">
+                <label class="label-user-dropdown">
+                    {{user.name}} {{user.lastname}}
                 </label>
-                &nbsp; &nbsp; &nbsp; &nbsp;
-                <span class="glyphicon glyphicon-menu-down" style='color: #9e9e9e'></span>
+                &nbsp;
+                <span class="glyphicon glyphicon-menu-down" style='color: #9e9e9e'> </span>
             </span>
             <div *ngIf='isLogout' class="dropContent arrow_box">
-                <div class='selectData' (click)='secondBtn()'>
+                <div class='selectData' (click)='secondBtn("profile")'>
                     <p>Mon Compte<img src="{{profileIcon}}" style="padding-left: 10px;"alt=""></p>
                 </div>
-                <div class='selectData' (click)='secondBtn()'>
+                <div class='selectData' (click)='secondBtn("users")'>
                     <p>Gestion des utilisateurs<img src="{{usersIcon}}" style="padding-left: 10px;"alt=""></p>
                 </div>
-                <div class='selectData' (click)='secondBtn()'>
+                <div class='selectData' (click)='secondBtn("reporting")'>
                     <p>Générer un reporting<img src="{{reportingIcon}}" style="padding-left: 10px;"alt=""></p>
                 </div>
-                <div class='selectData' (click)='secondBtn()'>
+                <div class='selectData' (click)='secondBtn("contact")'>
                     <p>Contactez-nous<img src="{{contactIcon}}" style="padding-left: 10px;"alt=""></p>
                 </div>
                 <div class='selectData' (click)='backToLogin()'>

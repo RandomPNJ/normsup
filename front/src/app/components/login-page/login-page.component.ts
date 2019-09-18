@@ -1,9 +1,9 @@
-import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { BrowserStorageService } from 'src/app/services/storageService';
 import { ModalComponent } from '../modal/modal.component';
-import { ProductService } from 'src/app/services/product.service';
-import { HttpService } from '../../services/http.service';
+import { AuthService } from 'src/app/services/auth.service';
+import { Subscription } from 'rxjs';
 import { Configuration } from '../../config/environment';
 
 
@@ -12,13 +12,14 @@ import { Configuration } from '../../config/environment';
   templateUrl: './login-page.component.html',
   styleUrls: ['./login-page.component.scss']
 })
-export class LoginPageComponent implements OnInit {
+export class LoginPageComponent implements OnInit, OnDestroy {
 
   @ViewChild(ModalComponent) appModal: ModalComponent;
 
   credentials = {};
   iserror = 'hide';
   iserror1 = 'hide';
+  subscription: Subscription;
   title: any;
   message: any;
   type: any;
@@ -27,60 +28,52 @@ export class LoginPageComponent implements OnInit {
   show = false;
   constructor(private router: Router,
     private bsService: BrowserStorageService,
-    public productService: ProductService,
-    private httpService: HttpService) { }
+    public authService: AuthService) { }
 
   ngOnInit() {
-    this.bsService.clearLocalStorage();
+    // this.bsService.clearLocalStorage();
+  }
+  ngOnDestroy() {
+    if(this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
   showModal() {
     this.appModal.openLogin(this.type, this.message, this.title);
   }
 
-  validate(user, pwd) {
-    this.isLoader = true;
-    const username = user;
-    const password = pwd;
-    if (this.credentials['username'] === '' && this.credentials['password'] === '') {
-      console.log('Here');
-      this.iserror = '';
-      this.iserror1 = '';
-      this.isLoader = false;
-    } else if (this.credentials['username'] === '') {
-      this.iserror = '';
-      this.isLoader = false;
-    } else if (this.credentials['password'] === '') {
-      this.iserror1 = '';
-      this.isLoader = false;
-    } else {
-      const data = {
-        userName: user,
-        password: pwd
-      };
-      const url = '/api/auth/login';
-      this.productService.postLoginData(url, data)
+  validate() {
+    if (this.credentials['username'] !== '' && this.credentials['password'] !== '') {
+      this.isLoader = true;
+      this.subscription = this.authService.login(this.credentials['username'], this.credentials['password'])
         .subscribe((res) => {
           this.isLoader = false;
-          let response: any;
-          response = res;
-          if (response.data === 'Wrong password.') {
+          if (res['msg'] === 'Wrong password.') {
             this.type = 'error';
-            this.message = response.data;
+            this.message = res['msg'];
             this.title = 'Error';
             this.showModal();
-          } else if (response.attachedObj === null) {
+          } else if(res['data'] === {}) {
             this.type = 'error';
-            this.message = response.errorMsg;
+            this.message = res['msg'];
             this.title = 'Error';
             this.showModal();
           } else {
-            this.bsService.setLocalStorage('current_user', response.user);
-            this.bsService.setLocalStorage('token', response.token);
-            console.log(this.bsService.getLocalStorage('current_user'));
-            this.router.navigate(['search']);
+            this.bsService.setLocalStorage('current_user', JSON.stringify(res['data']));
+            this.bsService.setLocalStorage('token', res['token']);
+            this.router.navigate(['/dashboard/main']);
           }
         }, error => {
           this.isLoader = false;
+          this.type = 'error';
+          if(error['msg']) {
+            this.message = error['msg'];
+          } else {
+            // this.message = 'An error has occured when trying to log in. Please retry';
+            this.message = 'Une erreur s\'est produite, merci de réessayer de vous connecter';
+          }
+          this.title = 'Error';
+          this.showModal();
         });
     }
   }

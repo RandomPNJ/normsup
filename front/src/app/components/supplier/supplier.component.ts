@@ -134,7 +134,7 @@ export class SupplierComponent implements OnInit {
       return;
     }
     if(type == 'subModal') {
-      this.subModalRef.hide(1);
+      this.subModalRef.hide();
     } else {
       this.modalService.hide(1);
       this.modalState = 'enterSiret';
@@ -168,6 +168,8 @@ export class SupplierComponent implements OnInit {
 
   fillCompany(record: any) {
     this.companyToAdd.denomination = record.denominationunitelegale;
+    this.companyToAdd.legalUnit = record.classeunitelegale;
+    this.companyToAdd.postalCode = record.codepostaletablissement;
     this.companyToAdd.siren = record.siren;
     this.companyToAdd.address = record.adresseetablissement;
     this.companyToAdd.dateCreation = moment(record.datecreationetablissement, 'YYYY/MM/DD').format('DD/MM/YYYY');
@@ -210,7 +212,7 @@ export class SupplierComponent implements OnInit {
     data.comp.denomination = data.comp.denomination.charAt(0).toUpperCase() + data.comp.denomination.toLowerCase().slice(1);
     this.apiService.postData('/api/supplier/define_supplier', data.comp)
     .subscribe(res => {
-      this.hideModal();
+      this.hideModal('');
       console.log('Res ', res);
     }, err => {
       console.log('Error, ', err);

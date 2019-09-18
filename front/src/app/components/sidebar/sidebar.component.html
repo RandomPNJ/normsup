@@ -1,0 +1,84 @@
+<!-- Vertical navbar -->
+<div *ngIf="showHeader" class="vertical-nav blueHeader" id="sidebar">
+    <div style="background-color: #fff !important;" class="py-4 px-3 mb-4 reduce-nav">
+      <div class="media d-flex align-items-center">
+        <img src="https://res.cloudinary.com/mhmd/image/upload/v1556074849/avatar-1_tcnd60.png" alt="..." width="65" class="mr-3 rounded-circle img-thumbnail shadow-sm undisplay">
+        <div class="media-body undisplay">
+          <h4 class="m-0 one-liner">{{user.name}} {{user.lastname}}</h4>
+          <p class="font-weight-light text-muted mb-0 one-liner">{{user.mainOrg}}</p>
+        </div>
+      </div>
+    </div>
+  
+    <!-- <p class="text-gray font-weight-bold text-uppercase px-3 small pb-4 mb-0">Main</p> -->
+  
+    <ul class="nav flex-column bg-white mb-0">
+      <li class="nav-item">
+        <a id="main" routerLinkActive="active" routerLink="/dashboard/main" class="nav-link text-dark nav-link-s" role="tab">
+          <i style="padding-left: 11px;" class="fa fa-th-large mr-3 fa-fw icn-style"></i>
+          <span class="link-txt">Tableau de bord</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a id="supplier" routerLinkActive="active" class="nav-link text-dark nav-link-s" routerLink="/dashboard/supplier" role="tab">
+          <i class="fa fa-address-card mr-3 fa-fw icn-style"></i>
+          <span class="link-txt">Fournisseurs</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a id="groups" routerLinkActive="active" class="nav-link text-dark nav-link-s" routerLink="/dashboard/groups"  role="tab">
+          <i class="fa fa-cubes mr-3 fa-fw icn-style"></i>
+          <span class="link-txt">Groupes</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a id="stats" routerLinkActive="active" class="nav-link text-dark nav-link-s" routerLink="/dashboard/stats" role="tab">
+          <i class="fa fa-picture-o mr-3 fa-fw icn-style"></i>
+          <span class="link-txt">Statistiques</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a id="alerts" routerLinkActive="active" class="nav-link text-dark nav-link-s" routerLink="/dashboard/alerts" role="tab">
+          <i class="fa fa-picture-o mr-3 fa-fw icn-style"></i>
+          <span class="link-txt">Alertes</span>
+        </a>
+      </li>
+      <li class="nav-item">
+          <a id="reminder" routerLinkActive="active" class="nav-link text-dark nav-link-s" routerLink="/dashboard/reminder" role="tab">
+            <i class="fa fa-picture-o mr-3 fa-fw icn-style"></i>
+            <span class="link-txt">Relances</span>
+          </a>
+        </li>
+    </ul>
+  
+    <!-- <p class="text-gray font-weight-bold text-uppercase px-3 small py-4 mb-0">Charts</p>
+  
+    <ul class="nav flex-column bg-white mb-0">
+      <li class="nav-item">
+        <a href="#" class="nav-link text-dark ">
+                  <i class="fa fa-area-chart mr-3 text-primary fa-fw"></i>
+                  Area charts
+              </a>
+      </li>
+      <li class="nav-item">
+        <a href="#" class="nav-link text-dark ">
+                  <i class="fa fa-bar-chart mr-3 text-primary fa-fw"></i>
+                  Bar charts
+              </a>
+      </li>
+      <li class="nav-item">
+        <a href="#" class="nav-link text-dark ">
+                  <i class="fa fa-pie-chart mr-3 text-primary fa-fw"></i>
+                  Pie charts
+              </a>
+      </li>
+      <li class="nav-item">
+        <a href="#" class="nav-link text-dark ">
+                  <i class="fa fa-line-chart mr-3 text-primary fa-fw"></i>
+                  Line charts
+              </a>
+      </li>
+    </ul> -->
+  </div>
+  <!-- End vertical navbar -->
+  

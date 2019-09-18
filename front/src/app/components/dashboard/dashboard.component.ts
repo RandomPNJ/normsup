@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DashboardComponent implements OnInit {
 
+  sidebarVisible: Boolean = true;
   constructor() { }
 
   ngOnInit() {

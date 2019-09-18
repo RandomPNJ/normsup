@@ -37,6 +37,13 @@ import { FocusDirective } from './directives/focus.directive';
 import { SupplierInfoModalComponent } from './components/supplier/supplier-info-modal/supplier-info-modal.component';
 import { LegalDocModalComponent } from './components/supplier/legal-doc-modal/legal-doc-modal.component';
 import { CompDocModalComponent } from './components/supplier/comp-doc-modal/comp-doc-modal.component';
+import { AddCompGroupComponent } from './components/groups/add-comp-group/add-comp-group.component';
+import { UsersManagementComponent } from './components/users-management/users-management.component';
+import { ProfileComponent } from './components/profile/profile.component';
+import { UsersTableComponent } from './components/users-management/users-table/users-table.component';
+import { GuestGuard } from './auth/guest.guard';
+import { LoggedinGuard } from './auth/loggedin.guard';
+import { SidebarComponent } from './components/sidebar/sidebar.component';
 
 @NgModule({
   declarations: [
@@ -58,6 +65,11 @@ import { CompDocModalComponent } from './components/supplier/comp-doc-modal/comp
     SupplierInfoModalComponent,
     LegalDocModalComponent,
     CompDocModalComponent,
+    AddCompGroupComponent,
+    UsersManagementComponent,
+    ProfileComponent,
+    UsersTableComponent,
+    SidebarComponent,
   ],
   imports: [
     BrowserModule,
@@ -90,7 +102,9 @@ import { CompDocModalComponent } from './components/supplier/comp-doc-modal/comp
     AddSupplierModalComponent
   ],
   providers: [
-    BrowserStorageService
+    BrowserStorageService,
+    GuestGuard,
+    LoggedinGuard
   ],
   bootstrap: [AppComponent]
 })

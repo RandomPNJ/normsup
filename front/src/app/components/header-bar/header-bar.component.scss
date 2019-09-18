@@ -135,7 +135,8 @@ nav .dropdown-trigger .arrowNavIcon {
 
     border-radius: 14px;
     margin-top: 7px;
-    position: relative;
+    position: absolute;
+    left: 75px;
     border-width: 1px;
 
 
@@ -149,7 +150,9 @@ nav .dropdown-trigger .arrowNavIcon {
 
 .arrow_box:after, .arrow_box:before {
 	bottom: 100%;
-	left: 73%;
+    // left: 73%;
+    // right: 18px;
+    float: right;
 	border: solid transparent;
 	content: " ";
 	height: 0;
@@ -158,6 +161,23 @@ nav .dropdown-trigger .arrowNavIcon {
 	pointer-events: none;
 }
 
+
+.login-logout-span {
+    min-width: 150px;
+    max-width: 200px;
+    display: inline-block;
+    height: 100%;
+}
+
+.label-user-dropdown {
+    height: 100%;
+    display: inline-block;
+    line-height: 30px;
+    width: 90%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
 .arrow_box:after {
 	border-color: rgba(0, 0, 0, 0);
 	border-bottom-color: #ffff;
@@ -202,7 +222,8 @@ hr {
 .selectData p {
     margin: 0;
     height: 100%;
-    line-height: 42px;
+    // line-height: 42px;
+    min-width: 105px;
 }
 
 .logo-app {
@@ -242,6 +263,7 @@ hr {
 
     .selectData{
         border-bottom: 1px solid #4E4E7B;
+        padding: 10px 10px;
     }
 
     .selectData:last-child{
