@@ -73,7 +73,7 @@ export default {
         { name: 'manageAlerts', uriPattern: '/alerts/manage', method: 'post' },
         { name: 'getAlerts', uriPattern: '/alerts/:id', method: 'get' },
         { name: 'manageReminders', uriPattern: '/reminders/manage', method: 'post' },
-        { name: 'getReminders', uriPattern: '/reminders', method: 'get' },
+        { name: 'getReminders', uriPattern: '/reminders/:id', method: 'get' },
       ]
     }
   },
@@ -87,6 +87,10 @@ export default {
     suppliers: {
       db: 'db:sqlDB',
       aliases: ['supplier', 'suppliers'],
+    },
+    settings: {
+      db: 'db:sqlDB',
+      aliases: ['setting', 'settings'],
     },
   }, // if using a DB
   AUTOSTART: _.isBoolean(process.env.AUTOSTART) ? process.env.AUTOSTART : true,

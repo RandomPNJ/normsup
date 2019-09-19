@@ -34,6 +34,7 @@ export default class UserRegistry {
                     .then(res => {
                         if(res === true) {
                             const payload = {
+                                id: user.id,
                                 username: user.username,
                                 email: user.email,
                                 name: user.name,
@@ -57,7 +58,7 @@ export default class UserRegistry {
 
     public genToken(payload) {
         let token = jwt.sign(payload, config.secret, { expiresIn: 36000 });
-        return `Bearer ${token}`;
+        return token;
     }
 
     public getUsers(data) {

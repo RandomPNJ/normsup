@@ -16,27 +16,18 @@ export function getAlerts(req, res, SettingsRegistry) {
     // if (!req.decoded) {
     //     return Promise.reject(`Cannot get user informations, invalid request.`);
     // }
+    const params = req.params;
+    loggerT.verbose('Getting the client\'s alerts settings.');
+    if(!params.id) {
+        const error = new Error(`Invalid request, no id specified.`);
+        error['statusCode'] = 400;
+        throw error;
+    }
 
-    const params = req.query;
-    loggerT.verbose('Getting the suppliers.');
-    if(!params.length) {
-        params.length = 10;
-    } else {
-        params.length = parseInt(params.length, 10);
-    }
-    let data = {
-        company: params.company,
-        limit: params.length,
-        search: params.search
-    };
-    if(params.start) {
-        data['start'] = parseInt(params.start, 10);
-    }
-    loggerT.verbose('params == ', data);
-    return SettingsRegistry.getAlerts(data)
+    return SettingsRegistry.getAlerts(params.id)
         .then(res => {
             let result = {
-                items: res
+                settings: res
             };
             return result;
         })

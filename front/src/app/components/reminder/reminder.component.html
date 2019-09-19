@@ -1,3 +1,84 @@
-<p>
-  reminder works!
-</p>
+<div class="container main-cont">
+    <div class="cont-wrapper">
+      <div>
+        <span class="title">Paramétrage des relances</span>
+      </div>
+      <div class="sub-cont">
+        <hr />
+        <div class="alert-cont" *ngIf="!loading">
+          <!-- <span class="alert-subtitle">
+            Paramétrage des alertes
+          </span> -->
+          <div>
+            <div class="alert-left-col">
+              <div>
+                <div class="form-group row mb-5 mt-5">
+                  <div class="col-md-3 col-sm-3  txt-styling">Recevoir des alertes par e-mail</div>
+                  <div class="col-md-1 col-sm-1 custom-control custom-switch toggle-alert-btn">
+                    <input type="checkbox" class="custom-control-input" [(ngModel)]="settings.alerts_state" id="alertState">
+                    <label class="custom-control-label" for="alertState"></label>
+                  </div>
+                </div>
+                <div *ngIf="settings.alerts_state" class="form-group row mb-5 ml-2">
+                  <div class="col-md-3 col-sm-3 txt-styling">Fournisseur à jour</div>
+                  <div class="col-md-1 col-sm-1">
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" [(ngModel)]="settings.alert_valid_sup" id="alertValidSup">
+                      <label class="form-check-label" for="alertValidSup"></label>
+                    </div>
+                  </div>
+                </div>
+                <div *ngIf="settings.alerts_state" class="form-group row mb-5 ml-2">
+                  <div class="col-md-3 col-sm-3 txt-styling">Fournisseur connectés/hors ligne</div>
+                  <div class="col-md-1 col-sm-1">
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" [(ngModel)]="settings.alert_invalid_sup" id="alertInvalidSup">
+                      <label class="form-check-label" for="alertInvalidSup"></label>
+                    </div>
+                  </div>
+                </div>
+                <div *ngIf="settings.alerts_state" class="form-group row mb-5 ml-2">
+                  <div class="col-md-3 col-sm-3 txt-styling">Adresse email invalides</div>
+                  <div class="col-md-1 col-sm-1">
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" [(ngModel)]="settings.alert_invalid_mail" id="alertInvalidMail">
+                      <label class="form-check-label" for="alertInvalidMail"></label>
+                    </div>
+                  </div>
+                </div>
+                <div *ngIf="settings.alerts_state" class="form-group row mb-5 ml-2">
+                  <label class="col-md-3 col-sm-3 col-form-label" for="alertFrequency">Fréquence des alertes</label>
+                  <div class="col-md-2 col-sm-4">
+                    <select class="form-control" id="alertFrequency"  name="alertFrequency" [(ngModel)]="settings.alert_frequency">
+                      <option *ngFor="let c of frequency" [ngValue]="c.value" [disabled]="c.name === ' '">{{c.name}}</option>
+                    </select>
+                  </div>
+                </div>
+                <div *ngIf="settings.alerts_state" class="row ml-2">
+                  <button (click)="openModal()" type="button" class="btn btn-outline-normsup">Sélectionnez le(s) groupe(s)</button>
+                </div>
+              </div>
+              <div class="col text-center pt-5">
+                  <button (click)="updatesettings()" type="button" class="btn btn-primary rounded">Confirmer</button>
+                </div>
+            </div>
+          </div>
+        </div>
+        <div class="loading" *ngIf="loading">
+  
+        </div>
+      </div>
+    </div>
+    <ng-template #selectSupp>
+      <div class="modal-header own-modal-header">
+        <h4 class="modal-title pull-left">Documents Légaux</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <app-add-comp-group (hideModal)="hideModal()"></app-add-comp-group>
+      </div>
+    </ng-template>
+  </div>
+  

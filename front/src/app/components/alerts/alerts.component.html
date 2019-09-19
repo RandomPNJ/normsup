@@ -5,7 +5,7 @@
     </div>
     <div class="sub-cont">
       <hr />
-      <div class="alert-cont">
+      <div class="alert-cont" *ngIf="!loading">
         <!-- <span class="alert-subtitle">
           Paramétrage des alertes
         </span> -->
@@ -15,46 +15,46 @@
               <div class="form-group row mb-5 mt-5">
                 <div class="col-md-3 col-sm-3  txt-styling">Recevoir des alertes par e-mail</div>
                 <div class="col-md-1 col-sm-1 custom-control custom-switch toggle-alert-btn">
-                  <input type="checkbox" class="custom-control-input" [(ngModel)]="preferences.alertState" id="alertState">
+                  <input type="checkbox" class="custom-control-input" [(ngModel)]="preferences.alerts_state" id="alertState">
                   <label class="custom-control-label" for="alertState"></label>
                 </div>
               </div>
-              <div *ngIf="!preferences.alertSwitch" class="form-group row mb-5 ml-2">
+              <div *ngIf="preferences.alerts_state" class="form-group row mb-5 ml-2">
                 <div class="col-md-3 col-sm-3 txt-styling">Fournisseur à jour</div>
                 <div class="col-md-1 col-sm-1">
                   <div class="form-check">
-                    <input class="form-check-input" type="checkbox" [(ngModel)]="preferences.alertValidSup" id="alertValidSup">
+                    <input class="form-check-input" type="checkbox" [(ngModel)]="preferences.alert_valid_sup" id="alertValidSup">
                     <label class="form-check-label" for="alertValidSup"></label>
                   </div>
                 </div>
               </div>
-              <div *ngIf="!preferences.alertSwitch" class="form-group row mb-5 ml-2">
+              <div *ngIf="preferences.alerts_state" class="form-group row mb-5 ml-2">
                 <div class="col-md-3 col-sm-3 txt-styling">Fournisseur connectés/hors ligne</div>
                 <div class="col-md-1 col-sm-1">
                   <div class="form-check">
-                    <input class="form-check-input" type="checkbox" [(ngModel)]="preferences.alertInvalidSup" id="alertInvalidSup">
+                    <input class="form-check-input" type="checkbox" [(ngModel)]="preferences.alert_invalid_sup" id="alertInvalidSup">
                     <label class="form-check-label" for="alertInvalidSup"></label>
                   </div>
                 </div>
               </div>
-              <div *ngIf="!preferences.alertSwitch" class="form-group row mb-5 ml-2">
+              <div *ngIf="preferences.alerts_state" class="form-group row mb-5 ml-2">
                 <div class="col-md-3 col-sm-3 txt-styling">Adresse email invalides</div>
                 <div class="col-md-1 col-sm-1">
                   <div class="form-check">
-                    <input class="form-check-input" type="checkbox" [(ngModel)]="preferences.alertInvalidMail" id="alertInvalidMail">
+                    <input class="form-check-input" type="checkbox" [(ngModel)]="preferences.alert_invalid_mail" id="alertInvalidMail">
                     <label class="form-check-label" for="alertInvalidMail"></label>
                   </div>
                 </div>
               </div>
-              <div *ngIf="!preferences.alertSwitch" class="form-group row mb-5 ml-2">
+              <div *ngIf="preferences.alerts_state" class="form-group row mb-5 ml-2">
                 <label class="col-md-3 col-sm-3 col-form-label" for="alertFrequency">Fréquence des alertes</label>
                 <div class="col-md-2 col-sm-4">
-                  <select class="form-control" id="alertFrequency"  name="alertFrequency" [(ngModel)]="preferences.alertFrequency">
+                  <select class="form-control" id="alertFrequency"  name="alertFrequency" [(ngModel)]="preferences.alert_frequency">
                     <option *ngFor="let c of frequency" [ngValue]="c.value" [disabled]="c.name === ' '">{{c.name}}</option>
                   </select>
                 </div>
               </div>
-              <div *ngIf="!preferences.alertSwitch" class="row ml-2">
+              <div *ngIf="preferences.alerts_state" class="row ml-2">
                 <button (click)="openModal()" type="button" class="btn btn-outline-normsup">Sélectionnez le(s) groupe(s)</button>
               </div>
             </div>
@@ -63,6 +63,9 @@
               </div>
           </div>
         </div>
+      </div>
+      <div class="loading" *ngIf="loading">
+
       </div>
     </div>
   </div>

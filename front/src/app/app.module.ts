@@ -44,6 +44,7 @@ import { UsersTableComponent } from './components/users-management/users-table/u
 import { GuestGuard } from './auth/guest.guard';
 import { LoggedinGuard } from './auth/loggedin.guard';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { ProfileFlyoverComponent } from './components/profile-flyover/profile-flyover.component';
 
 @NgModule({
   declarations: [
@@ -70,6 +71,7 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
     ProfileComponent,
     UsersTableComponent,
     SidebarComponent,
+    ProfileFlyoverComponent,
   ],
   imports: [
     BrowserModule,
