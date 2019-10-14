@@ -1,3 +1,56 @@
-<p>
-  add-comp-group works!
-</p>
+<div class="container">
+  <div *ngIf="state === 'GROUPNAME'">
+    <div class="row">
+      <div style="margin: auto;" class="mb-5">
+          <span class="add-grp-title">Nouveau groupe</span>
+      </div>
+    </div>
+    <div class="row mb-5">
+      <div class="col-md-5" style="margin: auto;">
+        <span class="inpt-label">
+          <label for="groupName">Nom du groupe</label>
+        </span>
+        <input (keyup.enter)="nextStep('GROUPMEMBERS')" [(ngModel)]="groupName" style="padding: 1rem 1rem !important; text-align: center;" type="text" class="form-control" id="groupName" aria-describedby="groupName">
+      </div>
+    </div>
+  
+    <div class="row">
+      <div style="margin: auto; position: relative;">
+        <button (click)="nextStep('GROUPMEMBERS')" type="button" class="btn btn-normsup modal-btn-cent btn-sm" style="border-radius: 5px !important;text-transform: capitalize; font-size: 11px;min-width: 90px;"> <span></span>Suivant</button>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="state === 'GROUPMEMBERS'">
+    <div class="row">
+      <div style="margin: auto;">
+        <span style="display: block;" class="pb-4 fs-12">Choisissez les fournisseurs appartenant au groupe</span>
+      </div>
+    </div>
+    <div class="row">
+      <div style="margin: auto;" class="pb-5 col-9">
+        <!-- <form #f="ngForm" [formGroup]="groupForm">
+          <label for="groupMembers"></label> -->
+          <!-- <textarea formControlName="searchGroupCtrl" class="form-control" id="groupMembers" rows="5"></textarea> -->
+          <ng-select 
+            [items]="people$ | async"
+            bindLabel="denomination"
+           [multiple]="true"
+           [hideSelected]="true"
+           [trackByFn]="trackByFn"
+           [loading]="peopleLoading"
+           [typeahead]="peopleInput$"
+           [ngModelOptions]="{standalone: true}"
+           [(ngModel)]="selectedPersons">
+          </ng-select>
+        <!-- </form> -->
+      </div>
+      <!-- <a class="trigger info-color text-white">Add<i class="fas fa-plus ml-2"></i></a> -->
+    </div>
+    <div class="row">
+      <div style="margin: auto; position: relative;">
+        <button (click)="nextStep('GROUPNAME')" type="button" class="btn btn-normsup first-btn-cent btn-sm" style="text-transform: capitalize; font-size: 11px; border: none !important;min-width: 90px;"> <span></span>Précédent</button>
+        <button (click)="createGroup()" type="button" class="btn btn-primary scd-btn-cent btn-sm rounded" style="text-transform: capitalize; font-size: 11px;min-width: 90px;"> <span></span>Valider</button>
+      </div>
+    </div>
+  </div>
+</div>

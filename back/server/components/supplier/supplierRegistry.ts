@@ -2,7 +2,6 @@ import { Promise, any } from 'bluebird';
 import * as _ from 'lodash';
 import * as Query from './queries';
 import config from '../../config/environment/index';
-import { Get, UseBefore } from 'routing-controllers';
 
 const fakeData = require('./fakeData.json');
 declare var loggerT: any;
@@ -15,22 +14,64 @@ export default class SupplierRegistry {
         this.mysql = mysql;
     }
 
+    public getQueryType(data: any) {
+        /*
+         * start search company group
+        */
+        let v = '';
+        let values = [];
+        if(data.company) { 
+            v += 'C'; 
+            values.push(data.company);
+            loggerT.verbose('Values three === ', values);
+        }
+        if(data.group) { 
+            v += 'G'; 
+            values.push(data.group);
+            loggerT.verbose('Values four === ', values);
+        }
+        if(data.search) { 
+            v += 'SE';
+            data.search = '%' + data.search + '%';
+            values.push(data.search);
+            values.push(data.search);
+            values.push(data.search);
+            loggerT.verbose('Values two === ', values);
+        }
+        if(data.start || data.start === 0) { 
+            v += 'S';
+            values.push(data.limit);
+            values.push(data.start);
+            loggerT.verbose('Values one === ', values);
+        }
+
+        const final = config.queries[v];
+        loggerT.verbose('Values final === ', values);
+        loggerT.verbose('Query final === ', final);
+        return {
+            type: final,
+            values: values
+        }
+    }
+
     public getSuppliers(data) {
         let query = {
             timeout: 40000
         };
-        const s = data.search ? data.search = '%' + data.search + '%' : '';
-
-        if(data.hasOwnProperty('start') && data.search) {
-            query['sql']    = Query.QUERY_GET_SUPPLIER_OFFLIM_SEARCH;
-            query['values'] = [data.company, s, s, s,  data.limit, data.start];
-        } else if(data.hasOwnProperty('start')) {
-            query['sql']    = Query.QUERY_GET_SUPPLIER_OFFLIM;
-            query['values'] = [data.company, data.limit, data.start];
-        } else {
-            query['sql'] = Query.QUERY_GET_SUPPLIER;
-            query['values'] = [data.company];
-        }
+        // const s = data.search ? data.search = '%' + data.search + '%' : '';
+        const queryTypeValues = this.getQueryType(data);
+        query['sql']    = Query[queryTypeValues['type']];
+        query['values']    = queryTypeValues['values'];
+        // if(data.hasOwnProperty('start') && data.search) {
+        //     query['sql']    = Query.QUERY_GET_SUPPLIER_OFFLIM_SEARCH;
+        //     query['values'] = [data.company, s, s, s,  data.limit, data.start];
+        // } else if(data.hasOwnProperty('start')) {
+        //     query['sql']    = Query.QUERY_GET_SUPPLIER_OFFLIM;
+        //     query['values'] = [data.company, data.limit, data.start];
+        // } else {
+        //     query['sql'] = Query.QUERY_GET_SUPPLIER;
+        //     query['values'] = [data.company];
+        // }
         return this.mysql.query(query)
             .then((res, fields) => {
                 loggerT.verbose('fields', fields)
@@ -44,22 +85,43 @@ export default class SupplierRegistry {
         ;
     }
 
-
-    public countSuppliers(data) {
+    public getGroups(org) {
         let query = {
             timeout: 40000
         };
 
-        const s = data.search ? data.search = '%' + data.search + '%' : '';
+        query['sql'] = Query.QUERY_GET_GROUPS;
+        query['values'] = [org];
+        return this.mysql.query(query)
+            .then((res, fields) => {
+                loggerT.verbose('fields', fields)
+                loggerT.verbose('QUERY RES ==== ', res);
+                return Promise.resolve(res);
+            })
+            .catch(err => {
+                loggerT.error('ERROR ON QUERY getGroups.');
+                return Promise.reject(err);
+            })
+        ;
+    }
 
+    public countSuppliers(data, user) {
+        let query = {
+            timeout: 40000
+        };
+        data.client = user.organisation;
+        const s = data.search ? data.search = '%' + data.search + '%' : '';
+        loggerT.verbose('Count data : ', data);
         if(data.client && data.search) {
             loggerT.verbose('Recount == ', s);
             query['sql']    = Query.QUERY_COUNT_SUPPLIERS_SEARCH;
             query['values'] = [data.client, s];
         } else if(data.client) {
+            loggerT.verbose('Recount 2 == ', s);
             query['sql']    = Query.QUERY_COUNT_SUPPLIERS_CLIENT;
             query['values'] = [data.client];
         } else {
+            loggerT.verbose('Recount 3 == ', s);
             query['sql'] = Query.QUERY_COUNT_SUPPLIERS;
         }
         return this.mysql.query(query)
@@ -75,20 +137,73 @@ export default class SupplierRegistry {
         ;
     }
 
-    public createSupplier(data) {
+    public createSupplier(data, user) {
         loggerT.verbose('Data : ', data);
+        if(!data.dateCreation)
+            data.dateCreation = new Date();
         let query = {
             timeout: 40000
         };
         query['sql']    = Query.INSERT_SUPPLIER;
         query['values'] = [data];
+
         return this.mysql.query(query)
             .then(res => {
-                loggerT.verbose('QUERY RES ==== ', res);
-                return Promise.resolve(res);
+                loggerT.verbose('FIRST QUERY RES ==== ', res);
+                let newInsert = {};
+                newInsert['supplier_id'] = res.insertId;
+                newInsert['client_id'] = user.organisation;
+
+                query['sql']    = Query.INSERT_REL;
+                query['values'] = [newInsert];
+                return this.mysql.query(query)
+                    .then(res => {
+
+                        return Promise.resolve(res);
+                    })
+                    .catch(err => {
+                        loggerT.error('ERROR ON SECOND QUERY createSuppliers : ', err);
+                        return Promise.reject(err);
+                    })
+                ;
             })
             .catch(err => {
-                loggerT.error('ERROR ON QUERY getSuppliers : ', err);
+                loggerT.error('ERROR ON FIRST QUERY createSuppliers : ', err);
+                return Promise.reject(err);
+            })
+        ;
+    }
+    public createGroup(data, suppliers) {
+        let query = {
+            timeout: 40000
+        };
+        query['sql']    = Query.INSERT_GROUP;
+        query['values'] = [data];
+
+        return this.mysql.query(query)
+            .then(res => {
+
+                let v = [];
+                suppliers.forEach(supp => {
+                    v.push([res.insertId, supp.member_id]);
+                });
+                
+                query['sql']    = Query.INSERT_GROUP_MEM;
+                query['values'] = [v];
+                
+                return this.mysql.query(query)
+                    .then(res => {
+
+                        return Promise.resolve(res);
+                    })
+                    .catch(err => {
+                        loggerT.error('ERROR ON SECOND QUERY createGroup : ', err);
+                        return Promise.reject(err);
+                    })
+                ;
+            })
+            .catch(err => {
+                loggerT.error('ERROR ON QUERY createGroup : ', err);
                 return Promise.reject(err);
             })
         ;

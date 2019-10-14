@@ -161,6 +161,18 @@ nav .dropdown-trigger .arrowNavIcon {
 	pointer-events: none;
 }
 
+.arrow_box:after {
+    border-color: rgba(0, 0, 0, 0);
+    border-bottom-color: #ffff;
+    border-width: 6px;
+    margin-left: -6px;
+}
+.arrow_box:before {
+    border-color: rgba(0, 0, 0, 0);
+    border-bottom-color: #000000;
+    border-width: 7px;
+    margin-left: -7px;
+}
 
 .login-logout-span {
     min-width: 150px;
@@ -177,18 +189,6 @@ nav .dropdown-trigger .arrowNavIcon {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-}
-.arrow_box:after {
-	border-color: rgba(0, 0, 0, 0);
-	border-bottom-color: #ffff;
-	border-width: 6px;
-	margin-left: -6px;
-}
-.arrow_box:before {
-	border-color: rgba(0, 0, 0, 0);
-	border-bottom-color: #000000;
-	border-width: 7px;
-	margin-left: -7px;
 }
 
 hr {

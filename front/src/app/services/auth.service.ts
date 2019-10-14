@@ -37,6 +37,7 @@ export class AuthService implements OnInit {
 
   public isLoggedIn(): any {
     let loggedUser = this.bsService.getLocalStorage('current_user');
+    console.log('logged', loggedUser);
     loggedUser = JSON.parse(loggedUser);
     if(loggedUser && loggedUser.username) {
       // I do this to preserve data coherency, as API return user in data property

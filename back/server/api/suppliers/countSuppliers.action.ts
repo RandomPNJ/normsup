@@ -12,11 +12,11 @@ export default {
 };
 
 export function getSuppliers(req, res, SupplierRegistry) {
-    // if (!req.decoded) {
-    //     return Promise.reject(`Cannot get user informations, invalid request.`);
-    // }
+    if (!req.decoded) {
+        return Promise.reject(`Cannot get user informations, invalid request.`);
+    }
 
-    return SupplierRegistry.countSuppliers(req.query)
+    return SupplierRegistry.countSuppliers(req.query, req.decoded)
         .then(res => {
             let result = {
                 count: res

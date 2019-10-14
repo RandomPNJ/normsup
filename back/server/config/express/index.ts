@@ -6,10 +6,12 @@
 import * as helmet from 'helmet';
 import * as compression from 'compression';
 import * as bodyParser from 'body-parser';
-import {useExpressServer, useContainer} from 'routing-controllers';
+// import {useExpressServer, useContainer} from 'routing-controllers';
 import * as passport from 'passport';
 import * as passportJWT from 'passport-jwt';
 import config from '../environment';
+import * as UserLogin from '../../api/auth/login.action';
+import {AuthenticatorMiddleware} from './auth-middleware';
 
 declare var loggerT: any;
 declare var loggerIO: any;
@@ -33,7 +35,7 @@ export default (expressApp) => {
   expressApp.use('/', (req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS, PATCH');
-    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, X-access-token');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
 
     if (req.method === 'OPTIONS') {
       return res.sendStatus(200).end();
@@ -60,27 +62,28 @@ export default (expressApp) => {
   jwtOptions['secretOrKey'] = secret;
 
   // lets create our strategy for web token
-  // let strategy = new JwtStrategy(jwtOptions, function(jwt_payload, next) {
-  //   console.log('payload received', jwt_payload);
-  //   let user = getUser({ id: jwt_payload.id });
-  //   if (user) {
-  //     next(null, user);
-  //   } else {
-  //     next(null, false);
-  //   }
-  // });
-  // use the strategy
-  // passport.use(strategy);
+  let strategy = new JwtStrategy(jwtOptions, 
+    (jwtPayload, next) => {
+    console.log('payload received', jwtPayload);
+    // let user = getUser({ id: jwtPayload.id });
+    if (Date.now() > jwtPayload.expires) {
+      return next('jwt expired');
+    }
 
-  // expressApp.use(passport.initialize());
+    return next(null, jwtPayload);
+  });
+  // use the strategy
+  passport.use(strategy);
+  expressApp.use(passport.initialize());
 
   // Authentification middleware
-  // const AuthentMiddleware = new AuthenticatorMiddleware();
-  // expressApp.use('/api', (req, res, next) => {
-  //   if (req.url === '/auth/login') {
-  //     return next();
-  //   }
-  //   AuthentMiddleware.use(req, res, next);
-  // });
+  const AuthMiddleware = new AuthenticatorMiddleware();
+  expressApp.use('/api', (req, res, next) => {
+    if (req.url === '/auth/login') {
+      return next();
+    }
+    AuthMiddleware.use(req, res, next);
+  });
+  // expressApp.use('/api', passport.authenticate('jwt', {session:false}));
 
 };

@@ -17,6 +17,7 @@ import UserRegistry from './components/users/usersRegistry';
 import DocumentsRegistry from './components/documents/documentsRegistry';
 import SupplierRegistry from './components/supplier/supplierRegistry';
 import SettingsRegistry from './components/settings/settingsRegistry';
+import AuthRegistry from './components/auth/authRegistry';
 
 const app = global['app'] || new ServiceManager({ retryUpAndRunning: -1 });
 

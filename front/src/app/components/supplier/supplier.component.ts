@@ -174,7 +174,8 @@ export class SupplierComponent implements OnInit {
     this.companyToAdd.address = record.adresseetablissement;
     this.companyToAdd.dateCreation = moment(record.datecreationetablissement, 'YYYY/MM/DD').format('DD/MM/YYYY');
     this.companyToAdd.siret = record.siret;
-    this.companyToAdd.client = 'Fakeclient';
+    this.companyToAdd.city = record.libellecommuneetablissement;
+    // this.companyToAdd.client = 'Fakeclient';
   }
 
   openInfoModal(event) {

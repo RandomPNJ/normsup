@@ -1,228 +1,187 @@
-<div class="dash-container">
-  
-  <!-- <app-stats-card></app-stats-card> -->
-  <!--Grid row-->
-  <div class="row wow fadeIn justify-content-md-center">
-      <!--Grid column-->
-      <div class="col-lg-auto col-md-auto mb-4">
+<div class="dash-container container dashboard">
 
-          <!--Card-->
-          <mdb-card class="canvaCard">
+  <div class="row wow fadeIn justify-content-md-center first-row">
 
-              <!-- Card header -->
-              <div class="card-header box-title">Mon Entreprise</div>
-
-              <!--Card content-->
-              <mdb-card-body>
-                <div class="row">
-                  <div class="col" style="display: inline-block;">
-                      <div style="width: 120px; height: 120px; position: relative;">
-                        <div style="width: 100%; position: absolute; top: 50%; left: 0; margin-top: -20px; line-height:19px; text-align: center; z-index: 999999999999999">
-                            <span class="number-fourn">{{nbFourni}}</span>
-                              <br/>
-                            <span class="fourn-text">Fournisseurs</span>
-                        </div>
-                      <canvas mdbChart [chartType]="chart5Type" [datasets]="doughnutData"
-                              [colors]="chartColors" [options]="doughnutOpt"
-                              [legend]="true">
-                      </canvas>
-                    </div>
-                    <div class="details-link">Voir en détail >></div>
-                  </div>
-
-                  <div class="col" style="display: inline-block;">
-                      <div style="width: 120px; height: 120px; position: relative;">
-                        <div style="width: 100%; position: absolute; top: 50%; left: 0; margin-top: -20px; line-height:19px; text-align: center; z-index: 999999999999999">
-                          <span class="number-fourn">{{nbFourni}}</span>
-                          <br/>
-                          <span class="fourn-text">Groupes</span>
-                        </div>
-                      <canvas mdbChart [chartType]="chart5Type" [datasets]="doughnutData"
-                              [colors]="chartColors" [options]="doughnutOpt"
-                              [legend]="true">
-                      </canvas>
-                    </div>
-                    <div class="details-link">Voir en détail >></div>
-                  </div>
+    <!-- <mdb-card class="canvaCard">
+      <div class="card-header box-title">Mon Entreprise</div>
+      <mdb-card-body>
+        <div class="row">
+          <div class="col" style="display: inline-block;">
+              <div style="width: 120px; height: 120px; position: relative;">
+                <div style="width: 100%; position: absolute; top: 50%; left: 0; margin-top: -20px; line-height:19px; text-align: center; z-index: 999999999999999">
+                    <span class="number-fourn">{{nbFourni}}</span>
+                      <br/>
+                    <span class="fourn-text">Fournisseurs</span>
                 </div>
-            </mdb-card-body>
-
-        </mdb-card>
-        <!--/.Card-->
-      </div>
-  <!--Grid column-->
-  <div class="col">
-
-  </div>
-      <!--Grid column-->
-      <div class="col-md-6 mb-4 dashtable">
-    
-        <!--Card-->
-        <div class="card">
-    
-          <!--Card content-->
-          <div class="card-body">
-    
-            <!-- Table  -->
-            <table class="table table-hover">
-              <!-- Table head -->
-              <thead class="blue-grey lighten-4">
-                <tr>
-                  <!-- <th>#</th> -->
-                  <th>Relance n°</th>
-                  <th>Client</th>
-                  <th>Correspondant</th>
-                </tr>
-              </thead>
-              <!-- Table head -->
-    
-              <!-- Table body -->
-              <tbody>
-                <tr>
-                  <!-- <th scope="row">1</th> -->
-                  <td>Cell 1</td>
-                  <td>Cell 2</td>
-                  <td>Cell 3</td>
-                </tr>
-                <tr>
-                  <!-- <th scope="row">2</th> -->
-                  <td>Cell 4</td>
-                  <td>Cell 5</td>
-                  <td>Cell 6</td>
-                </tr>
-                <tr>
-                  <!-- <th scope="row">3</th> -->
-                  <td>Cell 7</td>
-                  <td>Cell 8</td>
-                  <td>Cell 9</td>
-                </tr>
-              </tbody>
-              <!-- Table body -->
-            </table>
-            <!-- Table  -->
-    
-          <!-- </div> -->
-    
-        <!-- </div> -->
-        <!--/.Card-->
-    
-      <!-- </div> -->
-      <!--Grid column-->
-    
-      <!--Grid column-->
-      <!-- <div class="col-md-6 mb-4"> -->
-    
-        <!--Card-->
-        <!-- <div class="card"> -->
-    
-          <!--Card content-->
-          <!-- <div class="card-body"> -->
-    
-            <!-- Table  -->
-            <table class="table table-hover">
-              <!-- Table head -->
-              <thead class="blue lighten-4">
-                <tr>
-                  <!-- <th>#</th> -->
-                  <th>Alerte n°</th>
-                  <th>Client</th>
-                  <th>Correspondant</th>
-                </tr>
-              </thead>
-              <!-- Table head -->
-    
-              <!-- Table body -->
-              <tbody>
-                <tr>
-                  <!-- <th scope="row">1</th> -->
-                  <td>Cell 1</td>
-                  <td>Cell 2</td>
-                  <td>Cell 3</td>
-                </tr>
-                <tr>
-                  <!-- <th scope="row">2</th> -->
-                  <td>Cell 4</td>
-                  <td>Cell 5</td>
-                  <td>Cell 6</td>
-                </tr>
-                <tr>
-                  <!-- <th scope="row">3</th> -->
-                  <td>Cell 7</td>
-                  <td>Cell 8</td>
-                  <td>Cell 9</td>
-                </tr>
-              </tbody>
-              <!-- Table body -->
-            </table>
-            <!-- Table  -->
-    
+              <canvas mdbChart [chartType]="chart5Type" [datasets]="doughnutData"
+                      [colors]="chartColors" [options]="doughnutOpt"
+                      [legend]="true">
+              </canvas>
+            </div>
+            <div class="details-link">Voir en détail >></div>
           </div>
-    
+
+          <div class="col" style="display: inline-block;">
+              <div style="width: 120px; height: 120px; position: relative;">
+                <div style="width: 100%; position: absolute; top: 50%; left: 0; margin-top: -20px; line-height:19px; text-align: center; z-index: 999999999999999">
+                  <span class="number-fourn">{{nbFourni}}</span>
+                  <br/>
+                  <span class="fourn-text">Groupes</span>
+                </div>
+              <canvas mdbChart [chartType]="chart5Type" [datasets]="doughnutData"
+                      [colors]="chartColors" [options]="doughnutOpt"
+                      [legend]="true">
+              </canvas>
+            </div>
+            <div class="details-link">Voir en détail >></div>
+          </div>
         </div>
-        <!--/.Card-->
-    
+    </mdb-card-body>
+
+        </mdb-card> -->
+    <div class="col-lg-2 col-md-3 mb-4">
+      <mdb-card class="canvaCard">
+        <mdb-card-body>
+          <div class="row">
+            <div class="col" style="display: inline-block;">
+              <span class="nb">
+                300
+              </span>
+              <span class="card-txt">
+                Fournisseurs
+              </span>
+            </div>
+          </div>
+        </mdb-card-body>
+      </mdb-card>
+    </div>
+
+    <div class="col-lg-2 col-md-3 mb-4">
+      <mdb-card class="canvaCard">
+        <mdb-card-body>
+          <div class="row">
+            <div class="col" style="display: inline-block;">
+              <span class="nb">
+                223
+              </span>
+              <span class="card-txt">
+                Conformes
+              </span>
+            </div>
+          </div>
+        </mdb-card-body>
+      </mdb-card>
+    </div>
+    <div class="col-lg-2 col-md-3 mb-4">
+      <mdb-card class="canvaCard">
+        <mdb-card-body>
+          <div class="row">
+            <div class="col" style="display: inline-block;">
+              <span class="nb">
+                77
+              </span>
+              <span class="card-txt">
+                Non conformes
+              </span>
+            </div>
+          </div>
+        </mdb-card-body>
+      </mdb-card>
+    </div>
+    <div class="col-lg-2 col-md-3 mb-4">
+      <mdb-card class="canvaCard">
+        <mdb-card-body>
+          <div class="row">
+            <div class="col" style="display: inline-block;">
+              <span class="nb">
+                287
+              </span>
+              <span class="card-txt">
+                Hors ligne
+              </span>
+            </div>
+          </div>
+        </mdb-card-body>
+      </mdb-card>
+    </div>
+
+    <div class="col-lg-3 col-md-4 mb-4">
+      <div class="row">
+        <div class="col" style="display: inline-block;">
+          <div style="width: 100%; position: absolute; top: 55%;; left: 0; margin-top: -20px; text-align: center; z-index: 999999999999999">
+            <span class="number-fourn">{{conformityRateSet.datasets[0].data[0]}}%</span>
+            <br />
+          </div>
+          <canvas #conformityDoughnut id="conformDoughnut" mdbChart [chartType]="conformityType" height="150"></canvas>
+        </div>
       </div>
-      <!--Grid column-->
-    
+    </div>
   </div>
-    <!--Grid row-->
-  
+  <!--Grid row-->
+
+  <div class="row wow fadeIn mt-5">
+    <div class="col-lg-6 col-md-6 mb-4">
+      <div class="card">
+        <div class="box-title">Taux de conformité par mois en %</div>
+        <div class="card-body">
+          <!-- <canvas *ngIf="showConformityChart" #conformityChart id="conformityChart" mdbChart 
+            [chartType]="chart3Type"
+            [datasets]="chartDatasets"
+            [labels]="chartLabels"
+            [colors]="chartColors"
+            [options]="chartOptions"></canvas> -->
+            <canvas [hidden]="!showConformityChart" #conformityChart id="conformityChart" mdbChart [chartType]="chart3Type"></canvas>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-6 col-md-6 mb-4">
+      <div class="card">
+        <div class="box-title">Prochaines relances</div>
+        <div class="card-body">
+          <table class="table table-hover">
+            <thead class="table-head-style">
+              <tr>
+                <th>Nom du groupe</th>
+                <th>Jours avant relance</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of reminders">
+                <td class="group-txt">{{item.groupName}}</td>
+                <td class="reminder-txt">{{item.daysUntil}} jours</td>
+                <td style="text-align: center;"><button class="btn btn-normsup btn-modify">Modifier</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
   <!--Grid row-->
   <div class="row wow fadeIn mt-5">
-  
+
     <!--Grid column-->
     <div class="col-md-9 mb-4">
-  
+
       <!--Card-->
       <div class="card">
-  
+
         <!--Card content-->
         <div class="card-body">
-  
+
           <div style="display: block">
-            <canvas mdbChart [chartType]="chart1Type" [datasets]="chartDatasets" [labels]="chartLabels" [colors]="chartColors" [options]="chartOptions"
-              [legend]="true">
+            <canvas mdbChart [chartType]="chart1Type" [datasets]="chartDatasets" [labels]="chartLabels"
+              [colors]="chartColors" [options]="chartOptions" [legend]="true">
             </canvas>
           </div>
         </div>
-  
+
       </div>
       <!--/.Card-->
-  
+
     </div>
     <!--Grid column-->
-  
+
   </div>
-  <!--Grid row-->
-  
-  <!--Grid row-->
-  <!-- <div class="row wow fadeIn">
-  
-    <div class="col-md-6 mb-4">
-  
-
-      <div class="card">
-  
-
-        <div class="card-header">Google map</div>
-  
-
-        <div class="card-body">
-  
-
-          <div class="card-body text-center">
-            <agm-map [latitude]="map.lat" [longitude]="map.lng" [mapTypeId]="'roadmap'" style="height: 300px">
-              <agm-marker [latitude]="map.lat" [longitude]="map.lng"></agm-marker>
-            </agm-map>
-  
-          </div>
-        </div>
-  
-      </div>
-
-  
-    </div>
-
-  </div> -->
-  <!--Grid row-->
 </div>

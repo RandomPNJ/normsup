@@ -1,0 +1,121 @@
+.main-cont {
+    margin-top: 50px;
+    background-color: white;
+    box-shadow: 0 7px 15px 0 rgba(0, 51, 90, 0.04);
+    border-radius: 6px;
+  }
+  
+  .title {
+    color: #382244;
+    font-family: "Montserrat", sans-serif;
+    padding: 10px 0px 10px 10px;
+    font-weight: 500;
+    font-size: 21px;
+    text-transform: uppercase;
+    display: block;
+  }
+  
+  .table-header {
+    display: table-cell;
+    vertical-align: middle;
+    font-size: 16px;
+    font-weight: 500;
+    font-family: Roboto;
+    display: inline-block;
+  }
+  
+  .sub-cont {
+    padding: 25px 0px 20px 25px;
+    font-size: 12px;
+  }
+  
+  .card-style {
+    border-radius: 5px;
+  }
+  
+  hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #ccc;
+    margin: 2em 0 1em 0;
+    padding: 0;
+  }
+  
+  .btn {
+    font-size: 10px;
+  }
+  
+  .assign-div {
+    font-size: 12px;
+  }
+  
+  .button-style {
+    width: 100%;
+    height: 100%;
+    margin: 0px;
+    border-radius: 5px;
+    // border-top-left-radius: 5px;
+    // border-top-right-radius: 5px;
+    padding: 10px 0px 10px 15px;
+    border: none;
+    display: block;
+    color: #333;
+    text-align: left;
+  
+    &:hover,
+    &:focus {
+      text-decoration: none;
+    }
+  }
+  
+  .btn-link:focus {
+    outline: none !important;
+  }
+  
+  .plus-icn {
+    float: right;
+    color: lightblue;
+    position: absolute;
+    right: 20px;
+    cursor: pointer;
+    font-size: 2.5em;
+    top: -45px;
+    bottom: 0px;
+  }
+  
+  .icon-down {
+    float: right;
+    padding-right: 20px;
+    opacity: 0.9;
+    font-size: 1.5em;
+  }
+  
+  .card-body {
+    padding: 10px;
+  }
+  
+  h2 {
+    margin-bottom: 0px !important;
+  }
+  
+  .assign-link {
+    padding-bottom: 10px;
+    display: inline-block;
+    text-decoration: underline;
+    cursor: pointer;
+    text-align: center;
+  }
+  
+  .toggle-alert-txt {
+      display: inline-block;
+  }
+  
+  .toggle-alert-btn {
+      display: inline-block;
+  }
+  
+  .txt-styling {
+      font-weight: 500;
+      font-size: 12px;
+  }

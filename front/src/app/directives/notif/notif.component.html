@@ -1,0 +1,6 @@
+﻿<div style="position: absolute; left: 50%;">
+    <div [ngClass]="{'fade': index === toFade}" style="position: relative; left: -50%;" *ngFor="let alert of alerts; let i = index;" class="{{ cssClass(alert) }} alert-dismissable notif-style show animated fadeInDown">
+        {{alert.message}}
+        <a class="close" (click)="removeAlert(alert)">&times;</a>
+    </div>
+</div>

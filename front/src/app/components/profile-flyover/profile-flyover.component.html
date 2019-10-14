@@ -1,3 +1,31 @@
-<p>
-  profile-flyover works!
-</p>
+<div style="" class="flyover">
+  <div class="flyover-subcont media d-flex align-items-center">
+    <img src="https://res.cloudinary.com/mhmd/image/upload/v1556074849/avatar-1_tcnd60.png" alt="..." width="50" class="mr-3 rounded-circle img-thumbnail shadow-sm undisplay">
+    <div class="media-body undisplay">
+      <div class="inline-b">
+        <h4 class="m-0 one-liner">{{user.name}} {{user.lastname}}</h4>
+        <!-- <p class="font-weight-light text-muted mb-0 one-liner">{{user.mainOrg}}</p> -->
+      </div>
+      <div class="inline-b">
+        <span class="glyphicon glyphicon-menu-down menu-dwn grow-left" (click)='dropDown()'> </span>
+        <div *ngIf='dropdownMenu' class="dropContent arrow_box">
+            <div class='selectData' id="profile" routerLink="/user/profile">
+                <p>Mon Compte<img src="{{profileIcon}}" style="padding-left: 10px; height: 15px;"alt=""></p>
+            </div>
+            <div class='selectData' id="users" routerLink="/users">
+                <p>Gestion des utilisateurs<img src="{{usersIcon}}" style="padding-left: 10px; height: 15px;"alt=""></p>
+            </div>
+            <div class='selectData' id="reporting" routerLink="/reporting">
+                <p>Générer un reporting<img src="{{reportingIcon}}" style="padding-left: 10px; height: 15px;"alt=""></p>
+            </div>
+            <div class='selectData' id="contact" routerLink="/contact">
+                <p>Contactez-nous<img src="{{contactIcon}}" style="padding-left: 10px; height: 15px;"alt=""></p>
+            </div>
+            <div class='selectData' id="contact" routerLink="/log-out">
+                <p>Log out <img src="{{signOutLogo}}" style="padding-left: 15px; height: 15px;" alt=""></p>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

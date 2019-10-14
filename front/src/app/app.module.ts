@@ -2,11 +2,14 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { FileUploadModule } from 'ng2-file-upload';
+import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {HttpModule} from '@angular/http';
 import { Daterangepicker } from 'ng2-daterangepicker';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { NotifComponent} from './directives/notif/notif.component';
+import { NotifService } from './services/notif.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { DataTablesModule } from 'angular-datatables';
@@ -17,6 +20,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { ShowHidePasswordModule } from 'ngx-show-hide-password';
 import { AccordionModule } from 'ngx-bootstrap/accordion';
+import { ChartsModule } from 'ng2-charts';
 import { BrowserStorageService } from './services/storageService';
 import { ViewsModule } from './views/views.module';
 import { SharedModule } from './shared/shared.module';
@@ -64,6 +68,7 @@ import { ProfileFlyoverComponent } from './components/profile-flyover/profile-fl
     AddSupplierModalComponent,
     FocusDirective,
     SupplierInfoModalComponent,
+    NotifComponent,
     LegalDocModalComponent,
     CompDocModalComponent,
     AddCompGroupComponent,
@@ -77,13 +82,14 @@ import { ProfileFlyoverComponent } from './components/profile-flyover/profile-fl
     BrowserModule,
     MDBBootstrapModule.forRoot(),
     AppRoutingModule,
-    FormsModule,
-    ReactiveFormsModule,
+    NgSelectModule,
+    FormsModule, ReactiveFormsModule,
     HttpClientModule,
     HttpModule,
     Daterangepicker,
     FormsModule,
     NgbModule,
+    ChartsModule,
     SharedModule,
     FileUploadModule,
     ViewsModule,
@@ -106,7 +112,8 @@ import { ProfileFlyoverComponent } from './components/profile-flyover/profile-fl
   providers: [
     BrowserStorageService,
     GuestGuard,
-    LoggedinGuard
+    LoggedinGuard,
+    NotifService
   ],
   bootstrap: [AppComponent]
 })

@@ -1,18 +1,18 @@
 <div style="max-width: 200px;" class="form-group">
-    <label style="color: #333;" for="groupSelect">Choisir un secteur d'activité</label>
-    <select class="form-control" id="groupSelect" [(ngModel)]="groupSelect" (change)="filterByGroup($event.target.value)">
-      <option> </option>
+    <!-- <label style="color: #333;" for="groupSelect"></label> -->
+    <select class="form-control select-grp custom-select" id="groupSelect" [(ngModel)]="groupSelect" (change)="filterByGroup($event.target.value)">
+        <option style="text-transform: capitalize;" *ngFor="let c of groups" [ngValue]="c.id" [disabled]="c.id === ''">{{c.name}}</option>
+      <!-- <option value="" selected disabled>Choisir un groupe</option>
       <option>A</option>
       <option>B</option>
-      <option>C</option>
+      <option>C</option> -->
     </select>
   </div>
   <div class="table-responsive">
-<table datatable [dtOptions]="dtOptions" id="tableComp" class="table table-striped hover compact" cellspacing="0" width="100%" style="height: 100%;">
+<table datatable [dtOptions]="dtOptions" id="tableComp" class="table  hover compact" cellspacing="0" width="100%" style="height: 100%;">
   <thead>
     <tr>
       <th class="th-sm">Nom du fournisseur</th>
-      <th class="th-sm">Groupe</th>
       <th class="th-sm">Siret</th>
       <th class="th-sm">Localisation</th>
       <th class="th-sm">Status des documents</th>
@@ -22,23 +22,22 @@
   <tbody *ngIf="myTable">
     <tr *ngFor="let item of itemsToDisplay">
       <td style="cursor: pointer;" (click)="openSupplierInfo(item)">
-        <div class="content-cont">
-          <span class="assign-link">{{item.denomination | titlecase }}</span>
+        <div class="badge-container content-cont container">
+          <div class="row h-100  cent">
+            <span class="assign-link">{{item.denomination | titlecase }}</span>
+          </div>
         </div>
       </td>
       <td>
-        <div class="content-cont">
-          <span>{{item.group | titlecase }}</span>
+        <div class="badge-container content-cont container">
+            <div class="row h-100 cent">
+              <span>{{item.siret}}</span>
+            </div>
         </div>
       </td>
       <td>
-        <div class="content-cont">
-          <span>{{item.siret}}</span>
-        </div>
-      </td>
-      <td>
-        <div class="content-cont">
-          <div>
+        <div class="badge-container content-cont container">
+          <div class="row h-100 cent">
             <span [ngClass]="item.country != '' ? 'flag-icon-' + item.country : ''" class="flag-icon flag-icon-squared"></span>
             <span class="localisation">{{item.city | titlecase }}</span>
           </div>
@@ -52,14 +51,20 @@
       </td> -->
       <td>
         <div class="badge-container content-cont container">
-          <div class="row" style="margin-bottom: 0px;">
-            <div style="padding-right: 5px;" class="doc-cont col-6" (click)="openLegalDocModal(item)" data-toggle="modal" data-target="#exampleModalCenter">
-              <i style="display: block;" [ngClass]="{'invalid-doc': !item.urssaf}"  class="fas fa-file-alt doc-icn"></i>
-              <span [ngClass]="{'badge-red': !item.urssaf}" class="badge badge-style fix-middle">Légal</span>
+          <div class="row flex-grow-1 h-100" style="margin-bottom: 0px;">
+            <div style="padding-right: 5px;" class="doc-cont col-6 h-100" (click)="openLegalDocModal(item)" data-toggle="modal" data-target="#exampleModalCenter">
+              <span class="align-txt">
+                <embed *ngIf="true" class="valid-doc" src="../../../assets/img/valid-doc.svg">
+                <embed *ngIf="!legal-status" class="valid-doc" src="../../../assets/img/invalid-doc.svg">
+              </span>
+              <span style="text-decoration: underline;" class="fix-middle align-txt">Légal</span>
             </div>
-            <div class="doc-cont col-6" (click)="openCompDocModal(item)">
-              <i style="display: block;" [ngClass]="{'invalid-doc': !item.kbis}" class="fas fa-file-alt doc-icn"></i>
-              <span [ngClass]="{'badge-red': !item.kbis}" class="badge badge-style fix-middle">Complémentaire</span>
+            <div class="doc-cont col-6 h-100" (click)="openCompDocModal(item)">
+              <span class="align-txt">
+                <embed *ngIf="true" class="valid-doc"  src="../../../assets/img/valid-doc.svg">
+                <embed *ngIf="!comp-status" class="valid-doc"  src="../../../assets/img/invalid-doc.svg">
+              </span>
+              <span style="text-decoration: underline;" class="fix-middle">Complémentaire</span>
             </div>
             <!-- <span [ngClass]="{'badge-red': !item.lnte}" class="badge badge-style fix-middle"><i class="fas fa-file-alt doc-icn"></i>Lnte</span> -->
           </div>
@@ -69,7 +74,12 @@
         <div id="util-btns" class="badge-container content-cont">
           <!-- <span (click)="edit(item)" class="glyphicon glyphicon-pencil edit-icn fix-middle" aria-hidden="true"></span> -->
           <!-- <span style="padding: 0px 5px;" class="fix-middle"></span> -->
-          <span (click)="delete(item)" class="glyphicon glyphicon-trash fix-middle" aria-hidden="true"></span>
+          <!-- <span (click)="delete(item)" class="glyphicon glyphicon-trash fix-middle" aria-hidden="true"></span> -->
+          <div class="badge-container content-cont container">
+              <div class="row h-100 cent">
+                <button (click)="openModal(template, 'Supplier')" type="button" class="btn btn-outline-normsup default-btn-table"> <span></span>Relancer</button>
+              </div>
+          </div>
         </div>
       </td>
     </tr>

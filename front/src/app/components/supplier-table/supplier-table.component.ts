@@ -1,23 +1,28 @@
-import { AfterViewInit, EventEmitter, Component, OnInit, ViewChild, Input, Output, ChangeDetectorRef,
-        TemplateRef, ViewChildren } from '@angular/core';
-import { cloneDeep } from 'lodash';
+import { AfterViewInit, EventEmitter, Component, OnInit, ViewChild, Input, Output, ChangeDetectorRef } from '@angular/core';
+// import { cloneDeep } from 'lodash';
 import { DataTableDirective } from 'angular-datatables';
 import { HttpService } from 'src/app/services/http.service';
 // import {Configuration} from '../../../../config/environment.local';
 
 import 'datatables.net';
 import { HttpParams } from '@angular/common/http';
+import { NotifService } from 'src/app/services/notif.service';
+import { Router } from '@angular/router';
+import { BrowserStorageService } from 'src/app/services/storageService';
 
 @Component({
   selector: 'app-supplier-table',
   templateUrl: './supplier-table.component.html',
   styleUrls: ['./supplier-table.component.scss']
 })
-export class SupplierTableComponent implements OnInit {
+export class SupplierTableComponent implements OnInit,AfterViewInit {
 
   @ViewChild(DataTableDirective) datatableElement: DataTableDirective;
   itemsToDisplay: Array<any> = [];
   data: Array<any> = [];
+  groups: Array<any> = [ 
+    { id: '', name: 'Veuillez choisir un groupe' },
+    { id: '1', name: '' }];
   @Output() infoModal = new EventEmitter<string>();
   items: Array<any> = [];
   dtElement: DataTableDirective;
@@ -28,21 +33,34 @@ export class SupplierTableComponent implements OnInit {
     start: 0,
     length: 10,
     search: '',
+    group: '',
   };
   dtOptions: DataTables.Settings = {};
-  groupSelect: String;
+  groupSelect: String = '';
   myTable: Boolean = false;
 
-  constructor(private httpService: HttpService, private chRef: ChangeDetectorRef) { }
+  constructor(private httpService: HttpService, private notif: NotifService, private router: Router, private bs: BrowserStorageService) { }
 
   ngOnInit() {
     // First query to get the number of rows
-    let firstQParams = new HttpParams();
-    firstQParams = firstQParams.set('client', 'Fakeclient');
     this.httpService
-      .get('/api/supplier/count', firstQParams)
+      .get('/api/supplier/count')
       .subscribe(res => {
         this.nbOfRows = res.body['count'];
+      })
+    ;
+    this.httpService
+      .get('/api/supplier/groups')
+      .subscribe(res => {
+        this.groups = this.groups.concat(res.body['items']);
+      }, err => {
+        if(err.message === 'Unexpected error : Failed to authenticate token. (jwt expired)') {
+          this.notif.error('Session expirée. Vous serez redirigé vers la page de connexion.');
+          setTimeout(() => {
+            this.router.navigate(['/login']);
+            this.bs.clearLocalStorage();
+          }, 2500);
+        }
       })
     ;
     const that = this;
@@ -58,7 +76,7 @@ export class SupplierTableComponent implements OnInit {
       return false;
     });
     this.dtOptions = {
-      lengthMenu: [[10, 25, 50, -1], [10, 25, 50, 'Tout afficher']],
+      lengthMenu: [[10, 25, 50], [10, 25, 50]],
       searchDelay: 4500,
       ordering: false,
       searching: true,
@@ -66,11 +84,12 @@ export class SupplierTableComponent implements OnInit {
       serverSide: true,
       // processing: true,
       language: {
-          lengthMenu: 'Voir _MENU_ résultats par page',
+          lengthMenu: 'Afficher par _MENU_',
           zeroRecords: 'Aucun résultat trouvé',
           info: 'Page _PAGE_ sur _PAGES_',
           infoEmpty: 'Aucun résultat disponible',
-          search: 'Rechercher:',
+          search: '',
+          searchPlaceholder: "Rechercher un fournisseur",
           infoFiltered: '(filtré sur un total de _MAX_ résultats)',
           paginate: {
               first:      'Premier',
@@ -117,11 +136,6 @@ export class SupplierTableComponent implements OnInit {
           data: 'denomination',
           searchable: true
         },
-        {
-          title: 'Group',
-          data: 'groupName',
-          searchable: true
-        },
         null,
         null,
         null,
@@ -131,11 +145,7 @@ export class SupplierTableComponent implements OnInit {
   }
 
   ngAfterViewInit(): void {
-    // this.dtElement.dtInstance.then((dtInstance: any) => {
-    //   dtInstance.columns.adjust()
-    //      .responsive.recalc();
-    // });
-
+   
   }
 
   compareParams(datatableParams) {
@@ -172,7 +182,6 @@ export class SupplierTableComponent implements OnInit {
   recount(search?: string) {
     const that = this;
     let firstQParams = new HttpParams();
-    firstQParams = firstQParams.set('client', 'Fakeclient');
     if(search) {
       firstQParams = firstQParams.set('search', search);
     }

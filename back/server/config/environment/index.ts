@@ -51,6 +51,8 @@ export default {
         { name: 'createSupplier', uriPattern: '/define_supplier', method: 'post' },
         { name: 'modifySupplier', uriPattern: '/modify_supplier/:id', method: 'put' },
         { name: 'countSuppliers', uriPattern: '/count', method: 'get' },
+        { name: 'getGroups', uriPattern: '/groups', method: 'get' },
+        { name: 'createGroup', uriPattern: '/define_group', method: 'post' },
       ],
     },
     documents: {
@@ -78,6 +80,17 @@ export default {
     }
   },
 
+  queries: {
+    // Start SEarch Company Group
+    CGSES: 'QUERY_SUPPLIER_OFFLIM_SE_GROUP', 
+    CSES: 'QUERY_GET_SUPPLIER_OFFLIM_SEARCH',
+    CGS: 'QUERY_GET_SUPPLIER_GROUP',
+    CS: 'QUERY_GET_SUPPLIER_OFFLIM',
+    CGSE: 'QUERY_GET_SUPPLIER_SEARCH_GRP',
+    CSE: 'QUERY_GET_SUPPLIER_SEARCH', 
+    CG: 'QUERY_GET_GROUP_SUPPLIERS',
+    C: 'QUERY_GET_SUPPLIER',
+  },
 
   repositories: {
     product: {

@@ -1,3 +1,46 @@
-<p>
-  stats works!
-</p>
+<div class="container main-cont">
+  <div class="cont-wrapper">
+      <div class="row pt-4">
+        <div class="col-lg-auto col-md-auto">
+          <span class="title">Statistiques</span>
+        </div>
+        <div class="col">&nbsp;</div>
+        <div class="col-lg-auto col-md-auto button-div">
+          <button (click)="openModal()" type="button" class="btn btn-outline-normsup fs-10"> <span></span>Créer un groupe</button>
+        </div>
+      </div>
+      <div class="sub-cont">
+        <div class="container">
+          <div class="row">
+            <div class="col" style="display: inline-block;">
+              <div class="pie-title">
+                <span>Taux de conformité documents légaux</span>
+              </div>
+              <div style=" position: relative;">
+                <canvas mdbChart [chartType]="chart5Type" [datasets]="doughnutDataOne"
+                        [colors]="chartColors" [options]="doughnutOpt"
+                        [labels]="chartLabelsOne"
+                        [legend]="true">
+                </canvas> 
+              </div>
+            </div>
+            <div class="col" style="display: inline-block;">
+                <div class="pie-title">
+                  <span>Taux de conformité documents complémentaires</span>
+                </div>
+              <div style=" position: relative;">
+              <canvas mdbChart [chartType]="chart5Type" [datasets]="doughnutDataTwo"
+                      [colors]="chartColors" [options]="doughnutOpt"
+                      [labels]="chartLabels"
+                      [legend]="true">
+              </canvas>
+            </div>
+            </div>
+          </div>
+          <div class="row">
+
+          </div>
+        </div>
+      </div>
+    </div>
+</div>

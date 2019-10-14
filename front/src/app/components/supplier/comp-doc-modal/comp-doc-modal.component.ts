@@ -1,8 +1,9 @@
-import { Component, OnInit, ViewChild, Output, EventEmitter, TemplateRef } from '@angular/core';
+import { Component, OnInit, ViewChild, Output, EventEmitter, TemplateRef, ElementRef } from '@angular/core';
 import { DataTableDirective } from 'angular-datatables';
 import 'datatables.net';
 import { FileUploader } from 'ng2-file-upload';
 import { HttpService } from 'src/app/services/http.service';
+import { FormGroup, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-comp-doc-modal',
@@ -15,9 +16,10 @@ export class CompDocModalComponent implements OnInit {
   @Output() hideModal = new EventEmitter<string>();
   @ViewChild(DataTableDirective) datatableElement: DataTableDirective;
   @ViewChild('addDocModal') addModalRef: TemplateRef<any>;
-
+  @ViewChild('labelImport') labelImport: ElementRef;
+  formImport: FormGroup;
   public uploader: FileUploader = new FileUploader(
-    { url: 'http://localhost:8080/api/document/upload', removeAfterUpload: false, autoUpload: true });
+    { url: 'http://localhost:8080/api/document/upload', removeAfterUpload: false, autoUpload: false });
   public hasBaseDropZoneOver: Boolean = false;
   itemsToDisplay: Array<any> = [];
   data: Array<any> = [];
@@ -25,6 +27,7 @@ export class CompDocModalComponent implements OnInit {
   dataTable: any;
   currentState: String = 'false';
   hideFirst = 0;
+  fileToUpload1: any = "";
   tableParams: any = {
     start: 0,
     length: 9
@@ -40,7 +43,11 @@ export class CompDocModalComponent implements OnInit {
     }
   };
 
-  constructor(private httpService: HttpService) { }
+  constructor(private httpService: HttpService) { 
+  //   this.formImport = new FormGroup({
+  //     importFile: new FormControl('', Validators.required)
+  //  });
+  }
 
   ngOnInit() {
     const that = this;
@@ -117,5 +124,15 @@ export class CompDocModalComponent implements OnInit {
 
   public fileOverBase(e: any): void {
     this.hasBaseDropZoneOver = e;
+  }
+
+  handleFileInput(event: any) {
+    console.log('event ===', event[0]);
+    // this.fileToUpload1 = event[0];
+    this.labelImport.nativeElement.innerText = Array.from(event)
+      .map(f => f['name'])
+      .join(', ')
+    ;
+    this.fileToUpload1 = event.item(0);
   }
 }

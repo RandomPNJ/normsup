@@ -5,9 +5,9 @@ export const SupplierSchema = Joi.object({
     siren: Joi.string().required(),
     address: Joi.string().optional(),
     denomination: Joi.string().optional(),
-    group: Joi.string().optional(),
+    postalCode: Joi.string().optional(),
+    legalUnit: Joi.string().optional(),
     country: Joi.string().optional(),
     city: Joi.string().optional(),
-    client: Joi.string().required(),
     dateCreation: Joi.string().optional()
 });

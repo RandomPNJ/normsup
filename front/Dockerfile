@@ -9,7 +9,6 @@ RUN npm install -g npm@5.6.0
 
 USER node
 ADD package.json /tmp/package.json
-ADD angular-bootstrap-md-7.5.4.tgz /tmp/angular-bootstrap-md-7.5.4.tgz
 
 RUN ls /tmp
 

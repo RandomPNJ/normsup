@@ -116,7 +116,7 @@ export class UsersManagementComponent implements OnInit {
   }
 
 
-  // TODO: modify this
+  // TODO: modify this, we only need JWT
   addUser(data: any) {
     console.log('User', data);
     const user = {
@@ -125,16 +125,17 @@ export class UsersManagementComponent implements OnInit {
       name: 'El Fahim',
       lastname: 'Yassin',
       id: '0',
-      organisation: 'SpaceX',
+      organisation: 2,
       main_org: 'SpaceX',
       createdBy: 'GOD'
     };
 
     this.apiService.postData('/api/users/register', { user: data, creator: user})
-    .subscribe(res => {
-      this.hideModal('');
-    }, err => {
-    });
+      .subscribe(res => {
+          this.hideModal('');
+        }, err => {
+      })
+    ;
   }
 
 }

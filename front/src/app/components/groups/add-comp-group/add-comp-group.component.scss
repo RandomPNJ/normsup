@@ -1,0 +1,74 @@
+.add-grp-title {
+    color: #5097F0;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.inpt-label {
+    position: absolute;
+    top: -17px;
+    vertical-align: bottom;
+    background-color: white;
+    left: 55px;
+
+    label {
+        margin-bottom: 0px;
+        height: 18px;
+        color: #5097F0;
+        padding-right: 10px;
+        line-height: 31px;
+        vertical-align: text-bottom;
+        padding-left: 10px;
+    }
+}
+
+.trigger {
+    padding: 1px 10px;
+    font-size: 12px;
+    border-radius: 10px;
+    background-color: #eee;
+    color: #212121;
+    display: inline-block;
+    margin: 2px 5px;
+}
+    
+.hoverable, .trigger {
+    transition: box-shadow 0.55s;
+    box-shadow: 0;
+}
+    
+.hoverable:hover, .trigger:hover {
+    transition: box-shadow 0.45s;
+    box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.first-btn-cent {
+    position: absolute;
+    background-color: white !important;
+    top: -9px;
+    left: -96px;
+}
+
+.scd-btn-cent {
+    position: absolute;
+    top: -9px;
+    left: 2px;
+}
+form {
+    label, textarea {
+        position: relative;
+        display: block;
+        box-sizing: border-box;
+    }
+    label::after {
+        content: '.net';
+        position: absolute;
+        top: 4px;
+        left: 94px;
+        font-family: arial, helvetica, sans-serif;
+        font-size: 12px;
+        display: block;
+        color: rgba(0, 0, 0, 0.6);
+        font-weight: bold;
+    }
+}

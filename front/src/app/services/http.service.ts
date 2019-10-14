@@ -25,13 +25,13 @@ export class HttpService implements OnDestroy {
     'Content-Type': 'application/json'
   });
 
+
   public constructor(
     private _http: HttpClient,
     private bsService: BrowserStorageService,
     private _router: Router) {
 
   }
-
   ngOnDestroy(): void {
   }
 
@@ -41,7 +41,8 @@ export class HttpService implements OnDestroy {
       responseType: 'json',
       observe: 'response',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.bsService.getLocalStorage('token')}`
       }
     })
       .pipe(
@@ -50,14 +51,16 @@ export class HttpService implements OnDestroy {
   }
 
   public post<t>(actionUrl: string, body?: any): Observable<HttpResponse<t>> {
-    console.log('there')
     return this._http.post<t>(Configuration.serverUrl + actionUrl, body, {
-      headers: this.headers,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.bsService.getLocalStorage('token')}`
+      },
       responseType: 'json',
       observe: 'response'
     })
       .pipe(
-        retry(2),
+        // retry(1),
         catchError(this.handleError)
       );
   }
@@ -72,6 +75,7 @@ export class HttpService implements OnDestroy {
   }
 
   private handleError(error: HttpErrorResponse) {
+    console.log('ero = ', error);
     if (error.error instanceof ErrorEvent) {
       // A client-side or network error occurred. Handle it accordingly.
       console.error('An error occurred:', error.error.message);
@@ -80,10 +84,12 @@ export class HttpService implements OnDestroy {
       // The response body may contain clues as to what went wrong,
       console.error(`Backend returned code ${error.status}`);
     }
-
-    // return an observable with a user-facing error message
-    return throwError(
-      'Something bad happened; please try again later.');
+    if(error.error) {
+      return throwError(error.error);
+    } else {
+      return throwError(
+        'Something bad happened; please try again later.');
+    }
   }
 
 }

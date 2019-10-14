@@ -23,13 +23,13 @@ export class ProductService {
     } else {
       this.apiToken = '';
     }
-      this.httpOptions = {
-        headers: new HttpHeaders({
-          'Content-Type':  'application/json',
-          'X-Access-token': this.apiToken
-        })
-      };
-   }
+    this.httpOptions = {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.bsService.getLocalStorage('token')}`
+      }
+    }
+  }
 
   getCompany(params): Observable<any> {
     // this.getToken();
@@ -51,8 +51,7 @@ export class ProductService {
   }
 
   postData(url, data) {
-    // this.getToken();
-    console.log(this.httpOptions);
+    this.getToken();
     return this.http.post(Configuration.serverUrl + url, data, this.httpOptions)
         .pipe(map((response: Response) => {
          return response;
@@ -62,11 +61,12 @@ export class ProductService {
 
   getMockProducts(params) {
     return this.http
-    .get('src/app/models/dapji3.json')
-    .pipe(
-      map(this.extractData),
-      catchError(this.handleError)
-    );
+      .get('src/app/models/dapji3.json')
+      .pipe(
+        map(this.extractData),
+        catchError(this.handleError)
+      )
+    ;
   }
 
   postLoginData(url,  data) {
@@ -86,13 +86,13 @@ export class ProductService {
     console.log('response ');
     console.log(body);
     return body || {};
-}
+  }
 
-// Private Service method to handle erronous response
+  // Private Service method to handle erronous response
   private handleError(error: any) {
-  console.log('ERROR in HANDLE ERROR ', error);
+    console.log('ERROR in HANDLE ERROR ', error);
     const errMsg = (error.error.message) ? error.error.message :
         error.status ? `${error.status} - ${error.statusText}` : 'Server error';
     return throwError(errMsg);
-}
+  }
 }

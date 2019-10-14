@@ -13,13 +13,21 @@
             <div class="alert-left-col">
               <div>
                 <div class="form-group row mb-5 mt-5">
-                  <div class="col-md-3 col-sm-3  txt-styling">Recevoir des alertes par e-mail</div>
+                  <div class="col-md-3 col-sm-3  txt-styling">Activer les relances</div>
                   <div class="col-md-1 col-sm-1 custom-control custom-switch toggle-alert-btn">
-                    <input type="checkbox" class="custom-control-input" [(ngModel)]="settings.alerts_state" id="alertState">
-                    <label class="custom-control-label" for="alertState"></label>
+                    <input type="checkbox" class="custom-control-input" [(ngModel)]="settings.reminders_state" id="reminderState">
+                    <label class="custom-control-label" for="reminderState"></label>
                   </div>
                 </div>
-                <div *ngIf="settings.alerts_state" class="form-group row mb-5 ml-2">
+                <div *ngIf="settings.reminders_state" class="form-group row mb-5 ml-2">
+                  <label class="col-md-3 col-sm-3 col-form-label" for="reminderGroup">Sélectionner un groupe</label>
+                  <div class="col-md-2 col-sm-4">
+                    <select class="form-control" id="reminderGroup"  name="reminderGroup" [(ngModel)]="settings.alert_frequency">
+                      <option *ngFor="let c of frequency" [ngValue]="c.value" [disabled]="c.name === ' '">{{c.name}}</option>
+                    </select>
+                  </div>
+                </div>
+                <div *ngIf="settings.reminders_state" class="form-group row mb-5 ml-2">
                   <div class="col-md-3 col-sm-3 txt-styling">Fournisseur à jour</div>
                   <div class="col-md-1 col-sm-1">
                     <div class="form-check">
@@ -28,7 +36,7 @@
                     </div>
                   </div>
                 </div>
-                <div *ngIf="settings.alerts_state" class="form-group row mb-5 ml-2">
+                <div *ngIf="settings.reminders_state" class="form-group row mb-5 ml-2">
                   <div class="col-md-3 col-sm-3 txt-styling">Fournisseur connectés/hors ligne</div>
                   <div class="col-md-1 col-sm-1">
                     <div class="form-check">
@@ -37,7 +45,7 @@
                     </div>
                   </div>
                 </div>
-                <div *ngIf="settings.alerts_state" class="form-group row mb-5 ml-2">
+                <div *ngIf="settings.reminders_state" class="form-group row mb-5 ml-2">
                   <div class="col-md-3 col-sm-3 txt-styling">Adresse email invalides</div>
                   <div class="col-md-1 col-sm-1">
                     <div class="form-check">
@@ -46,7 +54,7 @@
                     </div>
                   </div>
                 </div>
-                <div *ngIf="settings.alerts_state" class="form-group row mb-5 ml-2">
+                <div *ngIf="settings.reminders_state" class="form-group row mb-5 ml-2">
                   <label class="col-md-3 col-sm-3 col-form-label" for="alertFrequency">Fréquence des alertes</label>
                   <div class="col-md-2 col-sm-4">
                     <select class="form-control" id="alertFrequency"  name="alertFrequency" [(ngModel)]="settings.alert_frequency">
@@ -54,7 +62,7 @@
                     </select>
                   </div>
                 </div>
-                <div *ngIf="settings.alerts_state" class="row ml-2">
+                <div *ngIf="settings.reminders_state" class="row ml-2">
                   <button (click)="openModal()" type="button" class="btn btn-outline-normsup">Sélectionnez le(s) groupe(s)</button>
                 </div>
               </div>

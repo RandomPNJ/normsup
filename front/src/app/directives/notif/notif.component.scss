@@ -1,0 +1,11 @@
+.notif-style {
+    z-index: 99;
+    width: 400px;
+    text-align: center;
+    font-size: 13px;
+
+    &:first-child {
+        margin-top: 10%;
+    }
+}
+

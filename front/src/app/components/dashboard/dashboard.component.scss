@@ -5,15 +5,27 @@
 }
 
 .sidebar-padding {
-    width: calc(100% - 20rem);
-    margin-left: 20rem;
+    // width: calc(100% - 20rem);
+    width: 100%;
+    padding-left: 20rem;
     transition: all 0.4s;
 }
 
 @media (max-width: 768px) {
     .sidebar-padding {
-        width: calc(100% - 4rem);
-        margin-left: 4rem;
+        // width: calc(100% - 4rem);
+        width: 100%;
+        padding-left: 4rem;
         transition: all 0.4s;
     }
-  }
+}
+
+.profile-flyover {
+    padding-top: 10px;
+}
+
+.dash-bg {
+    height: 100vh; 
+    background-color: #F4FAFF;
+    overflow-y: auto;
+}

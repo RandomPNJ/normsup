@@ -1,5 +1,6 @@
 .dash-container {
     padding-left: 10px;
+    padding-top: 20px;
 }
 
 .classic-admin-card .card-body {
@@ -45,7 +46,9 @@
 
 
 .number-fourn {
-    font-size: 16px;
+    font-family: 'Avenir Black';
+    font-size: 24px;
+    color: #4E5983;
 }
 
 .fourn-text {
@@ -53,7 +56,11 @@
 }
 
 .box-title {
-    font-size: 14px;
+    font-size: 15px;
+    font-family: 'Avenir Black';
+    color: #4E5983;
+    text-align: center;
+    padding-top: 13px;
 }
 
 .details-link {
@@ -67,4 +74,69 @@
 
 .dashtable {
     margin-right: 15px;
+}
+
+.card-style {
+    height: 103px;
+}
+
+.nb {
+    font-size: 35px;
+    font-family: 'Avenir Black';
+    display: block;
+    color: #4390EF;
+    text-align: center;
+}
+
+.card-txt {
+    font-size: 14px;
+    font-family: 'Avenir Medium';
+    display: block;
+    color: #4E5983;
+    text-align: center;
+}
+
+.card {
+    border-radius: 10px;
+}
+
+.table-head-style {
+    text-align: center;
+    
+
+    th {
+        border-bottom: none !important;
+        font-family: 'Avenir Black';
+        font-size: 13px;
+        letter-spacing: 0;
+        color: #4E5983;
+    }
+
+}
+
+td {
+    vertical-align: middle !important;
+}
+.reminder-txt {
+    text-align: center;
+    font-family: 'Avenir Medium';
+    font-size: 14px;
+    letter-spacing: 0;
+    color: #4E5983;
+}
+
+.group-txt {
+    text-align: center;
+    text-decoration: underline;
+    font-family: 'Avenir Medium';
+    font-size: 14px;
+    letter-spacing: 0;
+    color: #4390EF;
+}
+
+.btn-modify {
+    font-family: 'Avenir Heavy';
+    font-size: 13px;
+    text-transform: capitalize;
+    color: #4390EF;
 }

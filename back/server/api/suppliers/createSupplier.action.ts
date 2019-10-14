@@ -8,10 +8,10 @@ export default {
     method: 'post',
     uriPattern: '/define_supplier',
     services: [''],
-    handler: (req, res, app) => createSupplier(req, app.get('SupplierRegistry')),
+    handler: (req, res, app) => createSupplier(req, res, app.get('SupplierRegistry')),
 };
 
-export function createSupplier(req, SupplierRegistry) {
+export function createSupplier(req, res, SupplierRegistry) {
     let data;
 
     SupplierSchema.validate(req.body, (err, val) => {
@@ -28,11 +28,13 @@ export function createSupplier(req, SupplierRegistry) {
     } else {
         data.dateCreation = new Date();
     }
-    return SupplierRegistry.createSupplier(data)
+    return SupplierRegistry.createSupplier(data, req.decoded)
         .then(res => {
             return res;
         })
         .catch(err => {
+            loggerT.verbose('Err  = ', err);
+            res.status(500).json({status: err.message})
             return err;
         })
     ;

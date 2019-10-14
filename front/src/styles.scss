@@ -1,5 +1,35 @@
 /* You can add global styles to this file, and also import other style files */
+// @import "~@ng-select/ng-select/themes/material.theme.css";
+@import "~@ng-select/ng-select/themes/default.theme.css";
+/* ----- Variables ---- */
 
+$normsup-blue: #4692EF;
+$normsup-black: #333;
+$normsup-gray: #818181;
+
+
+/* ----- Fonts ----- */
+
+@font-face {
+    font-family: 'Avenir Book';
+    src: url('./assets/fonts/avenir-lt-std-cufonfonts/AvenirLTStd-Book.otf') format("opentype");
+}
+@font-face {
+    font-family: 'Avenir Light';
+    src: url('./assets/fonts/avenir-lt-std-cufonfonts/AvenirLTStd-Light.otf') format("opentype");
+}
+@font-face {
+    font-family: 'Avenir Black';
+    src: url('./assets/fonts/avenir-lt-std-cufonfonts/AvenirLTStd-Black.otf') format("opentype");
+}
+@font-face {
+    font-family: 'Avenir Medium';
+    src: url('./assets/fonts/avenir-lt-std-cufonfonts/AvenirLTStd-Medium.otf') format("opentype");
+}
+@font-face {
+    font-family: 'Avenir Heavy';
+    src: url('./assets/fonts/avenir-lt-std-cufonfonts/AvenirLTStd-Heavy.otf') format("opentype");
+}
 
 /* ----- Globals ----- */
 
@@ -7,7 +37,8 @@ html, body {
     min-height: 100%;
     height: 100%;
     margin: 0;
-    overflow: auto;
+    // overflow: auto;
+
 }
 * {
     font-family: Roboto;
@@ -308,8 +339,9 @@ body {
 
 .dataTables_length {
     label {
-        color: #333;
+        color: $normsup-gray;
         font-family: Roboto;
+        font-weight: 300;
         font-size: 12px;
     }
     select {
@@ -320,15 +352,25 @@ body {
 }
 
 #tableComp_filter {
+
     input {
-        width: auto;
+        width: 240px;
         color: black;
-        border-radius: 4px;
-        border: 1px solid lightgray;
+        border: 0px solid black;
+        border-bottom: 1px solid lightgray;
         font-weight: 400;
+
+        &:active {
+            border-bottom-color: $normsup-blue;
+            outline: none;
+        }
+        &:focus {
+            border-bottom-color: $normsup-blue;
+            outline: none;
+        }
     }
     label {
-        color: #333;
+        color: $normsup-black;
         font-family: Roboto;
         font-size: 13px;
     }
@@ -510,19 +552,144 @@ body {
 
 // Normsup button
 .btn-outline-normsup {
-    border: 2px solid lightskyblue !important;
+    border: 1px solid $normsup-blue !important;
     background-color: transparent !important;
-    color: lightskyblue !important;
-    border-radius: 8px !important;
+    color: $normsup-blue !important;
+    border-radius: 3px !important;
 
     &:focus, &:active {
-        border: 2px solid lightskyblue !important;
+        border: 2px solid $normsup-blue !important;
         background-color: transparent !important;
-        color: lightskyblue !important;
+        color: $normsup-blue !important;
     }
 
     &:hover {
         box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15);
         outline: 0;
+    }
+}
+
+.btn-normsup {
+    border: 1px solid $normsup-blue !important;
+    background-color: white !important;
+    color: $normsup-blue !important;
+    border-radius: 3px !important;
+
+    &:focus, &:active {
+        border: 2px solid $normsup-blue !important;
+        background-color: white !important;
+        color: $normsup-blue !important;
+    }
+
+    &:hover {
+        box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15);
+        outline: 0;
+    }
+}
+
+.inline-b {
+    display: inline-block !important;
+}
+
+.h-align {
+    display: table;
+    margin: auto;
+}
+
+.dataTables_length select {
+    display: inline-block !important;
+    width: 55px;
+    color: #333;
+    height: 27px;
+    text-align-last: center;
+    border: 1px solid #ced4da;
+    background-color: white;
+    padding: 11px;
+}
+
+.profile-flyover {
+    padding-top: 10px;
+}
+
+.dash-bg {
+    height: 100vh; 
+    background-color: #F4FAFF;
+    overflow-y: auto;
+}
+
+.modal-btn-cent {
+    position: absolute;
+    background-color: white !important;
+    top: -9px;
+    left: -44px;
+}
+
+.fs-12 {
+    font-size: 12px !important;
+}
+
+.fs-10 {
+    font-size: 10px !important;
+}
+
+.default-btn-table {
+    text-align: left;
+    font-family: 'Avenir Book' !important;
+    text-transform: capitalize !important;
+    letter-spacing: 0;
+    color: #4390EF;
+    font-size: 10px !important;
+    opacity: 1;
+}
+
+// ng select style
+
+.ng-select .ng-select-container {
+    border: 1px solid #D3D3D3;
+}
+.ng-select.ng-select-multiple .ng-select-container .ng-value-container .ng-value .ng-value-label {
+    font-size: 12px;
+    padding: 1px 3px 1px 8px;
+}
+
+.ng-select.ng-select-multiple .ng-select-container .ng-value-container .ng-value .ng-value-icon {
+    font-size: 13px;
+    padding: 1px 6px 1px 4px;
+    font-weight: 600;
+}
+.ng-select .ng-select-container .ng-value-container .ng-input>input {
+    color: $normsup-black;
+    font-size: 12px;
+}
+
+
+.alert-dismissable .close {
+    top: 0px;
+    right: 0px;
+    font-size: 14px;
+}
+
+
+/** ------ Dashboard ------ **/
+
+
+.dashboard {
+    mdb-card-body.card-body {
+        height: 103px !important;
+    }
+}
+
+.first-row {
+    .canvaCard.card {
+
+        border-radius: 10px;
+        .card {
+            // width: 185px !important;
+            background: #FFFFFF 0% 0% no-repeat padding-box;
+            box-shadow: 0px 0px 15px #4390EF3C;
+            border: 1px solid #4390EF;
+            border-radius: 10px;
+            opacity: 1;
+        }
     }
 }

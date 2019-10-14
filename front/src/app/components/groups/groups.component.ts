@@ -2,6 +2,8 @@ import { Component, OnInit, TemplateRef, ChangeDetectorRef, ViewChild } from '@a
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { combineLatest, Subscription } from 'rxjs';
 import { cloneDeep } from 'lodash';
+import { HttpService } from 'src/app/services/http.service';
+import { HttpParams } from '@angular/common/http';
 
 
 @Component({
@@ -19,18 +21,7 @@ export class GroupsComponent implements OnInit {
     class: 'modal-dialog-centered'
   };
   selectedItem: string;
-  items = [
-    {
-      name: 'name one',
-      desc: 'Blablabla  odezkfeklnzfezklk',
-      user: 'User1'
-    },
-    {
-      name: 'name two',
-      desc: 'Lorem ispum d,ken',
-      user: 'User1'
-    }
-  ];
+  items = [];
   itemPluralMapping = {
     'group': {
       '=0': 'n\'avez aucun groupe',
@@ -39,9 +30,16 @@ export class GroupsComponent implements OnInit {
     }
   };
   constructor(private modalService: BsModalService, private changeDetection: ChangeDetectorRef,
-    ) { }
+    private httpService: HttpService) { }
 
   ngOnInit() {
+    this.httpService
+      .get('/api/supplier/groups')
+      .subscribe(res => {
+        console.log('Groups res', res);
+        this.items = res.body['items'];
+      })
+    ;
   }
 
   openModal() {

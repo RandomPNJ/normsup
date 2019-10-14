@@ -67,49 +67,65 @@
           <div class="row">
             <div class="col-lg-auto col-md-auto"></div>
             <div class="col">
-              <div class="add-doc-head"><span class="table-header">Ajouter un document</span></div>
-              <div class="container">
-                <div class="file-upload">
-                  <span>Sélectionnez un fichier</span>
+              <form [formGroup]="docUpload">
+                <!-- <div class="add-doc-head"><span class="table-header">Ajouter un document</span></div> -->
+                <div class="container">
+                  <div class="file-upload">
+                    <span style="display: block;" class="pb-4">Sélectionnez un fichier</span>
+                    <div class="h-align">
+                      <div class="align-div">
+                        <!-- <button type="button" class="btn btn-upload add-btn">
+                          <span class="glyphicon glyphicon-download-alt download-icn fix-middle-icn" aria-hidden="true"></span>
+                          <span class="button-txt-dl">Envoyer un fichier</span>
+                        </button> -->
+                        <div class="input-group mb-3">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroupFile">Upload</span>
+                          </div>
+                          <div class="custom-file" lang="fr">
+                            <input 
+                              type="file" ng2FileSelect [uploader]="uploader" 
+                              class="custom-file-input" id="inputFile1" aria-describedby="inputGroupFile" 
+                              (change)="handleFileInput($event.target.files)">
+                            <label class="custom-file-label" #labelImport for="inputFile1">Sélectionnez un fichier</label>
+                          </div>
+                        </div>
+                        <!-- <input type="file" ng2FileSelect [uploader]="uploader" /> -->
+                        <div ng2FileDrop
+                          [ngClass]="{'nv-file-over': hasBaseDropZoneOver}"
+                          (fileOver)="fileOverBase($event)"
+                          [uploader]="uploader"
+                          class="custom-file-input" 
+                          id="inputFile2"
+                          class="well my-drop-zone">
+                          Déposez un fichier
+                      </div>
+                      </div>
+                      <div class="upload-txt text-center vert-align">
+                        <span style="display: block;">Aucun fichier selectionné</span>
+                        <span style="display: block;">Taille maximale: 200mb.</span>
+                      </div>
+                    </div>
+                  </div>
                   <div>
-                    <div class="align-div">
-                      <!-- <button type="button" class="btn btn-upload add-btn">
-                        <span class="glyphicon glyphicon-download-alt download-icn fix-middle-icn" aria-hidden="true"></span>
-                        <span class="button-txt-dl">Envoyer un fichier</span>
-                      </button> -->
-                      <input type="file" ng2FileSelect [uploader]="uploader" />
-                      <div ng2FileDrop
-                        [ngClass]="{'nv-file-over': hasBaseDropZoneOver}"
-                        (fileOver)="fileOverBase($event)"
-                        [uploader]="uploader"
-                        class="well my-drop-zone">
-                        Déposez un fichier
-                    </div>
-                    </div>
-                    <div class="upload-txt align-div vert-align">
-                      <span style="display: block;">Aucun fichier selectionné</span>
-                      <span style="display: block;">Taille maximale: 200mb.</span>
+                    <label for="filename">Titre du document *</label>
+                    <div class="input-group mb-3">
+                      <input  style="border-radius: 0.25rem;" type="text" class="form-control" id="filename" aria-describedby="basic-addon3" placeholder="Nom du document">
                     </div>
                   </div>
-                </div>
-                <div>
-                  <label for="filename">Titre du document *</label>
-                  <div class="input-group mb-3">
-                    <input  style="border-radius: 0.25rem;" type="text" class="form-control" id="filename" aria-describedby="basic-addon3" placeholder="Nom du document">
+                  <div class="form-group">
+                    <label for="filecategory">Catégorie *</label>
+                    <select class="form-control" id="filecategory">
+                      <option value="" disabled selected>Choisir une catégorie</option>
+                      <option>1</option>
+                      <option>2</option>
+                      <option>3</option>
+                      <option>4</option>
+                      <option>5</option>
+                    </select>
                   </div>
                 </div>
-                <div class="form-group">
-                  <label for="filecategory">Catégorie *</label>
-                  <select class="form-control" id="filecategory">
-                    <option value="" disabled selected>Choisir une catégorie</option>
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                  </select>
-                </div>
-              </div>
+              </form>
             </div>
             <div class="col-lg-auto col-md-auto"></div>
           </div>

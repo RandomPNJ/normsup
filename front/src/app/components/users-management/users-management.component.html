@@ -1,3 +1,14 @@
+<div class="dash-bg">
+<div class="container profile-flyover">
+  <div class="row">
+    <div class="col">
+       
+    </div>
+    <div class="col-md-auto col-lg-auto">
+      <app-profile-flyover></app-profile-flyover>
+    </div>
+  </div>
+</div>
 <div [ngClass]="{'sidebar-padding': sidebarVisible}" style="height: 100vh; background-color: #F4FAFF; overflow-y: auto;">
   <div class="container main-cont">
       <div class="cont-wrapper">
@@ -9,7 +20,7 @@
           <div class="container">
             <div class="row justify-content-end">
               <div class="col-lg-auto col-md-auto">
-                <button (click)="openModal(template, 'AddUser')" type="button" class="btn btn-primary btn-sm">Ajouter un utilisateur</button>
+                <button (click)="openModal(template, 'AddUser')" type="button" class="btn btn-outline-normsup">Ajouter un utilisateur</button>
               </div>
             </div>
             <!-- <span (click)="openModal(template, 'Supplier')" class="glyphicon glyphicon-plus-sign plus-icn" role="button"></span> -->
@@ -54,8 +65,8 @@
                         <div class="form-group col s6">
                           <label class="active" for="role">Role</label>
                           <select class="form-control" id="role"  name="role" [(ngModel)]="userToAdd.role">
-                              <option *ngFor="let c of roles" [ngValue]="c.value" [disabled]="c.name === ' '">{{c.name}}</option>
-                            </select>
+                            <option *ngFor="let c of roles" [ngValue]="c.value" [disabled]="c.name === ' '">{{c.name}}</option>
+                          </select>
                         </div>
                       </div>
                       <div class="row" *ngIf="modalState === 'AddUser'">
@@ -89,4 +100,5 @@
           </div>
         </ng-template>
     </div>
+</div>
 </div>

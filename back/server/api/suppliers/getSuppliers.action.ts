@@ -13,27 +13,35 @@ export default {
 };
 
 export function getSuppliers(req, res, SupplierRegistry) {
-    // if (!req.decoded) {
-    //     return Promise.reject(`Cannot get user informations, invalid request.`);
-    // }
+    if (!req.decoded) {
+        return Promise.reject(`Cannot get user informations, invalid request.`);
+    }
 
     const params = req.query;
     loggerT.verbose('Getting the suppliers.');
+    // if(!params.company) {
+    //     const error = new Error(`Invalid request, organisation needs to be provided.`);
+    //     error['statusCode'] = 400;
+    //     throw error;
+    // }
     if(!params.length) {
         params.length = 10;
     } else {
         params.length = parseInt(params.length, 10);
     }
     let data = {
-        company: params.company,
+        company: req.decoded.organisation,
         limit: params.length,
-        search: params.search
+        search: params.search,
+        group: params.group
     };
-    if(params.start) {
+    if(params.start || params.start == 0) {
         data['start'] = parseInt(params.start, 10);
+    } else if(!params.start) {
+        data['start'] = 0;
     }
     loggerT.verbose('params == ', data);
-    return SupplierRegistry.getSuppliers(data)
+    return SupplierRegistry.getSuppliers(data, req.decoded)
         .then(res => {
             let result = {
                 items: res
