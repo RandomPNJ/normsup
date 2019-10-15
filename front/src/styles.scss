@@ -693,3 +693,16 @@ body {
         }
     }
 }
+
+#circle {
+    width: 15px;
+    height: 15px;
+    -webkit-border-radius: 30px;
+    -moz-border-radius: 30px;
+    border-radius: 30px;
+}
+
+.nopadding {
+    padding: 0 !important;
+    margin: 0 !important;
+}

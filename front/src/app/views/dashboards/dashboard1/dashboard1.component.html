@@ -116,26 +116,23 @@
         </div>
       </div>
     </div>
+    <div class="col-lg-1 col-md-0 mb-4">
+
+    </div>
   </div>
   <!--Grid row-->
 
   <div class="row wow fadeIn mt-5">
     <div class="col-lg-6 col-md-6 mb-4">
-      <div class="card">
+      <div class="card card-big">
         <div class="box-title">Taux de conformité par mois en %</div>
         <div class="card-body">
-          <!-- <canvas *ngIf="showConformityChart" #conformityChart id="conformityChart" mdbChart 
-            [chartType]="chart3Type"
-            [datasets]="chartDatasets"
-            [labels]="chartLabels"
-            [colors]="chartColors"
-            [options]="chartOptions"></canvas> -->
-            <canvas [hidden]="!showConformityChart" #conformityChart id="conformityChart" mdbChart [chartType]="chart3Type"></canvas>
+            <canvas [hidden]="!showConformityChart" #conformityChart id="conformityChart" mdbChart [chartType]="conformityChartType"></canvas>
         </div>
       </div>
     </div>
     <div class="col-lg-6 col-md-6 mb-4">
-      <div class="card">
+      <div class="card card-big">
         <div class="box-title">Prochaines relances</div>
         <div class="card-body">
           <table class="table table-hover">
@@ -158,30 +155,60 @@
       </div>
     </div>
   </div>
-  <!--Grid row-->
+
   <div class="row wow fadeIn mt-5">
 
-    <!--Grid column-->
-    <div class="col-md-9 mb-4">
+    <div class="col-lg-4 col-md-4 mb-4">
 
-      <!--Card-->
-      <div class="card">
-
-        <!--Card content-->
+      <div class="card card-big">
         <div class="card-body">
-
           <div style="display: block">
-            <canvas mdbChart [chartType]="chart1Type" [datasets]="chartDatasets" [labels]="chartLabels"
-              [colors]="chartColors" [options]="chartOptions" [legend]="true">
-            </canvas>
+              <canvas #groupSupplier id="groupSupplier" mdbChart [chartType]="groupSupplierType" height="185"></canvas>
+          </div>
+          <div style="padding-top: 30px;" class="container">
+            <div style="margin: auto;" class="row pt-3">
+              <span *ngFor="let item of groupSupplierSet.datasets[0].data; let index = index" class="legend-cont col-4 nopadding pt-1">
+                <div style="line-height: 17px;">
+                  <div [ngStyle]="{'background-color': groupSColors[index]}" id="circle" class="color-circle">&nbsp;</div>
+                  <span class="legend-txt">Groupe {{ index }}</span>
+                </div>
+              </span>
+            </div>
           </div>
         </div>
 
       </div>
-      <!--/.Card-->
-
     </div>
-    <!--Grid column-->
+
+    <div class="col-lg-8 col-md-8 mb-4">
+      <div class="card card-big">
+
+        <div class="card-body">
+          <div class="container">
+            <div class="row">
+              <div class="col-9">
+                <canvas #conformityPerGrp id="conformityPerGrp" mdbChart [chartType]="conformityPerGrpType" height="185"></canvas>
+              </div>
+              <div class="col-3 v-list-scroll">
+                <div class="v-list-outer-wrp">
+                  <div class="v-list">
+                    <div class="v-cont">
+                      <div *ngFor="let item of confPerGrpSet.datasets[0].data; let index = index" class="v-legend-cont nopadding">
+                        <div style="line-height: 17px;">
+                          <div [ngStyle]="{'background-color': groupSColors[index]}" id="circle" class="color-circle">&nbsp;</div>
+                          <span class="legend-txt">Groupe {{ index }}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
 
   </div>
 </div>

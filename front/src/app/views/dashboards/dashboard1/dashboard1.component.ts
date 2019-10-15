@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, AfterViewInit, ElementRef } from '@angular/core';
 import * as moment from 'moment';
 import { Chart } from 'chart.js';
+import 'chartjs-plugin-labels';
 import { Promise } from 'Bluebird';
 import { HttpService } from 'src/app/services/http.service';
 
@@ -14,24 +15,32 @@ export class Dashboard1Component implements OnInit, AfterViewInit {
 
 	@ViewChild('conformityDoughnut') private conformityDoughnutRef: ElementRef;
 	@ViewChild('conformityChart') private conformityChartRef: ElementRef;
-
+	@ViewChild('groupSupplier') private groupSupplierRef: ElementRef;
+	@ViewChild('conformityPerGrp') private conformityPerGrpRef: ElementRef;
+	
 	public context: CanvasRenderingContext2D;
 	public lineContext: CanvasRenderingContext2D;
+	public groupSContext: CanvasRenderingContext2D;
+	public conformityPerGrpContext: CanvasRenderingContext2D;
+
 	// General data
 	public halfDoughnut: any;
 	public conformityChart: any;
+	public groupSDoughnut: any;
+	public confPerGrpBar: any;
 	public map: any = { lat: 51.678418, lng: 7.809007 };
 	private months = ['Janv', 'Fev', 'Mars', 'Avr', 'Mai', 'Juin', 'Juil', 'Aout', 'Sept', 'Oct', 'Nov', 'Dec'];
 	public nbFourni = 13;
 	public reminders: Array<any>;
 	public showConformityChart: Boolean = false;
+	public groupSColors : Array<string> = ['#4390EF', '#C7E0FF', '#4E5983'];
+	public groupData: Array<any> = [];
 
 	// All chart types
-	public chart1Type = 'bar';
-	public chart2Type = 'pie';
-	public chart3Type = 'line';
-	public chart4Type = 'radar';
+	public conformityChartType = 'line';
+	public conformityPerGrpType = 'bar';
 	public conformityType = 'doughnut';
+	public groupSupplierType = 'doughnut';
 
 	/** Conformity doughnut configuration **/
 	public conformityRateSet = {
@@ -116,9 +125,6 @@ export class Dashboard1Component implements OnInit, AfterViewInit {
 
 	public chartLabels: Array<any> = [];
 
-	public chartColors: Array<any> = [
-		"#4390EF", "#4390EF"
-	];
 
 	public chartOptions: any = {
 		responsive: true,
@@ -144,7 +150,163 @@ export class Dashboard1Component implements OnInit, AfterViewInit {
 		label: 'Taux de conformité fournisseurs'
 	};
 
+	/** Group suppliers chart **/
+	public groupSupplierSet = {
+		labels: [
+			'Value'
+		],
+		datasets: [
+			{
+				data: [30, 30, 20, 20],
+				backgroundColor: [
+					"#4390EF",
+					"#C7E0FF", 
+					'#4E5983'
+				],
+				hoverBackgroundColor: [
+					"#4390EF",
+					"#C7E0FF", 
+					'#4E5983'
+				]
+			}]
+	};
+
+	public groupSupplierOptions: any = {
+		responsive: true,
+		cutoutPercentage: 65,
+		tooltips: {
+			enabled: false
+		},
+		animation: {
+			animationRotate: true,
+			duration: 2000
+		},
+		legend: {
+			display: false
+		},
+		elements: {
+			arc: {
+				borderWidth: 0
+			}
+		},
+		title: {
+			display: true,
+			text: 'Fournisseur par groupe (en %)',
+			position: 'top',
+			fontColor: '#4E5983', //Default black
+			fontFamily: 'Avenir Medium', //Default Arial,
+			fontSize: 14
+		},
+		plugins: {
+			labels: {
+				// mode 'label', 'value' or 'percentage', default is 'percentage'
+				render: 'value',
+			
+				// precision for percentage, default is 0
+				precision: 0,
+			
+				// font size, default is defaultFontSize
+				fontSize: 13,
+			
+				// font color, default is '#fff'
+				fontColor: '#fff',
+			
+				// font style, default is defaultFontStyle
+				fontStyle: 'bold',
+			
+				// font family, default is defaultFontFamily
+				fontFamily: "'Avenir Black', 'Avenir'"
+			}
+		}
+	};
+
+	/** Conformity per group chart **/
+	public confPerGrpSet = {
+		labels: [
+			'Groupe 1', 'Groupe 2', 'Groupe 3', 'Groupe 4',
+		],
+		datasets: [
+			{
+				data: [75, 90, 50, 75],
+				backgroundColor: [
+					"#4390EF",
+					"#C7E0FF", 
+					'#4E5983'
+				],
+				hoverBackgroundColor: [
+					"#4390EF",
+					"#C7E0FF", 
+					'#4E5983'
+				]
+			}]
+	};
+
+	public confPerGrpOptions: any = {
+		responsive: true,
+		cutoutPercentage: 65,
+		tooltips: {
+			enabled: false
+		},
+		animation: {
+			animationRotate: true,
+			duration: 2000
+		},
+		legend: {
+			display: false
+		},
+		elements: {
+			arc: {
+				borderWidth: 0
+			}
+		},
+		scales: {
+			yAxes: [{
+				ticks: {
+					fontColor: '#5b5f62',
+					max: 100,
+					min: 0,
+					stepSize: 50
+				}
+			}],
+			xAxes: [{
+				ticks: {
+					fontColor: '#5b5f62',
+				}
+			}]
+		},
+		title: {
+			display: true,
+			text: 'Taux de conformité par groupe de fournisseurs (en%)',
+			position: 'top',
+			fontColor: '#4E5983', //Default black
+			fontFamily: 'Avenir Medium', //Default Arial,
+			fontSize: 14
+		},
+		plugins: {
+			labels: {
+				// mode 'label', 'value' or 'percentage', default is 'percentage'
+				render: 'value',
+			
+				// precision for percentage, default is 0
+				precision: 0,
+			
+				// font size, default is defaultFontSize
+				fontSize: 13,
+			
+				// font color, default is '#fff'
+				fontColor: '#fff',
+			
+				// font style, default is defaultFontStyle
+				fontStyle: 'bold',
+			
+				// font family, default is defaultFontFamily
+				fontFamily: "'Avenir Black', 'Avenir'"
+			}
+		}
+	};
+
 	constructor(private http: HttpService) {
+		// Custom tooltip
 		Chart.defaults.global.tooltips.custom = function(tooltip) {
 			// Tooltip Element
 			var tooltipEl = $('#chartjs-tooltip');
@@ -181,10 +343,10 @@ export class Dashboard1Component implements OnInit, AfterViewInit {
 			// Find Y Location on page
 			var top = 0;
 
-			console.log('tooltip.yAlign: ' + tooltip.yAlign);
-			console.log('tooltip.y: ' + tooltip.y);
-			console.log('tooltip.caretHeight: ' + tooltip.caretHeight);
-			console.log('tooltip.caretPadding: ' + tooltip.caretPadding);
+			// console.log('tooltip.yAlign: ' + tooltip.yAlign);
+			// console.log('tooltip.y: ' + tooltip.y);
+			// console.log('tooltip.caretHeight: ' + tooltip.caretHeight);
+			// console.log('tooltip.caretPadding: ' + tooltip.caretPadding);
 
 			if (tooltip.yAlign) {
 			  var ch = 0;
@@ -198,7 +360,7 @@ export class Dashboard1Component implements OnInit, AfterViewInit {
 			  }
 			}
 
-			console.log('top: ' + top);
+			// console.log('top: ' + top);
 
 			var position = $(this._chart.canvas)[0].getBoundingClientRect();
 			// Display, position, and set styles for font
@@ -213,6 +375,8 @@ export class Dashboard1Component implements OnInit, AfterViewInit {
 			  padding: tooltip.yPadding + 'px ' + tooltip.xPadding + 'px',
 			});
 		  };
+
+		// Custom vertical line
 		const verticalLinePlugin = {
 			getLinePosition: function (chart, pointIndex) {
 				const meta = chart.getDatasetMeta(0); // first dataset is used to discover X coordinate of a point
@@ -295,7 +459,19 @@ export class Dashboard1Component implements OnInit, AfterViewInit {
 			options: this.conformityDOptions
 		});
 
-		
+		this.groupSContext = (<HTMLCanvasElement>this.groupSupplierRef.nativeElement).getContext('2d');
+		this.groupSDoughnut = new Chart(this.groupSContext, {
+			type: this.groupSupplierType,
+			data: this.groupSupplierSet,
+			options: this.groupSupplierOptions
+		});
+
+		this.conformityPerGrpContext = (<HTMLCanvasElement>this.conformityPerGrpRef.nativeElement).getContext('2d');
+		this.confPerGrpBar = new Chart(this.conformityPerGrpContext, {
+			type: this.conformityPerGrpType,
+			data: this.confPerGrpSet,
+			options: this.confPerGrpOptions
+		});
 	}
 
 	initChart() {
@@ -304,6 +480,7 @@ export class Dashboard1Component implements OnInit, AfterViewInit {
 			type: 'line',
 			data: this.chartDatasets,
 			options: this.chartOptions,
+			//@ts-ignore
 			lineAtIndex: [this.chartDatasets.datasets[0].data.length - 1]
 		});
 	}
@@ -343,7 +520,9 @@ export class Dashboard1Component implements OnInit, AfterViewInit {
 			days = days - 1;
 		}
 		let leaveDays = days;
+		//@ts-ignore
 		if (leaveDays === 'NaN' || leaveDays === '' || leaveDays <= '0' || leaveDays == 'undefined') {
+			//@ts-ignore
 			leaveDays = '';
 		} else {
 			leaveDays = days;

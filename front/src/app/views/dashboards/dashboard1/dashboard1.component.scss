@@ -38,7 +38,12 @@
     background: linear-gradient(40deg, #45cafc, #4285f4);
 }
 
+.card-big {
+    height: 330px;
+}
+
 .card.card-cascade {
+
     .view {
         box-shadow: 0 3px 10px 0 rgba(0, 0, 0, 0.15), 0 3px 12px 0 rgba(0, 0, 0, 0.15);
     }
@@ -139,4 +144,61 @@ td {
     font-size: 13px;
     text-transform: capitalize;
     color: #4390EF;
+}
+
+.legend-cont {
+    display: inline-block;
+    font-family: 'Avenir Medium';
+    font-size: 14px;
+}
+
+.v-legend-cont {
+    display: block;
+    font-family: 'Avenir Medium';
+    font-size: 14px;
+    padding-top: 15px !important;
+    
+    &:first-child {
+        padding-top: 0px !important;
+    }
+
+}
+
+.v-list-outer-wrp {
+    display: table;
+    height: 100%;
+    // width: 100%;
+}
+.v-list { 
+    height: 100%;
+    // width: 100%; 
+    display:table-cell; 
+    vertical-align:bottom; 
+}
+
+.v-cont { 
+    // max-height:200px; 
+    // overflow-y: scroll; 
+}
+
+.v-list-scroll {
+    height: 300px;
+    overflow-y: auto;
+}
+
+.color-circle {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.legend-txt {
+
+}
+
+.chart-legend {
+
+} 
+
+.bottom-legend {
+
 }
