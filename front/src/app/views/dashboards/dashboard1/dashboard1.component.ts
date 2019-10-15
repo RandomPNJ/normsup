@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, AfterViewInit, ElementRef } from '@angula
 import * as moment from 'moment';
 import { Chart } from 'chart.js';
 import 'chartjs-plugin-labels';
-import { Promise } from 'Bluebird';
+// import { Promise } from 'Bluebird';
 import { HttpService } from 'src/app/services/http.service';
 
 
