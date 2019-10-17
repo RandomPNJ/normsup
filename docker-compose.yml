@@ -34,9 +34,9 @@ services:
       - ./front/src:/usr/src/app/src
       - ./front/angular.json:/usr/src/app/angular.json
       - ./front/tslint.json:/usr/src/app/tslint.json
-      # - ./front/config/environment.local.ts:/usr/src/app/src/app/config/environment.ts
+      - ./front/config/environment.local.ts:/usr/src/app/src/app/config/environment.ts
     ports:
-      - 127.0.0.1:4200:4200
+      - 4200:4200
     networks:
       - normsup
 
@@ -57,7 +57,7 @@ services:
       - ./mysql/data:/var/lib/mysql
       - ./mysql/migrations:/docker-entrypoint-initdb.d
     ports:
-      - 127.0.0.1:3307:3307
+      - 3307:3307
     expose:
       - 3307
     networks:

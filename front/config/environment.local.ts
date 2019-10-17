@@ -6,7 +6,7 @@ export const Configuration = {
   DEFINE_REQUIREMENT: '/api/csr/define_requirement',
   VALIDATE_FREQ_STATUS: '/api/product/validateFreq',
   UNVALIDATE_FREQ_STATUS: '/api/product/unvalidateFreq',
-  serverUrl: 'http://server.normsup'
+  serverUrl: 'http://34.241.27.237'
 };
 
 

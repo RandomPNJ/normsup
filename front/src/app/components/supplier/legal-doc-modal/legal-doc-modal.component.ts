@@ -4,6 +4,7 @@ import 'datatables.net';
 import { FileUploader } from 'ng2-file-upload';
 import { HttpService } from 'src/app/services/http.service';
 import { BrowserStorageService } from 'src/app/services/storageService';
+import {Configuration} from '../../../config/environment';
 
 @Component({
   selector: 'app-legal-doc-modal',
@@ -18,7 +19,7 @@ export class LegalDocModalComponent implements OnInit {
   @ViewChild('addDocModal') addModalRef: TemplateRef<any>;
 
   public uploader: FileUploader = new FileUploader({ 
-    url: 'http://localhost:8080/api/documents/upload', 
+    url: Configuration.serverUrl + '/api/documents/upload', 
     removeAfterUpload: true, 
     autoUpload: true,
     itemAlias: 'fileLegal',
