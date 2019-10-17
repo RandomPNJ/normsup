@@ -27,6 +27,7 @@
     "@ng-select/ng-select": "https://github.com/YassinElf/ng-select/tarball/build",
     "angular-bootstrap-md": "7.5.4",
     "angular-datatables": "^7.0.0",
+    "bluebird": "^3.7.1",
     "chart.js": "2.6.0",
     "chartjs-plugin-labels": "^1.1.0",
     "core-js": "^2.6.5",

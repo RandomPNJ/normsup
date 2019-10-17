@@ -1,4 +1,4 @@
-/**
+  /**
  * Express config
  * 1.0.2
  */
@@ -6,6 +6,9 @@
 import * as helmet from 'helmet';
 import * as compression from 'compression';
 import * as bodyParser from 'body-parser';
+import * as multer from 'multer';
+
+import { indexOf } from 'lodash';
 // import {useExpressServer, useContainer} from 'routing-controllers';
 import * as passport from 'passport';
 import * as passportJWT from 'passport-jwt';
@@ -21,11 +24,17 @@ const moment = require('moment');
 const secret = config.secret;
 
 export default (expressApp) => {
+  const storage = multer.memoryStorage();
+  const upload = multer({ storage: storage });
+
   expressApp.use(helmet());
   expressApp.use(compression());
   expressApp.use(bodyParser.urlencoded({ limit: '50mb', extended: false, parameterLimit: 50000}));
   expressApp.use(bodyParser.json({ limit: '50mb' }));
   expressApp.use(methodOverride());
+  let origin;
+  let accessControlAllowOrigin = '*';
+  const allowedOrigins = ['http://localhost:4200'];
 
   // Disable caching
   expressApp.use(helmet.noCache());
@@ -33,8 +42,15 @@ export default (expressApp) => {
 
   // Configuration serveur (CORS)
   expressApp.use('/', (req, res, next) => {
-    res.header('Access-Control-Allow-Origin', '*');
+    origin = req.get('origin');
+    if(origin && indexOf(allowedOrigins, origin) !== -1 ) {
+      accessControlAllowOrigin = origin;
+    } else {
+      accessControlAllowOrigin = '*';
+    }
+    res.header('Access-Control-Allow-Origin', accessControlAllowOrigin);
     res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS, PATCH');
+    res.header('Access-Control-Allow-Credentials', 'true');
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
 
     if (req.method === 'OPTIONS') {
@@ -84,6 +100,6 @@ export default (expressApp) => {
     }
     AuthMiddleware.use(req, res, next);
   });
-  // expressApp.use('/api', passport.authenticate('jwt', {session:false}));
+  expressApp.use('/api/documents/upload', upload.single('fileLegal'));
 
 };

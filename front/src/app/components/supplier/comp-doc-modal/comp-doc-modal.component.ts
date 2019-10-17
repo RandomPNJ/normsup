@@ -19,7 +19,7 @@ export class CompDocModalComponent implements OnInit {
   @ViewChild('labelImport') labelImport: ElementRef;
   formImport: FormGroup;
   public uploader: FileUploader = new FileUploader(
-    { url: 'http://localhost:8080/api/document/upload', removeAfterUpload: false, autoUpload: false });
+    { url: 'http://localhost:8080/api/document/upload', removeAfterUpload: true, autoUpload: false });
   public hasBaseDropZoneOver: Boolean = false;
   itemsToDisplay: Array<any> = [];
   data: Array<any> = [];

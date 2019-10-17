@@ -34,6 +34,26 @@ export default {
     queueLimit: 0,
     charset: "utf8mb4",
   },
+
+  s3Params: {
+    maxAsyncS3: 20,     // this is the default
+    s3RetryCount: 3,    // this is the default
+    s3RetryDelay: 1000, // this is the default
+    multipartUploadThreshold: 20971520, // this is the default (20 MB)
+    multipartUploadSize: 15728640, // this is the default (15 MB)
+    s3Options: {
+      accessKeyId: 'AKIA5Q6AXS2GMFEEUVSJ',
+      secretAccessKey: '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',
+    },
+  },
+
+  s3: {
+    bucket: 'normsup-storage',
+    kbis: '/kbis',
+    urssaf: '/urssaf',
+    lnte: '/lnte'
+  },
+
   model: {
     users: {
       uri: '/api/users',
@@ -59,8 +79,7 @@ export default {
       uri : '/api/documents',
       actions: [
         { name: 'getDocuments', uriPattern: '', method: 'get' },
-        // { name: 'createSupplier', uriPattern: '/define_supplier', method: 'post' },
-        // { name: 'modifySupplier', uriPattern: '/modify_supplier/:id', method: 'put' },
+        { name: 'createDocument', uriPattern: '/upload', method: 'post' }
       ],
     },
     auth: {

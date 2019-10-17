@@ -12,7 +12,6 @@ export class AuthenticatorMiddleware implements ExpressMiddlewareInterface {
         return this.authService.validateToken(token).then((res) => {
             if (res.code === 200) {
                 request.decoded = res.token;
-                console.log('RES TOKEN === ', res.token);
                 next();
             } else {
                 if (res.rc === 401 || res.rc === 403) {

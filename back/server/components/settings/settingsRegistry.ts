@@ -2,7 +2,6 @@ import { Promise, any } from 'bluebird';
 import * as _ from 'lodash';
 import * as Query from './queries';
 import config from '../../config/environment/index';
-import { Get, UseBefore } from 'routing-controllers';
 
 declare var loggerT: any;
 

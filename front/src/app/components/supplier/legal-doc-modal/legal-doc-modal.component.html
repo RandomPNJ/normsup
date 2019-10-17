@@ -77,7 +77,7 @@
                         <span class="glyphicon glyphicon-download-alt download-icn fix-middle-icn" aria-hidden="true"></span>
                         <span class="button-txt-dl">Envoyer un fichier</span>
                       </button> -->
-                      <input type="file" ng2FileSelect [uploader]="uploader" />
+                      <input type="file"  name="fileLegal" ng2FileSelect [uploader]="uploader" />
                       <div ng2FileDrop
                         [ngClass]="{'nv-file-over': hasBaseDropZoneOver}"
                         (fileOver)="fileOverBase($event)"
@@ -100,13 +100,11 @@
                 </div>
                 <div class="form-group">
                   <label for="filecategory">Catégorie *</label>
-                  <select class="form-control" id="filecategory">
+                  <select class="form-control" id="filecategory" [(ngModel)]="category">
                     <option value="" disabled selected>Choisir une catégorie</option>
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
+                    <option value="kbis">Kbis</option>
+                    <option value="urssaf">Urssaf</option>
+                    <option value="lnte">LNTE</option>
                   </select>
                 </div>
               </div>

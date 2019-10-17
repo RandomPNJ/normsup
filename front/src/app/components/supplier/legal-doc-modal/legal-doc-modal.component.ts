@@ -3,6 +3,7 @@ import { DataTableDirective } from 'angular-datatables';
 import 'datatables.net';
 import { FileUploader } from 'ng2-file-upload';
 import { HttpService } from 'src/app/services/http.service';
+import { BrowserStorageService } from 'src/app/services/storageService';
 
 @Component({
   selector: 'app-legal-doc-modal',
@@ -16,9 +17,16 @@ export class LegalDocModalComponent implements OnInit {
   @ViewChild(DataTableDirective) datatableElement: DataTableDirective;
   @ViewChild('addDocModal') addModalRef: TemplateRef<any>;
 
-  public uploader: FileUploader = new FileUploader(
-    { url: 'http://localhost:8080/api/document/upload', removeAfterUpload: false, autoUpload: false });
+  public uploader: FileUploader = new FileUploader({ 
+    url: 'http://localhost:8080/api/documents/upload', 
+    removeAfterUpload: true, 
+    autoUpload: true,
+    itemAlias: 'fileLegal',
+    authTokenHeader: 'Authorization',
+    authToken: `Bearer ${this.bsService.getLocalStorage('token')}`
+  });
   public hasBaseDropZoneOver: Boolean = false;
+  private category: String = 'test';
   itemsToDisplay: Array<any> = [];
   data: Array<any> = [];
   dtElement: DataTableDirective;
@@ -40,11 +48,21 @@ export class LegalDocModalComponent implements OnInit {
     }
   };
 
-  constructor(private httpService: HttpService) {
+  constructor(private httpService: HttpService, private bsService: BrowserStorageService) {
     
   }
 
   ngOnInit() {
+    this.uploader.onAfterAddingFile = (file) => { file.withCredentials = false;};
+    this.uploader.onBuildItemForm = (fileItem: any, form: any) => {
+      form.append('category' , this.category);
+    };
+    this.uploader.uploadAll();
+    this.uploader.onSuccessItem = (item: any, response: string, status: number, headers: any): any => {
+      if(response){
+        console.log("response"+JSON.stringify(response));
+      }
+    }
     const that = this;
     this.dtOptions = {
       searchDelay: 4500,
@@ -112,6 +130,7 @@ export class LegalDocModalComponent implements OnInit {
         },
       ]
     };
+    
   }
 
   addDoc() {

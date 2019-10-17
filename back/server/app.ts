@@ -2,6 +2,7 @@ import * as express from 'express';
 import { Promise } from 'bluebird';
 import * as path from 'path';
 import * as fs from 'fs';
+import * as AWSDK from 'aws-sdk';
 
 import ServiceManager from './config/serviceManager/index';
 import config from './config/environment/index';
@@ -77,11 +78,15 @@ function start(app: any, config: any): any {
   });
   app.set('swagger', swagger, { private: true });
 
+  // Init s3 object
+  AWSDK.config.update(config.s3Params.s3Options);
+  const s3Client = new AWSDK.S3();
+  app.set('s3', s3Client, {onLoad: true});
 
   // Registries to interface with products/requirements
   const supplierRegistry = new SupplierRegistry(sqlDB);
   app.set('SupplierRegistry', supplierRegistry, {onLoad: true});
-  const docRegistry = new DocumentsRegistry(sqlDB);
+  const docRegistry = new DocumentsRegistry(sqlDB, s3Client);
   app.set('DocumentsRegistry', docRegistry, {onLoad: true});
   const userRegistry = new UserRegistry(sqlDB);
   app.set('UsersRegistry', userRegistry, {onLoad: true});

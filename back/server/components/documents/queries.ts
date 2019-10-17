@@ -1,0 +1,1 @@
+export const INSERT_DOC_METADATA = 'INSERT INTO `documents` SET ?';
