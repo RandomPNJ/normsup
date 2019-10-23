@@ -65,10 +65,10 @@ export class LegalDocModalComponent implements OnInit {
     this.addDoc();
     this.uploader.onAfterAddingFile = (file) => { 
       file.withCredentials = false;
+      //@ts-ignore
       this.fileextension = file.some.name.match(/(\.)(?!.*\.)(.)*/)[0];
+      //@ts-ignore
       this.filename = file.some.name.match(/(.*)(\.)(?!.*\.)/)[0].substring(0, file.some.name.match(/(.*)(\.)(?!.*\.)/)[0].length - 1);
-      console.log('file =', this.filename);
-      console.log('ext =', this.fileextension);
     };
     this.uploader.onBuildItemForm = (fileItem: any, form: any) => {
       form.append('category' , this.category);
