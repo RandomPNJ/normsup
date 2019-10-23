@@ -489,8 +489,8 @@ export class Dashboard1Component implements OnInit, AfterViewInit {
 		let todateSec = new Date(timestamp * 1000);
 		let fromdateSec = new Date();
 
-		if (todateSec < fromdateSec)
-			alert('To date must be grater that from date!');
+		// if (todateSec < fromdateSec)
+			// alert('To date must be grater that from date!');
 
 		// Calculate days between dates
 		let millisecondsPerDay = 86400 * 1000; // Day in milliseconds
