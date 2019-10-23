@@ -42,16 +42,16 @@ export default {
     multipartUploadThreshold: 20971520, // this is the default (20 MB)
     multipartUploadSize: 15728640, // this is the default (15 MB)
     s3Options: {
-      accessKeyId: 'AKIA5Q6AXS2GMFEEUVSJ',
-      secretAccessKey: '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',
+      accessKeyId: 'AKIASFDGPSTARKFFW44O',
+      secretAccessKey: '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',
     },
   },
 
   s3: {
-    bucket: 'normsup-storage',
-    kbis: '/kbis',
-    urssaf: '/urssaf',
-    lnte: '/lnte'
+    bucket: 'normsup',
+    KBIS: '/KBIS',
+    URSSAF: '/URSSAF',
+    LNTE: '/LNTE'
   },
 
   model: {

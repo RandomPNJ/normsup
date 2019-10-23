@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="10" height="12" viewBox="0 0 10 12">
+  <g id="Groupe_412" data-name="Groupe 412" transform="translate(-56 -15.989)">
+    <g id="Groupe_407" data-name="Groupe 407" transform="translate(56 15.989)">
+      <path id="Tracé_316" data-name="Tracé 316" d="M65.93,17.816c-.012-.013-2.016-1.767-2.037-1.782A.255.255,0,0,0,63.82,16c-.052-.015.476-.01-7.57-.01a.25.25,0,0,0-.25.25v11.5a.25.25,0,0,0,.25.25h9.5a.25.25,0,0,0,.25-.25v-9.75A.252.252,0,0,0,65.93,17.816ZM64,16.79l1.085.949H64Zm-7.5,10.7v-11h7v1.5a.25.25,0,0,0,.25.25H65.5v9.25Z" transform="translate(-56 -15.989)" fill="#4390ef"/>
+      <path id="Tracé_317" data-name="Tracé 317" d="M160.5,346.012h-4.25a.25.25,0,0,0,0,.5h4.25a.25.25,0,0,0,0-.5Z" transform="translate(-153.5 -337.761)" fill="#4390ef"/>
+      <path id="Tracé_318" data-name="Tracé 318" d="M160.5,256.011h-4.25a.25.25,0,0,0,0,.5h4.25a.25.25,0,0,0,0-.5Z" transform="translate(-153.5 -250.01)" fill="#4390ef"/>
+      <path id="Tracé_319" data-name="Tracé 319" d="M186.25,166.511H189a.25.25,0,0,0,0-.5h-2.75a.25.25,0,0,0,0,.5Z" transform="translate(-182.75 -162.26)" fill="#4390ef"/>
+    </g>
+  </g>
+</svg>

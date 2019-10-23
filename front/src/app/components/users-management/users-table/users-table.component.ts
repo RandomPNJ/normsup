@@ -19,8 +19,8 @@ export class UsersTableComponent implements OnInit {
     lastname: 'Yassin',
     role: 'Admin',
     id: '0',
-    organisation: 'SpaceX',
-    main_org: 'SpaceX',
+    organisation: 1,
+    client: 1,
     createdBy: 'GOD'
   };
   tableParams: any = {

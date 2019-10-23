@@ -21,7 +21,7 @@
             <div class='selectData' id="contact" routerLink="/contact">
                 <p>Contactez-nous<img src="{{contactIcon}}" style="padding-left: 10px; height: 15px;"alt=""></p>
             </div>
-            <div class='selectData' id="contact" routerLink="/log-out">
+            <div class='selectData' id="contact" (click)="logOut()">
                 <p>Log out <img src="{{signOutLogo}}" style="padding-left: 15px; height: 15px;" alt=""></p>
             </div>
         </div>

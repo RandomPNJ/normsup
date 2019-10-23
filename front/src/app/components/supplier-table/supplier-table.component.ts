@@ -42,6 +42,7 @@ export class SupplierTableComponent implements OnInit,AfterViewInit {
   constructor(private httpService: HttpService, private notif: NotifService, private router: Router, private bs: BrowserStorageService) { }
 
   ngOnInit() {
+    this.openLegalDocModal({});
     // First query to get the number of rows
     this.httpService
       .get('/api/supplier/count')
@@ -94,8 +95,8 @@ export class SupplierTableComponent implements OnInit,AfterViewInit {
           paginate: {
               first:      'Premier',
               last:       'Dernier',
-              next:       'Suivant',
-              previous:   'Précédent'
+              next:       '>',
+              previous:   '<'
           },
       },
       ajax: (dataTablesParameters: any, callback: any) => {
@@ -132,7 +133,7 @@ export class SupplierTableComponent implements OnInit,AfterViewInit {
       },
       columns: [
         {
-          title: 'Name',
+          title: 'Fournisseur',
           data: 'denomination',
           searchable: true
         },

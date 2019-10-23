@@ -21,13 +21,15 @@ export class LegalDocModalComponent implements OnInit {
   public uploader: FileUploader = new FileUploader({ 
     url: Configuration.serverUrl + '/api/documents/upload', 
     removeAfterUpload: true, 
-    autoUpload: true,
-    itemAlias: 'fileLegal',
+    autoUpload: false,
     authTokenHeader: 'Authorization',
     authToken: `Bearer ${this.bsService.getLocalStorage('token')}`
   });
   public hasBaseDropZoneOver: Boolean = false;
-  private category: String = 'test';
+  public addDocState: Boolean = false;
+  private category: String = '';
+  private filename = '';
+  private fileextension = '';
   itemsToDisplay: Array<any> = [];
   data: Array<any> = [];
   dtElement: DataTableDirective;
@@ -41,11 +43,17 @@ export class LegalDocModalComponent implements OnInit {
   dtOptions: DataTables.Settings = {};
   myTable: Boolean = false;
 
+  itemPluralMappingNum = {
+    'documents': {
+      '=0': 'Aucun Document',
+      '=1': 'Un',
+      'other': '#'
+    }
+  };
   itemPluralMapping = {
     'documents': {
-      '=0': 'n\'avez aucun document',
-      '=1': 'un document',
-      'other': '# documents'
+      '=1': 'Document',
+      'other': 'Documents'
     }
   };
 
@@ -54,9 +62,17 @@ export class LegalDocModalComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.uploader.onAfterAddingFile = (file) => { file.withCredentials = false;};
+    this.addDoc();
+    this.uploader.onAfterAddingFile = (file) => { 
+      file.withCredentials = false;
+      this.fileextension = file.some.name.match(/(\.)(?!.*\.)(.)*/)[0];
+      this.filename = file.some.name.match(/(.*)(\.)(?!.*\.)/)[0].substring(0, file.some.name.match(/(.*)(\.)(?!.*\.)/)[0].length - 1);
+      console.log('file =', this.filename);
+      console.log('ext =', this.fileextension);
+    };
     this.uploader.onBuildItemForm = (fileItem: any, form: any) => {
       form.append('category' , this.category);
+      form.append('filename' , this.filename + this.fileextension);
     };
     this.uploader.uploadAll();
     this.uploader.onSuccessItem = (item: any, response: string, status: number, headers: any): any => {
@@ -135,11 +151,27 @@ export class LegalDocModalComponent implements OnInit {
   }
 
   addDoc() {
-    const data: any = {data: this.addModalRef, type: 'AddDoc'};
-    this.addDocModal.emit(data);
+    // const data: any = {data: this.addModalRef, type: 'AddDoc'};
+    // this.addDocModal.emit(data);
+    this.addDocState = true;
   }
 
+  uploadFile() {
+    this.uploader.uploadAll();
+  }
   public fileOverBase(e:any):void {
     this.hasBaseDropZoneOver = e;
+  }
+
+  private cleanVariables() {
+    this.fileextension = '';
+    this.filename = '';
+    this.category = '';
+    this.uploader.cancelAll();
+  }
+
+  private goToDocView() {
+    this.cleanVariables();
+    this.addDocState = false;
   }
 }

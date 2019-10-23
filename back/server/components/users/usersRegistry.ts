@@ -40,7 +40,7 @@ export default class UserRegistry {
                                 name: user.name,
                                 lastname: user.lastname,
                                 organisation: user.organisation,
-                                mainOrg: user.main_org,
+                                client: user.client,
                                 role: user.role,
                                 createTime: new Date(user.create_time)
                             };

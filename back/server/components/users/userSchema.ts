@@ -10,6 +10,6 @@ export const UserSchema = Joi.object({
     create_time: Joi.string().optional().allow(''),
     // id: Joi.string().optional(),
     organisation: Joi.string().optional(),
-    main_org: Joi.string().optional().allow(''),
+    client: Joi.number(),
     createdBy: Joi.string().optional(),
 });

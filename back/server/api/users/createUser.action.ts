@@ -27,7 +27,7 @@ export function createUser(req, UsersRegistry) {
 
     data.create_time = new Date();
     if(creator.organisation) {
-        data.main_org = creator.organisation;
+        data.client = creator.organisation;
     }
     if(creator.username) {
         data.createdBy = creator.username;

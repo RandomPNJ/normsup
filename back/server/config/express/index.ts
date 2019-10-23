@@ -100,6 +100,6 @@ export default (expressApp) => {
     }
     AuthMiddleware.use(req, res, next);
   });
-  expressApp.use('/api/documents/upload', upload.single('fileLegal'));
+  expressApp.use('/api/documents/upload', upload.single('file'));
 
 };

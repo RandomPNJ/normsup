@@ -30,7 +30,7 @@ const routes: Routes = [
   { path: 'users', component: UsersManagementComponent },
   { path: 'profile', component: ProfileComponent },
   { path: '',
-    redirectTo: '/login',
+    redirectTo: '/dashboard',
     pathMatch: 'full'
   },
 ];

@@ -1,17 +1,21 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="67" height="67" viewBox="0 0 67 67">
+<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14">
   <defs>
-    <filter id="Ellipse_3" x="0" y="0" width="67" height="67" filterUnits="userSpaceOnUse">
-      <feOffset input="SourceAlpha"/>
-      <feGaussianBlur stdDeviation="7.5" result="blur"/>
-      <feFlood flood-opacity="0.102"/>
-      <feComposite operator="in" in2="blur"/>
-      <feComposite in="SourceGraphic"/>
-    </filter>
+    <style>
+      .cls-1 {
+        fill: #fff;
+      }
+
+      .cls-2 {
+        fill: none;
+        stroke: #86d890;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-width: 2px;
+      }
+    </style>
   </defs>
-  <g id="Groupe_276" data-name="Groupe 276" transform="translate(-1026.5 -427)">
-    <g transform="matrix(1, 0, 0, 1, 1026.5, 427)" filter="url(#Ellipse_3)">
-      <circle id="Ellipse_3-2" data-name="Ellipse 3" cx="11" cy="11" r="11" transform="translate(22.5 22.5)" fill="#fff"/>
-    </g>
-    <path id="Tracé_179" data-name="Tracé 179" d="M1053.69,1297.158l4.888,6.418,7.91-12.048" transform="translate(0 -837)" fill="none" stroke="#86d890" stroke-linecap="round" stroke-width="2"/>
+  <g id="Groupe_437" data-name="Groupe 437" transform="translate(-662 -635)">
+    <circle id="Ellipse_39" data-name="Ellipse 39" class="cls-1" cx="7" cy="7" r="7" transform="translate(662 635)"/>
+    <path id="Tracé_320" data-name="Tracé 320" class="cls-2" d="M970.725,1464.923l1.721,1.656,3.561-3.427" transform="translate(-304.01 -822.646)"/>
   </g>
 </svg>

@@ -13,7 +13,7 @@
   <thead>
     <tr>
       <th class="th-sm">Nom du fournisseur</th>
-      <th class="th-sm">Siret</th>
+      <th class="th-sm">Interlocuteur</th>
       <th class="th-sm">Localisation</th>
       <th class="th-sm">Status des documents</th>
       <th class="th-sm">Actions</th>
@@ -24,47 +24,46 @@
       <td style="cursor: pointer;" (click)="openSupplierInfo(item)">
         <div class="badge-container content-cont container">
           <div class="row h-100  cent">
-            <span class="assign-link">{{item.denomination | titlecase }}</span>
+            <span class="col-9   assign-link nopadding">{{item.denomination | titlecase }}</span>
+            <span style="text-align: left;" class="col-2 nopadding"><img class="arw-dwn" src="../../../assets/img/arrow-down@2x.png"/></span>
           </div>
-        </div>
-      </td>
-      <td>
-        <div class="badge-container content-cont container">
-            <div class="row h-100 cent">
-              <span>{{item.siret}}</span>
-            </div>
         </div>
       </td>
       <td>
         <div class="badge-container content-cont container">
           <div class="row h-100 cent">
-            <span [ngClass]="item.country != '' ? 'flag-icon-' + item.country : ''" class="flag-icon flag-icon-squared"></span>
+            <span class="name-txt">Prénom Nom</span>
+            <span style="text-align: left; color: #4E5983; padding-left: 8px;" class=""><img class="arw-dwn" src="../../../assets/img/blue-arw-dwn@2x.png"/></span>
+          </div>
+        </div>
+      </td>
+      <td>
+        <div class="badge-container content-cont container">
+          <div class="row h-100 cent">
+            <!-- TODO Find a way to load flag -->
+            <span [ngClass]="item.country != '' ? 'flag-icon-' + item.country : ''" class="flag-icon flag-icon-fr"></span>
             <span class="localisation">{{item.city | titlecase }}</span>
           </div>
         </div>
       </td>
-      <!-- <td style="padding:0;">
-        <div class="badge-container" style="color: green;" *ngIf="item.status"><span
-            class="glyphicon glyphicon-ok status-icn fix-middle" aria-hidden="true"></span></div>
-        <div class="badge-container" style="color: red;" *ngIf="!item.status"><span
-            class="glyphicon glyphicon-remove status-icn fix-middle" aria-hidden="true"></span></div>
-      </td> -->
       <td>
         <div class="badge-container content-cont container">
           <div class="row flex-grow-1 h-100" style="margin-bottom: 0px;">
             <div style="padding-right: 5px;" class="doc-cont col-6 h-100" (click)="openLegalDocModal(item)" data-toggle="modal" data-target="#exampleModalCenter">
-              <span class="align-txt">
-                <embed *ngIf="true" class="valid-doc" src="../../../assets/img/valid-doc.svg">
-                <embed *ngIf="!legal-status" class="valid-doc" src="../../../assets/img/invalid-doc.svg">
+              <span class="doc-icn-cont">
+                <img style="height: 25px;" src="../../../assets/img/legal-icn@2x.png"/>
+                <embed class="valid-state-icn valid-icn-shadow" *ngIf="false" src="../../../assets/img/valid-icn.svg"/>
+                <embed class="invalid-state-icn valid-icn-shadow" *ngIf="true" src="../../../assets/img/invalid-doc-icn.svg"/>
+                <span style="text-decoration: underline;" class="fix-middle align-txt doc-type-txt">Légal</span>
               </span>
-              <span style="text-decoration: underline;" class="fix-middle align-txt">Légal</span>
             </div>
             <div class="doc-cont col-6 h-100" (click)="openCompDocModal(item)">
-              <span class="align-txt">
-                <embed *ngIf="true" class="valid-doc"  src="../../../assets/img/valid-doc.svg">
-                <embed *ngIf="!comp-status" class="valid-doc"  src="../../../assets/img/invalid-doc.svg">
+              <span class="doc-icn-cont">
+                <img style="height: 25px;" src="../../../assets/img/comp-icn@2x.png"/>
+                <embed class="valid-state-icn-two valid-icn-shadow" *ngIf="false" src="../../../assets/img/valid-icn.svg"/>
+                <embed class="invalid-state-icn-two valid-icn-shadow" *ngIf="true" src="../../../assets/img/invalid-doc-icn.svg"/>
+                <span style="text-decoration: underline;" class="fix-middle doc-type-txt">Complémentaire</span>
               </span>
-              <span style="text-decoration: underline;" class="fix-middle">Complémentaire</span>
             </div>
             <!-- <span [ngClass]="{'badge-red': !item.lnte}" class="badge badge-style fix-middle"><i class="fas fa-file-alt doc-icn"></i>Lnte</span> -->
           </div>
@@ -77,7 +76,7 @@
           <!-- <span (click)="delete(item)" class="glyphicon glyphicon-trash fix-middle" aria-hidden="true"></span> -->
           <div class="badge-container content-cont container">
               <div class="row h-100 cent">
-                <button (click)="openModal(template, 'Supplier')" type="button" class="btn btn-outline-normsup default-btn-table"> <span></span>Relancer</button>
+                <button style="box-shadow: none;" (click)="openModal(template, 'Supplier')" type="button" class="btn btn-outline-normsup default-btn-table">Relancer</button>
               </div>
           </div>
         </div>

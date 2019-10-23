@@ -45,23 +45,33 @@ export default class SupplierRegistry {
     }
 
 
-    public createDocument(file, user) {
+    public createDocument(file, meta, user) {
 
+        const path = meta.category + '/' + meta.filename;
 
-        return this.uploadFile(file)
+        // let data = {
+        //     path: path,
+        //     filename: meta.filename,
+        //     uploadedBy: user.id,
+        //     client: user.client,
+        //     size: file.size,
+        //     type: file.mimetype,
+        //     category: meta.category
+        // };
+        // loggerT.verbose('METADATA === ', data);
+        return this.uploadFile(file, path)
             .then((res, err) => {
                 if(err) {
                     return err;
                 }
                 let data = {
-                    path: file.originalname,
-                    createdAt: new Date(),
-                    filename: file.originalname,
+                    path: path,
+                    filename: meta.filename,
                     uploadedBy: user.id,
-                    organisation: user.main_org,
+                    client: user.client,
                     size: file.size,
                     type: file.mimetype,
-                    category: file.category
+                    category: meta.category
                 };
 
                 return this.createMetadata(data);
@@ -70,11 +80,11 @@ export default class SupplierRegistry {
         ;
     }
 
-    private uploadFile(file) {
+    private uploadFile(file, key) {
 
         return this.s3.upload({
             Bucket: 'normsup-storage',
-            Key: file.originalname,
+            Key: key,
             Body: file.buffer,
             ContentType: file.mimetype,
             ACL: 'public-read'

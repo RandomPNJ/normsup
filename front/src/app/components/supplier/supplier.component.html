@@ -159,22 +159,23 @@
       </div>
     </ng-template>
     <ng-template #legalDoc>
-      <div class="modal-header own-modal-header">
+      <!-- <div class="modal-header own-modal-header">
         <h4 class="modal-title pull-left">Documents Légaux</h4>
         <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
           <span aria-hidden="true">&times;</span>
         </button>
-      </div>
+      </div> -->
       <div class="modal-body">
         <app-legal-doc-modal (hideModal)="hideModal($event)" (addDocModal)="openInfoModal($event)"></app-legal-doc-modal>
       </div>
+      <div class="modal-footer" style="padding: 4px;border-style: none !important;">
+      </div>
     </ng-template>
     <ng-template #compDoc>
-        <div class="modal-header own-modal-header">
-          <h4 class="modal-title pull-left">Documents Complémentaires</h4>
-        </div>
         <div class="modal-body">
           <app-comp-doc-modal (hideModal)="hideModal($event)" (addDocModal)="openInfoModal($event)"></app-comp-doc-modal>
+        </div>
+        <div class="modal-footer" style="padding: 4px;border-style: none !important;">
         </div>
     </ng-template>
   </div>

@@ -125,8 +125,8 @@ export class UsersManagementComponent implements OnInit {
       name: 'El Fahim',
       lastname: 'Yassin',
       id: '0',
-      organisation: 2,
-      main_org: 'SpaceX',
+      organisation: 1,
+      client: 1,
       createdBy: 'GOD'
     };
 

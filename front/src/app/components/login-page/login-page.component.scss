@@ -178,6 +178,9 @@ select:-webkit-autofill:focus {
 
 .submit-btn {
     margin: auto;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
     display: flex;
     justify-content: center;
     background-color: lightblue;

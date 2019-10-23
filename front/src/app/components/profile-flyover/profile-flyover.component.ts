@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { BrowserStorageService } from 'src/app/services/storageService';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile-flyover',
@@ -11,7 +13,7 @@ export class ProfileFlyoverComponent implements OnInit {
   user = {
     name: 'Yassin',
     lastname: 'El Fahim',
-    mainOrg: 'SpaceX'
+    client: 1
   };
 
   profileIcon: String = '../../../assets/img/alarm.png';
@@ -22,7 +24,7 @@ export class ProfileFlyoverComponent implements OnInit {
 
   dropdownMenu: Boolean = false;
 
-  constructor() { }
+  constructor(private bsStorage: BrowserStorageService, private router: Router) { }
 
   ngOnInit() {
   }
@@ -31,4 +33,8 @@ export class ProfileFlyoverComponent implements OnInit {
     this.dropdownMenu = !this.dropdownMenu;
   }
 
+  logOut() {
+    this.bsStorage.clearLocalStorage();
+    this.router.navigate(['/login']);
+  }
 }

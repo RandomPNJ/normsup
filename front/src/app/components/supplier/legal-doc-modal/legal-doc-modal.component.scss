@@ -7,20 +7,36 @@
     top: 8px;
 }
 
-.button-txt {
-    display: inline-block;
-    padding-left: 18px;
-    font-size: 10px;
-    vertical-align: middle;
+.custom-legal-btn {
+  min-width: 137px;
+  font-family: 'Avenir Heavy';
+  font-size: 13px;
+  border-radius: 5px !important;
+  text-transform: unset;
+  padding-top: 6px;
+  padding-bottom: 6px;
 }
 
-.submit-btn {
-  border-radius: 3px;
+.legal-custom-outline {
+  color: #4E5983;
 }
 .button-pad {
   padding-bottom: 10px;
 }
-// Style for upload file zone
+
+
+/** Style for upload file zone BEGINNING **/
+
+.file-upload {
+  padding: 5px 0px 10px 0px;
+}
+
+.upload-txt {
+  display: inline-block;
+  vertical-align: middle;
+  padding-left: 10px;
+}
+
 .my-drop-zone { 
   border: dotted 3px lightgray;
   min-width: 320px;
@@ -29,6 +45,7 @@
   vertical-align: middle;
   font-size: 15px;
 }
+
 .nv-file-over { border: dotted 3px red; } /* Default class applied to drop zones on over */
 .another-file-over-class { border: dotted 3px green; }
 
@@ -38,207 +55,221 @@
   padding-bottom: 10px;
   padding-top: 10px;
 }
-.button-txt-dl {
-    height: 19px;
-    padding-left: 7px;
-    font-size: 10px;
-}
-.upload-txt {
-  display: inline-block;
-  vertical-align: middle;
-  padding-left: 10px;
-}
-.file-upload {
-  padding: 5px 0px 10px 25px;
-}
+
+/** Style for upload file zone END **/
+
+/** Button style BEGINNING **/
+
 .add-btn {
-    border-radius: 4px;
-    position: relative;
-    height: 35px;
-    margin-left: 0px !important;
+  min-width: 150px;
+  position: relative;
 }
 
-.dl-btn {
-  padding-left: 10px;
-  padding-right: 10px;
+.button-txt {
+  font-family: 'Roboto Medium';
+  text-transform: none;
+  display: inline-block;
+  font-size: 13px;
+  vertical-align: middle;
 }
+
+.button-txt-dl {
+  font-family: 'Roboto Medium';
+  text-transform: none;
+  height: 19px;
+  font-size: 10px;
+}
+
+/** Button style  END **/
+
+
+/** Table style BEGINNING **/
+
+.header-file {
+  padding-left: 37px;
+}
+.header-date {
+  padding-right: 37px;
+}
+
+th {
+
+  text-align: center !important;
+
+  &:first-child {
+    text-align: left !important;
+  }
+
+  &:last-child {
+    text-align: right !important;
+  }
+}
+
+.assign-link {
+  text-align: left;
+  padding: 20px 0px 20px 13.5px;
+  font-family: 'Roboto Medium';
+  font-size: 15px;
+}
+
+.status-txt {
+  padding-left: 5px;
+  font-family: 'Roboto Regular';
+  font-size: 15px;
+  color: #4E5983;
+}
+
+.doc-state-cont {
+  display: flex;
+  align-items: center;
+}
+
+.valid-icn {
+  height: 20px;
+  border-radius: 25px;
+}
+
+.doc-date {
+  text-align: right;
+  display: block;
+  padding-right: 37px;
+  width: 100%;
+  font-family: 'Roboto Regular';
+  font-size: 15px;
+}
+
+/** Table style END **/
+
+/** Modal Header style BEGINNING **/
 
 .table-header {
-    display: table-cell;
-    vertical-align: middle;
-    font-size: 13px;
-    padding: 10px 0 0 10px;
-    font-family: Roboto;
-    display: inline-block;
+  display: table-cell;
+  vertical-align: middle;
+  padding: 10px 0 0 0;
+  display: inline-block;
 }
 
-.main-cont {
-    margin-top: 50px;
-    background-color: white;
-    box-shadow: 0 7px 15px 0 rgba(0, 51, 90, 0.04);
-    border-radius: 6px;
-  }
-  
-  .cont-wrapper {
-  }
-  
-  th {
-    color: #333;
-    font-weight: 500 !important;
-    border-bottom: 0px solid black !important;
-    border-top: 0px solid black !important;
-    // background-color: #EFF5FC;
-    background-color: #bdbdbd;
-    border-radius: 0px;
-    text-align: center;
-  
-    &:first-child {
-      border-top-left-radius: 2px;
-      border-bottom-left-radius: 2px;
-    }
-    &:last-child {
-      border-top-right-radius: 2px;
-      border-bottom-right-radius: 2px;
-    }
-  }
-  
-  tr {
-    border-bottom: 0px solid black;
-    &:last-child {
-    }
-  }
-  
-  td {
-    // border-bottom: 1px solid #ddd;
-    padding: 0px !important;
-    font-size: 14px !important;
-    border-radius: 0px !important;
-  }
-  
-  hr {
-    display: block;
-    height: 1px;
-    border: 0;
-    border-top: 1px solid #ccc;
-    margin: 1em 0;
-    padding: 0;
-  }
-  
-  .table {
-    border-bottom: 0px solid black;
-  }
-  
-  .sub-cont {
-    padding: 25px 0px 20px 25px;
-  }
-  
+.top-txt {
+  display: inline-block;
+  color: #4390EF;
+  font-family: 'Roboto Bold';
+  font-size: 25px;
+}
+.mod-header {
+  padding-left: 35px;
+}
+.mod-header-title {
+  padding-top: 60px;
+}
+.doc-modal-type {
+  font-size: 15px;
+}
 
-  .title {
-    color: #382244;
-    font-family: "Montserrat", sans-serif;
-    padding: 10px 0px 10px 10px;
-    font-weight: 500;
-    font-size: 21px;
-    text-transform: uppercase;
-    display: block;
-  }
-  
-  .status-icn {
-    text-align: center;
-    vertical-align: middle;
-    font-size: 19px;
-  }
-  .download-icn {
-    text-align: center;
-    vertical-align: middle;
-    font-size: 16px;
-  }
-  
-  .badge-container {
-    height: 100%;
-    width: auto;
-    position: relative;
-    text-align: center;
-    vertical-align: middle;
-    display: inline-block !important;
-  
-    .badge-red {
-      border: 1px solid red !important;
-      color: red !important;
-    }
-    .badge-style {
-      margin-right: 5px;
-      font-weight: 400;
-      text-transform: uppercase;
-      background-color: white;
-      border: 1px solid green;
-      color: green;
-    
-      &:last-child {
-        margin-right: 0px;
-      }
-    }
-  }
-  
-  .localisation {
-    text-transform: capitalize;
-    padding-left: 5px;
-  }
-  
-  .edit-icn {
-    // padding-right: 7px;
-  }
-  
-  .fix-middle-icn {
-    top: 0px;
-    position: relative;
-  }
-  .fix-middle {
-    top: -3px;
-    position: relative;
-  }
-  
-  #util-btns {
-    span {
-      cursor: pointer;
-    }
-  }
-  
-  .content-cont {
-    display: flex; 
-    flex-direction: column; 
-    justify-content: center; 
+.doc-type-overlay {
+  padding: 5px 12px;
+  border-radius: 30px;
+  display: inline-block;
+}
+
+.active-type {
+  color: #FFF;
+  background-color: #4390EF;
+}
+
+.disabled-type {
+  background-color: white;
+  color: #4E5983;
+  opacity: 0.5;
+}
+
+.type-txt {
+  font-family: 'Roboto Medium';
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.doc-count-txt {
+  font-family: 'Roboto Regular';
+  font-size: 15px;
+}
+
+/** Modal Header style END **/
+
+.modal-body {
+  padding: 0px !important;
+}
+
+.file-input-normsup {
+  min-height: 47px;
+  height: 47px;
+  cursor: pointer;
+}
+.file-input-normsup-label {
+  border: 1px solid #C7E0FF !important;
+  border-radius: 7px !important;
+  min-height: 47px;
+  height: 47px;
+}
+
+.custom-file-label::after {
+  content: 'Uploader un fichier' !important;
+    padding: 0px 18px 0px 19px;
+    top: 8px !important;
+    right: 10px !important;
+    font-family: 'Roboto Medium';
+    font-size: 13px;
+    outline: none;
+    height: 30px;
     align-items: center;
-    min-height: 70px;
-    width: 100%;
-    // height: 70px;
-    // text-align: center;
-    // vertical-align: middle;
-    // position: relative;
-    // display: table-cell;
-  }
-  .doc-cont {
-    display: inline-block;
-    height: 100%;
-    padding: 10px 0px;
-    color: green;
-    cursor: pointer;
-  }
+    vertical-align: middle;
+    display: flex;
+    letter-spacing: 0;
+    background-color: white;
+    border: 1px solid #4390EF;
+    border-radius: 5px;
+    color: #4390EF;
+
+}
+
+.file-upload-label {
+  // padding: 14px 0px 15px 21px !important;
+  padding-left: 21px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  font-family: 'Roboto Regular';
+  font-size: 15px;
+  letter-spacing: 0;
+  color: #4E5983;
+  height: 100%;
+  vertical-align: middle;
+  align-items: center;
+  width: 100%;
+  display: flex;
+}
+
+
+.meta-input-label {
+  font-family: 'Roboto Regular';
+  font-size: 11px;
+  color: #4390EF;
+
+}
+
+.add-doc-return {
+  display: block;
+  font-size: 13px;
+  font-family: 'Roboto Medium';
+  color: #4E5983;
+  text-transform: uppercase;
+  opacity: 0.5;
+  cursor: pointer;
   
-  .invalid-doc {
-    color: red !important;
+  &::before {
+    content: '<';
+    color: #4E5983;
+    opacity: 0.5;
+    font-family: 'Roboto Medium';
   }
-  .doc-icn {
-    font-size: 50px;
-    display: block;
-    padding-bottom: 5px;
-  }
-  .assign-link {
-    display: inline-block;
-    text-decoration: underline;
-    cursor: pointer;
-    text-align: center;
-  }
-.status-txt {
-    padding-right: 5px;
 }

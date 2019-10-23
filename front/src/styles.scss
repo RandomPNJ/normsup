@@ -3,33 +3,23 @@
 @import "~@ng-select/ng-select/themes/default.theme.css";
 /* ----- Variables ---- */
 
-$normsup-blue: #4692EF;
+$normsup-blue: #4390EF;
 $normsup-black: #333;
+$normsup-dark-blue: #4E5983;
 $normsup-gray: #818181;
 
 
 /* ----- Fonts ----- */
 
-@font-face {
-    font-family: 'Avenir Book';
-    src: url('./assets/fonts/avenir-lt-std-cufonfonts/AvenirLTStd-Book.otf') format("opentype");
-}
-@font-face {
-    font-family: 'Avenir Light';
-    src: url('./assets/fonts/avenir-lt-std-cufonfonts/AvenirLTStd-Light.otf') format("opentype");
-}
-@font-face {
-    font-family: 'Avenir Black';
-    src: url('./assets/fonts/avenir-lt-std-cufonfonts/AvenirLTStd-Black.otf') format("opentype");
-}
-@font-face {
-    font-family: 'Avenir Medium';
-    src: url('./assets/fonts/avenir-lt-std-cufonfonts/AvenirLTStd-Medium.otf') format("opentype");
-}
-@font-face {
-    font-family: 'Avenir Heavy';
-    src: url('./assets/fonts/avenir-lt-std-cufonfonts/AvenirLTStd-Heavy.otf') format("opentype");
-}
+@font-face { font-family: 'Avenir Book'; src: url('./assets/fonts/avenir-lt-std-cufonfonts/AvenirLTStd-Book.otf') format("opentype"); }
+@font-face { font-family: 'Avenir Light'; src: url('./assets/fonts/avenir-lt-std-cufonfonts/AvenirLTStd-Light.otf') format("opentype"); }
+@font-face { font-family: 'Avenir Black'; src: url('./assets/fonts/avenir-lt-std-cufonfonts/AvenirLTStd-Black.otf') format("opentype"); }
+@font-face { font-family: 'Avenir Medium'; src: url('./assets/fonts/avenir-lt-std-cufonfonts/AvenirLTStd-Medium.otf') format("opentype"); }
+@font-face { font-family: 'Avenir Heavy'; src: url('./assets/fonts/avenir-lt-std-cufonfonts/AvenirLTStd-Heavy.otf') format("opentype"); }
+@font-face { font-family: 'Roboto'; src:  url('/assets/fonts/roboto/Roboto-Regular.ttf') format('truetype'); }
+@font-face { font-family: 'Roboto Bold'; src:  url('/assets/fonts/roboto/Roboto-Bold.ttf') format('truetype'); }
+@font-face { font-family: 'Roboto Medium'; src:  url('/assets/fonts/roboto/Roboto-Medium.ttf') format('truetype'); }
+@font-face { font-family: 'Roboto Light'; src:  url('/assets/fonts/roboto/Roboto-Light.ttf') format('truetype'); }
 
 /* ----- Globals ----- */
 
@@ -220,6 +210,277 @@ body {
     box-shadow: 0 0px 0px 0px rgba(0, 0, 0, 0.0), 0 0px 0px 0px rgba(0, 0, 0, 0.0), 0 0px 0px 0px rgba(0, 0, 0, 0.0);
 }
 
+/** NORMSUP DATABLE STYLE BEGINNING **/
+
+
+.table.dataTable.no-footer  {
+    border-bottom: 0px solid black !important;
+    border-style: none !important;
+}
+.main-cont {
+    margin-top: 50px;
+    background-color: white;
+    box-shadow: 0 7px 15px 0 rgba(0, 51, 90, 0.04);
+    border-radius: 6px;
+}
+  
+.cont-wrapper {
+}
+
+th {
+    color: #333;
+    font-weight: 500 !important;
+    border-bottom: 0px solid black !important;
+    border-top: 0px solid black !important;
+    background-color: #FAFCFE;
+    // background-color: #bdbdbd;
+    border-radius: 0px;
+    text-align: center !important;
+
+    &:first-child {
+        border-top-left-radius: 2px;
+        border-bottom-left-radius: 2px;
+    }
+    &:last-child {
+        border-top-right-radius: 2px;
+        border-bottom-right-radius: 2px;
+    }
+}
+
+tr {
+
+    border-bottom: 0px solid black;
+    &:first-child {
+
+        td {
+            border-top: 0px solid black;
+        }
+    }
+}
+  
+th {
+    font-size: 15px !important;
+    font-family: 'Roboto Bold' !important;
+    padding: 11px 17px 11px 4px !important;
+    font-weight: unset !important;
+}
+  
+td {
+    padding: 0px !important;
+    font-size: 14px !important;
+    border-radius: 0px !important;
+  
+}
+  
+
+  
+.table {
+    border-bottom: 0px solid black;
+}
+
+.table-header {
+    display: table-cell;
+    vertical-align: middle;
+    font-size: 16px;
+    font-weight: 500;
+    font-family: Roboto;
+}
+  
+.sub-cont {
+    padding: 25px 0px 20px 25px;
+}
+  
+.title {
+    color: #382244;
+    font-family: "Montserrat", sans-serif;
+    padding: 10px 0px 10px 10px;
+    font-weight: 500;
+    font-size: 21px;
+    text-transform: uppercase;
+    display: block;
+}
+  
+.status-icn {
+    text-align: center;
+    vertical-align: middle;
+    font-size: 19px;
+}
+  
+.doc-icn-cont {
+    position: relative;
+}
+  
+  
+.valid-state-icn {
+    position: absolute;
+    left: 12px;
+    top: 16px;
+    height: 14px;
+}
+  
+.valid-state-icn-two {
+    position: absolute;
+    left: 12px;
+    top: 16px;
+    height: 14px;
+}
+  
+.invalid-state-icn {
+    position: absolute;
+    left: 1px;
+    top: 9px;
+    height: 36px;
+}
+  
+.invalid-state-icn-two {
+    position: absolute;
+    left: 3px;
+    top: 8px;
+    height: 36px;
+}
+  
+// TODO: Valid/Invalid icn responsiveness
+@media (max-width: 1235px) {
+    .valid-state-icn-two {
+      position: absolute;
+      right: 16px;
+      top: -3px;
+      left: unset;
+    }
+    .invalid-state-icn-two {
+      position: absolute;
+      right: 22px;
+      top: 7px;
+      left: unset;
+    }
+}
+  
+.badge-container {
+    height: 100%;
+    width: auto;
+    position: relative;
+    text-align: center;
+    vertical-align: middle;
+    display: inline-block !important;
+  
+    .badge-red {
+      border: 1px solid red !important;
+      color: red !important;
+    }
+    .badge-style {
+      margin-right: 5px;
+      font-weight: 400;
+      text-transform: uppercase;
+      background-color: white;
+      border: 1px solid green;
+      color: green;
+    
+      &:last-child {
+        margin-right: 0px;
+      }
+    }
+}
+  
+.localisation {
+    text-transform: capitalize;
+    padding-left: 5px;
+}
+  
+.edit-icn {
+}
+  
+.fix-middle {
+    top: calc(50% - 16px);
+    position: relative;
+}
+  
+#util-btns {
+    span {
+      cursor: pointer;
+    }
+}
+  
+.content-cont {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex; 
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: center;
+    // min-height: 70px;
+    width: 100%;
+}
+.doc-cont {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    padding: 10px 0px;
+    color: #333;
+    cursor: pointer;
+}
+  
+.valid-doc {
+    height: 30px;
+    width: 27px;
+    padding-right: 10px;
+}
+  .doc-icn {
+    margin: auto;
+    display: block;
+}
+  
+.assign-link {
+    display: inline-block;
+    text-decoration: underline;
+    cursor: pointer;
+    text-align: center;
+    color: #4390EF;
+    font-size: 15px;
+    font-family: 'Roboto Regular', sans-serif;
+}
+  
+  .name-txt {
+    display: inline-block;
+    text-decoration: underline;
+    cursor: pointer;
+    text-align: center;
+    font-size: 15px;
+    color: #4E5983;
+    font-family: 'Roboto Regular', sans-serif;
+  }
+  
+.arw-dwn {
+    height: 6px;
+    padding-left: 3px;
+    width: 13px;
+}
+  
+.align-txt {
+    vertical-align: middle;
+    display: inline-block;
+}
+  
+.select-grp {
+    text-align-last: center;
+}
+  
+.cent {
+    justify-content: center;
+    align-items: center;
+}
+  
+.doc-type-txt {
+    font-size: 12px;
+    padding-left: 10px;
+}
+
+/** NORMSUP DATATABLE STYLE END **/
+
 
 /* spinner style starts */
 
@@ -395,23 +656,32 @@ body {
     border-radius: 0;
 }
 
+
+/** Datatable Pagination Custom CSS BEGINNING **/
+
 .dataTables_paginate {
     font-size: 12px !important;
 }
 .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
-    background-color: lightskyblue !important;
-    color: white !important;
+    // background-color: lightskyblue !important;
+    background-color: white !important;
+    // color: white !important;
+    color: #333 !important;
     font-size: 12px !important;
 }
 .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
-    background-color: lightskyblue !important;
-    color: white !important;
+    // background-color: lightskyblue !important;
+    background-color: white !important;
+    // color: white !important;
+    color: #333 !important;
     font-size: 12px !important;
 }
 
 .dataTables_wrapper .dataTables_paginate .paginate_button.current {
-    background-color: lightskyblue !important;
-    color: white !important;
+    // background-color: lightskyblue !important;
+    background-color: white !important;
+    // color: white !important;
+    color: #333 !important;
     font-size: 12px !important;
 }
 
@@ -420,6 +690,8 @@ body {
     color: #333 !important;
     font-size: 12px !important;
 }
+
+/** Datatable Pagination Custom CSS END **/
 
 .modal-dialog {
     margin: 0px auto;
@@ -447,7 +719,7 @@ body {
     }
 }
 .modal-content {
-    border-radius: 3px !important;
+    border-radius: 10px !important;
 }
 
 .align-div {
@@ -555,7 +827,7 @@ body {
     border: 1px solid $normsup-blue !important;
     background-color: transparent !important;
     color: $normsup-blue !important;
-    border-radius: 3px !important;
+    border-radius: 5px !important;
 
     &:focus, &:active {
         border: 2px solid $normsup-blue !important;
@@ -573,7 +845,8 @@ body {
     border: 1px solid $normsup-blue !important;
     background-color: white !important;
     color: $normsup-blue !important;
-    border-radius: 3px !important;
+    border-radius: 5px !important;
+    // height: 
 
     &:focus, &:active {
         border: 2px solid $normsup-blue !important;
@@ -634,7 +907,8 @@ body {
 
 .default-btn-table {
     text-align: left;
-    font-family: 'Avenir Book' !important;
+    font-size: 13px !important;
+    font-family: 'Roboto Medium' !important;
     text-transform: capitalize !important;
     letter-spacing: 0;
     color: #4390EF;
@@ -705,4 +979,36 @@ body {
 .nopadding {
     padding: 0 !important;
     margin: 0 !important;
+}
+
+.valid-icn-shadow {
+    filter: drop-shadow(0px 5px 2px rgba(0, 0, 0, 0.2));
+    -webkit-filter: drop-shadow(0px 5px 2px rgba(0, 0, 0, 0.2));
+}
+
+#legal-lb {
+    border: 1px solid #F3F7FC;
+}
+
+.modal-body {
+    padding: 0px !important;
+}
+
+.doctable th {
+
+    &:first-child {
+        padding-left: 37px !important;
+    }
+    &:last-child {
+        padding-right: 37px !important;
+    }
+}
+
+
+.bb {
+    box-sizing: border-box; /* CSS 3 rec */
+    -moz-box-sizing: border-box; /* Firefox 2 */
+    -ms-box-sizing: border-box; /* Internet Explorer 8 */
+    -webkit-box-sizing: border-box; /* Safari 3 */
+    -khtml-box-sizing: border-box; /* Konqueror */
 }

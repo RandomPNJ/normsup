@@ -15,7 +15,7 @@ export function getUsers(req, UsersRegistry) {
     let data;
     const params = req.params;
     // Unset this after
-    params.org = 'SpaceX';
+    params.org = 1;
 
     if(!params.org) {
         const error = new Error(`Invalid request, org must be specified.`);

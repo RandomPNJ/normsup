@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #fff;
+      }
+
+      .cls-2 {
+        fill: none;
+        stroke: #ff7b5c;
+        stroke-linecap: round;
+        stroke-width: 2px;
+      }
+    </style>
+  </defs>
+  <g id="Groupe_436" data-name="Groupe 436" transform="translate(-647 -575)">
+    <circle id="Ellipse_38" data-name="Ellipse 38" class="cls-1" cx="7" cy="7" r="7" transform="translate(647 575)"/>
+    <line id="Ligne_104" data-name="Ligne 104" class="cls-2" x1="5" y2="5" transform="translate(651.5 579.5)"/>
+    <line id="Ligne_114" data-name="Ligne 114" class="cls-2" x1="5" y2="5" transform="translate(656.5 579.5) rotate(90)"/>
+  </g>
+</svg>
