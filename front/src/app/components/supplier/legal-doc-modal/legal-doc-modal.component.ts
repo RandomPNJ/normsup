@@ -62,7 +62,6 @@ export class LegalDocModalComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.addDoc();
     this.uploader.onAfterAddingFile = (file) => { 
       file.withCredentials = false;
       //@ts-ignore

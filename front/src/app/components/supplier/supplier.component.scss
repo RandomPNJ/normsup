@@ -17,11 +17,13 @@
 }
 
 .searchText {
-  height: 100%;
-  display: inline-block;
-  padding-top: 3px;
-  font-size: 12px;
-  padding-right: 4px;
+  // height: 100%;
+  // display: inline-block;
+  // padding-top: 3px;
+  font-size: 13px;
+  font-family: 'Roboto Medium';
+  text-transform: none !important;
+  // padding-right: 4px;
 }
 
 hr {
@@ -106,6 +108,7 @@ hr {
   border-color: lightblue;
   color: white;
   border-radius: 5px;
+  text-transform: none !important;
 }
 
 .form-style {
@@ -179,9 +182,6 @@ hr {
   to   { opacity: 1; }
 }
 
-.btn:hover {
-  color: gray;
-}
 .select-comp-but {
   position: relative;
 
@@ -205,4 +205,99 @@ hr {
   display: inline-block;
   text-align: left;
   vertical-align: middle;
+}
+
+.add-supplier-txt {
+  font-size: 13px;
+  display: block;
+  height: 100%;
+  font-family: 'Roboto Medium';
+  padding: 7px 28px 8px 22.5px;
+  text-transform: none;
+}
+
+
+.supplier-modal-title {
+  font-family: 'Roboto Bold';
+  text-align: center;
+  font-size: 25px;
+  letter-spacing: 0;
+  color: #4390EF;
+}
+
+
+.comp-txt {
+  display: block;
+  font-family: 'Roboto Medium';
+  font-size: 15px;
+  color: #4E5983;
+  text-transform: uppercase;
+  padding-top: 31px;
+}
+
+.addSupp-label {
+  text-align: center;
+  font-family: 'Roboto Regular';
+  font-size: 11px;
+  letter-spacing: 0;
+  color: #4390EF;
+  padding-top: 29px;
+}
+
+.f-button-addsup {
+  text-align: center;
+  padding-top: 30.5px;
+}
+
+.nxt-btn-addsup {
+  padding: 7px 47px 8px 46px !important;
+}
+
+.input-space {
+  padding-right: 30px !important;
+}
+
+.vert-input-space {
+  padding-top: 40px !important;
+}
+
+.lowered-opac {
+  opacity: 0.49;
+}
+
+.custom-disabled {
+  background-color: white !important;
+  opacity: 0.49;
+}
+
+.prec-btn-supplier {
+  border: 1px solid #C7E0FF !important;
+  color: #4E5983 !important;
+  font-family: 'Avenir Heavy';
+  font-size: 13px;
+  padding: 6px 37px !important;
+}
+
+.next-btn-supplier {
+  color: #4E5983;
+  font-family: 'Avenir Heavy';
+  font-size: 13px;
+  padding: 6px 46px !important;
+  color: #FFFFFF;
+}
+
+.interloc-title {
+  font-family: 'Roboto Medium';
+  font-size: 15px;
+  color: #4E5983;
+  text-transform: uppercase;
+  width: 100%;
+}
+
+.optional-txt {
+  padding-top: 6.25px;
+  font-size: 13px;
+  font-family: 'Roboto Light';
+  color: #4E5983;
+  width: 100%;
 }

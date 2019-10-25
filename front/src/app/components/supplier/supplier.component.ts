@@ -20,7 +20,7 @@ declare var require: any;
 export class SupplierComponent implements OnInit {
 
   @ViewChild('supplierTableComp') child: SupplierTableComponent;
-  @ViewChild('supplierinfo') public infoModalRef: TemplateRef<any>;
+  @ViewChild('template') public addSuppRef: TemplateRef<any>;
   @ViewChild('compDoc') public compModalRef: TemplateRef<any>;
   @ViewChild('legalDoc') public legalModalRef: TemplateRef<any>;
   subscriptions: Subscription[] = [];
@@ -38,6 +38,21 @@ export class SupplierComponent implements OnInit {
   supplierInfo: any;
   legalDocInfo: any;
   compDocInfo: any;
+  focus: any = {
+    one: false,
+    two: false,
+    three: false,
+    four: false,
+    five: false,
+    six: false,
+    seven: false,
+  };
+  interlocFocus: any = {
+    one: false,
+    two: false,
+    three: false,
+    four: false,
+  };
   modalState: String = 'enterSiret';
   addInterloc: Boolean = false;
   interloc: any = {
@@ -59,6 +74,7 @@ export class SupplierComponent implements OnInit {
     animated: true,
     class: 'modal-dialog-centered'
   };
+  valueWidth: Boolean = false;
   itemsDisplay: Array<any> = [];
   // items = fakeData.items;
   items = [];
@@ -114,6 +130,9 @@ export class SupplierComponent implements OnInit {
     if(modalType !== 'Supplier' && modalType !== 'AddDoc') {
       config.class += ' modal-lg';
     }
+    if(modalType == 'Supplier') {
+      config.class += ' modal-sm';
+    }
     if(modalType === 'AddDoc') {
       this.subModalRef = this.modalService.show(template, config);
     } else {
@@ -155,6 +174,9 @@ export class SupplierComponent implements OnInit {
       if(res && res.records && res.records instanceof Array && res.records[0] && res.records[0].siren !== '') {
         this.company = res.records[0];
         this.fillCompany(res.records[0].fields);
+        this.valueWidth = !this.valueWidth;
+        const modalWidth = this.valueWidth ? 'modal-lg' : 'modal-sm';
+        this.modalRef.setClass(modalWidth);
         this.modalState = 'compInfo';
         this.searchCompany404 = false;
       } else {
@@ -220,5 +242,24 @@ export class SupplierComponent implements OnInit {
     });
     // this.itemsDisplay.push(data.comp);
     // this.child.reload(data.comp);
+  }
+
+  setModalClass() {
+    this.valueWidth = !this.valueWidth;
+    const modalWidth = this.valueWidth ? 'modal-lg' : 'modal-sm';
+    this.modalRef.setClass(modalWidth);
+    this.modalState = 'compInfo';
+  }
+
+  interlocInfo() {
+    this.modalState = 'interlocInfo';
+  }
+
+  updateInterloc() {
+    if(this.interloc.name !== '' || this.interloc.lastname !== '' || this.interloc.phone !== '' || this.interloc.mail !== '') {
+      this.addInterloc = true;
+    } else {
+      this.addInterloc = false;
+    }
   }
 }

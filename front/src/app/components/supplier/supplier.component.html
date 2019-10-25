@@ -7,7 +7,7 @@
       <div class="container">
         <div class="row justify-content-end">
           <div class="col-lg-auto col-md-auto">
-            <button (click)="openModal(template, 'Supplier')" type="button" class="btn btn-outline-normsup"> <span></span>Ajouter un fournisseur</button>
+            <button (click)="openModal(template, 'Supplier')" type="button" class="btn btn-primary custom-normsup-button nopadding"><span class="add-supplier-txt"><embed style="height: 10px;" src="../../../assets/img/plus-icn.svg"/> Ajouter un fournisseur</span></button>
           </div>
         </div>
       </div>
@@ -20,115 +20,87 @@
 
   
     <ng-template class="test" #template>
-      <div class="modal-header own-modal-header">
-        <h4 class="modal-title pull-left" *ngIf="modalState === 'enterSiret'">Ajouter un fournisseur</h4>
-        <h4 class="modal-title pull-left" *ngIf="modalState === 'compInfo'">Information sur l'entreprise </h4>
-        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-          <span aria-hidden="true">&times;</span>
-        </button>
+      <div class="modal-header own-modal-header-supplier">
       </div>
       <div class="modal-body">
+        <div class="mod-header">
+          <div style="display: block;">
+            &nbsp;
+            <button type="button" style="cursor:pointer;" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+              <embed src="../../../assets/img/close-icn.svg" style="height: 16px; cursor:pointer;" />
+            </button>
+          </div>
+          <div class="supplier-modal-title">Nouveau fournisseur</div>
+        </div>
         <div *ngIf="modalState === 'enterSiret'">
           <div class="row search-company" [ngClass]="{'fade-in': modalState === 'enterSiret', 'fade-away': modalState !== 'enterSiret'}">
             <!-- <span class="title-add-sup">Information sur l'entreprise recherchée</span> -->
-            <div class="input-field col s12">
-              <label for="company-input">Société</label>
-              <input class="form-control" [(ngModel)]="searchCompanyID" (keydown.enter)="searchCompany(searchCompanyID)" #companyInput id="company-input" type="text" data-length="10" appFocus>
-              <span class="helper-text">Sirene ou Siret</span>
+            <div style="text-align: center; padding: 0px 107px;" class="input-field col s12">
+              <span class="comp-txt">1. Société</span>
+              <label class="addSupp-label" for="company-input">Siret ou Siren</label>
+              <input class="form-control custom-normsup-input-nb" [(ngModel)]="searchCompanyID" (keydown.enter)="searchCompany(searchCompanyID)" #companyInput id="company-input" type="text" data-length="10" appFocus>
             </div>
           </div>
-          <button (click)="searchCompany(searchCompanyID)" [disabled]="!searchCompanyID" class="btn-primary mb-2 submit-btn" type="submit" name="action">
-            <span class="searchText">Rechercher</span>
-            <i class="material-icons right">send</i>
-          </button>
-          <span class="red-err-txt" *ngIf="searchCompany404">Aucun résultat trouvé. Veuillez entrer un siret/siren valide.</span>
+          <div class="f-button-addsup">
+            <button (click)="searchCompany(searchCompanyID)" [disabled]="!searchCompanyID" class="btn btn-primary custom-normsup-button nxt-btn-addsup" type="submit" name="action">
+              <span class="searchText">Suivant</span>
+            </button>
+            <span class="red-err-txt" *ngIf="searchCompany404">Aucun résultat trouvé. Veuillez entrer un siret/siren valide.</span>
+          </div>
         </div>
-        <div class="container" *ngIf="modalState === 'compInfo'">
-          <div class="row" [ngClass]="{'fade-in': modalState === 'compInfo', 'fade-away': modalState !== 'compInfo'}">
+        <div class="container nopadding" *ngIf="modalState === 'compInfo'">
+          <div style="padding-left: 53px !important; padding-right: 54px !important;" class="row ma" [ngClass]="{'fade-in': modalState === 'compInfo', 'fade-away': modalState !== 'compInfo'}">
             <form action="#" class="form-style">
                 <div>
-                  <div style="padding-top: 10px;" class="row">
-                    <div class="form-group  col s6">
-                      <label class="active" for="denom-legale">Dénomination légale</label>
-                      <input id="denom-legale" name="denom" type="text" class="form-control" [(ngModel)]="companyToAdd.denomination" placeholder="Dénomination légale">
+                  <div  style="padding-top: 49px !important;" class="row ma">
+                    <div class="form-group  col s6 nopadding input-space">
+                      <input (focus)="focus.one=true" (blur)="focus.one=false" id="denom-legale" name="denom" 
+                        type="text" class="form-control custom-normsup-input-nb" [(ngModel)]="companyToAdd.denomination">
+                      <label [ngClass]="{'lowered-opac': !companyToAdd.denomination && focus.one === false , 'custom-label-input-test-active': companyToAdd.denomination || focus.one === true}" class="custom-normsup-label-test" for="denom-legale">Dénomination légale</label>
                     </div>
-                    <div class="form-group col s6">
-                      <label class="active" for="siren">Siren</label>
-                      <input id="siret" type="text" name="siren" class="form-control" [(ngModel)]="companyToAdd.siren" placeholder="Siren" [disabled]="true">
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="form-group col s6">
-                      <label class="active" for="address">Adresse</label>
-                      <input id="address" name="address" type="text" class="form-control" [(ngModel)]="companyToAdd.address" placeholder="Code postal">
+                    <div class="form-group col s6 nopadding">
+                      <input style="cursor: not-allowed;" (focus)="focus.two=true" (blur)="focus.two=false" id="siret" type="text" name="siren" class="form-control custom-normsup-input-nb custom-disabled" [(ngModel)]="companyToAdd.siren" [disabled]="true">
+                      <label [ngClass]="{'lowered-opac': true, 'custom-label-input-test-active': companyToAdd.siren || focus.two === true}" class="custom-normsup-label-test" for="siren">Siren</label>
                     </div>
                   </div>
-                  <div class="row">
-                    <div class="form-group col s6">
-                      <label class="active" for="code-postal">Code postal</label>
-                      <input id="code-postal" name="code-postal" type="text" class="form-control" [(ngModel)]="companyToAdd.postalCode">
-                    </div>
-                    <div class="form-group col s6">
-                      <label class="active" for="city">Ville</label>
-                      <input id="city" name="city" type="text" class="form-control" [(ngModel)]="companyToAdd.city" placeholder="Ville">
+                  <div class="row ma vert-input-space">
+                    <div class="form-group col s6 nopadding">
+                      <input (focus)="focus.three=true" (blur)="focus.three=false" id="address" name="address" type="text" class="form-control custom-normsup-input-nb" [(ngModel)]="companyToAdd.address">
+                      <label [ngClass]="{'lowered-opac': !companyToAdd.address && focus.three === false, 'custom-label-input-test-active': companyToAdd.address || focus.three === true}" class="custom-normsup-label-test" for="address">Adresse</label>
                     </div>
                   </div>
-                  <div class="row">
-                    <div class="form-group col s6">
-                      <label class="active" for="date-creation">Date de création</label>
-                      <input id="date-creation" name="date-creation" type="text" class="form-control" [(ngModel)]="companyToAdd.dateCreation">
+                  <div class="row ma vert-input-space">
+                    <div class="form-group col s6 nopadding input-space">
+                      <input (focus)="focus.four=true" (blur)="focus.four=false" id="code-postal" name="code-postal" type="text" class="form-control custom-normsup-input-nb" [(ngModel)]="companyToAdd.postalCode">
+                      <label [ngClass]="{'lowered-opac': !companyToAdd.postalCode && focus.four === false, 'custom-label-input-test-active': companyToAdd.postalCode || focus.four === true}" class="custom-normsup-label-test" for="code-postal">Code postal</label>
                     </div>
-                    <div class="form-group col s6">
-                      <label class="active" for="class-unite">Domaine d'activité</label>
-                      <input id="class-unite" name="class-unite" type="text" class="form-control" [(ngModel)]="companyToAdd.legalUnit" placeholder="Domaine d'activité">
+                    <div class="form-group col s6 nopadding">
+                      <input (focus)="focus.five=true" (blur)="focus.five=false" id="city" name="city" type="text" class="form-control custom-normsup-input-nb" [(ngModel)]="companyToAdd.city">
+                      <label [ngClass]="{'lowered-opac': !companyToAdd.city && focus.five === false, 'custom-label-input-test-active': companyToAdd.city || focus.five === true}" class="custom-normsup-label-test" for="city">Ville</label>
                     </div>
                   </div>
-                </div>
-                <div class="plus-btn-container">
-                  <div class="add-interloc-cont">
-                    <span class="add-interloc-txt">Ajouter un interlocuteur</span>
-                    <div style="position: relative;">
-                      <span style="top: -18px !important" (click)="this.addInterloc = !this.addInterloc;" class="glyphicon glyphicon-plus-sign plus-icn" role="button"></span>
+                  <div class="row ma vert-input-space">
+                    <div class="form-group col s6 nopadding input-space">
+                      <input (focus)="focus.six=true" (blur)="focus.six=false" id="date-creation" name="date-creation" type="text" class="form-control custom-normsup-input-nb" [(ngModel)]="companyToAdd.dateCreation">
+                      <label [ngClass]="{'lowered-opac': !companyToAdd.dateCreation && focus.six === false, 'custom-label-input-test-active': companyToAdd.dateCreation || focus.six === true}" class="custom-normsup-label-test" for="date-creation">Date de création</label>
                     </div>
-                    <!-- <a style="display: inline-block; background-color: lightblue;" class="btn-floating waves-effect waves-light" (click)="this.addInterloc = !this.addInterloc;"><i style="font-size: 2.5rem;" class="material-icons">add</i></a> -->
+                    <div class="form-group col s6 nopadding">
+                      <input (focus)="focus.seven=true" (blur)="focus.seven=false" id="class-unite" name="class-unite" type="text" class="form-control custom-normsup-input-nb" [(ngModel)]="companyToAdd.legalUnit">
+                      <label [ngClass]="{'lowered-opac': !companyToAdd.legalUnit && focus.seven === false, 'custom-label-input-test-active': companyToAdd.legalUnit || focus.seven === true}" class="custom-normsup-label-test" for="class-unite">Domaine d'activité</label>
+                    </div>
                   </div>
                 </div>
-                <div style="padding-left: 0px !important; padding-right: 0px !important;" class="container add-interloc" *ngIf="addInterloc">
-                  <h4 style="padding-bottom: 15px;color: #333;text-align: center;">Information sur l'interlocuteur</h4>
-                  <div style="padding-bottom: 10px;" class="row">
-                    <div class="input-field  col s6">
-                      <label class="active" for="interloc-name">Prénom</label>
-                      <input id="interloc-name" name="interloc-name" type="text" class="form-control" [(ngModel)]="interloc.name" placeholder="Prénom">
-                    </div>
-                    <div class="input-field col s6">
-                      <label class="active" for="interloc-lastname">Nom</label>
-                      <input id="interloc-lastname" name="interloc-lastname" type="text" class="form-control" [(ngModel)]="interloc.lastname" placeholder="Nom de famille">
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="input-field col s6">
-                      <label class="active" for="interloc-phone">Téléphone</label>
-                      <input id="interloc-phone" name="interloc-phone" type="text" class="form-control" [(ngModel)]="interloc.phone" placeholder="Numéro de téléphone">
-                    </div>
-                      <div class="input-field col s6">
-                        <label class="active" for="interloc-mail">Email</label>
-                        <input id="interloc-mail" name="interloc-mail" type="text" class="form-control" [(ngModel)]="interloc.mail" placeholder="Adresse mail">
-                      </div>
-                  </div>
-                </div>
-              <div class="select-comp-but">
+              <div style="padding-top: 30.5px;" class="select-comp-but">
                 <div class="container">
                   <div class="row">
                     <div class="col">
-                      <button style="float: right" (click)="addCompany({comp: companyToAdd, interloc: interloc})" [disabled]="(!companyToAdd.denomination || !companyToAdd.address || !companyToAdd.siren || !companyToAdd.dateCreation) || (addInterloc === true && (interloc.name === '' || interloc.lastname === '' || interloc.phone === '' || interloc.mail === ''))" class="mb-2  submit-btn" type="submit" name="action">
-                        <span class="searchText">Ajouter</span>
-                        <i style="font-size: 22px !important;" class="material-icons right">send</i>
-                      </button>
+                        <button style="float: right" type="button" class="btn btn-outline-normsup prec-btn-supplier text-capitalize">
+                            <span class="button-txt">Précédent</span>
+                          </button>
                     </div>
                     <div class="col">
-                      <button style="float: left" (click)="hideModal()" class="mb-2 submit-btn" type="submit" name="action">
-                        <span class="searchText">Retour</span>
-                        <i style="font-size: 22px !important;"  class="material-icons right">send</i>
+                      <button  style="border-radius: 5px;float: left;" type="button" class="btn btn-primary text-capitalize next-btn-supplier" (click)="interlocInfo()" [disabled]="(!companyToAdd.denomination || !companyToAdd.address || !companyToAdd.siren || !companyToAdd.dateCreation)">
+                        <span class="button-txt">Suivant</span>
                       </button>
                     </div>
                   </div>
@@ -137,6 +109,51 @@
             </form>
           </div>
         </div>
+        <div class="container nopadding" *ngIf="modalState === 'interlocInfo'">
+          <div style="padding-left: 0px !important; padding-right: 0px !important;" class="container add-interloc">
+            <div class="row" style="margin: auto;text-align: center;padding-top: 29px;">
+              <div class="interloc-title">3. Information sur l'interlocuteur</div>
+              <div class="optional-txt">Ces informations sont facultatives.</div>
+            </div>
+            <div style="padding-bottom: 40px;padding-top: 49px;margin: auto;padding-left: 53px;padding-right: 54px;" class="row">
+              <div style="margin-right: 30px !important;" class="input-field  col s6 nopadding">
+                <input (change)="updateInterloc()" (focus)="interlocFocus.one=true" (blur)="interlocFocus.one=false"  id="interloc-name" name="interloc-name" type="text" class="form-control  custom-normsup-input-nb" [(ngModel)]="interloc.name">
+                <label [ngClass]="{'lowered-opac': !interloc.name && interlocFocus.one === false, 'custom-label-input-test-active': interloc.name || interlocFocus.one === true}" class="custom-normsup-label-test" for="interloc-name">Prénom</label>
+              </div>
+              <div class="input-field col s6 nopadding">
+                <input (change)="updateInterloc()" (focus)="interlocFocus.two=true" (blur)="interlocFocus.two=false"  id="interloc-lastname" name="interloc-lastname" type="text" class="form-control  custom-normsup-input-nb" [(ngModel)]="interloc.lastname">
+                <label [ngClass]="{'lowered-opac': !interloc.lastname && interlocFocus.two === false, 'custom-label-input-test-active': interloc.lastname || interlocFocus.two === true}" class="custom-normsup-label-test" for="interloc-lastname">Nom</label>
+              </div>
+            </div>
+            <div style="margin: auto;padding-left: 53px;padding-right: 54px;" class="row">
+              <div style="margin-right: 30px !important;" class="input-field col s6 nopadding">
+                <input (change)="updateInterloc()" (focus)="interlocFocus.three=true" (blur)="interlocFocus.three=false" id="interloc-phone" name="interloc-phone" type="text" class="form-control  custom-normsup-input-nb" [(ngModel)]="interloc.phone">
+                <label [ngClass]="{'lowered-opac': !interloc.phone && interlocFocus.three === false, 'custom-label-input-test-active': interloc.phone || interlocFocus.three === true}" class="custom-normsup-label-test" for="interloc-phone">Téléphone</label>
+              </div>
+              <div class="input-field col s6 nopadding">
+                <input (change)="updateInterloc()" (focus)="interlocFocus.four=true" (blur)="interlocFocus.four=false" id="interloc-mail" name="interloc-mail" type="text" class="form-control  custom-normsup-input-nb" [(ngModel)]="interloc.mail">
+                <label [ngClass]="{'lowered-opac': !interloc.mail && interlocFocus.four === false, 'custom-label-input-test-active': interloc.mail || interlocFocus.four === true}" class="custom-normsup-label-test" for="interloc-mail">Email</label>
+              </div>
+            </div>
+          </div>
+          <div style="padding-top: 30.5px;" class="select-comp-but">
+            <div class="row">
+              <div class="col">
+                <button style="float: right" type="button" class="btn btn-outline-normsup prec-btn-supplier text-capitalize" (click)="returnToCompInfo()">
+                  <span class="button-txt">Précédent</span>
+                </button>
+              </div>
+              <div class="col">
+                <button style="border-radius: 5px;float: left;" type="button" class="btn btn-primary text-capitalize next-btn-supplier" (click)="addCompany({comp: companyToAdd, interloc: interloc})" [disabled]="addInterloc === true && (interloc.name === '' || interloc.lastname === '' || interloc.phone === '' || interloc.mail === '')">
+                  <span class="button-txt">Suivant</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer own-modal-footer-supplier">
+
       </div>
     </ng-template>
     <ng-template #supplierinfo>
@@ -159,12 +176,6 @@
       </div>
     </ng-template>
     <ng-template #legalDoc>
-      <!-- <div class="modal-header own-modal-header">
-        <h4 class="modal-title pull-left">Documents Légaux</h4>
-        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div> -->
       <div class="modal-body">
         <app-legal-doc-modal (hideModal)="hideModal($event)" (addDocModal)="openInfoModal($event)"></app-legal-doc-modal>
       </div>

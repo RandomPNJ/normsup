@@ -42,7 +42,6 @@ export class SupplierTableComponent implements OnInit,AfterViewInit {
   constructor(private httpService: HttpService, private notif: NotifService, private router: Router, private bs: BrowserStorageService) { }
 
   ngOnInit() {
-    this.openLegalDocModal({});
     // First query to get the number of rows
     this.httpService
       .get('/api/supplier/count')
