@@ -1,9 +1,10 @@
 <div *ngIf="showHeader" [ngClass]="getHeaderStyle()" class="navbar-fixed" style="z-index: 100000000;">
     <nav role="navigation" style="padding-bottom: 0px;padding-top: 0px;" class="navbar navbar-expand-sm navbar-dark">
-        <a href="/dashboard/main" class="navbar-brand brand-logo">
-            <img class="logo-img" src="../../../assets/img/white_basic_logo.png" alt="Logo">
+         <a href="/dashboard/main" class="navbar-brand brand-logo">
+            <!-- <img class="logo-img" src="../../../assets/img/normsup-logo.png" alt="Logo"> -->
+            <embed src="../../../assets/img/logo-header-bar.svg" style="padding-left: 84px; width: 223px;">
         </a>
-        <ul style="overflow: hidden;" class="nav navbar-nav navigation-bar justify-content-center">
+        <!-- <ul style="overflow: hidden;" class="nav navbar-nav navigation-bar justify-content-center">
             <li class="nav-item navigation-item">
                 <a id="main" routerLinkActive="active"  class="nav-link align-anchor navigation-item" routerLink="/dashboard/main"  role="tab">Tableau de bord</a>
             </li>
@@ -22,11 +23,58 @@
             <li class="nav-item navigation-item">
                 <a id="reminder"  routerLinkActive="active" class="nav-link align-anchor disabled  navigation-item" routerLink="/dashboard/reminder"  role="tab">Relances</a>
             </li>
-        </ul>
-        <div class='logout' tabindex="0" (click)='dropbox()' (blur)="closeDropDown()">
+        </ul> -->
+        <div style="margin-top: 0px;" class=" logout flyover-subcont media d-flex align-items-center">
+            <img src="https://res.cloudinary.com/mhmd/image/upload/v1556074849/avatar-1_tcnd60.png" alt="..." width="50" class="mr-3 rounded-circle img-thumbnail shadow-sm undisplay">
+            <div class="undisplay" style="display: flex;align-items: center;">
+                <div class="inline-b">
+                <h4  style="padding-right: 15px;" class="m-0 one-liner">{{user.username}}</h4>
+                <!-- <p class="font-weight-light text-muted mb-0 one-liner">{{user.mainOrg}}</p> -->
+                </div>
+                <div class="inline-b">
+                <span class="glyphicon glyphicon-menu-down menu-dwn grow-left" (click)='dropbox()'> </span>
+                <!-- <div *ngIf='isLogout' class="dropContent arrow_box">
+                    <div class='selectData' id="profile" routerLink="/user/profile">
+                        <p>Mon Compte<img src="{{profileIcon}}" style="padding-left: 10px; height: 15px;"alt=""></p>
+                    </div>
+                    <div class='selectData' id="users" routerLink="/users">
+                        <p>Gestion des utilisateurs<img src="{{usersIcon}}" style="padding-left: 10px; height: 15px;"alt=""></p>
+                    </div>
+                    <div class='selectData' id="reporting" routerLink="/reporting">
+                        <p>Générer un reporting<img src="{{reportingIcon}}" style="padding-left: 10px; height: 15px;"alt=""></p>
+                    </div>
+                    <div class='selectData' id="contact" routerLink="/contact">
+                        <p>Contactez-nous<img src="{{contactIcon}}" style="padding-left: 10px; height: 15px;"alt=""></p>
+                    </div>
+                    <div class='selectData' id="contact" (click)="logOut()">
+                        <p>Log out <img src="{{signOutLogo}}" style="padding-left: 15px; height: 15px;" alt=""></p>
+                    </div>
+                </div> -->
+                <div *ngIf='false' class="dropContent arrow_box">
+                        <div class='selectData' (click)='secondBtn("profile")'>
+                            <p>Mon Compte<img src="{{profileIcon}}" style="padding-left: 10px;"alt=""></p>
+                        </div>
+                        <div class='selectData' (click)='secondBtn("users")'>
+                            <p>Gestion des utilisateurs<img src="{{usersIcon}}" style="padding-left: 10px;"alt=""></p>
+                        </div>
+                        <div class='selectData' (click)='secondBtn("reporting")'>
+                            <p>Générer un reporting<img src="{{reportingIcon}}" style="padding-left: 10px;"alt=""></p>
+                        </div>
+                        <div class='selectData' (click)='secondBtn("contact")'>
+                            <p>Contactez-nous<img src="{{contactIcon}}" style="padding-left: 10px;"alt=""></p>
+                        </div>
+                        <div class='selectData' (click)='backToLogin()'>
+                            <p>Log out <img src="{{signOutLogo}}" style="padding-left: 15px;" alt=""></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- <div class='logout' tabindex="0" (click)='dropbox()' (blur)="closeDropDown()">
             <span class="login-logout-span">
+                <img src="https://res.cloudinary.com/mhmd/image/upload/v1556074849/avatar-1_tcnd60.png" alt="..." width="50" class="mr-3 rounded-circle img-thumbnail shadow-sm undisplay">
                 <label class="label-user-dropdown">
-                    {{user.name}} {{user.lastname}}
+                    {{user.username}}
                 </label>
                 &nbsp;
                 <span class="glyphicon glyphicon-menu-down" style='color: #9e9e9e'> </span>
@@ -48,15 +96,15 @@
                     <p>Log out <img src="{{signOutLogo}}" style="padding-left: 15px;" alt=""></p>
                 </div>
             </div>
-        </div>
-        <div class="right" style="width: 60px;">
+        </div> -->
+        <!-- <div class="right" style="width: 60px;">
             <ul id="nav-mobile">
 
                 <li class="li2">
                     <img src="{{logoImg}}" alt="">
                 </li>
             </ul>
-        </div>
+        </div> -->
         <br>
     </nav>
 </div>

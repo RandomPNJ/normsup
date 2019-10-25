@@ -34,6 +34,7 @@ export class HeaderBarComponent implements OnInit {
 
   ngOnInit() {
     this.isLoggedIn = this.authService.isLogged.subscribe(res => {
+      console.log('res =', res);
       if(res !== false && res.data) {
         this.user = res.data;
       }
@@ -76,6 +77,6 @@ export class HeaderBarComponent implements OnInit {
     //   this.addIcon = '../../../assets/img/Add-icn.svg';
     //   return 'blueHeader';
     // }
-    return 'blueHeader';
+    return 'whiteHeader';
   }
 }
