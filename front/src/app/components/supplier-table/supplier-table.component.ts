@@ -9,6 +9,7 @@ import { HttpParams } from '@angular/common/http';
 import { NotifService } from 'src/app/services/notif.service';
 import { Router } from '@angular/router';
 import { BrowserStorageService } from 'src/app/services/storageService';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-supplier-table',
@@ -39,7 +40,12 @@ export class SupplierTableComponent implements OnInit,AfterViewInit {
   groupSelect: String = '';
   myTable: Boolean = false;
 
-  constructor(private httpService: HttpService, private notif: NotifService, private router: Router, private bs: BrowserStorageService) { }
+  constructor(
+    private httpService: HttpService, 
+    private notif: NotifService, 
+    private router: Router, 
+    private bs: BrowserStorageService,
+    private authService: AuthService) { }
 
   ngOnInit() {
     // First query to get the number of rows
@@ -57,6 +63,7 @@ export class SupplierTableComponent implements OnInit,AfterViewInit {
         if(err.message === 'Unexpected error : Failed to authenticate token. (jwt expired)') {
           this.notif.error('Session expirée. Vous serez redirigé vers la page de connexion.');
           setTimeout(() => {
+            this.authService.isLogged.next(false);
             this.router.navigate(['/login']);
             this.bs.clearLocalStorage();
           }, 2500);
