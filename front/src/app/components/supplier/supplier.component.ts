@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit, ViewChild, TemplateRef, ElementRef, Input } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild, TemplateRef, ElementRef, Input, HostListener } from '@angular/core';
 import { AddSupplierModalComponent } from './add-supplier-modal/add-supplier-modal.component';
 import { filter as lodashFilter } from 'lodash';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
@@ -23,6 +23,7 @@ export class SupplierComponent implements OnInit {
   @ViewChild('template') public addSuppRef: TemplateRef<any>;
   @ViewChild('compDoc') public compModalRef: TemplateRef<any>;
   @ViewChild('legalDoc') public legalModalRef: TemplateRef<any>;
+
   subscriptions: Subscription[] = [];
   searchCompanyID: string;
   searchCompany404: Boolean = false;
@@ -205,7 +206,7 @@ export class SupplierComponent implements OnInit {
       switch(event.type) {
         case 'Supplier':
             this.supplierInfo = event.data;
-            this.openModal(this.infoModalRef, 'Supplier');
+            this.openModal(this.addSuppRef, 'Supplier');
             break;
         case 'Legaldoc':
             this.legalDocInfo = event.data;

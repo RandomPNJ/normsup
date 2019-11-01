@@ -1,6 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="143" height="43" viewBox="0 0 143 43">
   <defs>
     <style>
+    svg { cursor: pointer; }
       .cls-1 {
         fill: url(#pattern);
       }

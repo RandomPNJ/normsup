@@ -8,7 +8,8 @@ import {HttpClientModule} from '@angular/common/http';
 import {HttpModule} from '@angular/http';
 import { Daterangepicker } from 'ng2-daterangepicker';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import { NotifComponent} from './directives/notif/notif.component';
+import { NotifComponent } from './directives/notif/notif.component';
+import { ClickOutsideDirective } from './directives/clickOutside.directive';
 import { NotifService } from './services/notif.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ModalModule } from 'ngx-bootstrap/modal';
@@ -67,6 +68,7 @@ import { ProfileFlyoverComponent } from './components/profile-flyover/profile-fl
     GroupsTableComponent,
     AddSupplierModalComponent,
     FocusDirective,
+    ClickOutsideDirective,
     SupplierInfoModalComponent,
     NotifComponent,
     LegalDocModalComponent,

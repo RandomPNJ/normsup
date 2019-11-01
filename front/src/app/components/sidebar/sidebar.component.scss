@@ -108,10 +108,13 @@ li:first-child .icn-style {
 
     &:hover, &.active {
       background-color: white;
-      font-weight: 500;
+      font-family: 'Roboto Bold';
 
       span {
         color: #382244;
+      }
+      .link-txt {
+        font-family: 'Roboto Bold';
       }
     }
     .icn-style {
@@ -128,6 +131,9 @@ li:first-child .icn-style {
 
 .link-txt {
   // color: white;
+  font-family: 'Roboto Regular';
+  font-size: 15px;
+  color: #4E5983;
   line-height: 40px;
 }
 

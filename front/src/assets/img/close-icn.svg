@@ -1,6 +1,9 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="14.163" height="14.163" viewBox="0 0 14.163 14.163">
   <defs>
     <style>
+    svg {
+      cursor:pointer;
+    }
       .cls-1 {
         fill: none;
         stroke: #d3d3d3;

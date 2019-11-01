@@ -9,6 +9,7 @@ import { AuthService } from 'src/app/services/auth.service';
   templateUrl: './header-bar.component.html',
   styleUrls: ['./header-bar.component.scss']
 })
+
 export class HeaderBarComponent implements OnInit {
   logoImg;
   title;
@@ -53,30 +54,31 @@ export class HeaderBarComponent implements OnInit {
     console.log(this.route.url);
   }
 
+  redirect(route){
+    if(route) {
+      this.router.navigate([route]);
+    }
+  }
+
   dropbox() {
-    if (this.isLogout) {
+    if(this.isLogout === true) {
       this.isLogout = false;
     } else {
       this.isLogout = true;
     }
   }
 
-  closeDropDown() {
+  closeDropdown() {
     this.isLogout = false;
   }
 
+  logOut() {
+    this.bsService.clearLocalStorage();
+    this.showHeader = false;
+    this.router.navigate(['/login']);
+  }
+
   getHeaderStyle() {
-    // if (this.router.url.includes('/dataEntry')) {
-    //   return 'whiteHeader';
-    // } else if (this.router.url.includes('/search')) {
-    //   return 'whiteHeader';
-    // } else if (this.router.url.includes('/results')) {
-    //   this.xceedLogo = '../../../assets/img/Logo_XCEED_white.svg';
-    //   this.logoImg = '../../../assets/img/Renault_logo-white.svg';
-    //   this.signOutLogo = '../../../assets/img/sign-out-icn.svg';
-    //   this.addIcon = '../../../assets/img/Add-icn.svg';
-    //   return 'blueHeader';
-    // }
     return 'whiteHeader';
   }
 }
