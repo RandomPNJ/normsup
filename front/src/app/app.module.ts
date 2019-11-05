@@ -50,6 +50,7 @@ import { GuestGuard } from './auth/guest.guard';
 import { LoggedinGuard } from './auth/loggedin.guard';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { ProfileFlyoverComponent } from './components/profile-flyover/profile-flyover.component';
+import { NumberOnlyDirective } from './directives/number-only.directive';
 
 @NgModule({
   declarations: [
@@ -79,6 +80,7 @@ import { ProfileFlyoverComponent } from './components/profile-flyover/profile-fl
     UsersTableComponent,
     SidebarComponent,
     ProfileFlyoverComponent,
+    NumberOnlyDirective,
   ],
   imports: [
     BrowserModule,
@@ -109,13 +111,13 @@ import { ProfileFlyoverComponent } from './components/profile-flyover/profile-fl
     AddSupplierModalComponent,
   ],
   entryComponents: [
-    AddSupplierModalComponent
+    AddSupplierModalComponent,
   ],
   providers: [
     BrowserStorageService,
     GuestGuard,
     LoggedinGuard,
-    NotifService
+    NotifService,
   ],
   bootstrap: [AppComponent]
 })

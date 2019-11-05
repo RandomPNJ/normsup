@@ -13,7 +13,7 @@
     position: fixed;
     top: 0;
     left: 0;
-    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
+    // box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
     transition: all 0.4s;
     border-top-right-radius: 20px !important;
     border-bottom-right-radius: 20px;
@@ -25,33 +25,9 @@
     margin-left: 20rem;
     transition: all 0.4s;
   }
-  
-  /* for toggle behavior */
-  
-  // #sidebar.active {
-  //   margin-left: -20rem;
-  // }
-  
-  // #content.active {
-  //   width: 100%;
-  //   margin: 0;
-  // }
+
   
 @media (max-width: 768px) {
-  // #sidebar {
-  //   margin-left: -20rem;
-  // }
-  // #sidebar.active {
-  //   margin-left: 0;
-  // }
-  // #content {
-  //   width: 100%;
-  //   margin: 0;
-  // }
-  // #content.active {
-  //   margin-left: 20rem;
-  //   width: calc(100% - 20rem);
-  // }
   .vertical-nav {
     min-width: 4rem;
     width: 4rem;
@@ -129,12 +105,17 @@ li:first-child .icn-style {
   }
 }
 
+.icn-cont {
+  position: absolute;
+  bottom: 7px;
+}
 .link-txt {
   // color: white;
   font-family: 'Roboto Regular';
   font-size: 15px;
   color: #4E5983;
   line-height: 40px;
+  padding-left: 45px;
 }
 
 .sb-logo {

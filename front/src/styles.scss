@@ -1071,3 +1071,36 @@ td {
     -webkit-transform-origin: 0 0;
     transform-origin: 0 0;
 }
+
+/** Vertical List **/
+
+// .v-list-outer-wrp {
+//     display: table;
+//     height: 100%;
+// }
+// .v-list { 
+//     height: 100%;
+//     display:table-cell; 
+//     vertical-align:bottom; 
+// }
+
+// .v-cont { 
+// }
+
+// .v-list-scroll {
+//     height: 300px;
+//     overflow-y: auto;
+// }
+
+.nohover:hover {
+    background: white !important;
+}
+
+.vert-alignement {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex; 
+    height: 100%;
+    align-items: center;
+}

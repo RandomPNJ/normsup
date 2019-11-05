@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="16.922" height="13.485" viewBox="0 0 16.922 13.485">
+<style>
+    svg {
+      cursor:pointer;
+    }
+
+    </style>
+  <g id="Groupe_15" data-name="Groupe 15" transform="translate(-16 -22.906)">
+    <path id="Tracé_45" data-name="Tracé 45" d="M24.461,22.906a8.465,8.465,0,0,0-6.812,13.485l.747-.661a7.465,7.465,0,1,1,12.131,0l.747.661a8.465,8.465,0,0,0-6.812-13.485Zm4.4,6.3-5.28,3.523a1.243,1.243,0,0,0,1.757,1.757Z" fill="#4390ef"/>
+  </g>
+</svg>
