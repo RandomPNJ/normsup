@@ -40,6 +40,7 @@ export class HeaderBarComponent implements OnInit {
         this.user = res.data;
       }
       this.showHeader = !!res;
+      console.log('showHeader ', this.showHeader)
     });
   }
 

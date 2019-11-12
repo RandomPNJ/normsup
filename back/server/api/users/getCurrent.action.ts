@@ -8,21 +8,19 @@ export default {
     method: 'get',
     uriPattern: '',
     services: [''],
-    handler: (req, res, app) => modifyUser(req, app.get('UsersRegistry')),
+    handler: (req, res, app) => getCurrentUser(req, app.get('UsersRegistry')),
 };
 
-export function modifyUser(req, UsersRegistry) {
+export function getCurrentUser(req, UsersRegistry) {
 
-
-    if(!req.params.id) {
-        const error = new Error(`Invalid request, id must be specified.`);
+    loggerT.verbose('Req decoded ', req.decoded);
+    if(!req.decoded) {
+        const error = new Error(`Invalid request, could not get information from token.`);
         error['statusCode'] = 400;
         throw error;
     }
-    const id = parseInt(req.params.id, 10);
-    loggerT.verbose('body', req.body)
 
-    return UsersRegistry.modifyUser(id, req.body)
+    return UsersRegistry.getUser(req.decoded.id)
         .then(res => {
             let result = {
                 items: res

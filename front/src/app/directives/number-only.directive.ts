@@ -4,6 +4,8 @@ import { Directive, ElementRef, HostListener, Input } from '@angular/core';
   selector: '[OnlyNumber]'
 })
 export class NumberOnlyDirective {
+  
+  key: any;
 
   constructor(private el: ElementRef) { }
 
@@ -27,8 +29,9 @@ export class NumberOnlyDirective {
           return;
         }
         // Ensure that it is a number and stop the keypress
-        if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
-            e.preventDefault();
+        this.key = Number(e.key)
+        if (isNaN(this.key) || e.key===null) {
+          e.preventDefault();
         }
       }
   }

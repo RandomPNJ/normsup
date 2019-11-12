@@ -137,7 +137,7 @@ export default class SupplierRegistry {
         ;
     }
 
-    public createSupplier(data, user) {
+    public createSupplier(data, user, representative) {
         loggerT.verbose('Data : ', data);
         if(!data.dateCreation)
             data.dateCreation = new Date();
@@ -153,19 +153,31 @@ export default class SupplierRegistry {
                 let newInsert = {};
                 newInsert['supplier_id'] = res.insertId;
                 newInsert['client_id'] = user.organisation;
-
                 query['sql']    = Query.INSERT_REL;
                 query['values'] = [newInsert];
-                return this.mysql.query(query)
-                    .then(res => {
 
-                        return Promise.resolve(res);
-                    })
-                    .catch(err => {
-                        loggerT.error('ERROR ON SECOND QUERY createSuppliers : ', err);
-                        return Promise.reject(err);
-                    })
+                let query2 = {
+                    timeout: 40000
+                };
+                representative['organisation_id'] = res.insertId;
+                representative['added_by'] = user.id;
+                query2['sql'] = Query.INSERT_REPRESENTATIVE;
+                query2['values'] = [representative]
+
+                return Promise.all[
+                    this.mysql.query(query),
+                    this.mysql.query(query2)]
                 ;
+                // return this.mysql.query(query)
+                //     .then(res => {
+
+                //         return Promise.resolve(res);
+                //     })
+                //     .catch(err => {
+                //         loggerT.error('ERROR ON SECOND QUERY createSuppliers : ', err);
+                //         return Promise.reject(err);
+                //     })
+                // ;
             })
             .catch(err => {
                 loggerT.error('ERROR ON FIRST QUERY createSuppliers : ', err);

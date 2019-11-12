@@ -24,11 +24,11 @@ const routes: Routes = [
       { path: 'stats', component: StatsComponent },
       { path: 'alerts', component: AlertsComponent },
       { path: 'reminder', component: ReminderComponent },
+      { path: 'profile', component: ProfileComponent },
+      { path: 'users', component: UsersManagementComponent },
       { path: '', pathMatch: 'full', redirectTo: 'main'},
     ]
   },
-  { path: 'users', component: UsersManagementComponent },
-  { path: 'profile', component: ProfileComponent },
   { path: '',
     redirectTo: 'dashboard',
     pathMatch: 'full'

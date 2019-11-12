@@ -86,6 +86,48 @@ export default class UserRegistry {
     }
 
 
+    public getUser(id) {
+        let query = {
+            timeout: 40000
+        };
+
+        if(id) {
+            query['sql']    = Query.QUERY_GET_USER;
+            query['values'] = [id];
+        }
+        return this.mysql.query(query)
+            .then(res => {
+                loggerT.verbose('QUERY RES ==== ', res);
+                return Promise.resolve(res);
+            })
+            .catch(err => {
+                loggerT.error('ERROR ON QUERY getUsers.');
+                return Promise.reject(err);
+            })
+        ;
+    }
+
+    public modifyUser(id, userInfo) {
+        let query = {
+            timeout: 40000
+        };
+        loggerT.verbose('userInfo', userInfo);
+        loggerT.verbose('userInfo.email', userInfo.email);
+        query['sql']    = Query.QUERY_MODIFY_USER;
+        query['values'] = [userInfo.email, userInfo.lastname, userInfo.name, userInfo.address, userInfo.phonenumber, userInfo.postalCode, userInfo.city, id];
+
+        return this.mysql.query(query)
+            .then(res => {
+                loggerT.verbose('QUERY RES ==== ', res);
+                return Promise.resolve(res);
+            })
+            .catch(err => {
+                loggerT.error('ERROR ON QUERY getUsers.');
+                return Promise.reject(err);
+            })
+        ;
+    }
+
     public createUser(data) {
         let query = {
             timeout: 40000

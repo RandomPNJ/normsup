@@ -1072,6 +1072,10 @@ td {
     transform-origin: 0 0;
 }
 
+.lowered-opac {
+    opacity: 0.49;
+}
+
 /** Vertical List **/
 
 // .v-list-outer-wrp {
@@ -1103,4 +1107,11 @@ td {
     display: flex; 
     height: 100%;
     align-items: center;
+}
+
+@media screen {
+    .modal-medium {
+      width: 400px; /* New width for default modal */
+      max-width: 400px !important;
+    }
 }

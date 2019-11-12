@@ -34,8 +34,8 @@ export class SupplierComponent implements OnInit {
   selectedCompany: any = null;
   isLoading: Boolean = false;
   filteredList: Array<any>;
-  company: any = {};
-  companyToAdd: any = {};
+  
+  // Modal Info
   supplierInfo: any;
   legalDocInfo: any;
   compDocInfo: any;
@@ -54,15 +54,24 @@ export class SupplierComponent implements OnInit {
     three: false,
     four: false,
   };
+
+  // Add supplier modal
   modalState: String = 'enterSiret';
-  addInterloc: Boolean = false;
+  company: any = {};
+  companyToAdd: any = {};
   interloc: any = {
     name: '',
     lastname: '',
-    phone: '',
-    mail: ''
+    phonenumber: '',
+    email: ''
   };
-
+  documentsSettings: any = {
+    legal: {
+      urssaf: true,
+      lnte: true,
+      kbis: true,
+    }
+  };
   itemPluralMapping = {
     'supplier': {
       '=0': 'n\'avez aucun fournisseur',
@@ -77,7 +86,6 @@ export class SupplierComponent implements OnInit {
   };
   valueWidth: Boolean = false;
   itemsDisplay: Array<any> = [];
-  // items = fakeData.items;
   items = [];
 
   companies: any[] = [];
@@ -97,12 +105,7 @@ export class SupplierComponent implements OnInit {
     //     this.child.reload();
     //   })
     // ;
-    // this.itemsDisplay = [...this.items];
-    // this.modalState = 'compInfo';
-    // this.companyToAdd.denom = this.company.fields.denominationunitelegale;
-    // this.companyToAdd.siren = this.company.fields.siren;
-    // this.companyToAdd.adress = this.company.fields.adresseetablissement;
-    // this.companyToAdd.dateCrea = moment(this.company.fields.datecreationetablissement, "YYYY/MM/DD").format('DD/MM/YYYY');
+
   }
 
   openModal(template: TemplateRef<any>, modalType: String) {
@@ -116,10 +119,9 @@ export class SupplierComponent implements OnInit {
     this.subscriptions.push(
       this.modalService.onHidden.subscribe(() => {
         this.modalState = 'enterSiret';
-        this.company = {};
         this.searchCompanyID = '';
         this.companyToAdd = {};
-        this.addInterloc = false;
+        this.searchCompany404 = false;
         this.interloc = {name: '', lastname: '', phone: '', mail: ''};
         this.supplierInfo = {};
         this.unsubscribe();
@@ -131,8 +133,12 @@ export class SupplierComponent implements OnInit {
     if(modalType !== 'Supplier' && modalType !== 'AddDoc') {
       config.class += ' modal-lg';
     }
-    if(modalType == 'Supplier') {
+    if(modalType == 'Supplier' && this.modalState === 'enterSiret') {
       config.class += ' modal-sm';
+    } else if (modalType == 'Supplier' && (this.modalState === 'compInfo' || this.modalState === 'interlocInfo')) {
+      config.class += ' modal-lg';
+    } else if (modalType == 'Supplier' && this.modalState === 'docInfo'){
+      config.class += ' modal-medium';
     }
     if(modalType === 'AddDoc') {
       this.subModalRef = this.modalService.show(template, config);
@@ -158,10 +164,10 @@ export class SupplierComponent implements OnInit {
     } else {
       this.modalService.hide(1);
       this.modalState = 'enterSiret';
-      this.company = {};
       this.searchCompanyID = '';
+      this.valueWidth = false;
       this.companyToAdd = {};
-      this.addInterloc = false;
+      this.searchCompany404 = false;
       this.interloc = {name: '', lastname: '', phone: '', mail: ''};
       this.supplierInfo = {};
       this.modalRef = null;
@@ -173,11 +179,8 @@ export class SupplierComponent implements OnInit {
     this.apiService.getCompany(params)
     .subscribe(res => {
       if(res && res.records && res.records instanceof Array && res.records[0] && res.records[0].siren !== '') {
-        this.company = res.records[0];
         this.fillCompany(res.records[0].fields);
-        this.valueWidth = !this.valueWidth;
-        const modalWidth = this.valueWidth ? 'modal-lg' : 'modal-sm';
-        this.modalRef.setClass(modalWidth);
+        this.modalRef.setClass('modal-dialog-centered modal-lg');
         this.modalState = 'compInfo';
         this.searchCompany404 = false;
       } else {
@@ -205,7 +208,7 @@ export class SupplierComponent implements OnInit {
     if(event) {
       switch(event.type) {
         case 'Supplier':
-            this.supplierInfo = event.data;
+            // this.supplierInfo = event.data;
             this.openModal(this.addSuppRef, 'Supplier');
             break;
         case 'Legaldoc':
@@ -234,21 +237,32 @@ export class SupplierComponent implements OnInit {
   addCompany(data: any) {
     console.log('Company', data);
     data.comp.denomination = data.comp.denomination.charAt(0).toUpperCase() + data.comp.denomination.toLowerCase().slice(1);
-    this.apiService.postData('/api/supplier/define_supplier', data.comp)
+    this.apiService.postData('/api/supplier/define_supplier', data)
     .subscribe(res => {
       this.hideModal('');
       console.log('Res ', res);
     }, err => {
       console.log('Error, ', err);
     });
-    // this.itemsDisplay.push(data.comp);
-    // this.child.reload(data.comp);
   }
 
+  previous(state: String) {
+    if(state === 'enterSiret') {
+      this.modalState = state;
+      this.companyToAdd = {};
+      this.modalRef.setClass('modal-dialog-centered modal-sm');
+    } else if(state === 'compInfo') {
+      this.modalState = state;
+      this.interloc = {};
+    } else if(state === 'interlocInfo') {
+      this.modalState = state;
+      this.modalRef.setClass('modal-dialog-centered modal-lg');
+    }
+  }
   setModalClass() {
     this.valueWidth = !this.valueWidth;
     const modalWidth = this.valueWidth ? 'modal-lg' : 'modal-sm';
-    this.modalRef.setClass(modalWidth);
+    this.modalRef.setClass('modal-dialog-centered ' + modalWidth);
     this.modalState = 'compInfo';
   }
 
@@ -256,11 +270,9 @@ export class SupplierComponent implements OnInit {
     this.modalState = 'interlocInfo';
   }
 
-  updateInterloc() {
-    if(this.interloc.name !== '' || this.interloc.lastname !== '' || this.interloc.phone !== '' || this.interloc.mail !== '') {
-      this.addInterloc = true;
-    } else {
-      this.addInterloc = false;
-    }
+  docInfo() {
+    this.modalRef.setClass('modal-dialog-centered modal-medium');
+    this.modalState = 'docInfo';
   }
+
 }

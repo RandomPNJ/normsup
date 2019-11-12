@@ -94,7 +94,7 @@
                 <div class="container">
                   <div class="row">
                     <div class="col">
-                        <button style="float: right" type="button" class="btn btn-outline-normsup prec-btn-supplier text-capitalize">
+                        <button style="float: right" type="button" class="btn btn-outline-normsup prec-btn-supplier text-capitalize" (click)="previous('enterSiret')">
                             <span class="button-txt">Précédent</span>
                           </button>
                     </div>
@@ -117,62 +117,84 @@
             </div>
             <div style="padding-bottom: 40px;padding-top: 49px;margin: auto;padding-left: 53px;padding-right: 54px;" class="row">
               <div style="margin-right: 30px !important;" class="input-field  col s6 nopadding">
-                <input (change)="updateInterloc()" (focus)="interlocFocus.one=true" (blur)="interlocFocus.one=false"  id="interloc-name" name="interloc-name" type="text" class="form-control  custom-normsup-input-nb" [(ngModel)]="interloc.name">
+                <input (focus)="interlocFocus.one=true" (blur)="interlocFocus.one=false"  id="interloc-name" name="interloc-name" type="text" class="form-control  custom-normsup-input-nb" [(ngModel)]="interloc.name">
                 <label [ngClass]="{'lowered-opac': !interloc.name && interlocFocus.one === false, 'custom-label-input-test-active': interloc.name || interlocFocus.one === true}" class="custom-normsup-label-test" for="interloc-name">Prénom</label>
               </div>
               <div class="input-field col s6 nopadding">
-                <input (change)="updateInterloc()" (focus)="interlocFocus.two=true" (blur)="interlocFocus.two=false"  id="interloc-lastname" name="interloc-lastname" type="text" class="form-control  custom-normsup-input-nb" [(ngModel)]="interloc.lastname">
+                <input (focus)="interlocFocus.two=true" (blur)="interlocFocus.two=false"  id="interloc-lastname" name="interloc-lastname" type="text" class="form-control  custom-normsup-input-nb" [(ngModel)]="interloc.lastname">
                 <label [ngClass]="{'lowered-opac': !interloc.lastname && interlocFocus.two === false, 'custom-label-input-test-active': interloc.lastname || interlocFocus.two === true}" class="custom-normsup-label-test" for="interloc-lastname">Nom</label>
               </div>
             </div>
             <div style="margin: auto;padding-left: 53px;padding-right: 54px;" class="row">
               <div style="margin-right: 30px !important;" class="input-field col s6 nopadding">
-                <input (change)="updateInterloc()" (focus)="interlocFocus.three=true" (blur)="interlocFocus.three=false" id="interloc-phone" name="interloc-phone" type="text" class="form-control  custom-normsup-input-nb" [(ngModel)]="interloc.phone">
-                <label [ngClass]="{'lowered-opac': !interloc.phone && interlocFocus.three === false, 'custom-label-input-test-active': interloc.phone || interlocFocus.three === true}" class="custom-normsup-label-test" for="interloc-phone">Téléphone</label>
+                <input (focus)="interlocFocus.three=true" (blur)="interlocFocus.three=false" id="interloc-phone" name="interloc-phone" type="text" class="form-control  custom-normsup-input-nb" [(ngModel)]="interloc.phonenumber" OnlyNumber='true' >
+                <label [ngClass]="{'lowered-opac': !interloc.phonenumber && interlocFocus.three === false, 'custom-label-input-test-active': interloc.phonenumber || interlocFocus.three === true}" class="custom-normsup-label-test" for="interloc-phone">Téléphone</label>
               </div>
               <div class="input-field col s6 nopadding">
-                <input (change)="updateInterloc()" (focus)="interlocFocus.four=true" (blur)="interlocFocus.four=false" id="interloc-mail" name="interloc-mail" type="text" class="form-control  custom-normsup-input-nb" [(ngModel)]="interloc.mail">
-                <label [ngClass]="{'lowered-opac': !interloc.mail && interlocFocus.four === false, 'custom-label-input-test-active': interloc.mail || interlocFocus.four === true}" class="custom-normsup-label-test" for="interloc-mail">Email</label>
+                <input (focus)="interlocFocus.four=true" (blur)="interlocFocus.four=false" id="interloc-mail" name="interloc-mail" type="text" class="form-control  custom-normsup-input-nb" [(ngModel)]="interloc.email">
+                <label [ngClass]="{'lowered-opac': !interloc.email && interlocFocus.four === false, 'custom-label-input-test-active': interloc.email || interlocFocus.four === true}" class="custom-normsup-label-test" for="interloc-mail">Email</label>
               </div>
             </div>
           </div>
           <div style="padding-top: 30.5px;" class="select-comp-but">
             <div class="row">
               <div class="col">
-                <button style="float: right" type="button" class="btn btn-outline-normsup prec-btn-supplier text-capitalize" (click)="returnToCompInfo()">
+                <button style="float: right" type="button" class="btn btn-outline-normsup prec-btn-supplier text-capitalize" (click)="previous('compInfo')">
                   <span class="button-txt">Précédent</span>
                 </button>
               </div>
               <div class="col">
-                <button style="border-radius: 5px;float: left;" type="button" class="btn btn-primary text-capitalize next-btn-supplier" (click)="addCompany({comp: companyToAdd, interloc: interloc})" [disabled]="addInterloc === true && (interloc.name === '' || interloc.lastname === '' || interloc.phone === '' || interloc.mail === '')">
+                <button style="border-radius: 5px;float: left;" type="button" class="btn btn-primary text-capitalize next-btn-supplier" (click)="docInfo()" [disabled]="(interloc.name !== '' || interloc.lastname !== '' || interloc.phonenumber !== '' || interloc.email !== '') && (interloc.name === '' || interloc.lastname === '' || interloc.phonenumber === '' || interloc.email === '')">
                   <span class="button-txt">Suivant</span>
                 </button>
               </div>
             </div>
           </div>
         </div>
+        <div class="container nopadding" *ngIf="modalState === 'docInfo'">
+            <div style="padding-left: 0px !important; padding-right: 0px !important;" class="container">
+              <div class="row" style="margin: auto;text-align: center;padding-top: 29px;">
+                <div class="interloc-title">4. Documents</div>
+                <div class="optional-txt">Choisissez les documents à demander.</div>
+              </div>
+              <div style="padding-bottom: 30px;padding-top: 30px;margin: auto;padding-left: 53px;padding-right: 54px;" class="row">
+                <div style="text-align: center;width: 100%; text-transform: capitalize;" class="interloc-title">
+                  Légal
+                </div>
+                <div class="doc-form-check">
+                  <div class="form-check form-check-inline normsup-checkbox-cont">
+                    <input class="form-check-input normsup-checkbox" type="checkbox" id="inlineCheckbox1" value="option1" disabled [(ngModel)]="documentsSettings.legal.urssaf">
+                    <label class="form-check-label" for="inlineCheckbox1">URSSAF</label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2" disabled [(ngModel)]="documentsSettings.legal.lnte">
+                    <label class="form-check-label" for="inlineCheckbox2">LNTE</label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3" disabled [(ngModel)]="documentsSettings.legal.kbis">
+                    <label class="form-check-label" for="inlineCheckbox3">KBIS</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div style="" class="select-comp-but">
+              <div class="row">
+                <div class="col">
+                  <button style="float: right" type="button" class="btn btn-outline-normsup prec-btn-supplier text-capitalize" (click)="previous('interlocInfo')">
+                    <span class="button-txt">Précédent</span>
+                  </button>
+                </div>
+                <div class="col">
+                  <button style="border-radius: 5px;float: left;" type="button" class="btn btn-primary text-capitalize next-btn-supplier" (click)="addCompany({comp: companyToAdd, interloc: interloc})" [disabled]="addInterloc === true && (interloc.name === '' || interloc.lastname === '' || interloc.phonenumber === '' || interloc.email === '')">
+                    <span class="button-txt">Suivant</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
       </div>
       <div class="modal-footer own-modal-footer-supplier">
 
-      </div>
-    </ng-template>
-    <ng-template #supplierinfo>
-      <div class="modal-header own-modal-header">
-        <h4 class="modal-title pull-left">Information fournisseur</h4>
-      </div>
-      <div class="modal-body">
-        <div class="card card-style">
-          <div class="card-body"><span class="card-text">Nom</span> <span class="supplier-info-text">{{supplierInfo.name}}</span></div>
-        </div>
-        <div class="card card-style">
-          <div class="card-body"><span class="card-text">Siren</span> <span class="supplier-info-text">{{supplierInfo.siren}}</span></div>
-        </div>
-        <div class="card card-style">
-          <div class="card-body"><span class="card-text">Adresse</span> <span class="supplier-info-text">{{supplierInfo.adress}}</span></div>
-        </div>
-        <div class="card card-style">
-          <div class="card-body"><span class="card-text">Date d'ajout</span> <span class="supplier-info-text">{{supplierInfo.dateCrea}}</span></div>
-        </div>
       </div>
     </ng-template>
     <ng-template #legalDoc>

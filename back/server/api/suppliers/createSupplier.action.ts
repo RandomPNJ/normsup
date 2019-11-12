@@ -13,8 +13,10 @@ export default {
 
 export function createSupplier(req, res, SupplierRegistry) {
     let data;
+    let comp = req.body.comp;
+    let representative = req.body.interloc;
 
-    SupplierSchema.validate(req.body, (err, val) => {
+    SupplierSchema.validate(comp, (err, val) => {
         if (err && err.details[0].message) {
             const error = new Error(`Invalid request, error message: ${err.details[0].message}.`);
             error['statusCode'] = 400;
@@ -28,7 +30,7 @@ export function createSupplier(req, res, SupplierRegistry) {
     } else {
         data.dateCreation = new Date();
     }
-    return SupplierRegistry.createSupplier(data, req.decoded)
+    return SupplierRegistry.createSupplier(data, req.decoded, representative)
         .then(res => {
             return res;
         })

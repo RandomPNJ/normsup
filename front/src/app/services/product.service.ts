@@ -32,9 +32,10 @@ export class ProductService {
   }
 
   getCompany(params): Observable<any> {
-    // this.getToken();
-    console.log(this.httpOptions);
-    return this.http.get('https://data.opendatasoft.com/api/records/1.0/search/?dataset=sirene_v3%40public' + params, this.httpOptions)
+    let httpOpt = {
+      'Content-Type': 'application/json'
+    };
+    return this.http.get('https://data.opendatasoft.com/api/records/1.0/search/?dataset=sirene_v3%40public' + params, httpOpt)
     .pipe(map((response: Response) => {
       console.log('Res ', response);
       return response;

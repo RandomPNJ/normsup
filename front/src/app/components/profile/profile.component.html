@@ -1,3 +1,149 @@
-<p>
-  profile works!
-</p>
+<div class="container profile-cont">
+  <div class="profile-title">
+    Mon compte
+  </div>
+  <div class="" style="padding-top: 30px;">
+    <div class="container nopadding">
+      <div class="row nopadding">
+        <div class="col-7" style="padding-left: 0 !important;">
+          <div class="profile-card">
+            <div class="profile-card-header">
+              <div>Coordonnées personnelles</div>
+            </div>
+            <div *ngIf="loading === true" class="profile-card-body">
+                <div class="d-flex justify-content-center">
+                  <div class="spinner-border spinner-css" role="status">
+                    <span class="sr-only">Loading...</span>
+                  </div>
+                </div>
+            </div>
+            <div *ngIf="loading === false" class="profile-card-body">
+              <div class="profile-circle-cont">
+                <div class="add-pic">
+                  <embed src="../../../assets/img/add-pic.svg" />
+                </div>
+              </div>
+              <div class="container nopadding">
+                <div style="padding-left: 0px !important; padding-right: 0px !important;" class="profile-info">
+                  <div style="padding-bottom: 40px;padding-top: 49px;margin: auto;padding-left: 53px;padding-right: 54px;" class="row">
+                    <div style="margin-right: 30px !important;" class="input-field  col s6 nopadding">
+                      <input (focus)="formFocus.one=true" (blur)="formFocus.one=false"  id="userInfo-name" name="userInfo-name" type="text" class="form-control  custom-normsup-input-nb" [(ngModel)]="userInfo.name">
+                      <label [ngClass]="{'lowered-opac': !userInfo.name && formFocus.one === false, 'custom-label-input-test-active': userInfo.name || formFocus.one === true}" class="custom-normsup-label-test" for="userInfo-name">Prénom</label>
+                    </div>
+                    <div class="input-field col s6 nopadding">
+                      <input (focus)="formFocus.two=true" (blur)="formFocus.two=false"  id="userInfo-lastname" name="userInfo-lastname" type="text" class="form-control  custom-normsup-input-nb" [(ngModel)]="userInfo.lastname">
+                      <label [ngClass]="{'lowered-opac': !userInfo.lastname && formFocus.two === false, 'custom-label-input-test-active': userInfo.lastname || formFocus.two === true}" class="custom-normsup-label-test" for="userInfo-lastname">Nom</label>
+                    </div>
+                  </div>
+                  <div style="margin: auto;padding-left: 53px;padding-right: 54px;padding-bottom: 40px;" class="row">
+                    <div style="margin-right: 30px !important;" class="input-field col s6 nopadding">
+                      <input (focus)="formFocus.three=true" (blur)="formFocus.three=false" id="userInfo-phone" name="userInfo-phone" type="text" class="form-control  custom-normsup-input-nb" [(ngModel)]="userInfo.phonenumber" OnlyNumber='true'>
+                      <label [ngClass]="{'lowered-opac': !userInfo.phonenumber && formFocus.three === false, 'custom-label-input-test-active': userInfo.phonenumber || formFocus.three === true}" class="custom-normsup-label-test" for="userInfo-phone">Téléphone</label>
+                    </div>
+                    <div class="input-field col s6 nopadding">
+                      <input (focus)="formFocus.four=true" (blur)="formFocus.four=false" id="userInfo-mail" name="userInfo-mail" type="text" class="form-control  custom-normsup-input-nb" [(ngModel)]="userInfo.email">
+                      <label [ngClass]="{'lowered-opac': !userInfo.email && formFocus.four === false, 'custom-label-input-test-active': userInfo.email || formFocus.four === true}" class="custom-normsup-label-test" for="userInfo-mail">Email</label>
+                    </div>
+                  </div>
+                  <div style="margin: auto;padding-left: 53px;padding-right: 54px;padding-bottom: 40px;" class="row">
+                    <div style="margin-right: 30px !important;" class="input-field col s6 nopadding">
+                      <input (focus)="formFocus.five=true" (blur)="formFocus.five=false" id="userInfo-address" name="userInfo-address" type="text" class="form-control  custom-normsup-input-nb" [(ngModel)]="userInfo.address">
+                      <label [ngClass]="{'lowered-opac': !userInfo.address && formFocus.five === false, 'custom-label-input-test-active': userInfo.address || formFocus.five === true}" class="custom-normsup-label-test" for="userInfo-phone">Adresse</label>
+                    </div>
+                  </div>
+                  <div style="margin: auto;padding-left: 53px;padding-right: 54px;padding-bottom: 35px;" class="row">
+                      <div style="margin-right: 30px !important;" class="input-field col s6 nopadding">
+                        <input (focus)="formFocus.six=true" (blur)="formFocus.six=false" id="userInfo-postalCode" name="userInfo-postalCode" type="text" class="form-control  custom-normsup-input-nb" [(ngModel)]="userInfo.postalCode" OnlyNumber='true'>
+                        <label [ngClass]="{'lowered-opac': !userInfo.postalCode && formFocus.six === false, 'custom-label-input-test-active': userInfo.postalCode || formFocus.six === true}" class="custom-normsup-label-test" for="userInfo-postalCode">Code Postal</label>
+                      </div>
+                      <div class="input-field col s6 nopadding">
+                        <input (focus)="formFocus.seven=true" (blur)="formFocus.seven=false" id="userInfo-city" name="userInfo-city" type="text" class="form-control  custom-normsup-input-nb" [(ngModel)]="userInfo.city">
+                        <label [ngClass]="{'lowered-opac': !userInfo.city && formFocus.seven === false, 'custom-label-input-test-active': userInfo.city || formFocus.seven === true}" class="custom-normsup-label-test" for="userInfo-city">Ville</label>
+                      </div>
+                    </div>
+                </div>
+                <div style="" class="save-btn-cont">
+                  <div class="row nopadding">
+                    <div class="center-btn">
+                      <button style="border-radius: 5px;width: 137px;" type="button" class="btn btn-primary text-capitalize next-btn-supplier" (click)="sendModifications()" [disabled]="(userInfo.name === user.name && userInfo.lastname === user.lastname && userInfo.phonenumber === user.phonenumber && userInfo.email === user.email && userInfo.address === user.address && userInfo.postalCode === user.postalCode && userInfo.city === user.city)">
+                        <span class="button-txt">Enregistrer</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-5">
+          <div class="profile-card">
+            <div class="profile-card-header">
+              <div>Mot de passe</div>
+            </div>
+            <div class="profile-card-body">
+              <div style="width: 100%;" class="text-center mdp-text">Changez votre mot de passe actuel</div>
+              <div class="row nopadding">
+                <div class="center-btn" style="padding-bottom: 40px;">
+                  <button style="width: 137px;" type="button" class="btn btn-outline-normsup text-capitalize" (click)="modifyPasswordFn()">
+                    <span class="button-txt">Modifier</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #modifyPassword>
+  <div class="modal-header own-modal-header-supplier">
+  </div>
+  <div class="modal-body">
+    <div class="container nopadding">
+      <div class="mod-header">
+        <div style="display: block;">
+          &nbsp;
+          <button type="button" style="cursor:pointer;width:20px;height:20px;" class="close pull-right" aria-label="Close" (click)="hideModal()">
+            <embed src="../../../assets/img/close-icn.svg" style="height: 16px; cursor:pointer;pointer-events: none;" />
+          </button>
+        </div>
+        <div class="supplier-modal-title">Modifier mot de passe</div>
+      </div>
+      <div class="row nopadding pwd-form" style="padding-top: 25px !important;">
+        <div class="pwd-input">
+          <div style="" class="input-field col nopadding">
+            <input (focus)="modifyPwdFocus.one=true" (blur)="modifyPwdFocus.one=false"  id="modifyPwd-lastPwd" name="modifyPwd-lastPwd" type="text" class="form-control  custom-normsup-input-nb" [(ngModel)]="modifyPwd.lastPwd">
+            <label [ngClass]="{'lowered-opac': !modifyPwd.lastPwd && modifyPwdFocus.one === false, 'custom-label-input-test-active': modifyPwd.lastPwd || modifyPwdFocus.one === true}" class="custom-normsup-label-test" for="modifyPwd-lastPwd">Ancien mot de passe</label>
+          </div>
+        </div>
+      </div>
+      <div class="row nopadding pwd-form">
+        <div class="pwd-input">
+          <div style="" class="input-field col nopadding">
+            <input (focus)="modifyPwdFocus.two=true" (blur)="modifyPwdFocus.two=false"  id="modifyPwd-newPwd" name="modifyPwd-newPwd" type="text" class="form-control  custom-normsup-input-nb" [(ngModel)]="modifyPwd.newPwd">
+            <label [ngClass]="{'lowered-opac': !modifyPwd.newPwd && modifyPwdFocus.two === false, 'custom-label-input-test-active': modifyPwd.newPwd || modifyPwdFocus.two === true}" class="custom-normsup-label-test" for="modifyPwd-newPwd">Nouveau mot de passe</label>
+          </div>
+        </div>
+      </div>
+      <div class="row nopadding pwd-form" style="padding-bottom: 15px !important;">
+        <div class="pwd-input">
+          <div style="" class="input-field col nopadding">
+            <input (focus)="modifyPwdFocus.three=true" (blur)="modifyPwdFocus.three=false"  id="modifyPwd-newPwd2" name="modifyPwd-newPwd2" type="text" class="form-control  custom-normsup-input-nb" [(ngModel)]="modifyPwd.newPwd2">
+            <label [ngClass]="{'lowered-opac': !modifyPwd.newPwd2 && modifyPwdFocus.three === false, 'custom-label-input-test-active': modifyPwd.newPwd2 || modifyPwdFocus.three === true}" class="custom-normsup-label-test" for="modifyPwd-newPwd2">Répétez le mot de passe</label>
+          </div>
+        </div>
+      </div>
+      <div class="row nopadding">
+        <div class="center-btn">
+          <button style="border-radius: 5px;width: 137px;" type="button" class="btn btn-primary text-capitalize next-btn-supplier" (click)="sendModifications()" [disabled]="(modifyPwd.lastPwd === '' || modifyPwd.newPwd === '' || modifyPwd.newPwd2 === '')">
+            <span class="button-txt">Enregistrer</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer" style="padding: 4px;border-style: none !important;">
+  </div>
+</ng-template>

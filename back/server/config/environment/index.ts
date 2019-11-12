@@ -62,6 +62,8 @@ export default {
         { name: 'modifyUser', uriPattern: '/modify/:id', method: 'put' },
         { name: 'deleteUser', uriPattern: '/delete/:id', method: 'post' },
         { name: 'getUsers', uriPattern: '', method: 'get' },
+        { name: 'getUser', uriPattern: '/getOne/:id', method: 'get' },
+        { name: 'getCurrent', uriPattern: '/current', method: 'get' },
       ],
     },
     suppliers: {
