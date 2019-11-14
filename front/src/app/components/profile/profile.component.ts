@@ -5,6 +5,8 @@ import { BrowserStorageService } from 'src/app/services/storageService';
 import { NotifService } from 'src/app/services/notif.service';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { combineLatest, Subscription } from 'rxjs';
+import { AuthService } from 'src/app/services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -65,8 +67,13 @@ export class ProfileComponent implements OnInit {
     newPwd: '',
     newPwd2: ''
   };
+  modifyPwdErr1: String;
+  modifyPwdErr: String;
   constructor(
-    private apiService: HttpService, 
+    private apiService: HttpService,
+    private authService: AuthService,
+    private router: Router, 
+    private bs: BrowserStorageService,
     private bsService: BrowserStorageService, 
     private changeDetection: ChangeDetectorRef,
     private notifService: NotifService,
@@ -80,6 +87,15 @@ export class ProfileComponent implements OnInit {
         this.userInfo = cloneDeep(res.body['items'][0]);
         this.user = cloneDeep(res.body['items'][0]);
         this.loading = false;
+      }, err => {
+        if(err.code === -1) {
+          this.notifService.error('Session expirée. Vous serez redirigé vers la page de connexion.');
+          setTimeout(() => {
+            this.authService.isLogged.next(false);
+            this.router.navigate(['/login']);
+            this.bs.clearLocalStorage();
+          }, 2500);
+        }
       })
     ;
   }
@@ -97,6 +113,38 @@ export class ProfileComponent implements OnInit {
 
   modifyPasswordFn() {
     this.openModal(this.modifyPwdRef);
+  }
+
+  modifyPwFinal() {
+    let regexp = /[!@#$%^&*(),.?":{}|<>]/;
+    if(this.modifyPwd.newPwd.match(regexp) !== null) {
+      console.log('lastpwd',this.modifyPwd.lastPwd);
+      const data = {
+        newpassword: this.modifyPwd.newPwd,
+        password: this.modifyPwd.lastPwd
+      };
+      console.log('data', data);
+      return this.apiService.post('/api/users/modify/' + this.id + '/modify_password', data)
+        .subscribe(res => {
+          this.notifService.success('Mot de passe modifié avec succès.');
+          this.hideModal();
+        }, err => {
+          if(err.reason === -1) {
+            this.notifService.error('Session expirée. Vous serez redirigé vers la page de connexion.');
+            setTimeout(() => {
+              this.authService.isLogged.next(false);
+              this.router.navigate(['/login']);
+              this.bs.clearLocalStorage();
+            }, 2500);
+          } else if(err.msg === 'Wrong credentials.') {
+            this.modifyPwdErr = 'Mot de passe renseigné invalide.';
+          }
+
+        })
+      ;
+    } else {
+      this.modifyPwdErr1 = 'Nouveau mot de passe doit contenir au moins un charactère spécial.'
+    }
   }
 
   openModal(template: TemplateRef<any>) {
@@ -130,6 +178,13 @@ export class ProfileComponent implements OnInit {
       return;
     }
     this.modalService.hide(1);
+    this.modifyPwd = {
+      lastPwd: '',
+      newPwd: '',
+      newPwd2: ''
+    };
+    this.modifyPwdErr1 = '';
+    this.modifyPwdErr = '';
     this.modalRef = null;
   }
 }

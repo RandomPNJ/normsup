@@ -13,15 +13,17 @@
                         <label for="password" class="error" [ngClass]="iserror1"><img src="../../../assets/img/error-icn.svg" alt="">&nbsp;&nbsp;Please enter a valid password.</label><br>
                     </div>
                     <div class="input-group has-feedback has-feedback-left mb-3 login-input-container">
-                        <input type="email" class="form-control input-style" placeholder="Username" name="username" [(ngModel)]='credentials.username' (focus)='remove()' required>
+                        <input type="email" class="form-control input-style" placeholder="Email" name="username" [(ngModel)]='credentials.username' (focus)='remove()' required>
                         <i style="z-index: 4;color: #2786C4;" class="material-icons prefix form-control-feedback">account_circle</i>
                     </div>
 
                     <div class="input-group has-feedback has-feedback-left mb-3 login-input-container">
-                        <input type="password" class="form-control input-style" placeholder="Password" name="password" [(ngModel)]='credentials.password' (focus)='remove()' required>
+                        <input type="password" class="form-control input-style" placeholder="Mot de passe" name="password" [(ngModel)]='credentials.password' (focus)='remove()' required>
                         <i style="z-index: 4;color: #2786C4;" class="material-icons prefix form-control-feedback">lock</i>
                     </div>
-
+                    <div>
+                        <span *ngIf="errMsg" class="red-err-txt" style="font-size: 13px;">{{errMsg}}</span>
+                    </div>
                 </div>
 
                 <div class="col s12">

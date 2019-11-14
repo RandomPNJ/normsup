@@ -12,7 +12,7 @@ export default {
 };
 
 export function createUser(req, UsersRegistry) {
-
+    loggerT.verbose('Body to create Users', req.body);
     let data;
     const creator = req.body.creator;
 
@@ -32,8 +32,13 @@ export function createUser(req, UsersRegistry) {
     if(creator.username) {
         data.createdBy = creator.username;
     }
+    // this removes white spaces I think
     data.username = data.name.replace(/\s+/g, '') + "_" + data.lastname.replace(/\s+/g, '');;
 
+    // If no password generated, generate one
+    if(!data.password) {
+        data.password = 'randompassword';
+    }
 
     return bcrypt.hash(data.password, 14, function(err, hash) {
         if(err) {
@@ -43,7 +48,7 @@ export function createUser(req, UsersRegistry) {
         }
         // Store hash in your password DB.
         data.password = hash;
-        return UsersRegistry.createUser(data)
+        return UsersRegistry.createUser(data, req.decoded)
             .then(res => {
                 loggerT.verbose('createUser res', res);
                 let response = {

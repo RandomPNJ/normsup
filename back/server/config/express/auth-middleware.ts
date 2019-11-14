@@ -17,12 +17,14 @@ export class AuthenticatorMiddleware implements ExpressMiddlewareInterface {
                 if (res.rc === 401 || res.rc === 403) {
                     return response.status(res.code).json({
                         success: false,
-                        message: res.msg
+                        message: res.msg,
+                        reason: -1
                     });
                 } else {
                     return response.status(500).json({
                         success: false,
-                        message: "Unexpected error : " + res.msg
+                        message: "Unexpected error : " + res.msg,
+                        reason: -1
                     });
                 }
             }

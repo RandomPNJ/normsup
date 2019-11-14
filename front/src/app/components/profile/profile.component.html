@@ -111,10 +111,11 @@
         </div>
         <div class="supplier-modal-title">Modifier mot de passe</div>
       </div>
+      <form>
       <div class="row nopadding pwd-form" style="padding-top: 25px !important;">
         <div class="pwd-input">
           <div style="" class="input-field col nopadding">
-            <input (focus)="modifyPwdFocus.one=true" (blur)="modifyPwdFocus.one=false"  id="modifyPwd-lastPwd" name="modifyPwd-lastPwd" type="text" class="form-control  custom-normsup-input-nb" [(ngModel)]="modifyPwd.lastPwd">
+            <input (focus)="modifyPwdFocus.one=true" (blur)="modifyPwdFocus.one=false"  id="modifyPwd-lastPwd" name="modifyPwd-lastPwd" type="password" class="form-control  custom-normsup-input-nb" [(ngModel)]="modifyPwd.lastPwd">
             <label [ngClass]="{'lowered-opac': !modifyPwd.lastPwd && modifyPwdFocus.one === false, 'custom-label-input-test-active': modifyPwd.lastPwd || modifyPwdFocus.one === true}" class="custom-normsup-label-test" for="modifyPwd-lastPwd">Ancien mot de passe</label>
           </div>
         </div>
@@ -122,7 +123,7 @@
       <div class="row nopadding pwd-form">
         <div class="pwd-input">
           <div style="" class="input-field col nopadding">
-            <input (focus)="modifyPwdFocus.two=true" (blur)="modifyPwdFocus.two=false"  id="modifyPwd-newPwd" name="modifyPwd-newPwd" type="text" class="form-control  custom-normsup-input-nb" [(ngModel)]="modifyPwd.newPwd">
+            <input (focus)="modifyPwdFocus.two=true" (blur)="modifyPwdFocus.two=false"  id="modifyPwd-newPwd" name="modifyPwd-newPwd" type="password" class="form-control  custom-normsup-input-nb" [(ngModel)]="modifyPwd.newPwd">
             <label [ngClass]="{'lowered-opac': !modifyPwd.newPwd && modifyPwdFocus.two === false, 'custom-label-input-test-active': modifyPwd.newPwd || modifyPwdFocus.two === true}" class="custom-normsup-label-test" for="modifyPwd-newPwd">Nouveau mot de passe</label>
           </div>
         </div>
@@ -130,18 +131,22 @@
       <div class="row nopadding pwd-form" style="padding-bottom: 15px !important;">
         <div class="pwd-input">
           <div style="" class="input-field col nopadding">
-            <input (focus)="modifyPwdFocus.three=true" (blur)="modifyPwdFocus.three=false"  id="modifyPwd-newPwd2" name="modifyPwd-newPwd2" type="text" class="form-control  custom-normsup-input-nb" [(ngModel)]="modifyPwd.newPwd2">
+            <input (focus)="modifyPwdFocus.three=true" (blur)="modifyPwdFocus.three=false"  id="modifyPwd-newPwd2" name="modifyPwd-newPwd2" type="password" class="form-control  custom-normsup-input-nb" [(ngModel)]="modifyPwd.newPwd2">
             <label [ngClass]="{'lowered-opac': !modifyPwd.newPwd2 && modifyPwdFocus.three === false, 'custom-label-input-test-active': modifyPwd.newPwd2 || modifyPwdFocus.three === true}" class="custom-normsup-label-test" for="modifyPwd-newPwd2">Répétez le mot de passe</label>
+            <span *ngIf="modifyPwd.newPwd2.length > 3 && modifyPwd.newPwd !== modifyPwd.newPwd2" class="red-err-txt">Les mots de passe doivent être identique.</span>
+            <span *ngIf="modifyPwdErr1" class="red-err-txt">{{modifyPwdErr1}}</span>
           </div>
         </div>
       </div>
-      <div class="row nopadding">
+      <div class="row nopadding" style="padding-bottom: 10px !important;">
         <div class="center-btn">
-          <button style="border-radius: 5px;width: 137px;" type="button" class="btn btn-primary text-capitalize next-btn-supplier" (click)="sendModifications()" [disabled]="(modifyPwd.lastPwd === '' || modifyPwd.newPwd === '' || modifyPwd.newPwd2 === '')">
+          <button style="border-radius: 5px;width: 137px;" type="button" class="btn btn-primary text-capitalize next-btn-supplier" (click)="modifyPwFinal()" [disabled]="(modifyPwd.lastPwd === '' || modifyPwd.newPwd === '' || modifyPwd.newPwd2 === '') || (modifyPwd.newPwd !== modifyPwd.newPwd2) || (modifyPwd.newPwd === modifyPwd.lastPwd)">
             <span class="button-txt">Enregistrer</span>
           </button>
+          <span *ngIf="modifyPwdErr" class="red-err-txt">{{modifyPwdErr}}</span>
         </div>
       </div>
+    </form>
     </div>
   </div>
   <div class="modal-footer" style="padding: 4px;border-style: none !important;">

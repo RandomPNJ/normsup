@@ -32,6 +32,12 @@ export class UsersTableComponent implements OnInit {
   myTable: Boolean = false;
   itemsToDisplay: Array<any> = [];
   dtOptions: DataTables.Settings = {};
+  roles: Array<any> = [
+    { name : ' ', value: ' '},
+    { name: 'Admin', value: 'admin'},
+    { name: 'Utilisateur', value: 'user'},
+    { name: 'Fournisseur', value: 'supplier'},
+  ];
 
 
 
@@ -55,8 +61,10 @@ export class UsersTableComponent implements OnInit {
       lengthMenu: [10, 25, 50, -1],
       searchDelay: 4500,
       ordering: false,
-      searching: true,
+      searching: false,
       responsive: true,
+      paging: false,
+      info: false,
       // pageLength: 10,
       serverSide: true,
       processing: true,
@@ -104,16 +112,18 @@ export class UsersTableComponent implements OnInit {
         that.tableParams.length = settings._iDisplayLength;
       },
       columns: [
-        null,
+        {
+          title: 'Nom',
+        },
         {
           title: 'Email',
-          data: 'email'
         },
         {
           title: 'Rôle',
-          data: 'role'
         },
-        null
+        {
+          title: 'Action'
+        }
       ]
     };
   }

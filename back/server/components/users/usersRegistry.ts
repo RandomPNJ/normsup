@@ -128,23 +128,101 @@ export default class UserRegistry {
         ;
     }
 
-    public createUser(data) {
+    public modifyPassword(id, login, data) {
         let query = {
             timeout: 40000
         };
+        const that = this;
+        query['sql']    = Query.FIND_USER_BY_NAME_EMAIL;
+        query['values'] = [login, login];
 
-        query['sql']    = Query.INSERT_USER;
-        query['values'] = [data];
         return this.mysql.query(query)
             .then(res => {
-                loggerT.verbose('QUERY RES ==== ', res);
-                return Promise.resolve(res);
+                if(res.length === 0) {
+                    return Promise.reject({statusCode: 404, msg: 'User not found.'});
+                }
+                loggerT.verbose('res user', res[0]);
+                let user = res[0];
+                return bcrypt.compare(data.password, user.password)
+                    .then(res => {
+                        if(res === true) {
+                            loggerT.verbose('bcrypt true');
+                            return bcrypt.hash(data.newpassword, 14, function(err, hash) {
+                                loggerT.verbose('bcrypt hash', hash);
+                                if(err) {
+                                    return Promise.reject({statusCode: 500, msg: 'Could not change password.'});
+                                }
+                                loggerT.verbose('bcrypt hash', hash);
+                                query['sql']    = Query.QUERY_MODIFY_PASSWORD;
+                                query['values'] = [hash, id];
+                                return that.mysql.query(query)
+                                   .then(res => {
+                                       loggerT.verbose('QUERY RES on modified password ==== ', res);
+                                       return Promise.resolve(res);
+                                   })
+                                   .catch(err => {
+                                       loggerT.error('ERROR ON QUERY modifyPassword.');
+                                       return Promise.reject(err);
+                                   })
+                               ;
+                            });
+                        }
+                        loggerT.verbose('bcrypt true');
+                        return Promise.reject({statusCode: 400, msg: 'Wrong credentials.'});
+                    }
+                );
+            })
+            .catch(err => {
+                return Promise.reject({statusCode: err.statusCode, msg: err.msg});
+            })
+        ;
+
+
+    }
+
+    public createUser(data, user) {
+        let query = {
+            timeout: 40000
+        };
+        const that = this;
+        query['sql']    = Query.INSERT_USER;
+        query['values'] = [data.name, data.lastname, data.email, data.password, data.username, user.organisation, user.organisation, data.create_time, user.id];
+
+        return this.mysql.query(query)
+            .then(res => {
+                loggerT.verbose('QUERY createUser RES ==== ', res);
+                const roleID = that.getRoleID(data.role);
+
+                query['sql']    = Query.INSERT_ROLE;
+                query['values'] = [res.insertId, roleID];
+                
+
+                return that.mysql.query(query)
+                    .then(res => {
+                        loggerT.verbose('QUERY createRole RES ==== ', res);
+                        return Promise.resolve(res);
+                    })
+                    .catch(err => {
+                        return Promise.reject({statusCode: 500, msg: 'Could not create user role for user with id :' + res.insertId})
+                    })
+                ;
+
             })
             .catch(err => {
                 loggerT.error('ERROR ON QUERY createUser : ', err);
                 return Promise.reject(err);
             })
         ;
+    }
+
+    private getRoleID(role) {
+        if(role === 'admin') {
+            return 1;
+        } else if(role === 'user') {
+            return 2;
+        } else if(role === 'supplier') {
+            return 3;
+        }
     }
 
     private throwError(message?: string): void {

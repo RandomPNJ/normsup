@@ -1,19 +1,12 @@
-<div class="container main-cont">
+<div class="container main-cont" style="padding-left: 50px !important;">
     <div class="cont-wrapper">
-      <div>
-        <span class="title">Mes utilisateurs</span>
+      <div class="row nopadding" style="padding-top: 45px !important;">
+        <div class="col title">Mes utilisateurs</div>
+        <div class="col-lg-auto col-md-auto content-cont">
+            <button style="height: 30px" (click)="openModal(template, 'Supplier')" type="button" class="btn btn-primary custom-normsup-button nopadding"><span class="add-user-txt"><embed style="height: 10px;" src="../../../assets/img/plus-icn.svg"/> Ajouter un utilisateur</span></button>
+        </div>
       </div>
       <div class="sub-cont">
-        <!-- <span class="table-header">Vous avez {{itemsDisplay.length | i18nPlural: itemPluralMapping['supplier']}}.</span> -->
-        <div class="container">
-          <div class="row justify-content-end">
-            <div class="col-lg-auto col-md-auto">
-              <button (click)="openModal(template, 'AddUser')" type="button" class="btn btn-outline-normsup">Ajouter un utilisateur</button>
-            </div>
-          </div>
-          <!-- <span (click)="openModal(template, 'Supplier')" class="glyphicon glyphicon-plus-sign plus-icn" role="button"></span> -->
-        </div>
-        <hr />
         <div class="table-cont">
           <app-users-table (modifyUser)="fillUser($event)"></app-users-table>
         </div>
@@ -57,18 +50,12 @@
                         </select>
                       </div>
                     </div>
-                    <div class="row" *ngIf="modalState === 'AddUser'">
-                      <div class="form-group col s6">
-                        <label class="active" for="mot-de-passe">Mot de passe</label>
-                        <input autocomplete="new-password" id="mot-de-passe" name="mot-de-passe" type="password" class="form-control" [(ngModel)]="userToAdd.password">
-                      </div>
-                    </div>
                   </div>
                 <div class="select-comp-but">
                   <div class="container">
                     <div class="row">
                       <div class="col">
-                        <button style="float: right" (click)="addUser(userToAdd)" [disabled]="(!userToAdd.name || !userToAdd.lastname || !userToAdd.email || !userToAdd.password)" class="mb-2  submit-btn" type="submit" name="action">
+                        <button style="float: right" (click)="addUser(userToAdd)" [disabled]="(!userToAdd.name || !userToAdd.lastname || !userToAdd.email || !userToAdd.role)" class="mb-2  submit-btn" type="submit" name="action">
                           <span class="searchText">Ajouter</span>
                           <i style="font-size: 22px !important;" class="material-icons right">send</i>
                         </button>

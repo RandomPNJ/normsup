@@ -26,6 +26,7 @@ export class LoginPageComponent implements OnInit, OnDestroy {
   role: any;
   isLoader: Boolean = false;
   show = false;
+  errMsg: String;
   constructor(private router: Router,
     private bsService: BrowserStorageService,
     public authService: AuthService) { }
@@ -64,6 +65,9 @@ export class LoginPageComponent implements OnInit, OnDestroy {
             this.router.navigate(['/dashboard/main']);
           }
         }, error => {
+          if(error.error.msg === 'Wrong credentials.' || error.error.msg === 'User not found.') {
+            this.errMsg = 'Email ou mot de passe erroné.';
+          }
           this.isLoader = false;
           this.type = 'error';
           if(error['msg']) {

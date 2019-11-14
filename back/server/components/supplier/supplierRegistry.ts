@@ -62,16 +62,6 @@ export default class SupplierRegistry {
         const queryTypeValues = this.getQueryType(data);
         query['sql']    = Query[queryTypeValues['type']];
         query['values']    = queryTypeValues['values'];
-        // if(data.hasOwnProperty('start') && data.search) {
-        //     query['sql']    = Query.QUERY_GET_SUPPLIER_OFFLIM_SEARCH;
-        //     query['values'] = [data.company, s, s, s,  data.limit, data.start];
-        // } else if(data.hasOwnProperty('start')) {
-        //     query['sql']    = Query.QUERY_GET_SUPPLIER_OFFLIM;
-        //     query['values'] = [data.company, data.limit, data.start];
-        // } else {
-        //     query['sql'] = Query.QUERY_GET_SUPPLIER;
-        //     query['values'] = [data.company];
-        // }
         return this.mysql.query(query)
             .then((res, fields) => {
                 loggerT.verbose('fields', fields)
@@ -168,16 +158,6 @@ export default class SupplierRegistry {
                     this.mysql.query(query),
                     this.mysql.query(query2)]
                 ;
-                // return this.mysql.query(query)
-                //     .then(res => {
-
-                //         return Promise.resolve(res);
-                //     })
-                //     .catch(err => {
-                //         loggerT.error('ERROR ON SECOND QUERY createSuppliers : ', err);
-                //         return Promise.reject(err);
-                //     })
-                // ;
             })
             .catch(err => {
                 loggerT.error('ERROR ON FIRST QUERY createSuppliers : ', err);

@@ -15,7 +15,7 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { Configuration } from './config/environment';
 
 const routes: Routes = [
-  { path: 'login', component: LoginPageComponent },
+  { path: 'login', component: LoginPageComponent, canActivate: [LoggedinGuard], },
   { path: 'dashboard', component: DashboardComponent, canActivate: [LoggedinGuard],  data: { roles: Configuration.basicRoutesRoles },
     children: [
       { path: 'main', component: Dashboard1Component },

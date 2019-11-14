@@ -60,6 +60,7 @@ export default {
       actions: [
         { name: 'createUser', uriPattern: '/register', method: 'post' },
         { name: 'modifyUser', uriPattern: '/modify/:id', method: 'put' },
+        { name: 'modifyPassword', uriPattern: '/modify/:id/modify_password', method: 'post' },
         { name: 'deleteUser', uriPattern: '/delete/:id', method: 'post' },
         { name: 'getUsers', uriPattern: '', method: 'get' },
         { name: 'getUser', uriPattern: '/getOne/:id', method: 'get' },

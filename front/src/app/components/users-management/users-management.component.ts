@@ -33,7 +33,7 @@ export class UsersManagementComponent implements OnInit {
     { name : ' ', value: ' '},
     { name: 'Admin', value: 'admin'},
     { name: 'Utilisateur', value: 'user'},
-    { name: 'Invité', value: 'guest'},
+    { name: 'Fournisseur', value: 'supplier'},
   ];
 
   itemPluralMapping = {

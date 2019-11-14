@@ -1,5 +1,6 @@
 .main-cont {
   margin-top: 20px;
+  padding-left: 50px !important;
   background-color: white;
   box-shadow: 0 7px 15px 0 rgba(0, 51, 90, 0.04);
   border-radius: 6px;
@@ -100,13 +101,12 @@ hr {
   }
   
   .sub-cont {
-    padding: 25px 0px 20px 25px;
+    padding: 25px 0px 20px 0px;
   }
   
   .title {
     color: #382244;
     font-family: "Montserrat", sans-serif;
-    padding: 10px 0px 10px 10px;
     font-weight: 500;
     font-size: 21px;
     text-transform: uppercase;
@@ -223,4 +223,13 @@ hr {
     display: inline-block;
     text-align: left;
     vertical-align: middle;
+  }
+
+  .add-user-txt {
+    font-size: 13px;
+    display: block;
+    height: 100%;
+    font-family: 'Roboto Medium';
+    padding: 7px 28px 8px 22.5px;
+    text-transform: none;
   }
