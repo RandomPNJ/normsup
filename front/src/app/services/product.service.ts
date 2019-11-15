@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { HttpService } from './http.service';
 import { Product } from '../models/Product';
+import { cloneDeep } from 'lodash';
 import { BrowserStorageService } from 'src/app/services/storageService';
 import { Configuration } from '../config/environment';
 import { map, filter, catchError, mergeMap } from 'rxjs/operators';
@@ -33,8 +34,11 @@ export class ProductService {
 
   getCompany(params): Observable<any> {
     let httpOpt = {
-      'Content-Type': 'application/json'
+      headers: {
+        'Content-Type': 'application/json'
+      }
     };
+    
     return this.http.get('https://data.opendatasoft.com/api/records/1.0/search/?dataset=sirene_v3%40public' + params, httpOpt)
     .pipe(map((response: Response) => {
       console.log('Res ', response);
