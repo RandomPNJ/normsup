@@ -233,3 +233,21 @@ hr {
     padding: 7px 28px 8px 22.5px;
     text-transform: none;
   }
+
+  .custom-label-input-test-active {
+    // left: 14px;
+    -webkit-transform: translateY(-14px) scale(1);
+    transform: translateY(-14px) scale(1);
+    -webkit-transform-origin: 0 0;
+    transform-origin: 0 0;
+  }
+
+  .user-select-text {
+    font-family: 'Roboto Regular';
+    font-size: 11px;
+    letter-spacing: 0;
+    color: #4390EF;
+    width: 100% !important;
+    text-align: center !important;
+    margin-bottom: 0px !important;
+  }

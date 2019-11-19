@@ -14,13 +14,17 @@ import { HttpParams } from '@angular/common/http';
 })
 export class AddCompGroupComponent implements OnInit {
 
-  @Output() hideModal = new EventEmitter<string>();
+  @Output() changeModal = new EventEmitter<string>();
 
   errorMsg: String = '';
   filteredGroups = [];
   isLoading: Boolean = false;
-  state: String = 'GROUPNAME';
+  showAlreadyExistsErr: Boolean = false;
+  state: String = 'groupName';
   // state: String = 'GROUPMEMBERS';
+  group: any = {
+    name: ''
+  };
   groupName: String;
   people$: Observable<any[]>;
   peopleLoading = false;
@@ -50,7 +54,28 @@ export class AddCompGroupComponent implements OnInit {
   }
 
   private nextStep(val) {
+    this.changeModal.emit(val);
     this.state = val;
+  }
+
+  private checkGroupName(name) {
+    let params = new HttpParams();
+    params = params.set('name', name);
+    this.http.get('/api/supplier/group/check_availability', params)
+      .subscribe(res => {
+        if(res.body['items'].exists) {
+          this.showAlreadyExistsErr = true;
+        } else {
+          this.showAlreadyExistsErr = false;
+          this.nextStep('groupMembers')
+        }
+        console.log('checkGroupName ', res);
+      },
+      err => {
+        this.notif.error(err);
+        this.changeModal.emit('hide');
+      })
+    ;
   }
 
   private createGroup() {
@@ -63,11 +88,11 @@ export class AddCompGroupComponent implements OnInit {
       .subscribe(res => {
         console.log('Success ', res);
         this.notif.success('Le groupe a été créé.');
-        this.hideModal.emit('hide');
+        this.changeModal.emit('hide');
       },
       err => {
         this.notif.error(err);
-        this.hideModal.emit('hide');
+        this.changeModal.emit('hide');
       })
     ;
   }

@@ -1,11 +1,13 @@
 <div class="container profile-cont">
-  <div class="profile-title">
-    Mon compte
-  </div>
   <div class="" style="padding-top: 30px;">
     <div class="container nopadding">
       <div class="row nopadding">
-        <div class="col-7" style="padding-left: 0 !important;">
+        <div class="col profile-title">
+          Mon compte
+        </div>
+      </div>
+      <div class="row nopadding">
+        <div class="col-lg-7 col-md-7 col-xs-8">
           <div class="profile-card">
             <div class="profile-card-header">
               <div>Coordonnées personnelles</div>
@@ -75,17 +77,55 @@
             </div>
           </div>
         </div>
-        <div class="col-5">
+        <div class="col-lg-5 col-md-5 col-xs-5">
           <div class="profile-card">
             <div class="profile-card-header">
               <div>Mot de passe</div>
             </div>
             <div class="profile-card-body">
               <div style="width: 100%;" class="text-center mdp-text">Changez votre mot de passe actuel</div>
+              <div class="container nopadding" *ngIf="modifyPasswordToggle">
+                <form>
+                  <div class="row nopadding pwd-form" style="padding-top: 25px !important;">
+                    <div class="pwd-input">
+                      <div style="" class="input-field col nopadding">
+                        <input (focus)="modifyPwdFocus.one=true" (blur)="modifyPwdFocus.one=false"  id="modifyPwd-lastPwd" name="modifyPwd-lastPwd" type="password" class="form-control  custom-normsup-input-nb" [(ngModel)]="modifyPwd.lastPwd">
+                        <label [ngClass]="{'lowered-opac': !modifyPwd.lastPwd && modifyPwdFocus.one === false, 'custom-label-input-test-active': modifyPwd.lastPwd || modifyPwdFocus.one === true}" class="custom-normsup-label-test" for="modifyPwd-lastPwd">Mot de passe actuel</label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row nopadding pwd-form">
+                    <div class="pwd-input">
+                      <div style="" class="input-field col nopadding">
+                        <input (focus)="modifyPwdFocus.two=true" (blur)="modifyPwdFocus.two=false"  id="modifyPwd-newPwd" name="modifyPwd-newPwd" type="password" class="form-control  custom-normsup-input-nb" [(ngModel)]="modifyPwd.newPwd">
+                        <label [ngClass]="{'lowered-opac': !modifyPwd.newPwd && modifyPwdFocus.two === false, 'custom-label-input-test-active': modifyPwd.newPwd || modifyPwdFocus.two === true}" class="custom-normsup-label-test" for="modifyPwd-newPwd">Nouveau mot de passe</label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row nopadding pwd-form" style="padding-bottom: 15px !important;">
+                    <div class="pwd-input">
+                      <div style="" class="input-field col nopadding">
+                        <input (focus)="modifyPwdFocus.three=true" (blur)="modifyPwdFocus.three=false"  id="modifyPwd-newPwd2" name="modifyPwd-newPwd2" type="password" class="form-control  custom-normsup-input-nb" [(ngModel)]="modifyPwd.newPwd2">
+                        <label [ngClass]="{'lowered-opac': !modifyPwd.newPwd2 && modifyPwdFocus.three === false, 'custom-label-input-test-active': modifyPwd.newPwd2 || modifyPwdFocus.three === true}" class="custom-normsup-label-test" for="modifyPwd-newPwd2">Confirmer mot de passe</label>
+                        <span *ngIf="modifyPwd.newPwd2.length > 3 && modifyPwd.newPwd !== modifyPwd.newPwd2" class="red-err-txt">Les mots de passe doivent être identique.</span>
+                        <span *ngIf="modifyPwdErr1" class="red-err-txt">{{modifyPwdErr1}}</span>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
               <div class="row nopadding">
-                <div class="center-btn" style="padding-bottom: 40px;">
+                <div class="center-btn" style="padding-bottom: 40px;" *ngIf="!modifyPasswordToggle">
                   <button style="width: 137px;" type="button" class="btn btn-outline-normsup text-capitalize" (click)="modifyPasswordFn()">
                     <span class="button-txt">Modifier</span>
+                  </button>
+                </div>
+                <div class="center-btn" style="padding-bottom: 40px;" *ngIf="modifyPasswordToggle">
+                  <button style="width: 137px;" type="button" class="btn btn-outline-normsup text-capitalize" (click)="toggleOffPassword()">
+                    <span class="button-txt">Annuler</span>
+                  </button>
+                  <button style="width: 137px;" type="button" class="btn btn-primary text-capitalize btn-primary-normsup" (click)="modifyPwFinal()">
+                    <span class="button-txt">Valider</span>
                   </button>
                 </div>
               </div>

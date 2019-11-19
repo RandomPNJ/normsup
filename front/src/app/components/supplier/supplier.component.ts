@@ -98,13 +98,6 @@ export class SupplierComponent implements OnInit {
     }
 
   ngOnInit() {
-    // this.httpService.get('http://localhost:8091/api/supplier')
-    //   .subscribe(res => {
-
-    //     this.itemsDisplay = res.body['items'];
-    //     this.child.reload();
-    //   })
-    // ;
 
   }
 

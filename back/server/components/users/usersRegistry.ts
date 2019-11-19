@@ -11,9 +11,11 @@ declare var loggerT: any;
 export default class UserRegistry {
 
     private mysql: any;
+    private refreshTokens: any;
 
     public constructor(mysql) {
         this.mysql = mysql;
+        this.refreshTokens = {};
     }
 
     public login(login: string, password: string) {
@@ -56,8 +58,40 @@ export default class UserRegistry {
         ;
     }
 
+    public refreshToken(login) {
+        let query = {
+            timeout: 40000
+        };
+        loggerT.verbose('login = ', login)
+        query['sql']    = Query.FIND_USER_BY_NAME_EMAIL;
+        query['values'] = [login, login];
+
+        return this.mysql.query(query)
+            .then(res => {
+                if(res.length === 0) {
+                    return Promise.reject({statusCode: 404, msg: 'User not found.'});
+                }
+                let user = res[0];
+                const payload = {
+                    id: user.id,
+                    username: user.username,
+                    email: user.email,
+                    name: user.name,
+                    lastname: user.lastname,
+                    organisation: user.organisation,
+                    client: user.client,
+                    role: user.role,
+                    createTime: new Date(user.create_time)
+                };
+                return Promise.resolve(payload);
+            })
+            .catch(err => {
+                return Promise.reject({statusCode: 404, msg: err.msg});
+            })
+        ;
+    }
     public genToken(payload) {
-        let token = jwt.sign(payload, config.secret, { expiresIn: 36000 });
+        let token = jwt.sign(payload, config.secret, { expiresIn: config.jwt.expirationTime });
         return token;
     }
 
@@ -203,6 +237,7 @@ export default class UserRegistry {
                         return Promise.resolve(res);
                     })
                     .catch(err => {
+                        loggerT.error('QUERY createRole ERR ==== ', err);
                         return Promise.reject({statusCode: 500, msg: 'Could not create user role for user with id :' + res.insertId})
                     })
                 ;
@@ -220,9 +255,27 @@ export default class UserRegistry {
             return 1;
         } else if(role === 'user') {
             return 2;
-        } else if(role === 'supplier') {
+        } else if(role === 'guest') {
             return 3;
         }
+    }
+
+    public setRefreshToken(uuid, username) {
+        return this.refreshTokens[uuid] = username;
+    }
+
+    public deleteRefreshToken(uuid) {
+        if(this.refreshTokens[uuid])
+            delete this.refreshTokens[uuid];
+    }
+
+    public getUsernameFromRefreshTok(uuid) {
+        if(this.refreshTokens[uuid])
+            return this.refreshTokens[uuid];
+    }
+
+    public getAllRefreshTokens() {
+        return this.refreshTokens;
     }
 
     private throwError(message?: string): void {

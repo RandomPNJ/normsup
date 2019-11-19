@@ -93,6 +93,7 @@ function start(app: any, config: any): any {
   const settingsRegistry = new SettingsRegistry(sqlDB);
   app.set('SettingsRegistry', settingsRegistry, {onLoad: true});
 
+
   return app.waitForUpAndRunning()
     .then(() => Promise.all([
       getAppVersion(config),

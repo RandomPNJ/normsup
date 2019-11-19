@@ -43,6 +43,7 @@ export class LoginPageComponent implements OnInit, OnDestroy {
     this.appModal.openLogin(this.type, this.message, this.title);
   }
 
+  // TODO: change this ugly af function
   validate() {
     if (this.credentials['username'] !== '' && this.credentials['password'] !== '') {
       this.isLoader = true;
@@ -62,6 +63,7 @@ export class LoginPageComponent implements OnInit, OnDestroy {
           } else {
             this.bsService.setLocalStorage('current_user', JSON.stringify(res['data']));
             this.bsService.setLocalStorage('token', res['token']);
+            this.bsService.setLocalStorage('refreshToken', res['refreshToken']);
             this.router.navigate(['/dashboard/main']);
           }
         }, error => {

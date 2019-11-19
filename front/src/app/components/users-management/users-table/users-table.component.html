@@ -3,15 +3,14 @@
     width="100%" style="height: 100%;">
     <tbody *ngIf="myTable">
       <tr *ngFor="let item of items; let i = index">
-        <td style="cursor: pointer;" (click)="openSupplierInfo(item, i)">
+        <td>
           <div class="badge-container content-cont container">
             <div class="row h-100  cent">
               <span class="col-9   assign-link nopadding">{{item.name}} {{item.lastname}}</span>
             </div>
           </div>
         </td>
-        <td style="cursor: pointer;"
-          (click)="openInterlocInfo(item, i)">
+        <td>
           <div class="badge-container content-cont container">
             <div class="row h-100 cent">
               <span class="name-txt">{{item.email}}</span>

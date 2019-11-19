@@ -14,7 +14,7 @@ export default {
 export function createUser(req, UsersRegistry) {
     loggerT.verbose('Body to create Users', req.body);
     let data;
-    const creator = req.body.creator;
+    const creator = req.decoded;
 
     UserSchema.validate(req.body.user, (err, val) => {
         if (err && err.details[0].message) {

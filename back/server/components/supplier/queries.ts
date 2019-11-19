@@ -9,7 +9,10 @@ export const QUERY_GET_SUPPLIER_GROUP = 'SELECT * FROM `organisations`  AS o LEF
 export const QUERY_GET_SUPPLIER = 'SELECT * FROM `organisations`  AS o LEFT JOIN `client_supplier_relation` as c ON o.id = c.supplier_id';
 
 
+export const QUERY_CHECK_GROUP = 'SELECT * FROM `groups` WHERE `client_id` = ? AND `name` LIKE ?';
+
 export const QUERY_GET_GROUPS = 'SELECT * FROM `groups` WHERE `client_id` = ?';
+export const QUERY_GET_GROUPS_NAME = 'SELECT * FROM `groups` WHERE `client_id` = ? AND `name` LIKE ?';
 export const QUERY_GET_GROUP_SUPPLIERS = 'SELECT g.id, COUNT(u.id) AS users_count, u.username FROM groups AS g LEFT JOIN `organisations` AS u ON g.id = u.group_id ' +
 'GROUP BY g.id HAVING users_count > ?';
 // export const QUERY_GET_GROUPS_SEARCH = 'SELECT * FROM `groups` AS g LEFT JOIN `client_supplier_relation` as c ON g.organisation = WHERE `org` = ?';

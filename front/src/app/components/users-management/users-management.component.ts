@@ -15,7 +15,6 @@ declare var require: any;
 })
 export class UsersManagementComponent implements OnInit {
 
-  @ViewChild('supplierinfo') public infoModalRef: TemplateRef<any>;
   @ViewChild('template') public modal: TemplateRef<any>;
 
   sidebarVisible: Boolean = true;
@@ -33,8 +32,15 @@ export class UsersManagementComponent implements OnInit {
     { name : ' ', value: ' '},
     { name: 'Admin', value: 'admin'},
     { name: 'Utilisateur', value: 'user'},
-    { name: 'Fournisseur', value: 'supplier'},
+    { name: 'Invité', value: 'guest'},
   ];
+
+  focus: any = {
+    one: false,
+    two: false,
+    three: false,
+    four: false
+  };
 
   itemPluralMapping = {
     'supplier': {
@@ -46,7 +52,7 @@ export class UsersManagementComponent implements OnInit {
 
   modalConfig = {
     animated: true,
-    class: 'modal-dialog-centered'
+    class: 'modal-dialog-centered modal-sm'
   };
   itemsDisplay: Array<any> = [];
   items = [];
@@ -119,18 +125,9 @@ export class UsersManagementComponent implements OnInit {
   // TODO: modify this, we only need JWT
   addUser(data: any) {
     console.log('User', data);
-    const user = {
-      username: 'lob123',
-      email: 'yass.elf@gmail.com',
-      name: 'El Fahim',
-      lastname: 'Yassin',
-      id: '0',
-      organisation: 1,
-      client: 1,
-      createdBy: 'GOD'
-    };
+    const user = 
 
-    this.apiService.postData('/api/users/register', { user: data, creator: user})
+    this.apiService.postData('/api/users/register', { user: data })
       .subscribe(res => {
           this.hideModal('');
         }, err => {

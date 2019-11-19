@@ -36,7 +36,7 @@ export class UsersTableComponent implements OnInit {
     { name : ' ', value: ' '},
     { name: 'Admin', value: 'admin'},
     { name: 'Utilisateur', value: 'user'},
-    { name: 'Fournisseur', value: 'supplier'},
+    { name: 'Invité', value: 'guest'},
   ];
 
 
@@ -92,7 +92,6 @@ export class UsersTableComponent implements OnInit {
           that.httpService
             .get('/api/users', dataTablesParameters)
             .subscribe(resp => {
-              console.log(resp);
               that.items = that.items.concat(resp.body['items']);
               that.itemsToDisplay = that.items.slice(that.tableParams.start, that.tableParams.start + that.tableParams.length);
 
@@ -102,6 +101,8 @@ export class UsersTableComponent implements OnInit {
                 recordsFiltered: that.items.length,
                 data: []
               });
+            }, err => {
+              console.log('/api/users err', err);
             });
         // } else if(action === 'redraw') {
         //   that.itemsToDisplay = that.items.slice(that.tableParams.start, that.tableParams.start + that.tableParams.length);

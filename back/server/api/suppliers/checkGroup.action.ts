@@ -7,18 +7,18 @@ declare var loggerT: any;
 
 export default {
     method: 'get',
-    uriPattern: '',
+    uriPattern: '/api/group/check_availability',
     services: [''],
-    handler: (req, res, app) => getGroups(req, res, app.get('SupplierRegistry')),
+    handler: (req, res, app) => checkGroup(req, res, app.get('SupplierRegistry')),
 };
 
-export function getGroups(req, res, SupplierRegistry) {
+export function checkGroup(req, res, SupplierRegistry) {
     if (!req.decoded) {
         return Promise.reject(`Cannot get user informations, invalid request.`);
     }
 
 
-    loggerT.verbose('Getting the supplier\'s groups.');
+    loggerT.verbose('Checking if group already exists.');
     if(!req.decoded.organisation) {
         const error = new Error(`Invalid request, organisation must be specified.`);
         error['statusCode'] = 400;
@@ -27,7 +27,7 @@ export function getGroups(req, res, SupplierRegistry) {
     let query = {}; 
     query = req.query;
     
-    return SupplierRegistry.getGroups(req.decoded.organisation, query)
+    return SupplierRegistry.checkGroup(req.decoded.organisation, query)
         .then(res => {
             let result = {
                 items: res

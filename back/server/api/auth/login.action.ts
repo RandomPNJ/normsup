@@ -1,4 +1,5 @@
 import * as _ from 'lodash';
+import * as uuid from 'uuid/v4';
 
 declare var loggerT: any;
 
@@ -23,9 +24,13 @@ export function login(body, res, UserRegistry) {
     return UserRegistry.login(user.username, user.password)
         .then(result => {
             let tok = UserRegistry.genToken(result);
+            let refreshUUID = uuid();
+            UserRegistry.setRefreshToken(refreshUUID, user.username);
+
             return res.status(200).json({
                 data: result,
                 token: tok,
+                refreshToken: refreshUUID,
                 msg: 'Success'
             });
         })

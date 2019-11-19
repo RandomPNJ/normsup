@@ -75,13 +75,18 @@ export default class SupplierRegistry {
         ;
     }
 
-    public getGroups(org) {
+    public getGroups(org, data) {
         let query = {
             timeout: 40000
         };
+        if(data && data.name) {
+            query['sql'] = Query.QUERY_GET_GROUPS_NAME;
+            query['values'] = [org, '%'+data.name+'%'];
+        } else {
+            query['sql'] = Query.QUERY_GET_GROUPS;
+            query['values'] = [org];
+        }
 
-        query['sql'] = Query.QUERY_GET_GROUPS;
-        query['values'] = [org];
         return this.mysql.query(query)
             .then((res, fields) => {
                 loggerT.verbose('fields', fields)
@@ -91,6 +96,41 @@ export default class SupplierRegistry {
             .catch(err => {
                 loggerT.error('ERROR ON QUERY getGroups.');
                 return Promise.reject(err);
+            })
+        ;
+    }
+
+    public checkGroup(org, data) {
+        let query = {
+            timeout: 40000
+        };
+        if(data && data.name) {
+            query['sql'] = Query.QUERY_GET_GROUPS_NAME;
+            query['values'] = [org, data.name];
+        }
+        let finalRes;
+        return this.mysql.query(query)
+            .then((res, fields) => {
+                loggerT.verbose('fields', fields)
+                loggerT.verbose('QUERY RES ==== ', res);
+                if(res && res.length > 0) {
+                    finalRes = {
+                        exists: true
+                    };
+                    return Promise.resolve(finalRes);
+                } else {
+                    finalRes = {
+                        exists: false
+                    };
+                    return Promise.resolve(finalRes);
+                }
+            })
+            .catch(err => {
+                loggerT.error('ERROR ON QUERY getGroups.');
+                finalRes = {
+                    exists: false
+                };
+                return Promise.resolve(finalRes);
             })
         ;
     }

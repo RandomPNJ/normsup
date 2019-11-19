@@ -56,6 +56,7 @@ export class ProfileComponent implements OnInit {
     seven: false
   };
 
+  modifyPasswordToggle: Boolean= false;
   modifyPwdFocus: any = {
     one: false,
     two: false,
@@ -112,7 +113,18 @@ export class ProfileComponent implements OnInit {
   }
 
   modifyPasswordFn() {
-    this.openModal(this.modifyPwdRef);
+    this.modifyPasswordToggle = true;
+  }
+
+  toggleOffPassword() {
+    this.modifyPwd = {
+      lastPwd: '',
+      newPwd: '',
+      newPwd2: ''
+    };
+    this.modifyPwdErr1 = '';
+    this.modifyPwdErr = '';
+    this.modifyPasswordToggle = false;
   }
 
   modifyPwFinal() {
@@ -127,7 +139,7 @@ export class ProfileComponent implements OnInit {
       return this.apiService.post('/api/users/modify/' + this.id + '/modify_password', data)
         .subscribe(res => {
           this.notifService.success('Mot de passe modifié avec succès.');
-          this.hideModal();
+          this.toggleOffPassword();
         }, err => {
           if(err.reason === -1) {
             this.notifService.error('Session expirée. Vous serez redirigé vers la page de connexion.');

@@ -13,39 +13,50 @@
       </div>
     </div>
     <ng-template class="test" #template>
-        <div class="modal-header own-modal-header">
-          <h4 class="modal-title pull-left">Ajouter un utilisateur</h4>
+        <div class="modal-header own-modal-header-supplier">
+          </div>
+        <!-- <div class="modal-header">
+          <h4 class="modal-title pull-left">Nouvel utilisateur</h4>
           <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
             <span aria-hidden="true">&times;</span>
           </button>
-        </div>
+        </div> -->
         <div class="modal-body">
+          <div class="normsup-mod-header">
+            <div style="display: block;">
+              &nbsp;
+              <button type="button" style="cursor:pointer;width:20px;height:20px;" class="close pull-right" aria-label="Close" (click)="hideModal('mainModal')">
+                <embed src="../../../assets/img/close-icn.svg" style="height: 16px; cursor:pointer;pointer-events: none;" />
+              </button>
+            </div>
+            <div class="supplier-modal-title">Nouvel utilisateur</div>
+          </div>
           <div class="container">
-            <div class="row" class="fade-in">
+            <div class="row fade-in">
               <form autocomplete="new-password" action="#" class="form-style">
                   <div class="container">
-                    <div style="padding-top: 10px;" class="row">
-                      <div class="form-group  col s6">
-                        <label class="active" for="name">Prénom</label>
-                        <input id="name" name="name" type="text" class="form-control" [(ngModel)]="userToAdd.name" placeholder="Prénom">
+                    <div style="padding: 20px 60px 10px 50px !important;" class="row">
+                      <div class="form-group  col s6 nopadding">
+                        <input (focus)="focus.one=true" (blur)="focus.one=false" id="name" name="name" type="text" class="form-control custom-normsup-input-nb" [(ngModel)]="userToAdd.name">
+                        <label style="width: 100% !important;text-align: center !important;" [ngClass]="{'lowered-opac': !userToAdd.name && focus.one === false, 'custom-label-input-test-active': userToAdd.name || focus.one === true}" class="custom-normsup-label-test" for="name">Prénom</label>
                       </div>
                     </div>
-                    <div class="row">
-                      <div class="form-group  col s6">
-                        <label class="active" for="lastname">Nom</label>
-                        <input id="lastname" name="lastname" type="text" class="form-control" [(ngModel)]="userToAdd.lastname" placeholder="Nom">
+                    <div style="padding: 10px 60px 10px 50px !important;" class="row">
+                      <div class="form-group  col s6 nopadding">
+                        <input (focus)="focus.two=true" (blur)="focus.two=false" id="lastname" name="lastname" type="text" class="form-control custom-normsup-input-nb" [(ngModel)]="userToAdd.lastname">
+                        <label style="width: 100% !important;text-align: center !important;" [ngClass]="{'lowered-opac': !userToAdd.lastname && focus.two === false, 'custom-label-input-test-active': userToAdd.lastname || focus.two === true}" class="custom-normsup-label-test" for="lastname">Nom</label>
                       </div>
                     </div>
-                    <div class="row">
-                      <div class="form-group col s6">
-                        <label class="active" for="email">Email</label>
-                        <input autocomplete="new-password" id="email" type="email" name="email" class="form-control" [(ngModel)]="userToAdd.email" placeholder="Email">
+                    <div style="padding: 10px 60px 10px 50px !important;" class="row">
+                      <div class="form-group col s6 nopadding">
+                        <input (focus)="focus.three=true" (blur)="focus.three=false" id="email" name="email" type="text" class="form-control custom-normsup-input-nb" [(ngModel)]="userToAdd.email">
+                        <label style="width: 100% !important;text-align: center !important;" [ngClass]="{'lowered-opac': !userToAdd.email && focus.three === false, 'custom-label-input-test-active': userToAdd.email || focus.three === true}" class="custom-normsup-label-test" for="email">Email</label>
                       </div>
                     </div>
-                    <div class="row">
-                      <div class="form-group col s6">
-                        <label class="active" for="role">Role</label>
-                        <select class="form-control" id="role"  name="role" [(ngModel)]="userToAdd.role">
+                    <div style="padding: 10px 60px 10px 50px !important;" class="row">
+                      <div class="form-group col s6 nopadding">
+                        <label class="active user-select-text" for="role">Role</label>
+                        <select class="form-control custom-select custom-select-normsup" id="role"  name="role" [(ngModel)]="userToAdd.role">
                           <option *ngFor="let c of roles" [ngValue]="c.value" [disabled]="c.name === ' '">{{c.name}}</option>
                         </select>
                       </div>
@@ -53,18 +64,11 @@
                   </div>
                 <div class="select-comp-but">
                   <div class="container">
-                    <div class="row">
-                      <div class="col">
-                        <button style="float: right" (click)="addUser(userToAdd)" [disabled]="(!userToAdd.name || !userToAdd.lastname || !userToAdd.email || !userToAdd.role)" class="mb-2  submit-btn" type="submit" name="action">
-                          <span class="searchText">Ajouter</span>
-                          <i style="font-size: 22px !important;" class="material-icons right">send</i>
-                        </button>
-                      </div>
-                      <div class="col">
-                        <button style="float: left" (click)="hideModal()" class="mb-2 submit-btn" type="submit" name="action">
-                          <span class="searchText">Retour</span>
-                          <i style="font-size: 22px !important;"  class="material-icons right">send</i>
-                        </button>
+                    <div class="row nopadding" style="padding: 10px 0px 40px 0px !important;">
+                      <div class="center-btn">
+                          <button style="width: 137px;" type="button" class="btn btn-primary text-capitalize btn-primary-normsup" (click)="addUser(userToAdd)">
+                            <span class="button-txt">Valider</span>
+                          </button>
                       </div>
                     </div>
                   </div>

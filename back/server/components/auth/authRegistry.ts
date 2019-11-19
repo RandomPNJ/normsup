@@ -32,6 +32,7 @@ export default class AuthRegistry {
                     resolve({
                         code: 403,
                         msg: "Failed to authenticate token. (" + err.message + ")",
+                        originalMessage: err.message,
                         token: null
                     });
                 }

@@ -18,15 +18,28 @@ export class GroupsComponent implements OnInit {
   modalRef: BsModalRef;
   modalConfig = {
     animated: true,
-    class: 'modal-dialog-centered'
+    class: 'modal-dialog-centered modal-sm'
   };
+  modalState: String = 'groupName';
+  showCount: Boolean = false;
   selectedItem: string;
   items = [];
+  group: {
+    name: '',
+    
+  }
+  itemPluralCount = {
+    'group': {
+      '=0': '',
+      '=1': '',
+      'other': '#'
+    }
+  };
   itemPluralMapping = {
     'group': {
       '=0': 'n\'avez aucun groupe',
       '=1': 'un groupe',
-      'other': '# groupes'
+      'other': 'groupes'
     }
   };
   constructor(private modalService: BsModalService, private changeDetection: ChangeDetectorRef,
@@ -38,6 +51,7 @@ export class GroupsComponent implements OnInit {
       .subscribe(res => {
         console.log('Groups res', res);
         this.items = res.body['items'];
+        this.showCount = true;
       })
     ;
   }
@@ -76,7 +90,22 @@ export class GroupsComponent implements OnInit {
       return;
     }
     this.modalService.hide(1);
+    this.modalState = 'groupName';
     this.modalRef = null;
+  }
+
+  changeModal(action) {
+    console.log('changeModal', action);
+    if(action === 'hide') {
+      this.hideModal();
+    }
+    if(action === 'groupMembers') {
+      console.log('changeModal2', action);
+      this.modalRef.setClass('modal-dialog-centered modal-extra');
+    }
+    if(action === 'groupName') {
+      this.modalRef.setClass('modal-dialog-centered modal-sm');
+    }
   }
 
   selectItem(item) {

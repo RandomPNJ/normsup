@@ -5,16 +5,43 @@
     border-radius: 6px;
 }
 
-.title {
-    color: #382244;
-    font-family: "Montserrat", sans-serif;
-    padding: 10px 0px 10px 10px;
-    font-weight: 500;
-    font-size: 21px;
-    text-transform: uppercase;
-    display: block;
+.groups-cont {
+    border: 1px solid #C7E0FF;
+    border-radius: 15px;
 }
 
+.group-card {
+    // margin: 20px 0px 10px 20px;
+
+    // &:first-child {
+    //     margin-left: 10px !important;
+    // }
+}
+
+.group-card-content {
+    padding: 10px 0px;
+}
+.group-card-header {
+    font-family: 'Roboto Medium';
+    font-size: 15px;
+    color: #4390EF;
+    text-transform: uppercase;
+    text-align: center;
+    padding: 20px 0px 25px 0px;
+}
+
+.card-sup-count {
+    font-family: 'Roboto Medium';
+    font-size: 15px;
+    color: #4E5983;
+    text-align: center;
+    padding-bottom: 25px;
+}
+
+.params-btn {
+    margin: 0 auto;
+    text-align: center;
+}
 .table-header {
     display: table-cell;
     vertical-align: middle;
@@ -101,4 +128,32 @@ h2 {
     text-decoration: underline;
     cursor: pointer;
     text-align: center;
+}
+
+.params-btn-txt {
+    display: flex;
+    align-items: center;
+    height: 100%;
+
+    & span {
+        font-size: 13px;
+        font-family: 'Roboto Medium';
+        text-transform: none;
+        text-align: center;
+    }
+  }
+
+.add-grp-btn {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+
+    & span {
+        font-family: 'Roboto Medium';
+        font-size: 13px;
+        letter-spacing: 0;
+        color: #FFFFFF;
+        text-transform: none !important;
+    }
 }

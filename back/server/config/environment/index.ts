@@ -9,6 +9,9 @@ export default {
 
   // api: {apiName: { url, routes}} // if using API
   secret: 'eZyo2k4p',
+  jwt: {
+    expirationTime: 86400
+  },
   LOG_DIR: process.env.LOG_DIR || 'logs',
 
   loggers: {
@@ -75,6 +78,7 @@ export default {
         { name: 'modifySupplier', uriPattern: '/modify_supplier/:id', method: 'put' },
         { name: 'countSuppliers', uriPattern: '/count', method: 'get' },
         { name: 'getGroups', uriPattern: '/groups', method: 'get' },
+        { name: 'checkGroup', uriPattern: '/group/check_availability', method: 'get' },
         { name: 'createGroup', uriPattern: '/define_group', method: 'post' },
       ],
     },
@@ -89,6 +93,7 @@ export default {
       uri: '/api/auth',
       actions: [
         { name: 'login', uriPattern: '/login', method: 'post' },
+        { name: 'refreshToken', uriPattern: '/refresh_token', method: 'post' },
       ]
     },
     settings: {

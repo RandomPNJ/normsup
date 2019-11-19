@@ -1,56 +1,185 @@
-<div class="container">
-  <div *ngIf="state === 'GROUPNAME'">
-    <div class="row">
-      <div style="margin: auto;" class="mb-5">
-          <span class="add-grp-title">Nouveau groupe</span>
+<div class="mod-header">
+    <div style="display: block;">
+      &nbsp;
+      <button type="button" style="cursor:pointer;width:20px;height:20px;" class="close pull-right"
+        aria-label="Close" (click)="hideModal()">
+        <embed src="../../../assets/img/close-icn.svg" style="height: 16px; cursor:pointer;pointer-events: none;" />
+      </button>
+    </div>
+    <div class="supplier-modal-title">Nouveau Groupe</div>
+  </div>
+  <div *ngIf="state === 'groupName'">
+    <div class="row search-company"
+      [ngClass]="{'fade-in': state === 'groupName', 'fade-away': state !== 'groupName'}">
+      <div style="text-align: center; padding: 0px 107px;" class="input-field col s12">
+        <label class="addSupp-label" for="group-name">Nom du groupe</label>
+        <input class="form-control custom-normsup-input-nb" [(ngModel)]="group.name"
+          (keydown.enter)="checkGroupName(group.name)" #companyInput id="group-name" type="text"
+          data-length="10" appFocus>
       </div>
     </div>
-    <div class="row mb-5">
-      <div class="col-md-5" style="margin: auto;">
-        <span class="inpt-label">
-          <label for="groupName">Nom du groupe</label>
-        </span>
-        <input (keyup.enter)="nextStep('GROUPMEMBERS')" [(ngModel)]="groupName" style="padding: 1rem 1rem !important; text-align: center;" type="text" class="form-control" id="groupName" aria-describedby="groupName">
+    <div class="f-button-addsup" style="padding-bottom: 40px;">
+      <button (click)="checkGroupName(group.name)" [disabled]="!group.name"
+        class="btn btn-primary custom-normsup-button nxt-btn-addsup" type="submit" name="action">
+        <span class="searchText">Suivant</span>
+      </button>
+      <span class="red-err-txt" *ngIf="showAlreadyExistsErr">Vous avez déjà un groupe avec ce nom.</span>
+    </div>
+  </div>
+  <div class="container nopadding" *ngIf="state === 'groupMembers'">
+    <div style="padding-left: 53px !important; padding-right: 54px !important;" class="row ma"
+      [ngClass]="{'fade-in': state === 'groupMembers', 'fade-away': state !== 'groupMembers'}">
+      <form action="#" class="form-style" style="width: 100%;">
+        <!-- <div>
+          <div style="padding-top: 49px !important;" class="row ma">
+            <div class="form-group  col s6 nopadding input-space">
+              <input (focus)="focus.one=true" (blur)="focus.one=false" id="denom-legale" name="denom" type="text"
+                class="form-control custom-normsup-input-nb" [(ngModel)]="companyToAdd.denomination">
+              <label
+                [ngClass]="{'lowered-opac': !companyToAdd.denomination && focus.one === false , 'custom-label-input-test-active': companyToAdd.denomination || focus.one === true}"
+                class="custom-normsup-label-test" for="denom-legale">Dénomination légale</label>
+            </div>
+          </div>
+          <div class="row ma vert-input-space">
+            <div class="form-group col s6 nopadding input-space">
+              <input (focus)="focus.six=true" (blur)="focus.six=false" id="date-creation" name="date-creation"
+                type="text" class="form-control custom-normsup-input-nb" [(ngModel)]="companyToAdd.dateCreation">
+              <label
+                [ngClass]="{'lowered-opac': !companyToAdd.dateCreation && focus.six === false, 'custom-label-input-test-active': companyToAdd.dateCreation || focus.six === true}"
+                class="custom-normsup-label-test" for="date-creation">Date de création</label>
+            </div>
+          </div>
+        </div> -->
+        <div style="padding-top: 30.5px;" class="select-comp-but">
+          <div class="container">
+            <div class="row">
+              <div class="col">
+                <button style="float: right" type="button"
+                  class="btn btn-outline-normsup prec-btn-supplier text-capitalize"
+                  (click)="previous('groupName')">
+                  <span class="button-txt">Précédent</span>
+                </button>
+              </div>
+              <div class="col">
+                <button style="border-radius: 5px;float: left;" type="button"
+                  class="btn btn-primary text-capitalize next-btn-supplier" (click)="interlocInfo()">
+                  <span class="button-txt">Suivant</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="container nopadding" *ngIf="state === 'interlocInfo'">
+    <div style="padding-left: 0px !important; padding-right: 0px !important;" class="container add-interloc">
+      <div class="row" style="margin: auto;text-align: center;padding-top: 29px;">
+        <div class="interloc-title">3. Information sur l'interlocuteur</div>
+        <div class="optional-txt">Ces informations sont facultatives.</div>
+      </div>
+      <div style="padding-bottom: 40px;padding-top: 49px;margin: auto;padding-left: 53px;padding-right: 54px;"
+        class="row">
+        <div style="margin-right: 30px !important;" class="input-field  col s6 nopadding">
+          <input (focus)="interlocFocus.one=true" (blur)="interlocFocus.one=false" id="interloc-name"
+            name="interloc-name" type="text" class="form-control  custom-normsup-input-nb"
+            [(ngModel)]="interloc.name">
+          <label
+            [ngClass]="{'lowered-opac': !interloc.name && interlocFocus.one === false, 'custom-label-input-test-active': interloc.name || interlocFocus.one === true}"
+            class="custom-normsup-label-test" for="interloc-name">Prénom</label>
+        </div>
+        <div class="input-field col s6 nopadding">
+          <input (focus)="interlocFocus.two=true" (blur)="interlocFocus.two=false" id="interloc-lastname"
+            name="interloc-lastname" type="text" class="form-control  custom-normsup-input-nb"
+            [(ngModel)]="interloc.lastname">
+          <label
+            [ngClass]="{'lowered-opac': !interloc.lastname && interlocFocus.two === false, 'custom-label-input-test-active': interloc.lastname || interlocFocus.two === true}"
+            class="custom-normsup-label-test" for="interloc-lastname">Nom</label>
+        </div>
+      </div>
+      <div style="margin: auto;padding-left: 53px;padding-right: 54px;" class="row">
+        <div style="margin-right: 30px !important;" class="input-field col s6 nopadding">
+          <input (focus)="interlocFocus.three=true" (blur)="interlocFocus.three=false" id="interloc-phone"
+            name="interloc-phone" type="text" class="form-control  custom-normsup-input-nb"
+            [(ngModel)]="interloc.phonenumber" OnlyNumber='true'>
+          <label
+            [ngClass]="{'lowered-opac': !interloc.phonenumber && interlocFocus.three === false, 'custom-label-input-test-active': interloc.phonenumber || interlocFocus.three === true}"
+            class="custom-normsup-label-test" for="interloc-phone">Téléphone</label>
+        </div>
+        <div class="input-field col s6 nopadding">
+          <input (focus)="interlocFocus.four=true" (blur)="interlocFocus.four=false" id="interloc-mail"
+            name="interloc-mail" type="text" class="form-control  custom-normsup-input-nb"
+            [(ngModel)]="interloc.email">
+          <label
+            [ngClass]="{'lowered-opac': !interloc.email && interlocFocus.four === false, 'custom-label-input-test-active': interloc.email || interlocFocus.four === true}"
+            class="custom-normsup-label-test" for="interloc-mail">Email</label>
+        </div>
       </div>
     </div>
-  
-    <div class="row">
-      <div style="margin: auto; position: relative;">
-        <button (click)="nextStep('GROUPMEMBERS')" type="button" class="btn btn-normsup modal-btn-cent btn-sm" style="border-radius: 5px !important;text-transform: capitalize; font-size: 11px;min-width: 90px;"> <span></span>Suivant</button>
+    <div style="padding-top: 30.5px;" class="select-comp-but">
+      <div class="row">
+        <div class="col">
+          <button style="float: right" type="button"
+            class="btn btn-outline-normsup prec-btn-supplier text-capitalize" (click)="previous('groupMembers')">
+            <span class="button-txt">Précédent</span>
+          </button>
+        </div>
+        <div class="col">
+          <button style="border-radius: 5px;float: left;" type="button"
+            class="btn btn-primary text-capitalize next-btn-supplier" (click)="docInfo()"
+            [disabled]="(interloc.name !== '' || interloc.lastname !== '' || interloc.phonenumber !== '' || interloc.email !== '') && (interloc.name === '' || interloc.lastname === '' || interloc.phonenumber === '' || interloc.email === '')">
+            <span class="button-txt">Suivant</span>
+          </button>
+        </div>
       </div>
     </div>
   </div>
-  <div *ngIf="state === 'GROUPMEMBERS'">
-    <div class="row">
-      <div style="margin: auto;">
-        <span style="display: block;" class="pb-4 fs-12">Choisissez les fournisseurs appartenant au groupe</span>
+  <div class="container nopadding" *ngIf="state === 'docInfo'">
+    <div style="padding-left: 0px !important; padding-right: 0px !important;" class="container">
+      <div class="row" style="margin: auto;text-align: center;padding-top: 29px;">
+        <div class="interloc-title">4. Documents</div>
+        <div class="optional-txt">Choisissez les documents à demander.</div>
+      </div>
+      <div style="padding-bottom: 30px;padding-top: 30px;margin: auto;padding-left: 53px;padding-right: 54px;"
+        class="row">
+        <div style="text-align: center;width: 100%; text-transform: capitalize;" class="interloc-title">
+          Légal
+        </div>
+        <div class="doc-form-check">
+          <div class="form-check form-check-inline normsup-checkbox-cont">
+            <input class="form-check-input normsup-checkbox" type="checkbox" id="inlineCheckbox1" value="option1"
+              disabled [(ngModel)]="documentsSettings.legal.urssaf">
+            <label class="form-check-label" for="inlineCheckbox1">URSSAF</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2" disabled
+              [(ngModel)]="documentsSettings.legal.lnte">
+            <label class="form-check-label" for="inlineCheckbox2">LNTE</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3" disabled
+              [(ngModel)]="documentsSettings.legal.kbis">
+            <label class="form-check-label" for="inlineCheckbox3">KBIS</label>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="row">
-      <div style="margin: auto;" class="pb-5 col-9">
-        <!-- <form #f="ngForm" [formGroup]="groupForm">
-          <label for="groupMembers"></label> -->
-          <!-- <textarea formControlName="searchGroupCtrl" class="form-control" id="groupMembers" rows="5"></textarea> -->
-          <ng-select 
-            [items]="people$ | async"
-            bindLabel="denomination"
-           [multiple]="true"
-           [hideSelected]="true"
-           [trackByFn]="trackByFn"
-           [loading]="peopleLoading"
-           [typeahead]="peopleInput$"
-           [ngModelOptions]="{standalone: true}"
-           [(ngModel)]="selectedPersons">
-          </ng-select>
-        <!-- </form> -->
-      </div>
-      <!-- <a class="trigger info-color text-white">Add<i class="fas fa-plus ml-2"></i></a> -->
-    </div>
-    <div class="row">
-      <div style="margin: auto; position: relative;">
-        <button (click)="nextStep('GROUPNAME')" type="button" class="btn btn-normsup first-btn-cent btn-sm" style="text-transform: capitalize; font-size: 11px; border: none !important;min-width: 90px;"> <span></span>Précédent</button>
-        <button (click)="createGroup()" type="button" class="btn btn-primary scd-btn-cent btn-sm rounded" style="text-transform: capitalize; font-size: 11px;min-width: 90px;"> <span></span>Valider</button>
+    <div style="" class="select-comp-but">
+      <div class="row">
+        <div class="col">
+          <button style="float: right" type="button"
+            class="btn btn-outline-normsup prec-btn-supplier text-capitalize" (click)="previous('interlocInfo')">
+            <span class="button-txt">Précédent</span>
+          </button>
+        </div>
+        <div class="col">
+          <button style="border-radius: 5px;float: left;" type="button"
+            class="btn btn-primary text-capitalize next-btn-supplier"
+            (click)="addCompany({comp: companyToAdd, interloc: interloc})"
+            [disabled]="addInterloc === true && (interloc.name === '' || interloc.lastname === '' || interloc.phonenumber === '' || interloc.email === '')">
+            <span class="button-txt">Suivant</span>
+          </button>
+        </div>
       </div>
     </div>
   </div>
-</div>

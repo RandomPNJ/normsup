@@ -15,7 +15,9 @@ import { Observable, ObservableInput, throwError, Subject } from 'rxjs';
 export class ProductService {
   apiToken = '';
   private httpOptions = {};
-  constructor(private httpService: HttpService, private http: HttpClient,
+  constructor(
+    private httpService: HttpService, 
+    private http: HttpClient,
     private bsService: BrowserStorageService) { }
 
   getToken() {
@@ -39,7 +41,7 @@ export class ProductService {
       }
     };
     
-    return this.http.get('https://data.opendatasoft.com/api/records/1.0/search/?dataset=sirene_v3%40public' + params, httpOpt)
+    return this.http.get('https://data.opendatasoft.com/api/records/1.0/search/?dataset=sirene_v3%40public' + params)
     .pipe(map((response: Response) => {
       console.log('Res ', response);
       return response;

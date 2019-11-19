@@ -52,11 +52,11 @@ export default (expressApp) => {
     res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS, PATCH');
     res.header('Access-Control-Allow-Credentials', 'true');
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
-
+    
     if (req.method === 'OPTIONS') {
       return res.sendStatus(200).end();
     }
-
+    
     next();
   });
 
@@ -88,6 +88,7 @@ export default (expressApp) => {
 
     return next(null, jwtPayload);
   });
+
   // use the strategy
   passport.use(strategy);
   expressApp.use(passport.initialize());
@@ -95,11 +96,13 @@ export default (expressApp) => {
   // Authentification middleware
   const AuthMiddleware = new AuthenticatorMiddleware();
   expressApp.use('/api', (req, res, next) => {
-    if (req.url === '/auth/login') {
+    if(req.url === '/auth/login' || req.url === '/auth/refresh_token') {
       return next();
     }
     AuthMiddleware.use(req, res, next);
   });
+
+  // Multer to upload files
   expressApp.use('/api/documents/upload', upload.single('file'));
 
 };
