@@ -1,10 +1,11 @@
-import { Component, OnInit, Output } from '@angular/core';
+import { Component, OnInit, Output, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { debounceTime, tap, switchMap, finalize, distinctUntilChanged, catchError, map } from 'rxjs/operators';
 import { HttpService } from 'src/app/services/http.service';
-import { Observable, Subject, of, concat } from 'rxjs';
+import { Observable, Subject, of, concat, fromEvent, from } from 'rxjs';
 import { NotifService } from 'src/app/services/notif.service';
 import { EventEmitter } from '@angular/core';
+import {cloneDeep} from 'lodash';
 import { HttpParams } from '@angular/common/http';
 
 @Component({
@@ -12,50 +13,97 @@ import { HttpParams } from '@angular/common/http';
   templateUrl: './add-comp-group.component.html',
   styleUrls: ['./add-comp-group.component.scss']
 })
-export class AddCompGroupComponent implements OnInit {
+export class AddCompGroupComponent implements OnInit, AfterViewInit {
 
   @Output() changeModal = new EventEmitter<string>();
+  @ViewChild('searchSupplier') searchSupplierInput: ElementRef;
+  @ViewChild('selectComponent') selectComponentRef;
 
+  public input$ = new Subject<string>();
+  suppliers$: Observable<any[]>;
+  suppliersLoading = false;
   errorMsg: String = '';
   filteredGroups = [];
   isLoading: Boolean = false;
   showAlreadyExistsErr: Boolean = false;
   state: String = 'groupName';
-  // state: String = 'GROUPMEMBERS';
   group: any = {
     name: ''
   };
+  searchSupplier: String = '';
   groupName: String;
-  people$: Observable<any[]>;
-  peopleLoading = false;
-  peopleInput$ = new Subject<string>();
+  suppliers: any[] = <any>[];
   selectedPersons: any[] = <any>[];
+  documentsSettings: any = {
+    legal: {
+      urssaf: true,
+      lnte: true,
+      kbis: true,
+    },
+    comp: {
+      
+    }
+  };
+
   constructor(private http: HttpService, private notif: NotifService) { }
 
   ngOnInit() {
-    this.loadSupplier();
+    this.http.get('/api/supplier?search=')
+      .subscribe(res => {
+        console.log('loadSupplier res', res);
+        if(res && res.body && res.body['items']) {
+          this.suppliers = res.body['items'];
+        }
+      }, err => {
+        console.log('loadSupplier err', err);
+      })
+    ;
+  }
+
+  ngAfterViewInit(): void {
   }
 
 
-  private loadSupplier() {
-    this.people$ = concat(
-      of([]), // default items
-      this.peopleInput$.pipe(
-        debounceTime(1000),
-        distinctUntilChanged(),
-        tap(() => this.peopleLoading = true),
-        switchMap(term => this.http.get('/api/supplier?search='+term).pipe(
-          catchError(() => of([])), // empty list on error
-          tap(() => this.peopleLoading = false)
-        )),
-        map(res => res['body'].items)
-      )
+  public searchSupplierChange(val) {
+    console.log('launched searchSupplierChange');
+    this.input$.pipe(
+      debounceTime(1000),
+      distinctUntilChanged(),
+      tap(() => this.suppliersLoading = true),
+      switchMap(term => this.http.get('/api/supplier?search='+term).pipe(
+        catchError(() => of([])), // empty list on error
+        tap(() => this.suppliersLoading = false)
+      )),
+      map(res => res['body'].items)
     );
+  }
+
+  private loadSupplier(searchSupplier) {
+
+    let uri;
+    if(searchSupplier && searchSupplier !== '') {
+      uri = '/api/supplier?search='+searchSupplier;
+    } else {
+      uri = '/api/supplier';
+    }
+
+    return this.http.get(uri)
+      .subscribe(res => {
+        if(res && res.body && res.body['items']) {
+          this.suppliers = res.body['items'];
+        }
+      }, err => {
+      })
+    ;
   }
 
   private nextStep(val) {
     this.changeModal.emit(val);
     this.state = val;
+  }
+
+  showInfo() {
+    console.log('parent selectedSuppliers', this.selectComponentRef.selectedSuppliers);
   }
 
   private checkGroupName(name) {

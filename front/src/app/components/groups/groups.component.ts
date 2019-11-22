@@ -106,6 +106,10 @@ export class GroupsComponent implements OnInit {
     if(action === 'groupName') {
       this.modalRef.setClass('modal-dialog-centered modal-sm');
     }
+    if(action === 'docInfo') {
+      console.log('changeModal docInfo', action);
+      this.modalRef.setClass('modal-dialog-centered modal-medium');
+    }
   }
 
   selectItem(item) {

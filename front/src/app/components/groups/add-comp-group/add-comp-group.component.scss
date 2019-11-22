@@ -54,21 +54,63 @@
     top: -9px;
     left: 2px;
 }
-form {
-    label, textarea {
-        position: relative;
-        display: block;
-        box-sizing: border-box;
+.select-comp-but {
+    position: relative; 
+    padding-bottom: 30px;
+}
+
+.prec-btn-group {
+    border: 1px solid #C7E0FF !important;
+    color: #4E5983 !important;
+    font-family: 'Avenir Heavy';
+    font-size: 13px;
+    padding: 5px 37px !important;
+}
+
+.next-btn-group {
+    color: #4E5983;
+    font-family: 'Avenir Heavy';
+    font-size: 13px;
+    padding: 6px 46px !important;
+    color: #FFFFFF;
+}
+
+.select-list-margin {
+    margin: 0px 50px !important;
+    min-width: 440px
+}
+
+@media (max-width: 580px) {
+    .select-list-margin {
+        margin: 0px 0px !important;
+        min-width: 440px
     }
-    label::after {
-        content: '.net';
-        position: absolute;
-        top: 4px;
-        left: 94px;
-        font-family: arial, helvetica, sans-serif;
-        font-size: 12px;
-        display: block;
-        color: rgba(0, 0, 0, 0.6);
-        font-weight: bold;
+}
+
+
+.basic-subtitle {
+    font-family: 'Roboto Medium';
+    font-size: 15px;
+    color: #4E5983;
+    text-transform: uppercase;
+    width: 100%;
+  }
+
+  .doc-form-check {
+    width: 100%;
+    padding-top: 10px;
+    text-align: center;
+  
+    & > div {
+      font-family: 'Roboto Regular';
+      color: #4E5983;
+      font-size: 14px;
     }
+  }
+.normsup-checkbox-cont [type="checkbox"]:disabled + label {
+    color: #4E5983 !important;
+}
+
+.normsup-checkbox {
+    cursor: pointer !important;
 }

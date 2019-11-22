@@ -1,0 +1,22 @@
+
+<div class="select-members-cont">
+  <div *ngIf="firstChange === false">
+    <div *ngFor="let supplier of selectedSuppliers | keyvalue; let i = index;let isEven = even;" [ngClass]="{'even-row': isEven, 'd-none': !supplier.value.show}" class="supplier-row">
+      <div class="form-check form-check-inline normsup-checkbox-cont">
+        <input class="form-check-input normsup-checkbox" type="checkbox" [attr.id]="'selectedSuppliersCheck' + i" [checked]="supplier.value.checked" (click)="uncheckSupplier($event.target.checked, supplier.value.denomination)">
+        <label class="form-check-label regular-txt f-14" [attr.for]="'selectedSuppliersCheck' + i">{{supplier.value.denomination}}</label>
+      </div>
+    </div>
+  </div>
+  
+  <div *ngFor="let supplier of suppliers; let i = index;let isEven = even;" [ngClass]="{'even-row': isEven}" class="supplier-row">
+    <div class="form-check form-check-inline normsup-checkbox-cont">
+      <input class="form-check-input normsup-checkbox" type="checkbox" [attr.id]="'inlineCheckbox' + i" [checked]="" (click)="selectSupplier($event.target.checked, i)">
+      <label class="form-check-label regular-txt f-14" [attr.for]="'inlineCheckbox' + i">{{supplier.denomination}}</label>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="showEmptyMsg" class="red-err-txt">
+  Cette recherche n'a donné aucun résultat.
+</div>

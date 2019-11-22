@@ -51,6 +51,7 @@ import { LoggedinGuard } from './auth/loggedin.guard';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { ProfileFlyoverComponent } from './components/profile-flyover/profile-flyover.component';
 import { NumberOnlyDirective } from './directives/number-only.directive';
+import { SelectListComponent } from './components/groups/select-list/select-list.component';
 
 @NgModule({
   declarations: [
@@ -81,6 +82,7 @@ import { NumberOnlyDirective } from './directives/number-only.directive';
     SidebarComponent,
     ProfileFlyoverComponent,
     NumberOnlyDirective,
+    SelectListComponent,
   ],
   imports: [
     BrowserModule,

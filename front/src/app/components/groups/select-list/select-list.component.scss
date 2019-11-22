@@ -1,0 +1,35 @@
+
+/* Aspect de la case */
+[type="checkbox"]:not(:checked) + label:before,
+[type="checkbox"]:checked + label:before {
+    left: 420px !important;
+}
+
+/* Aspect de la coche */
+[type="checkbox"]:not(:checked) + label:after,
+[type="checkbox"]:checked + label:after {
+    left: 423px !important;
+}
+
+.even-row {
+    background-color: #F3F7FC;
+}
+
+.supplier-row {
+
+    &:first-child {
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+    }
+    &:last-child {
+        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 5px;
+    }
+}
+
+.select-members-cont {
+    max-height: 150px;
+    overflow-y: scroll;
+    border: 1px solid #D3D3D3;
+    border-radius: 5px;
+}
