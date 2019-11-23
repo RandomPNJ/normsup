@@ -123,8 +123,7 @@
       <div class="col">
         <button style="border-radius: 5px;float: left;" type="button"
           class="btn btn-primary text-capitalize next-btn-group"
-          (click)="addCompany({comp: companyToAdd, interloc: interloc})"
-          [disabled]="addInterloc === true && (interloc.name === '' || interloc.lastname === '' || interloc.phonenumber === '' || interloc.email === '')">
+          (click)="createGroup()">
           <span class="button-txt">Suivant</span>
         </button>
       </div>

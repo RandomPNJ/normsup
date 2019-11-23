@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, OnInit, Output, ViewChild, ElementRef, AfterViewInit, ViewChildren, OnChanges } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { debounceTime, tap, switchMap, finalize, distinctUntilChanged, catchError, map } from 'rxjs/operators';
 import { HttpService } from 'src/app/services/http.service';
@@ -13,7 +13,7 @@ import { HttpParams } from '@angular/common/http';
   templateUrl: './add-comp-group.component.html',
   styleUrls: ['./add-comp-group.component.scss']
 })
-export class AddCompGroupComponent implements OnInit, AfterViewInit {
+export class AddCompGroupComponent implements OnInit, OnChanges, AfterViewInit {
 
   @Output() changeModal = new EventEmitter<string>();
   @ViewChild('searchSupplier') searchSupplierInput: ElementRef;
@@ -27,6 +27,8 @@ export class AddCompGroupComponent implements OnInit, AfterViewInit {
   isLoading: Boolean = false;
   showAlreadyExistsErr: Boolean = false;
   state: String = 'groupName';
+  // state: String = 'docInfo';
+  selectedSuppliers: any;
   group: any = {
     name: ''
   };
@@ -41,7 +43,7 @@ export class AddCompGroupComponent implements OnInit, AfterViewInit {
       kbis: true,
     },
     comp: {
-      
+
     }
   };
 
@@ -60,9 +62,22 @@ export class AddCompGroupComponent implements OnInit, AfterViewInit {
     ;
   }
 
-  ngAfterViewInit(): void {
+  ngOnChanges(): void {
+    // this.selectComponentRef.changes
+    //   .subscribe(changes => {
+    //     console.log('changes', changes);
+    //   })
+    // ;
   }
 
+  ngAfterViewInit(): void {
+    console.log('this.selectComponentRef', this.selectComponentRef)
+    // this.selectComponentRef.changes
+    //   .subscribe(changes => {
+    //     console.log('changes', changes);
+    //   })
+    // ;
+  }
 
   public searchSupplierChange(val) {
     console.log('launched searchSupplierChange');
@@ -98,12 +113,11 @@ export class AddCompGroupComponent implements OnInit, AfterViewInit {
   }
 
   private nextStep(val) {
+    if(val === 'docInfo') {
+      this.selectedSuppliers = Object.values(this.selectComponentRef.selectedSuppliers);
+    }
     this.changeModal.emit(val);
     this.state = val;
-  }
-
-  showInfo() {
-    console.log('parent selectedSuppliers', this.selectComponentRef.selectedSuppliers);
   }
 
   private checkGroupName(name) {
@@ -127,12 +141,12 @@ export class AddCompGroupComponent implements OnInit, AfterViewInit {
   }
 
   private createGroup() {
-    let supps = [];
-    this.selectedPersons.map(res => {
-      supps.push({member_id: res.id});
-    });
-    console.log('supps == ', supps);
-    this.http.post('/api/supplier/define_group', {name: this.groupName, suppliers: supps})
+    this.selectedSuppliers.map(supp => {
+      delete supp['checked'];
+      delete supp['show'];
+    })
+    console.log('supps == ', this.selectedSuppliers);
+    this.http.post('/api/supplier/define_group', {name: this.group.name, suppliers: this.selectedSuppliers})
       .subscribe(res => {
         console.log('Success ', res);
         this.notif.success('Le groupe a été créé.');

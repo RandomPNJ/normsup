@@ -60,6 +60,7 @@ export default class SupplierRegistry {
         };
         // const s = data.search ? data.search = '%' + data.search + '%' : '';
         const queryTypeValues = this.getQueryType(data);
+        loggerT.verbose('getSuppliers', queryTypeValues);
         query['sql']    = Query[queryTypeValues['type']];
         query['values']    = queryTypeValues['values'];
         return this.mysql.query(query)
@@ -206,18 +207,19 @@ export default class SupplierRegistry {
         ;
     }
     public createGroup(data, suppliers) {
+        loggerT.verbose('Group data', data);
         let query = {
             timeout: 40000
         };
         query['sql']    = Query.INSERT_GROUP;
         query['values'] = [data];
-
         return this.mysql.query(query)
             .then(res => {
 
                 let v = [];
                 suppliers.forEach(supp => {
-                    v.push([res.insertId, supp.member_id]);
+                    loggerT.verbose('supp id', supp.id);
+                    v.push([res.insertId, supp.id]);
                 });
                 
                 query['sql']    = Query.INSERT_GROUP_MEM;

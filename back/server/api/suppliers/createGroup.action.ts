@@ -31,6 +31,8 @@ export function createGroup(req, res, SupplierRegistry) {
     //     data = val;
     // });
 
+    loggerT.verbose('suppliers', suppliers);
+
     return SupplierRegistry.createGroup(group, suppliers)
         .then(res => {
             loggerT.verbose('Res  = ', res);
