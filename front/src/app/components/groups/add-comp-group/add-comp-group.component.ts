@@ -27,7 +27,6 @@ export class AddCompGroupComponent implements OnInit, OnChanges, AfterViewInit {
   isLoading: Boolean = false;
   showAlreadyExistsErr: Boolean = false;
   state: String = 'groupName';
-  // state: String = 'docInfo';
   selectedSuppliers: any;
   group: any = {
     name: ''
@@ -112,9 +111,25 @@ export class AddCompGroupComponent implements OnInit, OnChanges, AfterViewInit {
     ;
   }
 
+  private previous(val) {
+    if(val === 'groupName') {
+      this.changeModal.emit(val);
+      this.state = val;
+    }
+    if(val === 'groupMembers') {
+      this.changeModal.emit(val);
+      this.state = val;
+    }
+  }
+
   private nextStep(val) {
     if(val === 'docInfo') {
       this.selectedSuppliers = Object.values(this.selectComponentRef.selectedSuppliers);
+    }
+    if(val === 'groupName') {
+      this.group.name = '';
+      this.selectedSuppliers = [];
+      this.suppliers = [];
     }
     this.changeModal.emit(val);
     this.state = val;
@@ -149,13 +164,17 @@ export class AddCompGroupComponent implements OnInit, OnChanges, AfterViewInit {
     this.http.post('/api/supplier/define_group', {name: this.group.name, suppliers: this.selectedSuppliers})
       .subscribe(res => {
         console.log('Success ', res);
-        this.notif.success('Le groupe a été créé.');
-        this.changeModal.emit('hide');
+        this.changeModal.emit('newGroup');
+        this.state = 'newGroup';
       },
       err => {
         this.notif.error(err);
         this.changeModal.emit('hide');
       })
     ;
+  }
+
+  private closeModal() {
+    this.changeModal.emit('hide');
   }
 }

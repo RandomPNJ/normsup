@@ -6,7 +6,8 @@
       <embed src="../../../assets/img/close-icn.svg" style="height: 16px; cursor:pointer;pointer-events: none;" />
     </button>
   </div>
-  <div class="supplier-modal-title">Nouveau Groupe</div>
+  <div *ngIf="state !== 'newDoc'" class="supplier-modal-title">Nouveau Groupe</div>
+  <div *ngIf="state === 'newDoc'" class="supplier-modal-title">Félicitations</div>
 </div>
 <div *ngIf="state === 'groupName'">
   <div class="row search-company" [ngClass]="{'fade-in': state === 'groupName', 'fade-away': state !== 'groupName'}">
@@ -116,7 +117,7 @@
     <div class="row">
       <div class="col">
         <button style="float: right" type="button" class="btn btn-outline-normsup prec-btn-group text-capitalize"
-          (click)="previous('interlocInfo')">
+          (click)="previous('groupMembers')">
           <span class="button-txt">Précédent</span>
         </button>
       </div>
@@ -130,3 +131,27 @@
     </div>
   </div>
 </div>
+<div class="container nopadding" *ngIf="state === 'newGroup'">
+    <div style="padding-left: 0px !important; padding-right: 0px !important;" class="container">
+      <div class="row" style="margin: auto;text-align: center;padding-top: 29px;">
+        <div class="optional-txt">Votre groupe a été créé avec succès !</div>
+      </div>
+    </div>
+    <div style="padding-top: 30px;" class="select-comp-but">
+      <div class="row nopadding">
+        <div class="col nopadding" style="text-align: center;">
+          <button style="text-transform: none;" type="button" class="btn btn-outline-normsup new-group-btn"
+            (click)="nextStep('groupName')">
+            <span class="button-txt">Créer un nouveau groupe</span>
+          </button>
+        <!-- </div> -->
+        <!-- <div class="col nopadding"> -->
+          <button style="border-radius: 5px;" type="button"
+            class="btn btn-primary text-capitalize next-btn-group"
+            (click)="closeModal()">
+            <span class="button-txt">Continuer</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
