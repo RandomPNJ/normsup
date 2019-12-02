@@ -1,0 +1,41 @@
+<div class="container component-padding">
+    <div class="row nopadding col-lg-11 col-md-12 col-sm-10 col-8" style="padding-top: 45px !important; padding-bottom: 25px !important;">
+      <div class="col title nopadding">
+        <span style="padding-right: 20px;">Groupes</span>
+        <span class="item-count" *ngIf="showCount">Vous avez <span class="count-style">{{items.length | i18nPlural: itemPluralCount['group']}}</span> {{items.length | i18nPlural: itemPluralMapping['group']}}</span>
+      </div>
+      <div class="" style="width: 211px;">
+        <button style="width: 211px;height: 30px" (click)="openModal()" type="button" class="btn btn-primary custom-normsup-button nopadding">
+            <span class="add-grp-btn"><embed style="height: 10px;" src="../../../assets/img/plus-icn.svg" />
+              <span style="margin-left:5px;">Créer un nouveau groupe</span>
+            </span>
+        </button>
+      </div>
+    </div>
+    <div class="row nopadding groups-cont col-lg-11 col-md-11 col-sm-7 col-8">
+      <div class="group-card-style" *ngFor="let group of items; let i = index;" style="">
+        <mdb-card class="canvaCard group-card">
+          <mdb-card-body>
+            <div class="group-card-content">
+              <div class="group-card-header"><embed src="../../../assets/img/group-icn.svg" style="width: 20px;height: 12px;"/><span class="group-card-header" style="padding-left:5px">{{group.name}}</span></div>
+              <div class="card-sup-count"><span class="count-style">15</span> Fournisseurs</div>
+              <div class="params-btn">
+                <button style="height: 30px;width: 123px;" (click)="openGroupParams(i)" type="button" class="btn btn-outline-normsup">
+                  <span class="params-btn-txt"> <embed style="height: 15px;width:15px;" src="../../../assets/img/param-icn.svg"/>
+                    <span style="margin-left:5px;">Paramètres</span>
+                  </span>
+                </button>
+              </div>
+            </div>
+          </mdb-card-body>
+        </mdb-card>
+      </div>
+    </div>
+    <ng-template #addCompGroup>
+      <div class="modal-header own-modal-header-supplier" style="border-bottom: none;">
+      </div>
+      <div class="modal-body">
+        <app-add-comp-group (changeModal)="changeModal($event)"></app-add-comp-group>
+      </div>
+    </ng-template>
+  </div>
