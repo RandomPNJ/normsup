@@ -333,10 +333,10 @@ export class Dashboard1Component implements OnInit, AfterViewInit {
 			  tooltipEl.addClass('no-transform');
 			}
 			// Set Text
-			if (tooltip.body) {
+			if (tooltip['body']) {
 			  var innerHtml = [
-				(tooltip.beforeTitle || []).join('\n'), (tooltip.title || []).join('\n'), (tooltip.afterTitle || []).join('\n'), (tooltip.beforeBody || []).join('\n'), (tooltip.body || []).join('\n'), (tooltip.afterBody || []).join('\n'), (tooltip.beforeFooter || [])
-				.join('\n'), (tooltip.footer || []).join('\n'), (tooltip.afterFooter || []).join('\n')
+				(tooltip['beforeTitle'] || []).join('\n'), (tooltip['title'] || []).join('\n'), (tooltip['afterTitle'] || []).join('\n'), (tooltip['beforeBody'] || []).join('\n'), (tooltip['body'] || []).join('\n'), (tooltip.afterBody || []).join('\n'), (tooltip.beforeFooter || [])
+				.join('\n'), (tooltip['footer'] || []).join('\n'), (tooltip['afterFooter'] || []).join('\n')
 			  ];
 			  tooltipEl.html(innerHtml.join('\n'));
 			}
@@ -350,13 +350,13 @@ export class Dashboard1Component implements OnInit, AfterViewInit {
 
 			if (tooltip.yAlign) {
 			  var ch = 0;
-			  if (tooltip.caretHeight) {
-				ch = tooltip.caretHeight;
+			  if (tooltip['caretHeight']) {
+				ch = tooltip['caretHeight'];
 			  }
 			  if (tooltip.yAlign == 'above') {
-				top = tooltip.y - ch - tooltip.caretPadding;
+				top = tooltip.y - ch - tooltip['caretPadding'];
 			  } else {
-				top = tooltip.y + ch + tooltip.caretPadding;
+				top = tooltip.y + ch + tooltip['caretPadding'];
 			  }
 			}
 
@@ -369,9 +369,9 @@ export class Dashboard1Component implements OnInit, AfterViewInit {
 			  width: tooltip.width ? (tooltip.width + 'px') : 'auto',
 			  left: position.left + tooltip.x + 'px',
 			  top: position.top + top + 'px',
-			  fontFamily: tooltip._fontFamily,
-			  fontSize: tooltip.fontSize,
-			  fontStyle: tooltip._fontStyle,
+			  fontFamily: tooltip['_fontFamily'],
+			  fontSize: tooltip['fontSize'],
+			  fontStyle: tooltip['_fontStyle'],
 			  padding: tooltip.yPadding + 'px ' + tooltip.xPadding + 'px',
 			});
 		  };
