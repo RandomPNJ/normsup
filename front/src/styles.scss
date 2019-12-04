@@ -1492,3 +1492,38 @@ td {
 
 }
 }
+
+/** Custom Normsup Card **/
+
+.normsup-card {
+    height: 500px;
+    border-radius: 10px;
+}
+
+.normsup-card-header {
+    height: 49px;
+    background-color: #FAFCFE !important;
+    border-radius: 10px 10px 0px 0px;
+    vertical-align: middle;
+    line-height: 49px;
+    
+    span {
+        font-family: 'Roboto Bold';
+        font-size: 15px;
+        color: #4E5983;
+        padding-left: 35px;
+    }
+}
+
+.normsup-card-body {
+
+    overflow-y: scroll;
+    background-color: white !important;
+    height: 100%;
+
+    .supplier-row {
+        font-family: 'Roboto Regular';
+        font-size: 14px;
+        color: #4E5983;
+    }
+}

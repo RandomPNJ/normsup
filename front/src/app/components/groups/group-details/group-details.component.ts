@@ -12,7 +12,22 @@ import { HttpService } from 'src/app/services/http.service';
 export class GroupDetailsComponent implements OnInit {
 
   group$: Observable<any>;
+  suppliers: any[];
 
+  itemPluralCount = {
+    'supplier': {
+      '=0': '',
+      '=1': '',
+      'other': '#'
+    }
+  };
+  itemPluralMapping = {
+    'supplier': {
+      '=0': 'Vous n\'avez aucun fournisseur dans ce groupe',
+      '=1': 'Vous avez un fournisseur dans ce groupe',
+      'other': 'fournisseurs dans ce groupe'
+    }
+  };
 
   constructor(
     private route: ActivatedRoute,

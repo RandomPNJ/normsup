@@ -1,11 +1,12 @@
-import { Component, OnInit, TemplateRef, ChangeDetectorRef, ViewChild, OnDestroy, Output } from '@angular/core';
+import { Component, OnInit, TemplateRef, ChangeDetectorRef, ViewChild, Output } from '@angular/core';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { combineLatest, Subscription } from 'rxjs';
 import { cloneDeep } from 'lodash';
 import { HttpService } from 'src/app/services/http.service';
 import { HttpParams } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { EventEmitter } from 'protractor';
+import { EventEmitter } from '@angular/core';
+import { GroupsService } from 'src/app/services/groups.service';
 
 
 @Component({
@@ -13,9 +14,9 @@ import { EventEmitter } from 'protractor';
   templateUrl: './group-list.component.html',
   styleUrls: ['./group-list.component.scss']
 })
-export class GroupListComponent implements OnInit, OnDestroy {
+export class GroupListComponent implements OnInit {
 
-  @Output() groupData: EventEmitter = new EventEmitter();
+  @Output() groupData: EventEmitter<String> = new EventEmitter<String>();
   @ViewChild('addCompGroup') public addGroupModal: TemplateRef<any>;
   subscriptions: Subscription[] = [];
   modalRef: BsModalRef;
@@ -46,23 +47,26 @@ export class GroupListComponent implements OnInit, OnDestroy {
     }
   };
   constructor(private modalService: BsModalService, private changeDetection: ChangeDetectorRef,
-    private httpService: HttpService, private router: Router) { }
+    private httpService: HttpService, private router: Router, private groupsService: GroupsService) {
+      this.groupsService.groups$.subscribe(n => {
+          this.items = n;
+
+      });
+    }
 
   ngOnInit() {
-    this.httpService
-      .get('/api/supplier/groups')
-      .subscribe(res => {
-        console.log('Groups res', res);
-        this.items = res.body['items'];
-        this.showCount = true;
-        this.groupData.emit(JSON.stringify(res.body['items']));
-      })
-    ;
+    if(this.items.length === 0) {
+      this.httpService
+        .get('/api/supplier/groups')
+        .subscribe(res => {
+          this.items = res.body['items'];
+          this.showCount = true;
+          this.groupsService.addGroups(res.body['items']);
+        })
+      ;
+    }
   }
 
-  ngOnDestroy() {
-    console.log('Groups destroyed');
-  }
 
   sendGroupData() {
     if(this.items && this.items.length > 0) {
@@ -109,19 +113,16 @@ export class GroupListComponent implements OnInit, OnDestroy {
   }
 
   changeModal(action) {
-    console.log('changeModal', action);
     if(action === 'hide') {
       this.hideModal();
     }
     if(action === 'groupMembers') {
-      console.log('changeModal2', action);
       this.modalRef.setClass('modal-dialog-centered modal-extra');
     }
     if(action === 'groupName' || action === 'newDoc') {
       this.modalRef.setClass('modal-dialog-centered modal-sm');
     }
     if(action === 'docInfo') {
-      console.log('changeModal docInfo', action);
       this.modalRef.setClass('modal-dialog-centered modal-medium');
     }
   }

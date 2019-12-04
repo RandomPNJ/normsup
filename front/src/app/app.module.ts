@@ -36,7 +36,6 @@ import { StatsComponent } from './components/stats/stats.component';
 import { AlertsComponent } from './components/alerts/alerts.component';
 import { ReminderComponent } from './components/reminder/reminder.component';
 import { SupplierTableComponent } from './components/supplier-table/supplier-table.component';
-import { GroupsTableComponent } from './components/groups/groups-table/groups-table.component';
 import { AddSupplierModalComponent } from './components/supplier/add-supplier-modal/add-supplier-modal.component';
 import { FocusDirective } from './directives/focus.directive';
 import { SupplierInfoModalComponent } from './components/supplier/supplier-info-modal/supplier-info-modal.component';
@@ -52,6 +51,8 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { ProfileFlyoverComponent } from './components/profile-flyover/profile-flyover.component';
 import { NumberOnlyDirective } from './directives/number-only.directive';
 import { SelectListComponent } from './components/groups/select-list/select-list.component';
+import { GroupDetailsComponent } from './components/groups/group-details/group-details.component';
+import { GroupListComponent } from './components/groups/group-list/group-list.component';
 
 @NgModule({
   declarations: [
@@ -67,7 +68,6 @@ import { SelectListComponent } from './components/groups/select-list/select-list
     AlertsComponent,
     ReminderComponent,
     SupplierTableComponent,
-    GroupsTableComponent,
     AddSupplierModalComponent,
     FocusDirective,
     ClickOutsideDirective,
@@ -83,6 +83,8 @@ import { SelectListComponent } from './components/groups/select-list/select-list
     ProfileFlyoverComponent,
     NumberOnlyDirective,
     SelectListComponent,
+    GroupDetailsComponent,
+    GroupListComponent,
   ],
   imports: [
     BrowserModule,

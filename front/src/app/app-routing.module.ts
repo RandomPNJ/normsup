@@ -13,6 +13,8 @@ import { LoggedinGuard } from './auth/loggedin.guard';
 import { UsersManagementComponent } from './components/users-management/users-management.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { Configuration } from './config/environment';
+import { GroupDetailsComponent } from './components/groups/group-details/group-details.component';
+import { GroupListComponent } from './components/groups/group-list/group-list.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginPageComponent },
@@ -20,7 +22,10 @@ const routes: Routes = [
     children: [
       { path: 'main', component: Dashboard1Component },
       { path: 'supplier', component: SupplierComponent },
-      { path: 'groups', component: GroupsComponent },
+      { path: 'groups', component: GroupsComponent, children: [
+        {path: '', component: GroupListComponent, },
+        {path: 'details/:id', component: GroupDetailsComponent, },
+      ] },
       { path: 'stats', component: StatsComponent },
       { path: 'alerts', component: AlertsComponent },
       { path: 'reminder', component: ReminderComponent },
@@ -30,6 +35,10 @@ const routes: Routes = [
     ]
   },
   { path: '',
+    redirectTo: 'dashboard',
+    pathMatch: 'full'
+  },
+  { path: '**',
     redirectTo: 'dashboard',
     pathMatch: 'full'
   },

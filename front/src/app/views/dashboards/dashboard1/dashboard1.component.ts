@@ -335,7 +335,7 @@ export class Dashboard1Component implements OnInit, AfterViewInit {
 			// Set Text
 			if (tooltip['body']) {
 			  var innerHtml = [
-				(tooltip['beforeTitle'] || []).join('\n'), (tooltip['title'] || []).join('\n'), (tooltip['afterTitle'] || []).join('\n'), (tooltip['beforeBody'] || []).join('\n'), (tooltip['body'] || []).join('\n'), (tooltip.afterBody || []).join('\n'), (tooltip.beforeFooter || [])
+				(tooltip['beforeTitle'] || []).join('\n'), (tooltip['title'] || []).join('\n'), (tooltip['afterTitle'] || []).join('\n'), (tooltip['beforeBody'] || []).join('\n'), (tooltip['body'] || []).join('\n'), (tooltip['afterBody'] || []).join('\n'), (tooltip['beforeFooter'] || [])
 				.join('\n'), (tooltip['footer'] || []).join('\n'), (tooltip['afterFooter'] || []).join('\n')
 			  ];
 			  tooltipEl.html(innerHtml.join('\n'));
