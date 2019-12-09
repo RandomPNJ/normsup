@@ -12,17 +12,126 @@ import { HttpService } from 'src/app/services/http.service';
 export class GroupDetailsComponent implements OnInit {
 
   group$: Observable<any>;
-  suppliers: any[];
+  suppliers: any[] = [
+    {
+      denomination: 'SFR',
+    },
+    {
+      denomination: 'LOREZA',
+    },
+    {
+      denomination: 'cqcq',
+    },
+    {
+      denomination: 'SFCQscqsR',
+    },
+    {
+      denomination: 'cqcqs',
+    },
+    {
+      denomination: 'SFcqcsdR',
+    },
+    {
+      denomination: 'SFcscR',
+    },
+    {
+      denomination: 'cscs',
+    },
+    {
+      denomination: 'SFcdsdcR',
+    },
+    {
+      denomination: 'SFR',
+    },
+    {
+      denomination: 'LOREZA',
+    },
+    {
+      denomination: 'cqcq',
+    },
+    {
+      denomination: 'SFCQscqsR',
+    },
+    {
+      denomination: 'cqcqs',
+    },
+    {
+      denomination: 'SFcqcsdR',
+    },
+    {
+      denomination: 'SFcscR',
+    },
+    {
+      denomination: 'cscs',
+    },
+    {
+      denomination: 'SFcdsdcR',
+    },
+    {
+      denomination: 'SFR',
+    },
+    {
+      denomination: 'LOREZA',
+    },
+    {
+      denomination: 'cqcq',
+    },
+    {
+      denomination: 'SFCQscqsR',
+    },
+    {
+      denomination: 'cqcqs',
+    },
+    {
+      denomination: 'SFcqcsdR',
+    },
+    {
+      denomination: 'SFcscR',
+    },
+    {
+      denomination: 'cscs',
+    },
+    {
+      denomination: 'SFcdsdcR',
+    },
+    {
+      denomination: 'SFR',
+    },
+    {
+      denomination: 'LOREZA',
+    },
+    {
+      denomination: 'cqcq',
+    },
+    {
+      denomination: 'SFCQscqsR',
+    },
+    {
+      denomination: 'cqcqs',
+    },
+    {
+      denomination: 'SFcqcsdR',
+    },
+    {
+      denomination: 'SFcscR',
+    },
+    {
+      denomination: 'cscs',
+    },
+    {
+      denomination: 'SFcdsdcR',
+    },
+  ];
 
   itemPluralCount = {
-    'supplier': {
+    'suppliers': {
       '=0': '',
       '=1': '',
       'other': '#'
     }
   };
   itemPluralMapping = {
-    'supplier': {
+    'suppliers': {
       '=0': 'Vous n\'avez aucun fournisseur dans ce groupe',
       '=1': 'Vous avez un fournisseur dans ce groupe',
       'other': 'fournisseurs dans ce groupe'

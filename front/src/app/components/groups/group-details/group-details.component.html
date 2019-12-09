@@ -1,20 +1,28 @@
 <div class="container component-padding">
-  <div class="row nopadding col-lg-11 col-md-12 col-sm-10 col-8" style="padding-top: 45px !important; padding-bottom: 25px !important;">
-    <div class="col title nopadding">
+  <div class="row nopadding previous-lnk-row">
+      <span class="glyphicon glyphicon-chevron-left previous-arrow" aria-hidden="true"></span>Retour aux groupes
+  </div>
+  <div class="row nopadding  col-lg-11 col-md-11 col-sm-7 col-8" style="padding-top: 45px !important; padding-bottom: 25px !important;">
+    <div class="col-lg-7 col-md-12 col-sm-10 col-8 title nopadding">
       <span style="padding-right: 20px;">Groupes</span>
-      <span class="item-count" *ngIf="showCount"><span class="count-style">{{items.length | i18nPlural: itemPluralCount['group']}}</span> {{items.length | i18nPlural: itemPluralMapping['group']}}</span>
+      <span class="item-count">
+        <span class="count-style">{{suppliers.length | i18nPlural: itemPluralCount['suppliers']}}</span> 
+        {{suppliers.length | i18nPlural: itemPluralMapping['suppliers']}}
+      </span>
     </div>
-    <div class="" style="width: 211px;">
-      <button style="width: 211px;height: 30px" (click)="openModal()" type="button" class="btn btn-primary custom-normsup-button nopadding">
-          <span class="add-grp-btn"><embed style="height: 10px;" src="../../../assets/img/plus-icn.svg" />
-            <span style="margin-left:5px;">Modifier ce groupe</span>
-          </span>
-      </button>
-      <button style="width: 211px;height: 30px" (click)="openModal()" type="button" class="btn btn-primary custom-normsup-button nopadding">
-        <span class="add-grp-btn"><embed style="height: 10px;" src="../../../assets/img/plus-icn.svg" />
-          <span style="margin-left:5px;">Supprimer ce groupe</span>
-        </span>
-      </button>
+    <div class="col-lg-5 nopadding">
+      <div class="row nopadding">
+        <div class="col-6" style="padding-right: 0px !important;">
+          <button style="height: 30px" type="button" class="btn btn-outline-normsup comp-btn" (click)="modifyPasswordFn()">
+            <span class="button-txt">Modifier ce groupe</span>
+          </button>
+        </div>
+        <div class="col-6" style="padding-right: 0px !important;">
+          <button style="height: 30px" type="button" class="btn btn-outline-normsup comp-btn" (click)="modifyPasswordFn()">
+            <span class="button-txt">Supprimer ce groupe</span>
+          </button>
+        </div>
+      </div>
     </div>
   </div>
   <div class="row nopadding col-lg-11 col-md-11 col-sm-7 col-8">
@@ -25,9 +33,9 @@
           <span>Liste des fournisseurs du groupe</span>
         </div>
         <div class="normsup-card-body">
-          <span *ngFor="let supplier of suppliers" class="supplier-row">
-            {{supplier.denomination}}
-          </span>
+          <div *ngFor="let supplier of suppliers" class="supplier-row">
+            <span class="supplier-txt">{{supplier.denomination}}</span>
+          </div>
         </div>
       </div>
       <!-- Paramètre des relances -->

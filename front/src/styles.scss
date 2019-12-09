@@ -1517,13 +1517,22 @@ td {
 
 .normsup-card-body {
 
-    overflow-y: scroll;
+    overflow-y: auto;
     background-color: white !important;
     height: 100%;
 
     .supplier-row {
-        font-family: 'Roboto Regular';
-        font-size: 14px;
-        color: #4E5983;
+        padding-top: 18px;
+
+        &:first-child {
+            padding-top: 22px;
+        }
+        .supplier-txt {
+            padding-left: 35px;
+            font-family: 'Roboto Regular';
+            font-size: 14px;
+            color: #4E5983;
+            text-transform: capitalize;
+        }
     }
 }
