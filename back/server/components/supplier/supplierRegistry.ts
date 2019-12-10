@@ -101,6 +101,28 @@ export default class SupplierRegistry {
         ;
     }
 
+    public getGroupDetails(org, data) {
+        let query = {
+            timeout: 40000
+        };
+        if(data && data.id) {
+            query['sql'] = Query.QUERY_GET_GROUP_DETAILS;
+            query['values'] = [org, data.id];
+        }
+
+        return this.mysql.query(query)
+            .then((res, fields) => {
+                loggerT.verbose('fields', fields)
+                loggerT.verbose('QUERY RES ==== ', res);
+                return Promise.resolve(res);
+            })
+            .catch(err => {
+                loggerT.error('ERROR ON QUERY getGroups.');
+                return Promise.reject(err);
+            })
+        ;
+    }
+    
     public checkGroup(org, data) {
         let query = {
             timeout: 40000
@@ -206,6 +228,47 @@ export default class SupplierRegistry {
             })
         ;
     }
+
+    public modifyGroupReminders(data, user, representative) {
+
+        if(!data.dateCreation)
+            data.dateCreation = new Date();
+        let query = {
+            timeout: 40000
+        };
+        query['sql']    = Query.INSERT_SUPPLIER;
+        query['values'] = [data];
+
+        return this.mysql.query(query)
+            .then(res => {
+                loggerT.verbose('FIRST QUERY RES ==== ', res);
+                let newInsert = {};
+                newInsert['supplier_id'] = res.insertId;
+                newInsert['client_id'] = user.organisation;
+                query['sql']    = Query.INSERT_REL;
+                query['values'] = [newInsert];
+
+                let query2 = {
+                    timeout: 40000
+                };
+                representative['organisation_id'] = res.insertId;
+                representative['added_by'] = user.id;
+                query2['sql'] = Query.INSERT_REPRESENTATIVE;
+                query2['values'] = [representative]
+
+                return Promise.all[
+                    this.mysql.query(query),
+                    this.mysql.query(query2)]
+                ;
+            })
+            .catch(err => {
+                loggerT.error('ERROR ON FIRST QUERY createSuppliers : ', err);
+                return Promise.reject(err);
+            })
+        ;
+    }
+
+
     public createGroup(data, suppliers) {
         loggerT.verbose('Group data', data);
         let query = {
@@ -221,14 +284,24 @@ export default class SupplierRegistry {
                     loggerT.verbose('supp id', supp.id);
                     v.push([res.insertId, supp.id]);
                 });
-                
+                let insertId = res.insertId;
                 query['sql']    = Query.INSERT_GROUP_MEM;
                 query['values'] = [v];
                 
                 return this.mysql.query(query)
                     .then(res => {
-
-                        return Promise.resolve(res);
+                        
+                        query['sql']    = Query.INSERT_GROUP_REMINDERS;
+                        query['values'] = [insertId];
+                        return this.mysql.query(query)
+                            .then(res => {
+                                return Promise.resolve(res);
+                            })
+                            .catch(err => {
+                                loggerT.error('ERROR ON SECOND QUERY createGroup : ', err);
+                                return Promise.reject(err);
+                            })
+                        ;
                     })
                     .catch(err => {
                         loggerT.error('ERROR ON SECOND QUERY createGroup : ', err);

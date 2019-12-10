@@ -78,8 +78,10 @@ export default {
         { name: 'modifySupplier', uriPattern: '/modify_supplier/:id', method: 'put' },
         { name: 'countSuppliers', uriPattern: '/count', method: 'get' },
         { name: 'getGroups', uriPattern: '/groups', method: 'get' },
+        { name: 'getGroupDetails', uriPattern: '/group/:id', method: 'get' },
         { name: 'checkGroup', uriPattern: '/group/check_availability', method: 'get' },
         { name: 'createGroup', uriPattern: '/define_group', method: 'post' },
+        { name: 'modifyGroupReminders', uriPattern: '/group/:id/modify_reminders', method: 'post' },
       ],
     },
     documents: {

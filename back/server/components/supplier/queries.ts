@@ -12,6 +12,7 @@ export const QUERY_GET_SUPPLIER = 'SELECT * FROM `organisations`  AS o LEFT JOIN
 export const QUERY_CHECK_GROUP = 'SELECT * FROM `groups` WHERE `client_id` = ? AND `name` LIKE ?';
 
 export const QUERY_GET_GROUPS = 'SELECT * FROM `groups` WHERE `client_id` = ?';
+export const QUERY_GET_GROUP_DETAILS = 'SELECT * FROM `groups` AS g LEFT JOIN `group_reminders` as gr ON g.id = gr.group_id WHERE `client_id` = ? AND `id` = ?';
 export const QUERY_GET_GROUPS_NAME = 'SELECT * FROM `groups` WHERE `client_id` = ? AND `name` LIKE ?';
 export const QUERY_GET_GROUP_SUPPLIERS = 'SELECT g.id, COUNT(u.id) AS users_count, u.username FROM groups AS g LEFT JOIN `organisations` AS u ON g.id = u.group_id ' +
 'GROUP BY g.id HAVING users_count > ?';
@@ -25,4 +26,5 @@ export const INSERT_SUPPLIER = 'INSERT INTO `organisations` SET ?';
 export const INSERT_GROUP = 'INSERT INTO `groups` SET ?';
 export const INSERT_GROUP_MEM = 'INSERT INTO `group_members` (group_id, member_id) VALUES ?';
 export const INSERT_REL = 'INSERT INTO `client_supplier_relation` SET ?';
-export const INSERT_REPRESENTATIVE = 'INSERT INTO `representatives` SET ?'
+export const INSERT_REPRESENTATIVE = 'INSERT INTO `representatives` SET ?';
+export const INSERT_GROUP_REMINDERS = 'INSERT INTO `group_reminders` (group_id) VALUES ?'

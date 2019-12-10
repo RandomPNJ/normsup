@@ -2,21 +2,32 @@
     position: relative;
     padding-top: 75px !important;
     text-align: center;
+    cursor: pointer;
+
+    .previous-txt {
+        font-family: 'Roboto Medium';
+        font-size: 13px;
+        letter-spacing: 0;
+        color: #4E5983;
+        text-transform: uppercase;
+        opacity: 0.5;
+    }
+    .previous-arrow {
+        vertical-align: middle;
+        font-size: 9px;
+        position: absolute;
+        bottom: 6px;
+        left: -2px;
+        top: unset;
+        color: #4E5983;
+        text-transform: uppercase;
+        opacity: 0.5;
+    }
+}
+.button-txt {
     font-family: 'Roboto Medium';
     font-size: 13px;
     letter-spacing: 0;
-    color: #4E5983;
-    text-transform: uppercase;
-    opacity: 0.5;
-}
-
-.previous-arrow {
-    vertical-align: middle;
-    font-size: 9px;
-    position: absolute;
-    bottom: 6px;
-    left: -11px;
-    top: unset;
 }
 
 .comp-btn {
@@ -25,11 +36,102 @@
     padding: unset !important;
     box-shadow: unset;
     text-transform: unset;
-
+    
     .button-txt {
-        font-family: 'Roboto Medium';
-        font-size: 13px;
-        letter-spacing: 0;
         color: #4E5983;
     }
+}
+
+.spont-btn {
+    width: 100%;
+    border: 1px solid #4390EF !important;
+    padding: unset !important;
+    box-shadow: unset;
+    text-transform: unset;
+
+    .button-txt {
+        color: #4390EF;
+    }
+}
+
+.save-btn {
+    border-radius: 5px !important;
+
+    .button-txt {
+        color: #FFFFFF;
+        text-transform: none;
+    }
+}
+.group-card-row {
+    padding-top: 20px;
+    padding-bottom: 19px;
+    border-bottom: 1px solid #F3F7FC;
+}
+
+.basic-txt {
+    font-family: 'Roboto Medium';
+    font-size: 15px;
+    letter-spacing: 0;
+    color: #4E5983;
+}
+
+.switch-cont {
+    float: right;
+    padding-right: 45px;
+}
+
+
+.text-cont {
+    padding-left: 35px;
+}
+
+.params-input {
+    padding-top: 21px;
+
+    &:first-child {
+        padding-top: 27px;
+    }
+}
+
+.sub-txt {
+    font-family: 'Roboto Regular';
+    font-size: 14px;
+    letter-spacing: 0;
+    color: #4390EF;
+}
+
+.doc-form-check {
+    float: right;
+    padding-right: 35px;
+  
+    & > div {
+      font-family: 'Roboto Regular';
+      color: #4E5983;
+      font-size: 14px;
+    }
+  }
+  
+.select-cont {
+    float: right;
+    padding-right: 45px;
+    width: 100%;
+    max-width: 250px;
+}
+
+.freq-txt {
+    padding-top: 20px;
+    font-family: 'Roboto Regular';
+    font-size: 14px;
+    letter-spacing: 0;
+    color: #4E5983;
+}
+
+.select-cont2 {
+    padding-left: 10px;
+}
+
+.disabled-row {
+    opacity: 0.3;
+    -webkit-transition: opacity 0.6s, visibility 0s 0.6s;
+	transition: opacity 0.6s, visibility 0s 0.6s;
 }

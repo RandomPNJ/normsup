@@ -123,6 +123,24 @@ export class GroupDetailsComponent implements OnInit {
     },
   ];
 
+  activateReminders: Boolean = false;
+  documentsSettings: any = {
+    legal: {
+      urssaf: false,
+      lnte: false,
+      kbis: false,
+    },
+    frequency: ''
+  };
+  compDocs: Array<any> = [
+    { name: 'Complémentaire un', value: 'compone'},
+    { name: 'Complémentaire deux', value: 'comptwo'},
+  ];
+  frequency: Array<any> = [
+    { name: '5 jours', value: '5j'},
+    { name: '7 jours', value: '7j'},
+    { name: '10 jours', value: '10j'},
+  ];
   itemPluralCount = {
     'suppliers': {
       '=0': '',
