@@ -12,118 +12,12 @@ import { HttpService } from 'src/app/services/http.service';
 export class GroupDetailsComponent implements OnInit {
 
   group$: Observable<any>;
-  suppliers: any[] = [
-    {
-      denomination: 'SFR',
-    },
-    {
-      denomination: 'LOREZA',
-    },
-    {
-      denomination: 'cqcq',
-    },
-    {
-      denomination: 'SFCQscqsR',
-    },
-    {
-      denomination: 'cqcqs',
-    },
-    {
-      denomination: 'SFcqcsdR',
-    },
-    {
-      denomination: 'SFcscR',
-    },
-    {
-      denomination: 'cscs',
-    },
-    {
-      denomination: 'SFcdsdcR',
-    },
-    {
-      denomination: 'SFR',
-    },
-    {
-      denomination: 'LOREZA',
-    },
-    {
-      denomination: 'cqcq',
-    },
-    {
-      denomination: 'SFCQscqsR',
-    },
-    {
-      denomination: 'cqcqs',
-    },
-    {
-      denomination: 'SFcqcsdR',
-    },
-    {
-      denomination: 'SFcscR',
-    },
-    {
-      denomination: 'cscs',
-    },
-    {
-      denomination: 'SFcdsdcR',
-    },
-    {
-      denomination: 'SFR',
-    },
-    {
-      denomination: 'LOREZA',
-    },
-    {
-      denomination: 'cqcq',
-    },
-    {
-      denomination: 'SFCQscqsR',
-    },
-    {
-      denomination: 'cqcqs',
-    },
-    {
-      denomination: 'SFcqcsdR',
-    },
-    {
-      denomination: 'SFcscR',
-    },
-    {
-      denomination: 'cscs',
-    },
-    {
-      denomination: 'SFcdsdcR',
-    },
-    {
-      denomination: 'SFR',
-    },
-    {
-      denomination: 'LOREZA',
-    },
-    {
-      denomination: 'cqcq',
-    },
-    {
-      denomination: 'SFCQscqsR',
-    },
-    {
-      denomination: 'cqcqs',
-    },
-    {
-      denomination: 'SFcqcsdR',
-    },
-    {
-      denomination: 'SFcscR',
-    },
-    {
-      denomination: 'cscs',
-    },
-    {
-      denomination: 'SFcdsdcR',
-    },
-  ];
+  suppliers: any[] = [];
 
+  id: Number;
   activateReminders: Boolean = false;
+  freq: any;
+  groupName: string;
   documentsSettings: any = {
     legal: {
       urssaf: false,
@@ -137,9 +31,9 @@ export class GroupDetailsComponent implements OnInit {
     { name: 'Complémentaire deux', value: 'comptwo'},
   ];
   frequency: Array<any> = [
-    { name: '5 jours', value: '5j'},
-    { name: '7 jours', value: '7j'},
-    { name: '10 jours', value: '10j'},
+    { name: '5 jours', value: '5d'},
+    { name: '7 jours', value: '7d'},
+    { name: '10 jours', value: '10d'},
   ];
   itemPluralCount = {
     'suppliers': {
@@ -163,10 +57,47 @@ export class GroupDetailsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.group$ = this.route.paramMap.pipe(
-      switchMap((params: ParamMap) => 
-        this.httpService.get('/api/groups/'+params.get('id'))
-      ));
+    this.id = parseInt(this.route.snapshot.paramMap.get("id"), 10);
+    this.httpService.get('/api/supplier/group/'+ this.id)
+      .subscribe(res => {
+        console.log('res', res);
+        if(res.body && res.body['items']) {
+          this.groupName = res.body['items'][0]['name'];
+          this.activateReminders = !!res.body['items'][0];
+          if(res.body['items'][0]['legal_docs'] !== "" && res.body['items'][0]['legal_docs'] !== null && res.body['items'][0]['legal_docs'] !== "null") {
+            let legalSettings = res.body['items'][0]['legal_docs'].split('_');
+            legalSettings.forEach(e => {
+              if(e === 'u') {
+                this.documentsSettings.legal.urssaf = true;
+              }
+              if(e === 'l') {
+                this.documentsSettings.legal.lnte = true;
+              }
+              if(e === 'k') {
+                this.documentsSettings.legal.kbis = true;
+              }
+            });
+          }
+          this.documentsSettings.frequency = res.body['items'][0]['frequency'];
+        }
+      }, err => {
+        console.log('err', err);
+      })
+    ;
+    
+    this.httpService.get('/api/supplier/group/'+ this.id + '/members')
+      .subscribe(res => {
+        console.log('res', res);
+        if(res.body && res.body['items']) {
+          this.suppliers = res.body['items'];
+        }
+      }, err => {
+        console.log('err', err);
+      })
+    ;
+      
   }
+
+
 
 }

@@ -9,10 +9,10 @@ export default {
     method: 'get',
     uriPattern: '',
     services: [''],
-    handler: (req, res, app) => getGroups(req, res, app.get('SupplierRegistry')),
+    handler: (req, res, app) => getGroupMembers(req, res, app.get('SupplierRegistry')),
 };
 
-export function getGroups(req, res, SupplierRegistry) {
+export function getGroupMembers(req, res, SupplierRegistry) {
     if (!req.decoded) {
         return Promise.reject(`Cannot get user informations, invalid request.`);
     }
@@ -22,12 +22,11 @@ export function getGroups(req, res, SupplierRegistry) {
         error['statusCode'] = 400;
         throw error;
     }
-
-    let params = {}; 
-    params = req.params;
-    loggerT.verbose('Getting group details for group with id :', req.params.id);
+    loggerT.verbose('decoded', req.decoded)
+    let id = req.params.id;
+    loggerT.verbose('Getting group details for group with id :', id);
     
-    return SupplierRegistry.getGroupDetails(req.decoded.organisation, params)
+    return SupplierRegistry.getGroupMembers(id, req.decoded.organisation)
         .then(res => {
             let result = {
                 items: res

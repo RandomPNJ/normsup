@@ -7,7 +7,7 @@
   </div>
   <div class="row nopadding  col-lg-11 col-md-11 col-sm-7 col-8" style="padding-top: 45px !important; padding-bottom: 25px !important;">
     <div class="col-lg-7 col-md-12 col-sm-10 col-8 title nopadding">
-      <span style="padding-right: 20px;">Groupes</span>
+      <span style="padding-right: 20px;">{{groupName}}</span>
       <span class="item-count">
         <span class="count-style">{{suppliers.length | i18nPlural: itemPluralCount['suppliers']}}</span> 
         {{suppliers.length | i18nPlural: itemPluralMapping['suppliers']}}
@@ -96,8 +96,8 @@
               <div class="params-input">
                 <div class="sub-txt d-inline-block">Faire une relance tous les</div>
                 <div class="d-inline-block select-cont2">
-                  <select [disabled]="!activateReminders" class="form-control" id="compDoc"  name="compDoc" [(ngModel)]="documentsSettings.frequency">
-                    <option *ngFor="let c of compDocs" [ngValue]="c.value" [disabled]="c.value === 1">{{c.name}}</option>
+                  <select [disabled]="!activateReminders" class="form-control" id="freq"  name="freq" [(ngModel)]="documentsSettings.frequency">
+                    <option *ngFor="let f of frequency" [ngValue]="f.value">{{f.name}}</option>
                   </select>
                 </div>
               </div>

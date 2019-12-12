@@ -30,3 +30,48 @@ True
 
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+## Date
+
+
+11-12-2019
+
+## Comment
+
+Modify table group_reminders, add group_id as PK
+
+## Query
+
+ALTER TABLE `normsup`.`group_reminders` 
+DROP PRIMARY KEY,
+ADD PRIMARY KEY (`id`, `group_id`);
+
+
+## Applied
+
+True
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+## Date
+
+
+11-12-2019
+
+## Comment
+
+Modify table group_reminders, remove id
+
+## Query
+
+ALTER TABLE `normsup`.`group_reminders` 
+DROP COLUMN `id`,
+DROP PRIMARY KEY,
+ADD PRIMARY KEY (`group_id`);
+
+
+
+## Applied
+
+True

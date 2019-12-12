@@ -101,6 +101,27 @@ export default class SupplierRegistry {
         ;
     }
 
+    public getGroupMembers(id, org) {
+        let query = {
+            timeout: 40000
+        };
+
+        query['sql'] = Query.QUERY_GET_GROUP_MEMBERS;
+        query['values'] = [id];
+
+        return this.mysql.query(query)
+            .then((res, fields) => {
+                loggerT.verbose('fields', fields)
+                loggerT.verbose('QUERY RES ==== ', res);
+                return Promise.resolve(res);
+            })
+            .catch(err => {
+                loggerT.error('ERROR ON QUERY getGroups.');
+                return Promise.reject(err);
+            })
+        ;
+    }
+    
     public getGroupDetails(org, data) {
         let query = {
             timeout: 40000
@@ -229,40 +250,21 @@ export default class SupplierRegistry {
         ;
     }
 
-    public modifyGroupReminders(data, user, representative) {
-
-        if(!data.dateCreation)
-            data.dateCreation = new Date();
+    public modifyGroupReminders(id, data) {
         let query = {
             timeout: 40000
         };
-        query['sql']    = Query.INSERT_SUPPLIER;
-        query['values'] = [data];
+        loggerT.verbose('data = ', data);
+        query['sql'] = Query.MODIFY_GROUP_REMINDERS;
+        query['values'] = [id, data.activated, data.legal_docs, data.comp_docs, data.frequency, id, data.activated, data.legal_docs, data.comp_docs, data.frequency];
 
         return this.mysql.query(query)
             .then(res => {
-                loggerT.verbose('FIRST QUERY RES ==== ', res);
-                let newInsert = {};
-                newInsert['supplier_id'] = res.insertId;
-                newInsert['client_id'] = user.organisation;
-                query['sql']    = Query.INSERT_REL;
-                query['values'] = [newInsert];
-
-                let query2 = {
-                    timeout: 40000
-                };
-                representative['organisation_id'] = res.insertId;
-                representative['added_by'] = user.id;
-                query2['sql'] = Query.INSERT_REPRESENTATIVE;
-                query2['values'] = [representative]
-
-                return Promise.all[
-                    this.mysql.query(query),
-                    this.mysql.query(query2)]
-                ;
+                loggerT.verbose('QUERY RES ==== ', res);
+                return Promise.resolve(res);
             })
             .catch(err => {
-                loggerT.error('ERROR ON FIRST QUERY createSuppliers : ', err);
+                loggerT.error('ERROR ON QUERY modifyGroupReminders : ', err);
                 return Promise.reject(err);
             })
         ;
