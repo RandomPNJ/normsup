@@ -16,12 +16,12 @@
     <div class="col-lg-5 nopadding">
       <div class="row nopadding">
         <div class="col-6" style="padding-right: 0px !important;">
-          <button style="height: 30px" type="button" class="btn btn-outline-normsup comp-btn" (click)="modifyPasswordFn()">
+          <button style="height: 30px" type="button" class="btn btn-outline-normsup comp-btn" (click)="openModal('modify')">
             <span class="button-txt">Modifier ce groupe</span>
           </button>
         </div>
         <div class="col-6" style="padding-right: 0px !important;">
-          <button style="height: 30px" type="button" class="btn btn-outline-normsup comp-btn" (click)="modifyPasswordFn()">
+          <button style="height: 30px" type="button" class="btn btn-outline-normsup comp-btn" (click)="openModal('delete')">
             <span class="button-txt">Supprimer ce groupe</span>
           </button>
         </div>
@@ -112,7 +112,7 @@
                   </button>
                 </div>
                 <div class="col-5" style="padding-right: 0px !important;">
-                  <button [disabled]="!activateReminders" style="height: 36px" type="button" class="btn btn-primary save-btn" (click)="save()">
+                  <button [disabled]="!activateReminders || !documentsSettings.frequency" style="height: 36px" type="button" class="btn btn-primary save-btn" (click)="save()">
                     <span class="button-txt">Enregistrer</span>
                   </button>
                 </div>
@@ -124,3 +124,35 @@
     </div>
   </div>
 </div>
+<ng-template #deleteGroupModal>
+  <div class="modal-header own-modal-header-supplier" style="border-bottom: none;">
+  </div>
+  <div class="modal-body">
+    <div class="supplier-modal-title">Confirmation</div>
+    <div style="padding-top: 30.5px;padding-bottom: 40px;" class="select-comp-but">
+        <div class="container">
+          <div class="row">
+            <div class="col nopadding" style="padding-left: 40px !important;">
+              <button style="float: right;width: 100%;" type="button" class="btn btn-outline-normsup prec-btn-group text-capitalize"
+                (click)="hideModal()">
+                <span class="button-txt">Annuler</span>
+              </button>
+            </div>
+            <div class="col nopadding" style="padding-right: 40px !important;">
+              <button style="border-radius: 5px;float: left;width: 100%;" type="button"
+                class="btn btn-primary text-capitalize next-btn-group" (click)="deleteGroup()">
+                <span class="button-txt">Accepter</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>
+</ng-template>
+<ng-template #modifyGroupModal>
+  <div class="modal-header own-modal-header-supplier" style="border-bottom: none;">
+  </div>
+  <div class="modal-body">
+    <app-add-comp-group (changeModal)="changeModal($event)" [groupName]="groupName" [type]="typeModal" [id]="id"></app-add-comp-group>
+  </div>
+</ng-template>

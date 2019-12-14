@@ -59,6 +59,7 @@ export class GroupListComponent implements OnInit {
       this.httpService
         .get('/api/supplier/groups')
         .subscribe(res => {
+          console.log('group list res', res);
           this.items = res.body['items'];
           this.showCount = true;
           this.groupsService.addGroups(res.body['items']);

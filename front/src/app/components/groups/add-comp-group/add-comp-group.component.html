@@ -6,7 +6,8 @@
       <embed src="../../../assets/img/close-icn.svg" style="height: 16px; cursor:pointer;pointer-events: none;" />
     </button>
   </div>
-  <div *ngIf="state !== 'newDoc'" class="supplier-modal-title">Nouveau Groupe</div>
+  <div *ngIf="state !== 'newDoc' && type !== 'MODIFICATION'" class="supplier-modal-title">Nouveau Groupe</div>
+  <div *ngIf="state !== 'newDoc' && type === 'MODIFICATION'" class="supplier-modal-title">Modifier Groupe</div>
   <div *ngIf="state === 'newDoc'" class="supplier-modal-title">Félicitations</div>
 </div>
 <div *ngIf="state === 'groupName'">
@@ -43,7 +44,7 @@
         </div>
         <div class="row ma vert-input-space">
           <div class="form-group col s6 nopadding input-space select-list-margin">
-            <app-select-list #selectComponent [suppliers]="suppliers"
+            <app-select-list #selectComponent [suppliers]="suppliers" [onInitSuppliers]="onInitSuppliers"
               (getSelectedSuppliers)='getSelectedSuppliers($event)'></app-select-list>
           </div>
         </div>
@@ -69,7 +70,7 @@
     </form>
   </div>
 </div>
-<div class="container nopadding" *ngIf="state === 'docInfo'">
+<div class="container nopadding" *ngIf="state === 'docInfo' && type !== 'MODIFICATION'">
   <div style="padding-left: 0px !important; padding-right: 0px !important;" class="container">
     <div class="row" style="margin: auto;text-align: center;padding-top: 29px;">
       <div class="optional-txt">Choisissez les documents à demander.</div>

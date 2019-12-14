@@ -121,7 +121,114 @@ export default class SupplierRegistry {
             })
         ;
     }
+
+    public deleteGroup(id, org) {
+        let query = {
+            timeout: 40000
+        };
+        let query2 = {
+            timeout: 40000
+        };
+
+        query['sql'] = Query.DELETE_GROUP;
+        query['values'] = [id, org];
+
+        query2['sql'] = Query.DELETE_ALL_GRP_MEM;
+        query2['values'] = [id];
+
+        return this.mysql.query(query)
+            .then((res, fields) => {
+                loggerT.verbose('QUERY RES deleteGroup ==== ', res);
+
+                return this.mysql.query(query2)
+                    .then(res => {
+                        return Promise.resolve(res);
+                    })
+                    .catch(err => {
+                        loggerT.error('ERROR ON QUERY deleteGroupMembers.');
+                        return Promise.reject(err);
+                    })
+            })
+            .catch(err => {
+                loggerT.error('ERROR ON QUERY deleteGroup.');
+                return Promise.reject(err);
+            })
+        ;
+    }
+
+    public updateGroup(group, suppliers, suppToDelete) {
+        let query = {
+            timeout: 40000
+        };
+
+        query['sql'] = Query.UPDATE_GROUP;
+        query['values'] = [group.name, group.id, group.client_id];
+
+        return this.mysql.query(query)
+            .then((res, fields) => {
+                loggerT.verbose('QUERY RES updateGroup ==== ', res);
+                if((suppliers && suppliers.length > 0) || (suppToDelete && suppToDelete.length > 0)) {
+                    return this.updateGroupMembers(suppliers, suppToDelete, group.id);
+                } else {
+                    return Promise.resolve(res);
+                }
+            })
+            .catch(err => {
+                loggerT.error('ERROR ON QUERY deleteGroup.');
+                return Promise.reject(err);
+            })
+        ;
+    }
     
+    private updateGroupMembers(suppliers, suppToDelete, group_id) {
+        let query = {
+            timeout: 40000
+        };
+        let query2 = {
+            timeout: 40000
+        };
+        let v = [];
+        let promises = [];
+
+        if(suppToDelete && suppToDelete.length > 0) {
+            query2['sql'] = Query.DELETE_GROUP_MEMBERS;
+            query2['values'] = [group_id];
+            suppToDelete.forEach((element, index) => {
+                if(index !== 0) {
+                    query2['sql'] += ' OR member_id = ?';
+                }
+                query2['values'].push(element.id);
+            });
+            loggerT.verbose('query2 ', query2['sql']);
+            loggerT.verbose('query2 val', query2['values']);
+            promises.push(this.mysql.query(query2));
+        }
+        if(suppliers && suppliers.length > 0) {
+            loggerT.verbose('case two');
+            suppliers.forEach(supp => {
+                loggerT.verbose('supp id', supp.id);
+                v.push([group_id, supp.id]);
+            });
+    
+            query['sql'] = Query.INSERT_GROUP_MEM;
+            query['values'] = [v];
+            promises.push(this.mysql.query(query));
+        }
+        
+        if(promises.length > 0) {
+            return Promise.all(promises);
+        }
+        // return this.mysql.query(query)
+        //     .then((res, fields) => {
+        //         loggerT.verbose('QUERY RES updateGroup ==== ', res);
+        //         return this.updateGroupMembers(suppliers, suppToDelete);
+        //     })
+        //     .catch(err => {
+        //         loggerT.error('ERROR ON QUERY deleteGroup.');
+        //         return Promise.reject(err);
+        //     })
+        // ;
+    }
     public getGroupDetails(org, data) {
         let query = {
             timeout: 40000
@@ -282,11 +389,12 @@ export default class SupplierRegistry {
             .then(res => {
 
                 let v = [];
+                let insertId = res.insertId;
                 suppliers.forEach(supp => {
                     loggerT.verbose('supp id', supp.id);
-                    v.push([res.insertId, supp.id]);
+                    v.push([insertId, supp.id]);
                 });
-                let insertId = res.insertId;
+                
                 query['sql']    = Query.INSERT_GROUP_MEM;
                 query['values'] = [v];
                 

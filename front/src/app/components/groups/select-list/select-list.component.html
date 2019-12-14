@@ -11,8 +11,8 @@
   
   <div *ngFor="let supplier of suppliers; let i = index;let isEven = even;" [ngClass]="{'even-row': isEven}" class="supplier-row">
     <div class="form-check form-check-inline normsup-checkbox-cont">
-      <input class="form-check-input normsup-checkbox" type="checkbox" [attr.id]="'inlineCheckbox' + i" [checked]="" (click)="selectSupplier($event.target.checked, i)">
-      <label class="form-check-label regular-txt f-14" [attr.for]="'inlineCheckbox' + i">{{supplier.denomination}}</label>
+      <input class="form-check-input normsup-checkbox" type="checkbox" [attr.id]="'inlineCheckboxSelectList' + i" [checked]="" (click)="selectSupplier($event.target.checked, i)">
+      <label class="form-check-label regular-txt f-14" [attr.for]="'inlineCheckboxSelectList' + i">{{supplier.denomination}}</label>
     </div>
   </div>
 </div>

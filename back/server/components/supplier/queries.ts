@@ -31,3 +31,8 @@ export const INSERT_REPRESENTATIVE = 'INSERT INTO `representatives` SET ?';
 export const INSERT_GROUP_REMINDERS = 'INSERT INTO `group_reminders` (group_id) VALUES ?'
 export const MODIFY_GROUP_REMINDERS = 'INSERT INTO `group_reminders` (group_id, activated, legal_docs, comp_docs, frequency) VALUES (?,?,?,?,?)' + 
 'ON DUPLICATE KEY UPDATE group_id= ?, activated = ?, legal_docs = ?, comp_docs = ?, frequency = ?';
+
+export const DELETE_GROUP = 'DELETE FROM `groups` WHERE id = ? AND client_id = ?';
+export const DELETE_GROUP_MEMBERS = 'DELETE FROM `group_members` WHERE group_id = ? AND member_id = ?';
+export const DELETE_ALL_GRP_MEM = 'DELETE FROM `group_members` WHERE group_id = ?'
+export const UPDATE_GROUP = 'UPDATE `groups` SET name = ? WHERE id = ? AND client_id = ?';

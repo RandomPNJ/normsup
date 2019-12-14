@@ -82,7 +82,9 @@ export default {
         { name: 'getGroupMembers', uriPattern: '/group/:id/members', method: 'get' },
         { name: 'checkGroup', uriPattern: '/group/check_availability', method: 'get' },
         { name: 'createGroup', uriPattern: '/define_group', method: 'post' },
+        { name: 'deleteGroup', uriPattern: '/group/:id/delete', method: 'post' },
         { name: 'modifyGroupReminders', uriPattern: '/group/:id/modify_reminders', method: 'post' },
+        { name: 'modifyGroup', uriPattern: '/group/:id/modify_group', method: 'post' },
       ],
     },
     documents: {
