@@ -1,0 +1,95 @@
+.export-container {
+    margin-top: 90px;
+}
+
+.export-body {
+    background-color: #FFF;
+    border-radius: 10px;
+
+    .export-title {
+        padding-top: 45px !important;
+        padding-bottom: 20px !important;
+        text-align: center;
+        border-bottom: 1px solid #F3F7FC;
+
+
+        .e-main-txt {
+            font-family: 'Roboto Bold';
+            font-size:  25px;
+            color: #4390EF;
+            width: 100%;
+        }
+
+        .e-sub-txt {
+            font-family: 'Roboto Light';
+            font-size:  14px;
+            color: #4E5983;
+            width: 100%;
+        }
+    }
+
+    .export-row {
+        padding-top: 20px !important;
+        padding-bottom: 20px !important;
+    }
+}
+
+.center-row {
+    text-align: center;
+}
+
+.row-input-style {
+    max-width: 180px;
+    margin: 0 auto;
+    
+    select, input {
+        height: 30px;
+    }
+}
+
+.major-txt-style {
+    font-family: 'Roboto Medium';
+    font-size: 15px;
+    letter-spacing: 0;
+    color: #4E5983;
+}
+.export-checkbox {
+    padding-bottom: 10.5px;
+    font-family: 'Roboto Medium';
+    font-size: 15px;
+    letter-spacing: 0;
+    color: #4E5983;
+
+    .normsup-checkbox-cont [type="checkbox"]:not(:checked) + label, .normsup-checkbox-cont [type="checkbox"]:checked + label {
+        line-height: 1.4 !important;
+    }
+}
+
+.add-doc-link {
+    font-family: 'Roboto Regular';
+    font-size: 15px;
+    letter-spacing: 0;
+    color: #4390EF;
+}
+
+.exp-border-bottom {
+    border-bottom: 1px solid #F3F7FC;
+    padding-bottom: 10px;
+}
+
+.pick-date-txt {
+    font-family: 'Roboto Regular';
+    letter-spacing: 0;
+    color: #4E5983;
+    padding-right: 12px;
+}
+
+.export-btn {
+    font-family: 'Roboto Medium';
+    letter-spacing: 0;
+    color: #FFFFFF;
+    font-size: 13px;
+    border-radius: 5px !important;
+    width: 155px;
+    text-transform: none;
+}

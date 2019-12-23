@@ -221,7 +221,7 @@ export class GroupDetailsComponent implements OnInit {
     this.httpService.post('/api/supplier/group/'+ this.id + '/delete')
       .subscribe(res => {
         console.log('res', res);
-        this.router.navigate(['dashboard', 'groups']);
+        this.router.navigate(['dashboard', 'groups', {action: 'deleted'}]);
         this.hideModal();
       }, err => {
         console.log('err', err);

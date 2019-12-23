@@ -21,6 +21,7 @@
 .group-card-content {
     padding: 10px 0px;
 }
+
 .group-card-header {
     font-family: 'Roboto Medium';
     font-size: 15px;
@@ -28,6 +29,15 @@
     text-transform: uppercase;
     text-align: center;
     padding: 20px 0px 25px 0px;
+}
+
+.group-name-style {
+    display: block;
+    font-family: 'Roboto Medium';
+    font-size: 15px;
+    color: #4390EF;
+    text-transform: uppercase;
+    text-align: center;
 }
 
 .card-sup-count {
@@ -159,10 +169,20 @@ h2 {
 }
 
 .group-card-style {
-    width:186px; 
-    margin: 20px 0px 10px 30px;
+    // width:186px; 
+    // margin: 20px 0px 10px 30px;
+
+    margin: 20px 0px 10px 0px; 
+    min-width: 190px;
+    max-height: 210px;
 
     &:last-child {
         margin-bottom: 20px !important;
     }
+}
+
+.text-ov {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }

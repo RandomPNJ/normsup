@@ -37,6 +37,9 @@ export class GroupListComponent implements OnInit {
       '=0': '',
       '=1': '',
       'other': '#'
+    },
+    'members': {
+      'other': '#'
     }
   };
   itemPluralMapping = {
@@ -44,6 +47,11 @@ export class GroupListComponent implements OnInit {
       '=0': 'n\'avez aucun groupe',
       '=1': 'un groupe',
       'other': 'groupes'
+    },
+    'members': {
+      '=0': 'Fournisseur',
+      '=1': 'Fournisseur',
+      'other': 'Fournisseurs'
     }
   };
   constructor(private modalService: BsModalService, private changeDetection: ChangeDetectorRef,
@@ -134,5 +142,16 @@ export class GroupListComponent implements OnInit {
 
   openGroupParams(i) {
     this.router.navigate(['dashboard', 'groups', 'details', i]);
+  }
+
+  reloadList() {
+    this.httpService
+      .get('/api/supplier/groups')
+      .subscribe(res => {
+        this.items = res.body['items'];
+        this.showCount = true;
+        this.groupsService.addGroups(res.body['items']);
+      })
+    ;
   }
 }

@@ -1,0 +1,105 @@
+<div class="container export-container" style="padding: 0px !important;">
+  <div class="col-lg-auto">
+    
+  </div>
+  <div class="col-lg-10">
+  <div class="export-body">
+    <div class="container nopadding">
+      <div class="row export-title nopadding">
+        <div class="e-main-txt">Export</div>
+        <div class="e-sub-txt">Générez les exports des documents que vous souhaitez</div>
+      </div>
+      <div class="row export-row nopadding">
+        <div class="col-lg-2 col-md-2 col-2 col-xs-2">
+
+        </div>
+        <div class="col-lg-4 col-md-4 col-4 col-xs-4 center-row exp-border-bottom">
+          <div class="doc-form-check d-inline-block">
+            <div class="form-check form-check-inline normsup-checkbox-cont export-checkbox">
+              <input class="form-check-input normsup-checkbox" type="checkbox"
+                id="inlineCheckbox1" value="option1" [(ngModel)]="exportType.group">
+              <label class="form-check-label" for="inlineCheckbox1">Groupe</label>
+            </div>
+          </div>
+          <div class="d-block select-cont row-input-style">
+            <select *ngIf="groups" class="form-control" id="groupChoice"  name="groupChoice" [(ngModel)]="groupsChosen">
+              <option [ngValue]="undefined" disabled>Choisir groupe</option>
+              <option *ngFor="let c of groups" [ngValue]="c.id" [disabled]="c.value === 1">{{c.denomination}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-4 col-4 col-xs-4 center-row exp-border-bottom">
+          <div class="doc-form-check d-inline-block">
+            <div class="form-check form-check-inline normsup-checkbox-cont export-checkbox">
+              <input class="form-check-input normsup-checkbox" type="checkbox"
+                id="inlineCheckbox2" value="option1" [(ngModel)]="exportType.supplier">
+              <label class="form-check-label" for="inlineCheckbox2">Fournisseur</label>
+            </div>
+          </div>
+          <div class="form-group row-input-style">
+            <input type="text" class="form-control" id="supplierChoice" aria-describedby="supplierHelp" placeholder="Rechercher">
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-2 col-2 col-xs-2">
+
+        </div>
+      </div>
+      <div class="row export-row nopadding">
+        <div class="col-lg-2 col-md-2 col-2 col-xs-2">
+
+        </div>
+        <div class="col-lg-8 col-md-8 col-8 col-xs-8 center-row exp-border-bottom">
+          <div class="d-block select-cont row-input-style">
+            <div class="major-txt-style" >Documents</div>
+            <select class="form-control" id="documentsChoice"  name="documentsChoice" [(ngModel)]="documentsChosen">
+              <option [ngValue]="undefined" disabled>Choisir document</option>
+              <option *ngFor="let c of documents" [ngValue]="c.id" [disabled]="c.value === 1">{{c.name}}</option>
+            </select>
+          </div>
+          <div style="padding-top: 10px;">
+            <embed src="../../../assets/img/plus-add-icn.svg" style="height: 10px;padding-right: 8px;" /><span class="add-doc-link">Ajouter un document</span>
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-2 col-2 col-xs-2">
+
+        </div>
+      </div>
+      <div class="row export-row nopadding" style="padding-bottom: 40px !important;">
+        <div class="col-lg-2 col-md-2 col-2 col-xs-2">
+
+        </div>
+        <div class="col-lg-8 col-md-8 col-8 col-xs-8 center-row exp-border-bottom">
+          <div class="d-block select-cont">
+            <div class="major-txt-style">Dates</div>
+            <div style="display: inline-block;">
+            <span class="pick-date-txt">Du</span>
+            <input autocomplete="off" id="datestart" class="datepicker-ph custom-normsup-input-nb"
+              (hideDaterangepicker)="closeDatePicker($event)"
+              (selected)="selectedDate($event)" type="text" name="Date" placeholder="JJ/MM/AAAA"
+              #daterangepicker1 daterangepicker
+              (cancelDaterangepicker)="clear()"/></div>
+            <div style="display: inline-block;">
+            <span class="pick-date-txt" style="padding-left: 12px;">au</span>
+            <input autocomplete="off" id="dateend"  class="datepicker-ph custom-normsup-input-nb"
+              (hideDaterangepicker)="closeDatePicker($event)"
+              (selected)="selectedDate($event)" type="text" name="Date" placeholder="JJ/MM/AAAA"
+              #daterangepicker2 daterangepicker
+              (cancelDaterangepicker)="clear()"/></div>
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-2 col-2 col-xs-2">
+
+        </div>
+      </div>
+      <div class="row export-row nopadding" style="padding-bottom: 40px;">
+        <div style="margin: 0 auto;">
+          <button (click)="updatePreferences()" type="button" class="btn btn-primary export-btn">Faire un export</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+  <div class="col-lg-1">
+
+  </div>
+</div>

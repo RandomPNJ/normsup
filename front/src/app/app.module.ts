@@ -53,6 +53,7 @@ import { NumberOnlyDirective } from './directives/number-only.directive';
 import { SelectListComponent } from './components/groups/select-list/select-list.component';
 import { GroupDetailsComponent } from './components/groups/group-details/group-details.component';
 import { GroupListComponent } from './components/groups/group-list/group-list.component';
+import { ExportComponent } from './components/export/export.component';
 
 @NgModule({
   declarations: [
@@ -85,6 +86,7 @@ import { GroupListComponent } from './components/groups/group-list/group-list.co
     SelectListComponent,
     GroupDetailsComponent,
     GroupListComponent,
+    ExportComponent,
   ],
   imports: [
     BrowserModule,

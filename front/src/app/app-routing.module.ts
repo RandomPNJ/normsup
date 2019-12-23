@@ -15,6 +15,7 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { Configuration } from './config/environment';
 import { GroupDetailsComponent } from './components/groups/group-details/group-details.component';
 import { GroupListComponent } from './components/groups/group-list/group-list.component';
+import { ExportComponent } from './components/export/export.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginPageComponent },
@@ -30,6 +31,7 @@ const routes: Routes = [
       { path: 'alerts', component: AlertsComponent },
       { path: 'reminder', component: ReminderComponent },
       { path: 'profile', component: ProfileComponent },
+      { path: 'export', component: ExportComponent },
       { path: 'users', component: UsersManagementComponent },
       { path: '', pathMatch: 'full', redirectTo: 'main'},
     ]
@@ -48,7 +50,10 @@ const routes: Routes = [
   imports: [
     RouterModule.forRoot(
       routes,
-      // { enableTracing: true } // <-- debugging purposes only
+      // { enableTracing: true }, // <-- debugging purposes only
+      {
+        onSameUrlNavigation: 'reload'
+      },
     )
   ],
   exports: [RouterModule]

@@ -378,46 +378,41 @@ export default class SupplierRegistry {
     }
 
 
-    public createGroup(data, suppliers) {
+    public createGroup(data, suppliers, remindersData) {
         loggerT.verbose('Group data', data);
         let query = {
             timeout: 40000
         };
+        let query2 = {
+            timeout: 40000
+        };
+
+        let promises = [];
+
         query['sql']    = Query.INSERT_GROUP;
         query['values'] = [data];
         return this.mysql.query(query)
             .then(res => {
-
-                let v = [];
                 let insertId = res.insertId;
-                suppliers.forEach(supp => {
-                    loggerT.verbose('supp id', supp.id);
-                    v.push([insertId, supp.id]);
-                });
+                if(suppliers && suppliers.length > 0) {
+                    let v = [];
+                    suppliers.forEach(supp => {
+                        loggerT.verbose('supp id', supp.id);
+                        v.push([insertId, supp.id]);
+                    });
+                    
+                    query['sql']    = Query.INSERT_GROUP_MEM;
+                    query['values'] = [v];
+                    promises.push(this.mysql.query(query));
+                }
                 
-                query['sql']    = Query.INSERT_GROUP_MEM;
-                query['values'] = [v];
-                
-                return this.mysql.query(query)
-                    .then(res => {
-                        
-                        query['sql']    = Query.INSERT_GROUP_REMINDERS;
-                        query['values'] = [insertId];
-                        return this.mysql.query(query)
-                            .then(res => {
-                                return Promise.resolve(res);
-                            })
-                            .catch(err => {
-                                loggerT.error('ERROR ON SECOND QUERY createGroup : ', err);
-                                return Promise.reject(err);
-                            })
-                        ;
-                    })
-                    .catch(err => {
-                        loggerT.error('ERROR ON SECOND QUERY createGroup : ', err);
-                        return Promise.reject(err);
-                    })
-                ;
+                query2['sql']    = Query.INSERT_GROUP_REMINDERS;
+                let legal_docs = remindersData.legal_docs ? remindersData.legal_docs : '';
+                let comp_docs = remindersData.comp_docs ? remindersData.comp_docs : '';
+                query2['values'] = [insertId, 1, legal_docs, comp_docs, remindersData.frequency];
+                promises.push(this.mysql.query(query2));
+
+                return Promise.all(promises);
             })
             .catch(err => {
                 loggerT.error('ERROR ON QUERY createGroup : ', err);

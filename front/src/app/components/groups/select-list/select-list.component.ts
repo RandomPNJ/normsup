@@ -19,7 +19,7 @@ export class SelectListComponent implements OnInit, OnChanges {
   constructor() { }
 
   ngOnInit() {
-    if(this.onInitSuppliers.length > 0) {
+    if(this.onInitSuppliers && this.onInitSuppliers.length > 0) {
       let initValues = cloneDeep(this.onInitSuppliers);
       initValues.map(supp => {
         supp['checked'] = true;
@@ -36,7 +36,6 @@ export class SelectListComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: {[propKey: string]: SimpleChange}) {
-    console.log('changes', changes)
     if(changes.suppliers && changes.suppliers.currentValue) {
       this.firstChange = changes.suppliers.firstChange;
       for(let propName in this.selectedSuppliers) {
@@ -62,16 +61,13 @@ export class SelectListComponent implements OnInit, OnChanges {
     let denom = this.suppliers[i]['denomination'];
     if(value) {
       if(this.selectedSuppliers[denom]) {
-        console.log('selectSupplier one');
         this.selectedSuppliers[denom].checked = true;
       } else {
-        console.log('selectSupplier two');
         this.selectedSuppliers[denom] = this.suppliers[i];
         this.selectedSuppliers[denom].checked = true;
         this.selectedSuppliers[denom].show = false;
       }
     } else if(value === false && this.selectedSuppliers[denom]) {
-      console.log('selectSupplier three');
       this.selectedSuppliers[denom].checked = false;
     }
   }

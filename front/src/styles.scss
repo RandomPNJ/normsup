@@ -7,7 +7,10 @@ $normsup-blue: #4390EF;
 $normsup-black: #333;
 $normsup-dark-blue: #4E5983;
 $normsup-gray: #818181;
-
+$datepicker-color: #A3A6B6;
+$datepicker-font-weight: 600;
+$datepicker-placeholder-color: #A3A6B6;
+$datepicker-placeholder-weight: 700;
 
 /* ----- Fonts ----- */
 
@@ -108,127 +111,127 @@ body {
     word-break: break-all;
 }
 
-.daterangepicker.ltr .calendar.left .calendar-table,
-.daterangepicker.ltr .left .daterangepicker_input {
-    padding-bottom: 40px;
-}
+// .daterangepicker.ltr .calendar.left .calendar-table,
+// .daterangepicker.ltr .left .daterangepicker_input {
+//     padding-bottom: 40px;
+// }
 
-.daterangepicker .input-mini.active {
-    display: none;
-}
+// .daterangepicker .input-mini.active {
+//     display: none;
+// }
 
-.daterangepicker_input i {
-    display: none;
-}
+// .daterangepicker_input i {
+//     display: none;
+// }
 
-.daterangepicker .daterangepicker_input {
-    display: none;
-}
+// .daterangepicker .daterangepicker_input {
+//     display: none;
+// }
 
-.daterangepicker.ltr {
-    direction: ltr;
-    text-align: left;
-    background: #3E3E65;
-    border-radius: 10px;
-}
+// .daterangepicker.ltr {
+//     direction: ltr;
+//     text-align: left;
+//     background: #3E3E65;
+//     border-radius: 10px;
+// }
 
-.daterangepicker.ltr .calendar.left .calendar-table,
-.daterangepicker.ltr .left .daterangepicker_input {
-    padding-right: 12px;
-    background: #3E3E65;
-    color: #ffff;
-    border: 1px solid #3E3E65;
-}
+// .daterangepicker.ltr .calendar.left .calendar-table,
+// .daterangepicker.ltr .left .daterangepicker_input {
+//     padding-right: 12px;
+//     background: #3E3E65;
+//     color: #ffff;
+//     border: 1px solid #3E3E65;
+// }
 
-.daterangepicker td.off,
-.daterangepicker td.off.end-date,
-.daterangepicker td.off.in-range,
-.daterangepicker td.off.start-date {
-    background-color: #3E3E65 !important;
-    border-color: transparent;
-    color: #999;
-}
+// .daterangepicker td.off,
+// .daterangepicker td.off.end-date,
+// .daterangepicker td.off.in-range,
+// .daterangepicker td.off.start-date {
+//     background-color: #3E3E65 !important;
+//     border-color: transparent;
+//     color: #999;
+// }
 
-.daterangepicker.ltr .calendar.right .calendar-table,
-.daterangepicker.rtl .calendar.left .calendar-table {
-    border-left: none;
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
-    background: #3E3E65;
-    border: 1px solid #3E3E65;
-    color: #ffff;
-}
+// .daterangepicker.ltr .calendar.right .calendar-table,
+// .daterangepicker.rtl .calendar.left .calendar-table {
+//     border-left: none;
+//     border-top-left-radius: 0;
+//     border-bottom-left-radius: 0;
+//     background: #3E3E65;
+//     border: 1px solid #3E3E65;
+//     color: #ffff;
+// }
 
-.daterangepicker td.start-date.end-date {
-    border-radius: 50% !important;
-    background-color: #2255f9;
-}
+// .daterangepicker td.start-date.end-date {
+//     border-radius: 50% !important;
+//     background-color: #2255f9;
+// }
 
-.daterangepicker td.active,
-.daterangepicker td.active {
-    background-color: #2255f9;
-    border-color: transparent;
-    color: #fff;
-}
+// .daterangepicker td.active,
+// .daterangepicker td.active {
+//     background-color: #2255f9;
+//     border-color: transparent;
+//     color: #fff;
+// }
 
-.daterangepicker td.active,
-.daterangepicker td.active:hover {
-    background-color: linear-gradient(to right, #2255f9, #089EFE) !important;
-    background-color: #2255f9 !important;
-    border-color: transparent;
-    color: #fff;
-    border-radius: 50%;
-}
+// .daterangepicker td.active,
+// .daterangepicker td.active:hover {
+//     background-color: linear-gradient(to right, #2255f9, #089EFE) !important;
+//     background-color: #2255f9 !important;
+//     border-color: transparent;
+//     color: #fff;
+//     border-radius: 50%;
+// }
 
-.daterangepicker td.start-date {
-    border-radius: 50% !important;
-}
+// .daterangepicker td.start-date {
+//     border-radius: 50% !important;
+// }
 
-.daterangepicker td.end-date {
-    border-radius: 50% !important;
-}
+// .daterangepicker td.end-date {
+//     border-radius: 50% !important;
+// }
 
-.daterangepicker td.in-range {
-    background-color: #ebf4f8;
-    border-color: transparent;
-    color: #000;
-}
+// .daterangepicker td.in-range {
+//     background-color: #ebf4f8;
+//     border-color: transparent;
+//     color: #000;
+// }
 
-.daterangepicker .calendar td,
-.daterangepicker .calendar th:hover {
-    white-space: nowrap;
-    text-align: center;
-    min-width: 32px;
-    border-radius: 50% !important;
-}
+// .daterangepicker .calendar td,
+// .daterangepicker .calendar th:hover {
+//     white-space: nowrap;
+//     text-align: center;
+//     min-width: 32px;
+//     border-radius: 50% !important;
+// }
 
-.daterangepicker .calendar td,
-.daterangepicker .calendar th {
-    white-space: nowrap;
-    text-align: center;
-    min-width: 32px;
-    border-radius: 50%;
-}
+// .daterangepicker .calendar td,
+// .daterangepicker .calendar th {
+//     white-space: nowrap;
+//     text-align: center;
+//     min-width: 32px;
+//     border-radius: 50%;
+// }
 
-.range_inputs .btn {
-    background: linear-gradient(to right, #2255f9, #089EFE) !important;
-}
+// .range_inputs .btn {
+//     background: linear-gradient(to right, #2255f9, #089EFE) !important;
+// }
 
-.daterangepicker td.in-range {
-    background-color: #8686A5 !important;
-    border-color: transparent;
-    color: #000;
-    // border-radius: 0;
-}
+// .daterangepicker td.in-range {
+//     background-color: #8686A5 !important;
+//     border-color: transparent;
+//     color: #000;
+//     // border-radius: 0;
+// }
 
-.daterangepicker td.active,
-.daterangepicker td.active:hover {
-    background: linear-gradient(to right, #2255f9, #089EFE) !important;
-}
+// .daterangepicker td.active,
+// .daterangepicker td.active:hover {
+//     background: linear-gradient(to right, #2255f9, #089EFE) !important;
+// }
 
-.daterangepicker {
-    font-family: sans-serif
-}
+// .daterangepicker {
+//     font-family: sans-serif
+// }
 
 ::-webkit-scrollbar {
     background-color: #5d5d78;
@@ -1490,9 +1493,12 @@ td {
 
     .normsup-checkbox {
 
-}
+    }
 }
 
+.export-checkbox [type="checkbox"]:not(:checked) + label, .normsup-checkbox-cont [type="checkbox"]:checked + label {
+    line-height: 1.4 !important;
+}
 /** Custom Normsup Card **/
 
 .normsup-card {
@@ -1557,4 +1563,48 @@ td {
         transform: translateX(1.5rem);
     }
     
+}
+
+
+
+/** Normsup Datepicker **/
+
+.daterangepicker .calendar {
+    max-width: none !important;
+}
+
+.daterangepicker, .calendar, .calendar-table {
+    padding: 0px !important;
+    margin: 0px !important;
+}
+
+.datepicker-ph {
+
+    text-align: center;
+    font-family: 'Roboto Regular';
+    font-size: 15px;
+    letter-spacing: 0;
+    color: #4390EF;
+    opacity: 0.6;
+
+    &::placeholder {
+        font-family: 'Roboto Regular';
+        font-size: 15px;
+        letter-spacing: 0;
+        color: #4390EF;
+        opacity: 0.6;
+    }
+}
+.sort-by-date {
+
+    box-shadow: none !important;
+    // background: linear-gradient(229.28deg, #353559 0%, #353559 100%) !important;
+    // padding-left: 15px !important;
+    // border-bottom: 0 !important;
+    height: 30px;
+    // font-weight: $datepicker-font-weight;
+
+    // &::placeholder {
+    //   color: #FFFFFF;
+    // }
 }

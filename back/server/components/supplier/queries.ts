@@ -10,8 +10,9 @@ export const QUERY_GET_SUPPLIER = 'SELECT * FROM `organisations`  AS o LEFT JOIN
 
 
 export const QUERY_CHECK_GROUP = 'SELECT * FROM `groups` WHERE `client_id` = ? AND `name` LIKE ?';
-
-export const QUERY_GET_GROUPS = 'SELECT * FROM `groups` WHERE `client_id` = ?';
+export const QUERY_GET_GROUPS = 'SELECT g.name, g.client_id, g.description, g.creation_time, g.id, count(gm.group_id) AS members_count FROM `groups` AS g LEFT OUTER JOIN `group_members` AS gm ON g.id = gm.group_id WHERE `client_id` = ? GROUP BY g.id ORDER BY g.name ASC';
+// export const QUERY_GET_GROUPS = 'SELECT * FROM `groups` WHERE `client_id` = ?';
+//TODO: Factoriser QUERY_GET_GROUP_MEMBERS & QUERY_GET_GROUP_DETAILS
 export const QUERY_GET_GROUP_MEMBERS = 'SELECT o.id, o.denomination, o.siret, o.address, o.siren, o.country, o.city, o.dateCreation, o.legalUnit, o.postalCode FROM `group_members` as gm LEFT JOIN `organisations` as o ON o.id = gm.member_id WHERE gm.group_id = ?';
 export const QUERY_GET_GROUP_DETAILS = 'SELECT * FROM `groups` AS g LEFT JOIN `group_reminders` as gr ON g.id = gr.group_id WHERE g.client_id = ? AND g.id = ?';
 export const QUERY_GET_GROUPS_NAME = 'SELECT * FROM `groups` WHERE `client_id` = ? AND `name` LIKE ?';
@@ -28,7 +29,7 @@ export const INSERT_GROUP = 'INSERT INTO `groups` SET ?';
 export const INSERT_GROUP_MEM = 'INSERT INTO `group_members` (group_id, member_id) VALUES ?';
 export const INSERT_REL = 'INSERT INTO `client_supplier_relation` SET ?';
 export const INSERT_REPRESENTATIVE = 'INSERT INTO `representatives` SET ?';
-export const INSERT_GROUP_REMINDERS = 'INSERT INTO `group_reminders` (group_id) VALUES ?'
+export const INSERT_GROUP_REMINDERS = 'INSERT INTO `group_reminders` (group_id, activated, legal_docs, comp_docs, frequency) VALUES (?,?,?,?,?)'
 export const MODIFY_GROUP_REMINDERS = 'INSERT INTO `group_reminders` (group_id, activated, legal_docs, comp_docs, frequency) VALUES (?,?,?,?,?)' + 
 'ON DUPLICATE KEY UPDATE group_id= ?, activated = ?, legal_docs = ?, comp_docs = ?, frequency = ?';
 

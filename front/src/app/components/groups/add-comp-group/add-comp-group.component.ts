@@ -168,7 +168,10 @@ export class AddCompGroupComponent implements OnInit {
 
   //TODO: Rework this function, I made this on a hurry so it's very poorly written
   private createGroup() {
-    const docSettings = {};
+    const docSettings = {
+      comp_docs: '',
+      frequency: '5d'
+    };
     let i = 0;
     let data;
     let uri;
@@ -200,14 +203,14 @@ export class AddCompGroupComponent implements OnInit {
     
     if(this.type === 'MODIFICATION' && this.id) {
       uri = '/api/supplier/group/' + this.id +'/modify_group';
-      data = {name: this.group.name, suppliers: suppToAdd, deleteSuppliers: suppToDelete};
+      data = {name: this.group.name, suppliers: suppToAdd, deleteSuppliers: suppToDelete, remindersSettings: docSettings};
     } else {
       uri = '/api/supplier/define_group';
-      data = {name: this.group.name, suppliers: suppToAdd};
+      data = {name: this.group.name, suppliers: suppToAdd, remindersSettings: docSettings};
     }
 
     this.http.post(uri, data)
-      .subscribe(res => {
+      .subscribe(() => {
         if(this.type !== 'MODIFICATION') {
           this.changeModal.emit('newGroup');
           this.state = 'newGroup';

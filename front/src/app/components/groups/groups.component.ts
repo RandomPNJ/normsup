@@ -3,7 +3,7 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { combineLatest, Subscription } from 'rxjs';
 import { cloneDeep } from 'lodash';
 import { HttpService } from 'src/app/services/http.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute, UrlSegment } from '@angular/router';
 import { GroupsService } from 'src/app/services/groups.service';
 
 
@@ -27,7 +27,6 @@ export class GroupsComponent implements OnInit {
         if(!this.first && n && n.length > 0) {
           this.groups = n;
           this.first = true;
-          console.log('here', n)
         }
       });
     }
@@ -35,11 +34,13 @@ export class GroupsComponent implements OnInit {
   ngOnInit() {
   }
 
-  onActivate(e) {
-    console.log('onActivate', e);
+  onActivate(componentRef) {
+    if(this.router.url === '/dashboard/groups;action=deleted') {
+      this.router.navigate(['dashboard', 'groups']);
+      componentRef.reloadList();
+    }
   }
 
   getGroupsData(e) {
-    console.log('getGroupsData', e);
   }
 }

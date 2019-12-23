@@ -17,23 +17,23 @@ export function createGroup(req, res, SupplierRegistry) {
     }
     let group = {};
     let suppliers = [];
+    let docSettings = {
+        activated: 1,
+        legal_docs: '',
+        comp_docs: '',
+        frequency: '5d'
+    };
     group['name'] = req.body.name;
     group['client_id'] = req.decoded.organisation;
     if(req.body.suppliers.length > 0) {
         suppliers = cloneDeep(req.body.suppliers);
     }
-    // GroupSchema.validate(req.body, (err, val) => {
-    //     if (err && err.details[0].message) {
-    //         const error = new Error(`Invalid request, error message: ${err.details[0].message}.`);
-    //         error['statusCode'] = 400;
-    //         throw error;
-    //     }
-    //     data = val;
-    // });
+    if(req.body.remindersSettings) {
+        docSettings = req.body.remindersSettings;
+    }
+    loggerT.verbose('req.body.remindersSettings', req.body.remindersSettings);
 
-    loggerT.verbose('suppliers', suppliers);
-
-    return SupplierRegistry.createGroup(group, suppliers)
+    return SupplierRegistry.createGroup(group, suppliers, docSettings)
         .then(res => {
             loggerT.verbose('Res  = ', res);
             return res;
