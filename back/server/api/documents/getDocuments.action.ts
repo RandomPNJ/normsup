@@ -13,9 +13,9 @@ export default {
 };
 
 export function getDocuments(req, res, DocumentsRegistry) {
-    // if (!req.decoded) {
-    //     return Promise.reject(`Cannot get user informations, invalid request.`);
-    // }
+    if(!req.decoded) {
+        return Promise.reject(`Cannot get user informations, invalid request.`);
+    }
 
     const params = req.query;
     loggerT.verbose('Getting the documents.');
@@ -27,8 +27,17 @@ export function getDocuments(req, res, DocumentsRegistry) {
     }
 
     let data = {
-        company: params.company
+        company: params.company,
+        groups: [],
+        suppliers: []
     };
+
+    if(params.groups) {
+        data['groups'] = params.groups;
+    }
+    if(params.suppliers) {
+        data['suppliers'] = params.suppliers;
+    }
 
     return DocumentsRegistry.getDocuments(data)
         .then(res => {

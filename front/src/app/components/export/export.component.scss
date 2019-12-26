@@ -65,12 +65,7 @@
     }
 }
 
-.add-doc-link {
-    font-family: 'Roboto Regular';
-    font-size: 15px;
-    letter-spacing: 0;
-    color: #4390EF;
-}
+
 
 .exp-border-bottom {
     border-bottom: 1px solid #F3F7FC;
@@ -79,6 +74,7 @@
 
 .pick-date-txt {
     font-family: 'Roboto Regular';
+    font-size: 14px;
     letter-spacing: 0;
     color: #4E5983;
     padding-right: 12px;
@@ -86,10 +82,24 @@
 
 .export-btn {
     font-family: 'Roboto Medium';
+    font-size: 13px;
     letter-spacing: 0;
     color: #FFFFFF;
-    font-size: 13px;
     border-radius: 5px !important;
     width: 155px;
     text-transform: none;
+}
+
+.doc-list {
+    display: block;
+    font-family: 'Roboto Medium';
+    font-size: 15px;
+    color: #4E5983;
+}
+
+.undisplay {
+    display:none;
+    opacity:0;
+    position:relative;    
+    transition: opacity 2s;
 }
