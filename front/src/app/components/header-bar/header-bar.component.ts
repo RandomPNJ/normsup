@@ -76,7 +76,7 @@ export class HeaderBarComponent implements OnInit {
   logOut() {
     this.bsService.clearLocalStorage();
     this.showHeader = false;
-    this.router.navigate(['/login']);
+    this.router.navigate(['/logout']);
   }
 
   getHeaderStyle() {

@@ -54,6 +54,7 @@ import { SelectListComponent } from './components/groups/select-list/select-list
 import { GroupDetailsComponent } from './components/groups/group-details/group-details.component';
 import { GroupListComponent } from './components/groups/group-list/group-list.component';
 import { ExportComponent } from './components/export/export.component';
+import { LogoutPageComponent } from './components/logout-page/logout-page.component';
 
 @NgModule({
   declarations: [
@@ -87,6 +88,7 @@ import { ExportComponent } from './components/export/export.component';
     GroupDetailsComponent,
     GroupListComponent,
     ExportComponent,
+    LogoutPageComponent,
   ],
   imports: [
     BrowserModule,

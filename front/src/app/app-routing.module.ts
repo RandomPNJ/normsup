@@ -16,9 +16,11 @@ import { Configuration } from './config/environment';
 import { GroupDetailsComponent } from './components/groups/group-details/group-details.component';
 import { GroupListComponent } from './components/groups/group-list/group-list.component';
 import { ExportComponent } from './components/export/export.component';
+import { LogoutPageComponent } from './components/logout-page/logout-page.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginPageComponent },
+  { path: 'logout', component: LogoutPageComponent },
   { path: 'dashboard', component: DashboardComponent, canActivate: [LoggedinGuard],  data: { roles: Configuration.basicRoutesRoles },
     children: [
       { path: 'main', component: Dashboard1Component },

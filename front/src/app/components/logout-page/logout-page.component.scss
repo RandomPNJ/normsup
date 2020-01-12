@@ -12,6 +12,10 @@
     position: absolute;
 }
 
+.logout-logo {
+    padding-bottom: 12rem;
+}
+
 .loginContainer a {
     padding: 31px;
     height: 39px !important;
@@ -20,13 +24,11 @@
 .container {
     max-width: 400px;
     text-align: center;
-    top: 50%;
+    top: 7%;
     position: absolute;
-    margin-top: -200px;
     left: 0%;
     right: 0%;
     width: 100%;
-
 }
 
 
@@ -40,7 +42,7 @@
 }
 
 .colorDiv {
-    padding: 30px;
+    padding: 50px 0px;
     background-color: white;
     border-radius: 10px;
 }
@@ -59,7 +61,7 @@
     display: none;
 }
 
-button i {
+form button i {
     margin-left: 0px;
 }
 
@@ -158,39 +160,22 @@ select:-webkit-autofill:focus {
     border-radius: 10px !important;
 }
 
-.login-input-container {
-    padding: 0px 60px;
-}
-
-.login-checkbox {
-    flex-flow: column wrap;
-    display: flex;
-    align-items: center;
-    padding-top: 25px;
-}
-
-.normsup-checkbox-cont [type="checkbox"]:not(:checked) + label, .normsup-checkbox-cont [type="checkbox"]:checked + label {
-    line-height: 1.6 !important;
-}
-
-.login-btn-cont {
-    padding-top: 26.250px;
-}
-
-.forgot-password-lnk {
-    padding-top: 25px;
-    cursor: pointer;
-    color: #4E5983;
-    font-size: 14px;
-    font-family: 'Roboto Regular';
-    opacity: 0.5;
-    text-decoration: underline;
-    width: 100%;
-    text-align: center;
-}
 .virtualBg{
     position: absolute;
     width: 100%;
     z-index: 0;
     bottom: 0;
   }
+.deconnect-txt-one {
+    font-family: 'Roboto Bold';
+    font-size: 25px;
+    letter-spacing: 0;
+    color: #4390EF;
+}
+
+.deconnect-txt-two {
+    font-family: 'Roboto Regular';
+    font-size: 15px;
+    letter-spacing: 0;
+    color: #4E5983;
+}

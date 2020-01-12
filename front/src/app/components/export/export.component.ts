@@ -5,11 +5,14 @@ import { find } from 'lodash'
 import { debounceTime, distinctUntilChanged, map, tap, switchMap, catchError } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
+import * as moment from 'moment';
+
 @Component({
   selector: 'app-export',
   templateUrl: './export.component.html',
   styleUrls: ['./export.component.scss']
 })
+
 export class ExportComponent implements OnInit {
 
   @ViewChild('daterangepicker1') startDatePicker: ElementRef;
@@ -18,8 +21,17 @@ export class ExportComponent implements OnInit {
   exportType: any = {
     group: false,
     supplier: false
-  }
+  };
 
+  dateRange: any = {
+    startDate: null,
+    endDate: null
+  };
+
+  showWrongDateOne: Boolean = false;
+  showWrongDateTwo: Boolean = false;
+
+  supplierSelected: any;
   searching: Boolean = false;
   searchFailed: Boolean = false;
   firstGroupLoad: Boolean = true;
@@ -35,7 +47,7 @@ export class ExportComponent implements OnInit {
   suppliersChosen: Array<any> = [];
   documentsToRequest: Array<string> = [];
 
-  search = (text$: Observable<string>) =>
+  searchSupplier = (text$: Observable<string>) =>
     text$.pipe(
       debounceTime(300),
       distinctUntilChanged(),
@@ -43,6 +55,7 @@ export class ExportComponent implements OnInit {
       switchMap(term =>
         this.httpService.get('/api/supplier', new HttpParams().set('search', term)).pipe(
           tap(() => this.searchFailed = false),
+          map(response => response.body['items']),
           catchError(() => {
             this.searchFailed = true;
             return of([]);
@@ -50,6 +63,10 @@ export class ExportComponent implements OnInit {
       ),
       tap(() => this.searching = false)
     );
+
+
+  formatter = (x: any) => x.denomination;
+  formatter2 = (x: any) => x.denomination;
 
   constructor(
     private dateRangeConf: DaterangepickerConfig,
@@ -72,7 +89,7 @@ export class ExportComponent implements OnInit {
   addDocumentType() {
     if(this.documentChosen.value !== undefined) {
       console.log('this.documentChosen = ', this.documentChosen);
-      this.documentsToRequest.push(this.documentChosen);
+      this.documentsToRequest.push(this.documentChosen.value);
       this.documents.map(obj => {
         if(obj.value === this.documentChosen.value) {
           obj.available = false;
@@ -80,26 +97,28 @@ export class ExportComponent implements OnInit {
         }
       });
       this.documentChosen = this.documents[0];
-      console.log('this.documents', this.documents)
     }
-    console.log('this.documentsToRequest = ', this.documentsToRequest);
   }
 
-  closeDatePicker() {
-
-  }
 
   selectGroup(checked) {
-    if(checked === true && this.firstGroupLoad === true) {
+    if(checked === true) {
+      this.exportType.supplier = false;
+    }
+    if(this.firstGroupLoad === true) {
       this.httpService
         .get('/api/supplier/groups')
         .subscribe(res => {
           this.groups = res.body['items'];
           this.firstGroupLoad = false;
-          console.log('this.groups', this.groups)
         })
       ;
-      this.exportType.supplier = false;
+    }
+  }
+
+  selectSupplier(checked) {
+    if(checked === true) {
+      this.exportType.group = false;
     }
   }
 
@@ -113,21 +132,103 @@ export class ExportComponent implements OnInit {
     }
   }
 
-  choseSuppliers(value) {
+  choseSupplier() {
+    console.log('this.supplierSelected', this.supplierSelected)
+    if(typeof this.supplierSelected === 'string') {
+      return;
+    }
     if(this.groupsChosen.length > 0) {
       this.groupsChosen = [];
     }
 
-    if(find(this.suppliersChosen, o => { return o.name === value.name; }) === undefined) {
-      this.suppliersChosen.push(value);
+    if(find(this.suppliersChosen, o => { return o.name === this.supplierSelected.name; }) === undefined) {
+      this.suppliersChosen.push(this.supplierSelected);
+    }
+    this.supplierSelected = {};
+  }
+
+  selectedDate(e, type) {
+    if(type === 'start') {
+      if(!this.dateRange.endDate) {
+        this.dateRange.startDate = moment(e.start).format('DD-MM-YYYY');
+        this.showWrongDateOne = false;
+      } else if(this.dateRange.endDate && moment(e.start).isBefore(moment(this.dateRange.endDate, 'DD-MM-YYYY'))) {
+        this.dateRange.startDate = moment(e.start).format('DD-MM-YYYY');
+        this.showWrongDateOne = false;
+      } else {
+        this.showWrongDateOne = true;
+      }
+    }
+    if(type === 'end') {
+      if(!this.dateRange.startDate) {
+        this.dateRange.endDate = moment(e.start).format('DD-MM-YYYY');
+        this.showWrongDateTwo = false;
+      } else if(this.dateRange.startDate && moment(e.start).isAfter(moment(this.dateRange.startDate, 'DD-MM-YYYY'))) {
+        this.dateRange.endDate = moment(e.start).format('DD-MM-YYYY');
+        this.showWrongDateTwo = false;
+      } else {
+        this.showWrongDateTwo = true;
+      }
+      this.dateRange.endDate = moment(e.start).format('DD-MM-YYYY');
+    }
+
+    console.log('Daterange', this.dateRange);
+  }
+
+  closeDatePicker(e, type) {
+    if(type === 'start' && !this.dateRange.startDate) {
+      this.dateRange.startDate = moment(e.start).format('DD-MM-YYYY');
+    }
+    if(type === 'end' && !this.dateRange.endDate) {
+      this.dateRange.endDate = moment(e.start).format('DD-MM-YYYY');
     }
   }
 
-  selectedDate() {
+  clear() {
 
   }
 
-  clear() {
+  export() {
+    let length;
+    const endRes = {
+      startDate: this.dateRange.startDate,
+      endDate: this.dateRange.endDate,
+      type: '',
+      values: '',
+      docs: ''
+    };
+
+    if(this.documentsToRequest.length > 0) {
+      endRes.docs = this.documentsToRequest.join(',');
+    }
+
+    if(this.exportType.group === true) {
+      endRes.type = 'GROUP';
+      length = this.groupsChosen.length;
+      this.groupsChosen.forEach((res, i) => {
+        if(i !== (length - 1)) {
+          endRes.values += res.id + ','
+        } else {
+          endRes.values += res.id
+        }
+      });
+    } else if(this.exportType.supplier === true) {
+      endRes.type = 'SUPPLIER';
+      length = this.suppliersChosen.length;
+      this.suppliersChosen.forEach((res, i) => {
+        if(i !== (length - 1)) {
+          endRes.values += res.id + ','
+        } else {
+          endRes.values += res.id
+        }
+      });
+    } else {
+      // Todo: Gérer ce cas de figure
+      return 'ERROR'
+    }
+
+    console.log('endRes', endRes)
+    // this.httpService.get('/api/documents/export', endRes)
 
   }
 

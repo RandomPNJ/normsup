@@ -16,7 +16,14 @@ export class LoginPageComponent implements OnInit, OnDestroy {
 
   @ViewChild(ModalComponent) appModal: ModalComponent;
 
-  credentials = {};
+  formFocus: any = {
+    one: false,
+    two: false
+  };
+  credentials = {
+    username: '',
+    password: ''
+  };
   iserror = 'hide';
   iserror1 = 'hide';
   subscription: Subscription;
@@ -45,6 +52,7 @@ export class LoginPageComponent implements OnInit, OnDestroy {
 
   // TODO: change this ugly af function
   validate() {
+    console.log('this.credentials', this.credentials);
     if (this.credentials['username'] !== '' && this.credentials['password'] !== '') {
       this.isLoader = true;
       this.subscription = this.authService.login(this.credentials['username'], this.credentials['password'])
