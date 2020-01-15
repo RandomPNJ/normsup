@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { DaterangepickerConfig } from 'ng2-daterangepicker';
 import { HttpService } from 'src/app/services/http.service';
-import { find } from 'lodash'
+import { find, filter, remove } from 'lodash'
 import { debounceTime, distinctUntilChanged, map, tap, switchMap, catchError } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
@@ -133,7 +133,6 @@ export class ExportComponent implements OnInit {
   }
 
   choseSupplier() {
-    console.log('this.supplierSelected', this.supplierSelected)
     if(typeof this.supplierSelected === 'string') {
       return;
     }
@@ -182,6 +181,14 @@ export class ExportComponent implements OnInit {
     if(type === 'end' && !this.dateRange.endDate) {
       this.dateRange.endDate = moment(e.start).format('DD-MM-YYYY');
     }
+  }
+
+  removeGroup(group) {
+    remove(this.groupsChosen, group);
+  }
+
+  removeSupplier(supplier) {
+    remove(this.suppliersChosen, supplier);
   }
 
   clear() {

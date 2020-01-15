@@ -10,6 +10,9 @@ export class LogoutPageComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    setTimeout(() => {
+      window.location.href = 'http://www.normsup.com';
+    }, 3000)
   }
 
 }

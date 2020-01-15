@@ -29,7 +29,10 @@
             </div>
           </div>
           <div *ngIf="groupsChosen.length > 0">
-            <span *ngFor="let group of groupsChosen" class="doc-list">{{group.name}}</span>
+            <div *ngFor="let group of groupsChosen"> 
+              <span  class="doc-list">{{group.name}}</span>
+              <span class="trash-icn" (click)="removeGroup(group)"><i class="far fa-trash-alt"></i></span>
+            </div>
           </div>
         </div>
         <div class="col-lg-4 col-md-4 col-4 col-xs-4 center-row exp-border-bottom">
@@ -50,7 +53,10 @@
             </div>
           </div>
           <div *ngIf="suppliersChosen.length > 0">
-            <span *ngFor="let supplier of suppliersChosen" class="doc-list">{{supplier.denomination}}</span>
+            <div *ngFor="let supplier of suppliersChosen">
+              <span class="doc-list">{{supplier.denomination}}</span>
+              <span class="trash-icn" (click)="removeSupplier(supplier)"><i class="far fa-trash-alt"></i></span>
+            </div>
           </div>
         </div>
 

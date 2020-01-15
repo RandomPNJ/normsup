@@ -17,9 +17,11 @@ import { GroupDetailsComponent } from './components/groups/group-details/group-d
 import { GroupListComponent } from './components/groups/group-list/group-list.component';
 import { ExportComponent } from './components/export/export.component';
 import { LogoutPageComponent } from './components/logout-page/logout-page.component';
+import { SupplierUploadPageComponent } from './components/supplier-upload-page/supplier-upload-page.component';
 
 const routes: Routes = [
-  { path: 'login', component: LoginPageComponent },
+  { path: 'upload', component: SupplierUploadPageComponent },
+  { path: 'login', component: LoginPageComponent, canActivate: [LoggedinGuard] },
   { path: 'logout', component: LogoutPageComponent },
   { path: 'dashboard', component: DashboardComponent, canActivate: [LoggedinGuard],  data: { roles: Configuration.basicRoutesRoles },
     children: [

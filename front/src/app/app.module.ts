@@ -55,6 +55,7 @@ import { GroupDetailsComponent } from './components/groups/group-details/group-d
 import { GroupListComponent } from './components/groups/group-list/group-list.component';
 import { ExportComponent } from './components/export/export.component';
 import { LogoutPageComponent } from './components/logout-page/logout-page.component';
+import { SupplierUploadPageComponent } from './components/supplier-upload-page/supplier-upload-page.component';
 
 @NgModule({
   declarations: [
@@ -89,6 +90,7 @@ import { LogoutPageComponent } from './components/logout-page/logout-page.compon
     GroupListComponent,
     ExportComponent,
     LogoutPageComponent,
+    SupplierUploadPageComponent,
   ],
   imports: [
     BrowserModule,
