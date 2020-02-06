@@ -8,23 +8,19 @@
                 <div class="colorDiv col s12">
                     <!-- <embed src="../../../assets/img/login-logo.svg" /> -->
                     <img src="../../../assets/img/normsup-logo.png" style="height: 75px;" />
-                    <!-- <div>
-                        <label for="username" class="error" [ngClass]="iserror"> <img src="../../../assets/img/error-icn.svg" alt="" >&nbsp;&nbsp; Please enter a valid username or email address.</label><br>
-                        <label for="password" class="error" [ngClass]="iserror1"><img src="../../../assets/img/error-icn.svg" alt="">&nbsp;&nbsp;Please enter a valid password.</label><br>
-                    </div> -->
                     <div class="row" style="padding-top: 35px;">
                         <div class="col-lg-3 col-md-3 col-xs-3 col-3"></div>
                         <div class="input-field col-lg-6 col-md-6 col-xs-6 col-6 s6 nopadding">
-                            <input (focus)="formFocus.one=true" (blur)="formFocus.one=false" id="credentialsUsername" name="credentialsUsername" type="email" class="form-control  custom-normsup-input-nb" [(ngModel)]='credentials.username' required>
-                            <label [ngClass]="{'lowered-opac': !credentials.username && formFocus.one === false, 'custom-label-input-test-active': credentials.username || formFocus.one === true}" class="custom-normsup-label-test" for="credentialsUsername">Adresse mail</label>
+                            <input id="credentialsUsername" name="credentialsUsername" type="email" class="form-control  custom-normsup-input-nb" [(ngModel)]='credentials.username' required>
+                            <label class="custom-normsup-label-test custom-label-input-test-active" for="credentialsUsername">Adresse mail</label>
                         </div>
                         <div class="col-lg-3 col-md-3 col-xs-3 col-3"></div>
                     </div>
-                    <div class="row" style="padding-top: 15px;">
+                    <div class="row" style="padding-top: 17px;">
                         <div class="col-lg-3 col-md-3 col-xs-3 col-3"></div>
                         <div class="input-field col-lg-6 col-md-6 col-xs-6 col-6 s6 nopadding">
-                            <input (focus)="formFocus.two=true" (blur)="formFocus.two=false" id="password" name="credentialsPassword" type="password" class="form-control  custom-normsup-input-nb" [(ngModel)]='credentials.password' required>
-                            <label [ngClass]="{'lowered-opac': !credentials.password && formFocus.two === false, 'custom-label-input-test-active': credentials.password || formFocus.two === true}" class="custom-normsup-label-test" for="credentialsPassword">Mot de passe</label>
+                            <input id="password" name="credentialsPassword" type="password" class="form-control  custom-normsup-input-nb" [(ngModel)]='credentials.password' required>
+                            <label class="custom-normsup-label-test custom-label-input-test-active" for="credentialsPassword">Mot de passe</label>
                         </div>
                         <div class="col-lg-3 col-md-3 col-xs-3 col-3"></div>
                     </div>
@@ -34,7 +30,7 @@
                     <div class="row form-check form-check-inline normsup-checkbox-cont login-checkbox">
                         <input class="form-check-input normsup-checkbox" type="checkbox"
                           id="stayConnected" [(ngModel)]="credentials.cacheConnected">
-                        <label class="form-check-label r-robo-14" for="stayConnected">Restez connecté</label>
+                        <label class="form-check-label r-robo-14 stayConnected" for="stayConnected">Restez connecté</label>
                     </div>
                     <div class="login-btn-cont">
                         <button class="btn btn-outline-normsup" style="position: relative;padding-bottom: 0.3rem !important;padding-top: 0.3rem !important;" type="submit" name="submit" (click)='validate()'>

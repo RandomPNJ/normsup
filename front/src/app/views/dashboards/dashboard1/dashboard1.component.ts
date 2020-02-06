@@ -157,7 +157,7 @@ export class Dashboard1Component implements OnInit, AfterViewInit {
 		],
 		datasets: [
 			{
-				data: [30, 30, 20, 20],
+				data: [62, 25, 13],
 				backgroundColor: [
 					"#4390EF",
 					"#C7E0FF", 
@@ -172,6 +172,15 @@ export class Dashboard1Component implements OnInit, AfterViewInit {
 	};
 
 	public groupSupplierOptions: any = {
+		aspectRatio: 1,
+		layout: {
+            padding: {
+                left: 0,
+                right: 0,
+                top: 0,
+                bottom: 0,
+            }
+        },
 		responsive: true,
 		cutoutPercentage: 65,
 		tooltips: {
@@ -190,11 +199,11 @@ export class Dashboard1Component implements OnInit, AfterViewInit {
 			}
 		},
 		title: {
-			display: true,
+			display: false,
 			text: 'Fournisseur par groupe (en %)',
 			position: 'top',
 			fontColor: '#4E5983', //Default black
-			fontFamily: 'Avenir Medium', //Default Arial,
+			fontFamily: 'Roboto Regular', //Default Arial,
 			fontSize: 14
 		},
 		plugins: {
@@ -215,7 +224,7 @@ export class Dashboard1Component implements OnInit, AfterViewInit {
 				fontStyle: 'bold',
 			
 				// font family, default is defaultFontFamily
-				fontFamily: "'Avenir Black', 'Avenir'"
+				fontFamily: "'Roboto Regular', 'Roboto'"
 			}
 		}
 	};
@@ -223,7 +232,8 @@ export class Dashboard1Component implements OnInit, AfterViewInit {
 	/** Conformity per group chart **/
 	public confPerGrpSet = {
 		labels: [
-			'Groupe 1', 'Groupe 2', 'Groupe 3', 'Groupe 4',
+			// 'Groupe 1', 'Groupe 2', 'Groupe 3', 'Groupe 4',
+			'','','','',
 		],
 		datasets: [
 			{
@@ -275,7 +285,7 @@ export class Dashboard1Component implements OnInit, AfterViewInit {
 			}]
 		},
 		title: {
-			display: true,
+			display: false,
 			text: 'Taux de conformité par groupe de fournisseurs (en%)',
 			position: 'top',
 			fontColor: '#4E5983', //Default black
@@ -300,7 +310,7 @@ export class Dashboard1Component implements OnInit, AfterViewInit {
 				fontStyle: 'bold',
 			
 				// font family, default is defaultFontFamily
-				fontFamily: "'Avenir Black', 'Avenir'"
+				fontFamily: "'Roboto Regular', 'Roboto'"
 			}
 		}
 	};

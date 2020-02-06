@@ -350,8 +350,8 @@ td {
     font-family: 'Roboto Bold';
     font-size: 25px;
     color: #4390EF;
-    padding: 10px 0px 10px 10px;
-    font-weight: 500;
+    padding: 45px 0px 10px 35px;
+    // font-weight: 500;
     font-size: 21px;
     display: block;
 }
@@ -1619,4 +1619,19 @@ td {
     font-size: 14px !important;
     letter-spacing: 0 !important;
     color: #4E5983 !important;
+}
+
+.normsup-navbar {
+
+    .navbar {
+        box-shadow: unset !important;
+    }
+}
+
+.btn {
+    box-shadow: unset !important;
+
+    &:hover {
+        box-shadow: unset !important;
+    }
 }

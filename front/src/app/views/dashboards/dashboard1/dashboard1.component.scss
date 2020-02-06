@@ -1,5 +1,5 @@
 .dash-container {
-    padding-left: 10px;
+    padding-left: 8rem;
     padding-top: 20px;
 }
 
@@ -39,7 +39,16 @@
 }
 
 .card-big {
-    height: 330px;
+    // height: 330px;
+    // height: 275px;
+}
+
+.second-card-row {
+    height: 275px;
+}
+
+.third-card-row {
+    min-height: 310px;
 }
 
 .card.card-cascade {
@@ -51,7 +60,7 @@
 
 
 .number-fourn {
-    font-family: 'Avenir Black';
+    font-family: 'Roboto Bold';
     font-size: 24px;
     color: #4E5983;
     -webkit-user-select: none; /* Safari */        
@@ -66,7 +75,7 @@
 
 .box-title {
     font-size: 15px;
-    font-family: 'Avenir Black';
+    font-family: 'Roboto Bold';
     color: #4E5983;
     text-align: center;
     padding-top: 13px;
@@ -103,7 +112,7 @@
 
 .card-txt {
     font-size: 14px;
-    font-family: 'Avenir Medium';
+    font-family: 'Roboto Regular';
     display: block;
     color: #4E5983;
     text-align: center;
@@ -122,10 +131,12 @@
     
 
     th {
+        padding-top: 5px !important;
+        padding-bottom: 5px !important;
+        background-color: #fff;
         border-bottom: none !important;
-        font-family: 'Avenir Black';
-        font-size: 13px;
-        letter-spacing: 0;
+        font-family: 'Roboto Bold' !important;
+        font-size: 13px !important;
         color: #4E5983;
     }
 
@@ -135,38 +146,53 @@ td {
     vertical-align: middle !important;
 }
 .reminder-txt {
-    text-align: center;
-    font-family: 'Avenir Medium';
+    text-align: left;
+    font-family: 'Roboto Regular';
     font-size: 14px;
     letter-spacing: 0;
     color: #4E5983;
+
+    &:first-child {
+        border-top: none !important;
+    }
 }
 
 .group-txt {
-    text-align: center;
+    text-align: left;
     text-decoration: underline;
-    font-family: 'Avenir Medium';
+    font-family: 'Roboto Regular';
     font-size: 14px;
     letter-spacing: 0;
     color: #4390EF;
+
+    &:first-child {
+        border-top: none !important;
+    }
 }
 
 .btn-modify {
-    font-family: 'Avenir Heavy';
+    font-family: 'Roboto Medium';
     font-size: 13px;
     text-transform: capitalize;
     color: #4390EF;
+    padding-top: 4.5px;
+    padding-bottom: 4.5px;
+    margin-bottom: 15px;
+    margin-top: 15px;
+    // &:first-child {
+    //     border-top: none !important;
+    // }
 }
 
 .legend-cont {
     display: inline-block;
-    font-family: 'Avenir Medium';
+    font-family: 'Roboto Regular';
     font-size: 14px;
 }
 
 .v-legend-cont {
     display: block;
-    font-family: 'Avenir Medium';
+    font-family: 'Roboto Regular';
     font-size: 14px;
     padding-top: 15px !important;
     
@@ -194,7 +220,8 @@ td {
 }
 
 .v-list-scroll {
-    height: 300px;
+    // height: 300px;
+    max-height: 350px;
     overflow-y: auto;
 }
 
@@ -213,4 +240,17 @@ td {
 
 .bottom-legend {
 
+}
+
+.groupSupplierDoughnut {
+    height: 183px;
+}
+
+.reminders-card {
+    padding: 23px 20px 0px 20px !important;
+    
+    td {
+        border-top: none !important;
+        border-bottom: 1px solid  #F3F7FC;
+    }
 }

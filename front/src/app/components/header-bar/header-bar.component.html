@@ -1,4 +1,4 @@
-<div *ngIf="showHeader" [ngClass]="getHeaderStyle()" class="navbar-fixed" style="z-index: 100000000;">
+<div *ngIf="showHeader" [ngClass]="getHeaderStyle()" class="navbar-fixed normsup-navbar" style="z-index: 100000000;">
     <nav role="navigation" style="padding-bottom: 0px;padding-top: 0px;" class="navbar navbar-expand-sm navbar-dark">
          <a routerLink="/dashboard/main" class="navbar-brand brand-logo" style="padding-left: 85px !important;">
             <img class="logo-img" src="../../../assets/img/normsup-logo.png" alt="Logo">
@@ -8,7 +8,7 @@
             <img src="https://res.cloudinary.com/mhmd/image/upload/v1556074849/avatar-1_tcnd60.png" alt="..." width="50" class="mr-3 rounded-circle img-thumbnail shadow-sm">
             <div class="" style="display: flex;align-items: center;width: 100%;" (click)='dropbox()' (clickOutside)="closeDropdown()">
                 <div style="width: 100%;" class="inline-b">
-                <h4  style="width:100%;max-width: 80px;" class="m-0 one-liner">{{user.name}}</h4>
+                <h4  style="width:100%;max-width: 80px;" class="m-0 one-liner show-username">{{user.name}}</h4>
                 </div>
                 <div class="inline-b">
                     <span class="glyphicon glyphicon-menu-down menu-dwn grow-left"> </span>

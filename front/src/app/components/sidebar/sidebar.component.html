@@ -4,43 +4,43 @@
     <li class="nav-item">
       <a id="main" routerLinkActive="active" routerLink="/dashboard/main" class="nav-link text-dark nav-link-s"
         role="tab">
-        <div class="pl-4">
+        <div class="side-icon-placement">
           <span class="icn-cont dashboard-icn" style="bottom: 9px;">
-            <!-- <i class="fa fa-th-large mr-5 fa-fw icn-style added-pad"></i> -->
             <embed src="../../../assets/img/menu-dashboard.svg" class="icn-style added-pad" />
           </span>
           <span class="link-txt">Tableau de bord</span>
+          <embed *ngIf="active" src="../../../assets/img/active-link.svg"  class="active-lnk-icn added-pad"  />
         </div>
       </a>
     </li>
     <li class="nav-item">
       <a id="supplier" routerLinkActive="active" class="nav-link text-dark nav-link-s" routerLink="/dashboard/supplier"
         role="tab">
-        <div class="pl-4">
+        <div class="side-icon-placement">
           <span class="icn-cont supplier-icn">
-            <!-- <i class="fa fa-address-card mr-5 fa-fw icn-style added-pad"></i> -->
             <embed src="../../../assets/img/menu-suppliers.svg"  class="icn-style added-pad"  />
           </span>
           <span class="link-txt">Fournisseurs</span>
+          <embed *ngIf="active" src="../../../assets/img/active-link.svg"  class="active-lnk-icn added-pad"  />
         </div>
       </a>
     </li>
     <li class="nav-item">
       <a id="groups" routerLinkActive="active" class="nav-link text-dark nav-link-s" routerLink="/dashboard/groups"
         role="tab">
-        <div class="pl-4">
+        <div class="side-icon-placement">
           <span class="icn-cont grp-icn">
-            <!-- <i class="fa fa-cubes mr-5 fa-fw icn-style"></i> -->
             <embed src="../../../assets/img/menu-groups.svg"  class="icn-style added-pad" style="padding-left: 8px !important;"  />
           </span>
           <span class="link-txt">Groupes</span>
+          <embed *ngIf="active" src="../../../assets/img/active-link.svg"  class="active-lnk-icn added-pad"/>
         </div>
       </a>
     </li>
     <!-- <li class="nav-item">
       <a id="stats" routerLinkActive="active" class="nav-link text-dark nav-link-s" routerLink="/dashboard/stats"
         role="tab">
-        <div class="pl-4">
+        <div class="side-icon-placement">
           <span class="icn-cont">
             <embed src="../../../assets/img/menu-stats.svg"  class="icn-style added-pad"  />
           </span>
@@ -51,7 +51,7 @@
     <!-- <li class="nav-item">
       <a id="alerts" routerLinkActive="active" class="nav-link text-dark nav-link-s" routerLink="/dashboard/alerts"
         role="tab">
-        <div class="pl-4">
+        <div class="side-icon-placement">
           <span class="icn-cont">
             <embed src="../../../assets/img/menu-" />
           </span>
@@ -62,11 +62,12 @@
     <li class="nav-item">
       <a id="reminder" routerLinkActive="active" class="nav-link text-dark nav-link-s" routerLink="/dashboard/export"
         role="tab">
-        <div class="pl-4">
+        <div class="side-icon-placement">
           <span class="icn-cont export-icn">
             <embed src="../../../assets/img/menu-exports.svg"  class="icn-style added-pad" style="padding-left: 12px !important;" />
           </span>
           <span class="link-txt">Exports</span>
+          <embed *ngIf="active" src="../../../assets/img/active-link.svg"  class="active-lnk-icn added-pad"/>
         </div>
       </a>
     </li>

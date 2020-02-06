@@ -2,7 +2,7 @@
 // header scss
 nav {
     background-color: #FFFFFF;
-    box-shadow: 0 10px 15px 5px rgba(0, 0, 0, 0.03);
+    // box-shadow: 0 10px 15px 5px rgba(0, 0, 0, 0.03);
     height: 65px ! important;
 }
 
@@ -321,4 +321,10 @@ hr {
 
 .menu-dwn {
     width: 100%;
+}
+
+.show-username {
+    font-family: 'Avenir Heavy';
+    font-size: 15px;
+    color: #4E5983;
 }

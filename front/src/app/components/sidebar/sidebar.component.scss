@@ -7,13 +7,13 @@
 */
 
 .vertical-nav {
-    min-width: 20rem;
-    width: 20rem;
+    min-width: 307px;
+    width: 307px;
     height: 100vh;
     position: fixed;
     top: 0;
     left: 0;
-    // box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 0px 55px #00000012;
     transition: all 0.4s;
     border-top-right-radius: 20px !important;
     border-bottom-right-radius: 20px;
@@ -21,8 +21,8 @@
   }
   
   .page-content {
-    width: calc(100% - 20rem);
-    margin-left: 20rem;
+    width: calc(100% - 307px);
+    margin-left: 307px;
     transition: all 0.4s;
   }
 
@@ -70,7 +70,6 @@
   padding-left: 10px;
   margin-right: 2rem;
   color: white;
-
 }
   
 li:first-child .icn-style {
@@ -134,4 +133,12 @@ li:first-child .icn-style {
   display: block;
   height: 95px;
   margin: auto;
+}
+
+.side-icon-placement {
+  padding-left: 65px;
+}
+
+.active-lnk-icn {
+  padding-left: 45px;
 }

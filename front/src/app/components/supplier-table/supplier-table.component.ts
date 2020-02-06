@@ -22,6 +22,10 @@ export class SupplierTableComponent implements OnInit,AfterViewInit {
   @ViewChild(DataTableDirective) datatableElement: DataTableDirective;
   @ViewChild('confirmationModal') confirmationModal: TemplateRef<any>;
   @Output() infoModal = new EventEmitter<string>();
+  @Input() items: Array<any> = [];
+  @Output() suppliersData: EventEmitter<number> =   new EventEmitter();
+
+
   itemsToDisplay: Array<any> = [];
   indexInfo: Number = -1;
   infoType: String = '';
@@ -33,7 +37,6 @@ export class SupplierTableComponent implements OnInit,AfterViewInit {
   groups: Array<any> = [ 
     { id: '', name: 'Veuillez choisir un groupe' },
     { id: '1', name: '' }];
-  items: Array<any> = [];
   dtElement: DataTableDirective;
   dataTable: any;
   nbOfRows: any;
@@ -140,6 +143,7 @@ export class SupplierTableComponent implements OnInit,AfterViewInit {
               that.itemsToDisplay = that.data.slice(that.tableParams.start, that.tableParams.start + that.tableParams.length);
               // console.log('length =', that.data);
               that.myTable = true;
+              this.suppliersData.emit(that.data.length);
               callback({
                 recordsTotal: that.nbOfRows, // grand total avant filtre
                 recordsFiltered: that.nbOfRows, // Nb d'onglet pagination

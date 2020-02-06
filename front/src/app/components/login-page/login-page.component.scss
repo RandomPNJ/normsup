@@ -1,6 +1,4 @@
 .loginContainer {
-    // background: url("../../../assets/img/indexLogo.png");
-    // background: url("../../../assets/img/indexLogo.png")no-repeat center center fixed;
     background-color: #F3F7FC;
     -webkit-background-size: cover;
     -moz-background-size: cover;
@@ -133,6 +131,9 @@ select:-webkit-autofill:focus {
     text-transform: capitalize;
 }
 
+.stayConnected {
+    font-weight: 400;
+}
 .submit-btn {
     margin: auto;
     display: -webkit-box;
@@ -188,9 +189,14 @@ select:-webkit-autofill:focus {
     width: 100%;
     text-align: center;
 }
-.virtualBg{
+.virtualBg {
     position: absolute;
     width: 100%;
     z-index: 0;
     bottom: 0;
-  }
+}
+
+.custom-label-input-test-active {
+    text-align: center;
+    width: 100%;
+}

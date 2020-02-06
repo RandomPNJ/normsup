@@ -24,6 +24,7 @@ export class SupplierComponent implements OnInit {
   @ViewChild('compDoc') public compModalRef: TemplateRef<any>;
   @ViewChild('legalDoc') public legalModalRef: TemplateRef<any>;
 
+  showCount: Boolean = false;
   subscriptions: Subscription[] = [];
   searchCompanyID: string;
   searchCompany404: Boolean = false;
@@ -72,11 +73,18 @@ export class SupplierComponent implements OnInit {
       kbis: true,
     }
   };
+  itemPluralCount = {
+    'suppliers': {
+      '=0': '',
+      '=1': '',
+      'other': '#'
+    }
+  };
   itemPluralMapping = {
-    'supplier': {
-      '=0': 'n\'avez aucun fournisseur',
-      '=1': 'un fournisseur',
-      'other': '# fournisseurs'
+    'suppliers': {
+      '=0': 'fournisseur',
+      '=1': 'fournisseur',
+      'other': 'fournisseurs'
     }
   };
 
@@ -86,7 +94,7 @@ export class SupplierComponent implements OnInit {
   };
   valueWidth: Boolean = false;
   itemsDisplay: Array<any> = [];
-  items = [];
+  dataLength = -1;
 
   companies: any[] = [];
 
@@ -237,6 +245,12 @@ export class SupplierComponent implements OnInit {
     }, err => {
       console.log('Error, ', err);
     });
+  }
+
+  suppliersDataUpdate(e) {
+    if(e) {
+      this.dataLength = e;
+    }
   }
 
   previous(state: String) {

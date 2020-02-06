@@ -1,22 +1,29 @@
 <div class="container main-cont">
   <div class="cont-wrapper">
-    <div>
-      <span class="title">Fournisseurs</span>
-    </div>
+    <!-- <div>
+      
+    </div> -->
     <div class="sub-cont">
-      <div class="container">
-        <div class="row justify-content-end">
-          <div class="col-lg-auto col-md-auto">
-            <button (click)="openModal(template, 'Supplier')" type="button" class="btn btn-primary custom-normsup-button nopadding">
-              <span class="add-supplier-txt"><embed style="height: 10px;" src="../../../assets/img/plus-icn.svg"/> Ajouter un fournisseur</span>
-            </button>
+      <div class="container nopadding" style="padding-bottom: 45px !important; padding-top: 20px !important;">
+        <div class="row nopadding">
+          <div class="col">
+            <span class="title">Fournisseurs</span>
+            
+            <span class="item-count count-placement" *ngIf="dataLength !== -1">Vous avez <span class="count-style" *ngIf="dataLength !== -1">{{dataLength| i18nPlural: itemPluralCount['suppliers']}}</span> {{dataLength | i18nPlural: itemPluralMapping['suppliers']}}</span>
+          </div>
+          <div class="justify-content-end">
+            <div class="col-lg-auto col-md-auto">
+              <button (click)="openModal(template, 'Supplier')" type="button" class="btn btn-primary custom-normsup-button nopadding">
+                <span class="add-supplier-txt"><embed style="height: 10px;" src="../../../assets/img/plus-icn.svg"/> Ajouter un fournisseur</span>
+              </button>
+            </div>
           </div>
         </div>
       </div>
       <hr />
       <div class="table-cont">
         <app-supplier-table #supplierTableComp 
-          (infoModal)="openInfoModal($event)"></app-supplier-table>
+          (infoModal)="openInfoModal($event)" [items]=items (suppliersData)="suppliersDataUpdate($event)"></app-supplier-table>
       </div>
     </div>
 

@@ -1,202 +1,166 @@
 <div class="dash-container container dashboard">
-
-  <div class="row wow fadeIn justify-content-md-center first-row">
-
-    <!-- <mdb-card class="canvaCard">
-      <div class="card-header box-title">Mon Entreprise</div>
-      <mdb-card-body>
+  <div class="col-lg-11">
+    <div class="row wow fadeIn justify-content-md-center first-row">
+      <div class="col-lg-2 col-md-3 mb-4">
+        <mdb-card class="canvaCard">
+          <mdb-card-body>
+            <div class="row">
+              <div class="col" style="display: inline-block;">
+                <span class="nb">
+                  300
+                </span>
+                <span class="card-txt">
+                  Fournisseurs
+                </span>
+              </div>
+            </div>
+          </mdb-card-body>
+        </mdb-card>
+      </div>
+  
+      <div class="col-lg-2 col-md-3 mb-4">
+        <mdb-card class="canvaCard">
+          <mdb-card-body>
+            <div class="row">
+              <div class="col" style="display: inline-block;">
+                <span class="nb">
+                  223
+                </span>
+                <span class="card-txt">
+                  Conformes
+                </span>
+              </div>
+            </div>
+          </mdb-card-body>
+        </mdb-card>
+      </div>
+      <div class="col-lg-2 col-md-3 mb-4">
+        <mdb-card class="canvaCard">
+          <mdb-card-body>
+            <div class="row">
+              <div class="col" style="display: inline-block;">
+                <span class="nb">
+                  77
+                </span>
+                <span class="card-txt">
+                  Non conformes
+                </span>
+              </div>
+            </div>
+          </mdb-card-body>
+        </mdb-card>
+      </div>
+      <div class="col-lg-2 col-md-3 mb-4">
+        <mdb-card class="canvaCard">
+          <mdb-card-body>
+            <div class="row">
+              <div class="col" style="display: inline-block;">
+                <span class="nb">
+                  287
+                </span>
+                <span class="card-txt">
+                  Hors ligne
+                </span>
+              </div>
+            </div>
+          </mdb-card-body>
+        </mdb-card>
+      </div>
+  
+      <div class="col-lg-3 col-md-4 mb-4">
         <div class="row">
           <div class="col" style="display: inline-block;">
-              <div style="width: 120px; height: 120px; position: relative;">
-                <div style="width: 100%; position: absolute; top: 50%; left: 0; margin-top: -20px; line-height:19px; text-align: center; z-index: 999999999999999">
-                    <span class="number-fourn">{{nbFourni}}</span>
-                      <br/>
-                    <span class="fourn-text">Fournisseurs</span>
-                </div>
-              <canvas mdbChart [chartType]="chart5Type" [datasets]="doughnutData"
-                      [colors]="chartColors" [options]="doughnutOpt"
-                      [legend]="true">
-              </canvas>
+            <div style="width: 100%; position: absolute; top: 55%;; left: 0; margin-top: -20px; text-align: center; z-index: 999">
+              <span class="number-fourn">{{conformityRateSet.datasets[0].data[0]}}%</span>
+              <br />
             </div>
-            <div class="details-link">Voir en détail >></div>
-          </div>
-
-          <div class="col" style="display: inline-block;">
-              <div style="width: 120px; height: 120px; position: relative;">
-                <div style="width: 100%; position: absolute; top: 50%; left: 0; margin-top: -20px; line-height:19px; text-align: center; z-index: 999999999999999">
-                  <span class="number-fourn">{{nbFourni}}</span>
-                  <br/>
-                  <span class="fourn-text">Groupes</span>
-                </div>
-              <canvas mdbChart [chartType]="chart5Type" [datasets]="doughnutData"
-                      [colors]="chartColors" [options]="doughnutOpt"
-                      [legend]="true">
-              </canvas>
-            </div>
-            <div class="details-link">Voir en détail >></div>
+            <canvas #conformityDoughnut id="conformDoughnut" mdbChart [chartType]="conformityType" height="150"></canvas>
           </div>
         </div>
-    </mdb-card-body>
-
-        </mdb-card> -->
-    <div class="col-lg-2 col-md-3 mb-4">
-      <mdb-card class="canvaCard">
-        <mdb-card-body>
-          <div class="row">
-            <div class="col" style="display: inline-block;">
-              <span class="nb">
-                300
-              </span>
-              <span class="card-txt">
-                Fournisseurs
-              </span>
-            </div>
-          </div>
-        </mdb-card-body>
-      </mdb-card>
+      </div>
+      <div class="col-lg-1 col-md-0 mb-4">
+  
+      </div>
     </div>
-
-    <div class="col-lg-2 col-md-3 mb-4">
-      <mdb-card class="canvaCard">
-        <mdb-card-body>
-          <div class="row">
-            <div class="col" style="display: inline-block;">
-              <span class="nb">
-                223
-              </span>
-              <span class="card-txt">
-                Conformes
-              </span>
-            </div>
+    <!--Grid row-->
+  
+    <div class="row wow fadeIn mt-5">
+      <div class="col-lg-6 col-md-6 mb-4">
+        <div class="card second-card-row">
+          <div class="box-title">Taux de conformité par mois en %</div>
+          <div class="card-body">
+              <canvas [hidden]="!showConformityChart" #conformityChart id="conformityChart" mdbChart [chartType]="conformityChartType"></canvas>
           </div>
-        </mdb-card-body>
-      </mdb-card>
-    </div>
-    <div class="col-lg-2 col-md-3 mb-4">
-      <mdb-card class="canvaCard">
-        <mdb-card-body>
-          <div class="row">
-            <div class="col" style="display: inline-block;">
-              <span class="nb">
-                77
-              </span>
-              <span class="card-txt">
-                Non conformes
-              </span>
-            </div>
+        </div>
+      </div>
+      <div class="col-lg-6 col-md-6 mb-4">
+        <div class="card second-card-row">
+          <div class="box-title">Prochaines relances</div>
+          <div class="card-body reminders-card">
+            <table class="table table-hover">
+              <thead class="table-head-style">
+                <tr>
+                  <th>Nom du groupe</th>
+                  <th>Jours avant relance</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of reminders">
+                  <td class="group-txt">{{item.groupName}}</td>
+                  <td class="reminder-txt">{{item.daysUntil}} jours</td>
+                  <td style="text-align: center;"><button class="btn btn-normsup btn-modify">Modifier</button></td>
+                </tr>
+              </tbody>
+            </table>
           </div>
-        </mdb-card-body>
-      </mdb-card>
-    </div>
-    <div class="col-lg-2 col-md-3 mb-4">
-      <mdb-card class="canvaCard">
-        <mdb-card-body>
-          <div class="row">
-            <div class="col" style="display: inline-block;">
-              <span class="nb">
-                287
-              </span>
-              <span class="card-txt">
-                Hors ligne
-              </span>
-            </div>
-          </div>
-        </mdb-card-body>
-      </mdb-card>
-    </div>
-
-    <div class="col-lg-3 col-md-4 mb-4">
-      <div class="row">
-        <div class="col" style="display: inline-block;">
-          <div style="width: 100%; position: absolute; top: 55%;; left: 0; margin-top: -20px; text-align: center; z-index: 999">
-            <span class="number-fourn">{{conformityRateSet.datasets[0].data[0]}}%</span>
-            <br />
-          </div>
-          <canvas #conformityDoughnut id="conformDoughnut" mdbChart [chartType]="conformityType" height="150"></canvas>
         </div>
       </div>
     </div>
-    <div class="col-lg-1 col-md-0 mb-4">
-
-    </div>
-  </div>
-  <!--Grid row-->
-
-  <div class="row wow fadeIn mt-5">
-    <div class="col-lg-6 col-md-6 mb-4">
-      <div class="card card-big">
-        <div class="box-title">Taux de conformité par mois en %</div>
-        <div class="card-body">
-            <canvas [hidden]="!showConformityChart" #conformityChart id="conformityChart" mdbChart [chartType]="conformityChartType"></canvas>
-        </div>
-      </div>
-    </div>
-    <div class="col-lg-6 col-md-6 mb-4">
-      <div class="card card-big">
-        <div class="box-title">Prochaines relances</div>
-        <div class="card-body">
-          <table class="table table-hover">
-            <thead class="table-head-style">
-              <tr>
-                <th>Nom du groupe</th>
-                <th>Jours avant relance</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let item of reminders">
-                <td class="group-txt">{{item.groupName}}</td>
-                <td class="reminder-txt">{{item.daysUntil}} jours</td>
-                <td style="text-align: center;"><button class="btn btn-normsup btn-modify">Modifier</button></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="row wow fadeIn mt-5 mb-5">
-
-    <div class="col-lg-4 col-md-4 mb-4">
-
-      <div class="card card-big">
-        <div class="card-body">
-          <div style="display: block">
-              <canvas #groupSupplier id="groupSupplier" mdbChart [chartType]="groupSupplierType" height="185"></canvas>
-          </div>
-          <div style="padding-top: 30px;" class="container">
-            <div style="margin: auto;" class="row pt-3">
-              <span *ngFor="let item of groupSupplierSet.datasets[0].data; let index = index" class="legend-cont col-4 nopadding pt-1">
-                <div style="line-height: 17px;">
-                  <div [ngStyle]="{'background-color': groupSColors[index]}" id="circle" class="color-circle">&nbsp;</div>
-                  <span class="legend-txt">Groupe {{ index }}</span>
-                </div>
-              </span>
+  
+    <div class="row wow fadeIn mt-5 mb-5">
+  
+      <div class="col-lg-5 col-md-4 mb-4">
+  
+        <div class="card third-card-row">
+          <div class="box-title">Fournisseurs par groupe (en %)</div>
+          <div class="card-body" style="padding-bottom: 0px !important;">
+            <div class="groupSupplierDoughnut">
+                <canvas #groupSupplier id="groupSupplier" mdbChart [chartType]="groupSupplierType" height="162"></canvas>
             </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-
-    <div class="col-lg-8 col-md-8 mb-4">
-      <div class="card card-big">
-
-        <div class="card-body">
-          <div class="container">
-            <div class="row">
-              <div class="col-9">
-                <canvas #conformityPerGrp id="conformityPerGrp" mdbChart [chartType]="conformityPerGrpType" height="185"></canvas>
+            <div style="padding-top: 30px;" class="container">
+              <div style="margin: auto;" class="row ">
+                <span *ngFor="let item of groupSupplierSet.datasets[0].data; let index = index" class="legend-cont col-4 nopadding pt-1">
+                  <div style="line-height: 17px;">
+                    <div [ngStyle]="{'background-color': groupSColors[index]}" id="circle" class="color-circle">&nbsp;</div>
+                    <span class="legend-txt">Groupe {{ index }}</span>
+                  </div>
+                </span>
               </div>
-              <div class="col-3 v-list-scroll">
-                <div class="v-list-outer-wrp">
-                  <div class="v-list">
-                    <div class="v-cont">
-                      <div *ngFor="let item of confPerGrpSet.datasets[0].data; let index = index" class="v-legend-cont nopadding">
-                        <div style="line-height: 17px;">
-                          <div [ngStyle]="{'background-color': groupSColors[index]}" id="circle" class="color-circle">&nbsp;</div>
-                          <span class="legend-txt">Groupe {{ index }}</span>
+            </div>
+          </div>
+  
+        </div>
+      </div>
+  
+      <div class="col-lg-7 col-md-8 mb-4">
+        <div class="card third-card-row">
+          <div class="box-title">Taux de conformité par groupe de fournisseurs (en %)</div>
+          <div class="card-body">
+            <div class="container">
+              <div class="row">
+                <div class="col-9">
+                  <canvas #conformityPerGrp id="conformityPerGrp" mdbChart [chartType]="conformityPerGrpType" height="194"></canvas>
+                </div>
+                <div class="col-3 v-list-scroll">
+                  <div class="v-list-outer-wrp">
+                    <div class="v-list">
+                      <div class="v-cont">
+                        <div *ngFor="let item of confPerGrpSet.datasets[0].data; let index = index" class="v-legend-cont nopadding">
+                          <div style="line-height: 17px;">
+                            <div [ngStyle]="{'background-color': groupSColors[index]}" id="circle" class="color-circle">&nbsp;</div>
+                            <span class="legend-txt">Groupe {{ index }}</span>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -205,10 +169,10 @@
               </div>
             </div>
           </div>
+  
         </div>
-
       </div>
+  
     </div>
-
   </div>
 </div>

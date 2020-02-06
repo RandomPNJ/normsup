@@ -10,20 +10,41 @@
     position: absolute;
 }
 
+.virtualBg{
+    position: absolute;
+    width: 100%;
+    z-index: 0;
+    bottom: 0;
+}
+
 
 .upload-title {
     font-family: 'Roboto Medium';
     font-size: 15px;
     color: #4E5983;
+    width: 100%;
+    text-align: center;
+    padding-bottom: 5px;
+}
+
+.upload-logo {
+    text-align: center;
+    padding-bottom: 12rem;
+    padding-top: 9rem;
 }
 
 .upload-subtitle {
     font-family: 'Roboto Light';
     font-size: 13px;
     color: #4E5983;
+    width: 100%;
+    text-align: center;
+    padding-bottom: 5rem;
 }
 
-.doc-modal-type {
+.doc-type-choice {
+    text-align: center;
+    width: 100%;
     font-size: 15px;
 }
 
