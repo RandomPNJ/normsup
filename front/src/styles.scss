@@ -64,6 +64,11 @@ $datepicker-placeholder-weight: 700;
     src: url('/assets/fonts/roboto/Roboto-Light.ttf') format('truetype');
 }
 
+@font-face {
+    font-family: 'Roboto Black';
+    src: url('/assets/fonts/roboto/Roboto-Black.ttf') format('truetype');
+}
+
 /* ----- Globals ----- */
 
 html,
@@ -1071,11 +1076,11 @@ td {
         .card {
             // width: 185px !important;
             background: #FFFFFF 0% 0% no-repeat padding-box;
-            box-shadow: 0px 0px 15px #4390EF3C;
-            border: 1px solid #4390EF;
+            box-shadow: 0px 0px 15px #4390EF3C !important;
             border-radius: 10px;
             opacity: 1;
         }
+
     }
 }
 
@@ -1159,7 +1164,8 @@ td {
     letter-spacing: 0;
     color: #4390EF;
     position: absolute;
-    top: 0;
+    // top: 0;
+    top: -5px;
     left: 0;
     font-size: 11px;
     cursor: text;
@@ -1392,6 +1398,7 @@ td {
     font-family: 'Roboto Regular' !important;
     letter-spacing: 0 !important;
     color: #4E5983 !important;
+    font-weight: 400 !important;
 }
 
 .f-14 {
@@ -1635,3 +1642,43 @@ td {
         box-shadow: unset !important;
     }
 }
+
+
+@media (min-width: 992px) {
+
+    .col-lg-2-half {
+        float: left !important;
+        flex: 0 0 20% !important;
+        max-width: 20% !important;
+    }
+}
+
+.supplier-table {
+
+    thead tr {
+        th {
+            font-family: 'Roboto Bold';
+            font-size: 15px;
+            letter-spacing: 0;
+            color: #4E5983;
+        }
+    }
+}
+
+.modal-backdrop.in {
+    opacity: 0.7;
+    background-color: #FFF;
+}
+
+// .searchText {
+//     display: inline-block;
+//     width: 100%;
+//     text-align: center;
+//     font-family: 'Roboto Regular';
+//     font-size: 13px;
+//     letter-spacing: 0;
+//     color: #4390EF;
+//     line-height: 22px;
+//     font-size: 12px;
+//     text-transform: capitalize;
+// }

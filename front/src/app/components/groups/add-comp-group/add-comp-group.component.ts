@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, ViewChild, ElementRef, Input } from '@angular/core';
+import { Component, OnInit, Output, ViewChild, ElementRef, Input, AfterViewInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { debounceTime, tap, switchMap, finalize, distinctUntilChanged, catchError, map } from 'rxjs/operators';
 import { HttpService } from 'src/app/services/http.service';
@@ -8,6 +8,7 @@ import { EventEmitter } from '@angular/core';
 import {cloneDeep, differenceBy} from 'lodash';
 import { HttpParams } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { SelectListComponent } from '../select-list/select-list.component';
 
 @Component({
   selector: 'app-add-comp-group',
@@ -20,8 +21,7 @@ export class AddCompGroupComponent implements OnInit {
   @Input() type;
   @Input() id;
   @Output() changeModal = new EventEmitter<string>();
-  @ViewChild('searchSupplier') searchSupplierInput: ElementRef;
-  @ViewChild('selectComponent') selectComponentRef;
+  @ViewChild('selectComponent') selectComponentRef: SelectListComponent;
 
   public input$ = new Subject<string>();
   suppliers$: Observable<any[]>;
@@ -32,14 +32,13 @@ export class AddCompGroupComponent implements OnInit {
   isLoading: Boolean = false;
   showAlreadyExistsErr: Boolean = false;
   state: String = 'groupName';
-  selectedSuppliers: any;
+  selectedSuppliers: any = [];
   group: any = {
     name: ''
   };
   searchSupplier: String = '';
-  // groupName: String;
   suppliers: any[] = <any>[];
-  selectedPersons: any[] = <any>[];
+
   documentsSettings: any = {
     legal: {
       urssaf: true,

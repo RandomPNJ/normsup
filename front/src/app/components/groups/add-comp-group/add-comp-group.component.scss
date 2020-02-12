@@ -122,3 +122,32 @@
 .normsup-checkbox {
     cursor: pointer !important;
 }
+.group-name-input {
+    text-align: center;
+    font-family: 'Roboto Regular';
+    font-size: 15px;
+    letter-spacing: 0;
+    color: #4E5983;
+}
+
+.searchText {
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+    font-family: 'Roboto Medium';
+    font-size: 13px;
+    letter-spacing: 0;
+    color: #FFF;
+    line-height: 22px;
+    text-transform: capitalize;
+}
+
+.selected-grps-count {
+    padding-top: 6.25px;
+    text-align: center;
+    font-family: 'Roboto Regular';
+    font-size:  11px;
+    letter-spacing: 0;
+    color: #4E5983;
+    width: 100%;
+}

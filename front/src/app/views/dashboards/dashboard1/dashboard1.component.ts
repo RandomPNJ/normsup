@@ -114,9 +114,9 @@ export class Dashboard1Component implements OnInit, AfterViewInit {
 			label: "Taux de conformité",
 			data: [],
 			borderColor: "#4390EF",
-			backgroundColor: "#eef5ff",
+			// backgroundColor: "#eef5ff",
 			// borderColor: "#fff",
-			// backgroundColor: "#fff",
+			backgroundColor: "rgba(199,224,255, 0.3)",
 			fill: true,
 			pointRadius: 0,
 			radius: 5,
@@ -289,7 +289,7 @@ export class Dashboard1Component implements OnInit, AfterViewInit {
 			text: 'Taux de conformité par groupe de fournisseurs (en%)',
 			position: 'top',
 			fontColor: '#4E5983', //Default black
-			fontFamily: 'Avenir Medium', //Default Arial,
+			fontFamily: 'Roboto Regular', //Default Arial,
 			fontSize: 14
 		},
 		plugins: {

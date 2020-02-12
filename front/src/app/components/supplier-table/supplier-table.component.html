@@ -11,7 +11,7 @@
   </select>
 </div>
 <div class="table-responsive">
-  <table datatable [dtOptions]="dtOptions" id="tableComp" class="table display pageResize hover compact" cellspacing="0"
+  <table datatable [dtOptions]="dtOptions" id="tableComp" class="table display pageResize hover compact supplier-table" cellspacing="0"
     width="100%" style="height: 100%;">
     <!-- <thead>
     <tr>
@@ -29,8 +29,10 @@
           <div class="badge-container content-cont container">
             <div class="row h-100  cent">
               <span class="col-9   assign-link nopadding">{{item.denomination | titlecase }}</span>
-              <span style="text-align: left;" class="col-2 nopadding"><img class="arw-dwn"
-                  src="../../../assets/img/arrow-down@2x.png" /></span>
+              <span style="text-align: left;" class="col-2 nopadding">
+                <img class="arw-dwn" src="../../../assets/img/arrow-down@2x.png" *ngIf="infoType === 'NONE' || infoType === 'INTERLOC'"/>
+                <img class="arw-dwn" src="../../../assets/img/arrow-up@2x.png" *ngIf="indexInfo === i  && infoType === 'SUPPLIER'"/>
+              </span>
             </div>
           </div>
         </td>
@@ -39,8 +41,10 @@
           <div class="badge-container content-cont container">
             <div class="row h-100 cent">
               <span class="name-txt">{{item.name}} {{item.lastname}}</span>
-              <span style="text-align: left; color: #4E5983; padding-left: 8px;" class=""><img class="arw-dwn"
-                  src="../../../assets/img/blue-arw-dwn@2x.png" /></span>
+              <span style="text-align: left; color: #4E5983; padding-left: 8px;" class="">
+                <img class="arw-dwn" src="../../../assets/img/blue-arw-dwn@2x.png"  *ngIf="infoType === 'NONE' || infoType === 'SUPPLIER'"/>
+                <img class="arw-dwn" src="../../../assets/img/blue-arrow-up@2x.png"  *ngIf="indexInfo === i && infoType === 'INTERLOC'"/>
+              </span>
             </div>
           </div>
         </td>

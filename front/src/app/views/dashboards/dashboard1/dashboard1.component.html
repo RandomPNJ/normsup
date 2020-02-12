@@ -1,8 +1,8 @@
 <div class="dash-container container dashboard">
-  <div class="col-lg-11">
-    <div class="row wow fadeIn justify-content-md-center first-row">
-      <div class="col-lg-2 col-md-3 mb-4">
-        <mdb-card class="canvaCard">
+  <div class="col-lg-12">
+    <div class="row wow fadeIn first-row">
+      <div class="col-lg-2-half col-md-3 infocard">
+        <mdb-card class="canvaCard normsup-card-border" style="border: 1px solid #4390EF;">
           <mdb-card-body>
             <div class="row">
               <div class="col" style="display: inline-block;">
@@ -18,7 +18,7 @@
         </mdb-card>
       </div>
   
-      <div class="col-lg-2 col-md-3 mb-4">
+      <div class="col-lg-2-half col-md-3 infocard">
         <mdb-card class="canvaCard">
           <mdb-card-body>
             <div class="row">
@@ -34,12 +34,12 @@
           </mdb-card-body>
         </mdb-card>
       </div>
-      <div class="col-lg-2 col-md-3 mb-4">
+      <div class="col-lg-2-half col-md-3 infocard">
         <mdb-card class="canvaCard">
           <mdb-card-body>
             <div class="row">
               <div class="col" style="display: inline-block;">
-                <span class="nb">
+                <span class="nb non-valid">
                   77
                 </span>
                 <span class="card-txt">
@@ -50,12 +50,12 @@
           </mdb-card-body>
         </mdb-card>
       </div>
-      <div class="col-lg-2 col-md-3 mb-4">
+      <div class="col-lg-2-half col-md-3 infocard">
         <mdb-card class="canvaCard">
           <mdb-card-body>
             <div class="row">
               <div class="col" style="display: inline-block;">
-                <span class="nb">
+                <span class="nb non-valid">
                   287
                 </span>
                 <span class="card-txt">
@@ -67,37 +67,36 @@
         </mdb-card>
       </div>
   
-      <div class="col-lg-3 col-md-4 mb-4">
+      <div class="col-lg-2-half">
         <div class="row">
           <div class="col" style="display: inline-block;">
             <div style="width: 100%; position: absolute; top: 55%;; left: 0; margin-top: -20px; text-align: center; z-index: 999">
               <span class="number-fourn">{{conformityRateSet.datasets[0].data[0]}}%</span>
               <br />
             </div>
-            <canvas #conformityDoughnut id="conformDoughnut" mdbChart [chartType]="conformityType" height="150"></canvas>
+            <canvas #conformityDoughnut id="conformDoughnut" mdbChart [chartType]="conformityType" height="170"></canvas>
           </div>
         </div>
       </div>
-      <div class="col-lg-1 col-md-0 mb-4">
+      <!-- <div class="col-lg-1 col-md-0 mb-4">
   
-      </div>
+      </div> -->
     </div>
-    <!--Grid row-->
   
     <div class="row wow fadeIn mt-5">
-      <div class="col-lg-6 col-md-6 mb-4">
+      <div class="col-lg-6 col-md-6 mb-4" style="padding-left: 0px !important;">
         <div class="card second-card-row">
           <div class="box-title">Taux de conformité par mois en %</div>
           <div class="card-body">
-              <canvas [hidden]="!showConformityChart" #conformityChart id="conformityChart" mdbChart [chartType]="conformityChartType"></canvas>
+              <canvas [hidden]="!showConformityChart" #conformityChart id="conformityChart" mdbChart [chartType]="conformityChartType" height="135"></canvas>
           </div>
         </div>
       </div>
-      <div class="col-lg-6 col-md-6 mb-4">
+      <div class="col-lg-6 col-md-6 mb-4" style="padding-right: 0px !important;">
         <div class="card second-card-row">
           <div class="box-title">Prochaines relances</div>
           <div class="card-body reminders-card">
-            <table class="table table-hover">
+            <table class="table">
               <thead class="table-head-style">
                 <tr>
                   <th>Nom du groupe</th>
@@ -118,9 +117,9 @@
       </div>
     </div>
   
-    <div class="row wow fadeIn mt-5 mb-5">
+    <div class="row wow fadeIn mb-5" style="margin-top: 2.5rem !important;">
   
-      <div class="col-lg-5 col-md-4 mb-4">
+      <div class="col-lg-5 col-md-4 mb-4"  style="padding-left: 0px !important;">
   
         <div class="card third-card-row">
           <div class="box-title">Fournisseurs par groupe (en %)</div>
@@ -143,7 +142,7 @@
         </div>
       </div>
   
-      <div class="col-lg-7 col-md-8 mb-4">
+      <div class="col-lg-7 col-md-8 mb-4"  style="padding-right: 0px !important;">
         <div class="card third-card-row">
           <div class="box-title">Taux de conformité par groupe de fournisseurs (en %)</div>
           <div class="card-body">

@@ -135,7 +135,7 @@ export class SupplierComponent implements OnInit {
       config.class += ' modal-lg';
     }
     if(modalType == 'Supplier' && this.modalState === 'enterSiret') {
-      config.class += ' modal-sm';
+      config.class += ' modal-medium';
     } else if (modalType == 'Supplier' && (this.modalState === 'compInfo' || this.modalState === 'interlocInfo')) {
       config.class += ' modal-lg';
     } else if (modalType == 'Supplier' && this.modalState === 'docInfo'){

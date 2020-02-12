@@ -5,7 +5,7 @@
             <!-- <embed src="../../../assets/img/logo-header-bar.svg" class="header-logo" (click)="redirect('dashboard/main')"> -->
         </a>
         <div style="margin-top: 0px;" class=" logout flyover-subcont media d-flex align-items-center">
-            <img src="https://res.cloudinary.com/mhmd/image/upload/v1556074849/avatar-1_tcnd60.png" alt="..." width="50" class="mr-3 rounded-circle img-thumbnail shadow-sm">
+            <img src="https://res.cloudinary.com/mhmd/image/upload/v1556074849/avatar-1_tcnd60.png" alt="..." width="31" class="rounded-circle shadow-sm">
             <div class="" style="display: flex;align-items: center;width: 100%;" (click)='dropbox()' (clickOutside)="closeDropdown()">
                 <div style="width: 100%;" class="inline-b">
                 <h4  style="width:100%;max-width: 80px;" class="m-0 one-liner show-username">{{user.name}}</h4>
@@ -14,20 +14,28 @@
                     <span class="glyphicon glyphicon-menu-down menu-dwn grow-left"> </span>
                     <div [hidden]='!isLogout' class="dropContent" style="z-index: 1000 !important;">
                         <div class='selectData' id="profile" routerLink="/dashboard/profile">
-                            <embed class="header-drop-icn" src="../../../assets/img/profile-icn.svg" style="height: 13px;"alt="">
-                            <p>Mon compte</p>
+                            <div class="selectDataChild">
+                                <embed class="header-drop-icn" src="../../../assets/img/profile-icn.svg" style="height: 13px;"alt="">
+                                <p>Mon compte</p>
+                            </div>
                         </div>
                         <div class='selectData' id="users" routerLink="/dashboard/users">
-                            <embed class="header-drop-icn" src="../../../assets/img/users-icn.svg" style="height: 17px;padding-right: 18px;"alt="">
-                            <p>Gestion des utilisateurs</p>
+                            <div class="selectDataChild">
+                                <embed class="header-drop-icn" src="../../../assets/img/users-icn.svg" style="height: 17px;padding-right: 18px;"alt="">
+                                <p>Gestion des utilisateurs</p>
+                            </div>
                         </div>
                         <div class='selectData' id="contact" routerLink="/dashboard/alerts">
-                            <embed class="header-drop-icn" src="../../../assets/img/alert-icn.svg" style="height: 13px;"alt="">
-                            <p>Alerte</p>
+                            <div class="selectDataChild">
+                                <embed class="header-drop-icn" src="../../../assets/img/alert-icn.svg" style="height: 13px;"alt="">
+                                <p>Alerte</p>
+                            </div>
                         </div>
                         <div class='selectData' id="contact" (click)="logOut()">
-                            <embed class="header-drop-icn" src="../../../assets/img/logout-icn.svg" style="height: 12px;"alt="">
-                            <p>Déconnexion</p>
+                            <div class="selectDataChild">
+                                <embed class="header-drop-icn" src="../../../assets/img/logout-icn.svg" style="height: 12px;" alt="" style="padding-right: 20px !important;">
+                                <p>Déconnexion</p>
+                            </div>
                         </div>
                     </div>
 

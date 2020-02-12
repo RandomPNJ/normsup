@@ -47,7 +47,7 @@
             <div style="text-align: center; padding: 0px 107px;" class="input-field col s12">
               <span class="comp-txt">1. Société</span>
               <label class="addSupp-label" for="company-input">Siret ou Siren</label>
-              <input class="form-control custom-normsup-input-nb" [(ngModel)]="searchCompanyID" (keydown.enter)="searchCompany(searchCompanyID)" #companyInput id="company-input" type="text" data-length="10" appFocus>
+              <input class="form-control custom-normsup-input-nb enter-siret-input" [(ngModel)]="searchCompanyID" (keydown.enter)="searchCompany(searchCompanyID)" #companyInput id="company-input" type="text" data-length="10" appFocus>
             </div>
           </div>
           <div class="f-button-addsup">
@@ -58,6 +58,9 @@
           </div>
         </div>
         <div class="container nopadding" *ngIf="modalState === 'compInfo'">
+          <div class="row" style="margin: auto;text-align: center;padding-top: 29px;">
+            <div class="interloc-title">2. INFORMATIONS ENTREPRISE</div>
+          </div>
           <div style="padding-left: 53px !important; padding-right: 54px !important;" class="row ma" [ngClass]="{'fade-in': modalState === 'compInfo', 'fade-away': modalState !== 'compInfo'}">
             <form action="#" class="form-style">
                 <div>
@@ -173,15 +176,15 @@
                 <div class="doc-form-check">
                   <div class="form-check form-check-inline normsup-checkbox-cont">
                     <input class="form-check-input normsup-checkbox" type="checkbox" id="inlineCheckbox1" value="option1" disabled [(ngModel)]="documentsSettings.legal.urssaf">
-                    <label class="form-check-label" for="inlineCheckbox1">URSSAF</label>
+                    <label class="form-check-label" for="inlineCheckbox1" style="color: #4E5983;">URSSAF</label>
                   </div>
-                  <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2" disabled [(ngModel)]="documentsSettings.legal.lnte">
-                    <label class="form-check-label" for="inlineCheckbox2">LNTE</label>
+                  <div class="form-check form-check-inline normsup-checkbox-cont">
+                    <input class="form-check-input normsup-checkbox" type="checkbox" id="inlineCheckbox2" value="option2" disabled [(ngModel)]="documentsSettings.legal.lnte">
+                    <label class="form-check-label" for="inlineCheckbox2" style="color: #4E5983;">LNTE</label>
                   </div>
-                  <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3" disabled [(ngModel)]="documentsSettings.legal.kbis">
-                    <label class="form-check-label" for="inlineCheckbox3">KBIS</label>
+                  <div class="form-check form-check-inline normsup-checkbox-cont">
+                    <input class="form-check-input normsup-checkbox" type="checkbox" id="inlineCheckbox3" value="option3" disabled [(ngModel)]="documentsSettings.legal.kbis">
+                    <label class="form-check-label" for="inlineCheckbox3" style="color: #4E5983;">KBIS</label>
                   </div>
                 </div>
               </div>

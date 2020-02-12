@@ -205,32 +205,10 @@ hr {
     border: 0.3px solid whitesmoke;
 }
 
-.selectData {
-    width: 100%;
-    // height: 50%;
-    border-bottom: 1px solid #ececec;
-}
-
-// .selectData:first-child {
-//     border-bottom-left-radius: 0;
-//     border-bottom-right-radius: 0;
-
-//     &:hover {
-
-//     }
-// }
-
-// .selectData:last-child{
-//     border-top-left-radius: 0;
-//     border-top-right-radius: 0;
-//     border-bottom: none;
-// }
-
-// .selectData:hover {
-//     background: #ececec;
-//     box-shadow: 12px 12px 12px 12px rgba(117, 117, 117, 0.03);
-//     // border-radius: 10px;
-
+// .selectData {
+//     width: 100%;
+//     // height: 50%;
+//     border-bottom: 1px solid #ececec;
 // }
 
 .selectData p {
@@ -272,13 +250,17 @@ hr {
     }
 
     .selectData {
-        border-bottom: 1px solid #4E4E7B;
-        // padding: 10px 10px;
-        padding: 23px 19px 21.5px 20px;
+        padding: 23px 0px 0px 0px;
         text-align: left;
         display: flex;
         align-items: center;
 
+        .selectDataChild {
+            width: 100%;
+            margin: 0px 19px 0px 20px;
+            padding-bottom: 21.5px;
+            border-bottom: 1px solid #F4F2F2;
+        }
         &:hover {
             background: #353559;
             color: white !important;

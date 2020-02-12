@@ -1,6 +1,7 @@
 .dash-container {
     padding-left: 8rem;
     padding-top: 20px;
+    padding-right: 4rem;
 }
 
 .classic-admin-card .card-body {
@@ -100,7 +101,7 @@
 
 .nb {
     font-size: 35px;
-    font-family: 'Avenir Black';
+    font-family: 'Roboto Black';
     display: block;
     color: #4390EF;
     text-align: center;
@@ -124,6 +125,11 @@
 
 .card {
     border-radius: 10px;
+}
+
+.infocard {
+    padding: 0px 20px 0px 0px !important;
+
 }
 
 .table-head-style {
@@ -167,6 +173,7 @@ td {
 
     &:first-child {
         border-top: none !important;
+        padding-left: 20px !important;
     }
 }
 
@@ -247,10 +254,14 @@ td {
 }
 
 .reminders-card {
-    padding: 23px 20px 0px 20px !important;
+    padding: 23px 0px 0px 0px !important;
     
     td {
         border-top: none !important;
         border-bottom: 1px solid  #F3F7FC;
     }
+}
+
+.non-valid {
+    color: #C7E0FF !important;
 }

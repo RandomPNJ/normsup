@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges, SimpleChange} from '@angular/core';
+import { Component, OnInit, Input, OnChanges, SimpleChange, Output} from '@angular/core';
 import {cloneDeep, filter} from 'lodash';
 
 @Component({
@@ -10,11 +10,12 @@ export class SelectListComponent implements OnInit, OnChanges {
 
   @Input() suppliers: any[];
   @Input() onInitSuppliers: any[];
+  count = 0;
   selectedSuppliers: any = {};
   suppliersToDisplay = [];
   showEmptyMsg: Boolean = false;
   firstChange: Boolean = true;
-
+  
 
   constructor() { }
 
@@ -62,21 +63,26 @@ export class SelectListComponent implements OnInit, OnChanges {
     if(value) {
       if(this.selectedSuppliers[denom]) {
         this.selectedSuppliers[denom].checked = true;
+        this.count++;
       } else {
         this.selectedSuppliers[denom] = this.suppliers[i];
         this.selectedSuppliers[denom].checked = true;
         this.selectedSuppliers[denom].show = false;
+        this.count++;
       }
     } else if(value === false && this.selectedSuppliers[denom]) {
       this.selectedSuppliers[denom].checked = false;
+      this.count--;
     }
   }
 
   uncheckSupplier(checked, denom) {
     if(checked === false && this.selectedSuppliers[denom]) {
       this.selectedSuppliers[denom].checked = false;
+      this.count--;
     } else if(checked === true && this.selectedSuppliers[denom]) {
       this.selectedSuppliers[denom].checked = true;
+      this.count++;
     }
   }
 

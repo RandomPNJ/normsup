@@ -14,7 +14,7 @@
   <div class="row search-company" [ngClass]="{'fade-in': state === 'groupName', 'fade-away': state !== 'groupName'}">
     <div style="text-align: center; padding: 0px 107px;" class="input-field col s12">
       <label class="addSupp-label" for="group-name">Nom du groupe</label>
-      <input class="form-control custom-normsup-input-nb" [(ngModel)]="group.name"
+      <input class="form-control custom-normsup-input-nb group-name-input" [(ngModel)]="group.name"
         (keydown.enter)="checkGroupName(group.name)" #companyInput id="group-name" type="text" data-length="10"
         appFocus>
     </div>
@@ -27,7 +27,7 @@
     <span class="red-err-txt" *ngIf="showAlreadyExistsErr">Vous avez déjà un groupe avec ce nom.</span>
   </div>
 </div>
-<div class="container nopadding" *ngIf="state === 'groupMembers'">
+<div class="container nopadding" [hidden]="state !== 'groupMembers'">
   <div style="padding-left: 53px !important; padding-right: 54px !important;" class="row ma"
     [ngClass]="{'fade-in': state === 'groupMembers', 'fade-away': state !== 'groupMembers'}">
     <div class="optional-txt" style="text-align: center;">Choisissez les fournisseurs appartenant au groupe.</div>
@@ -47,6 +47,11 @@
             <app-select-list #selectComponent [suppliers]="suppliers" [onInitSuppliers]="onInitSuppliers"
               (getSelectedSuppliers)='getSelectedSuppliers($event)'></app-select-list>
           </div>
+        </div>
+        <div class="row">
+          <span class="selected-grps-count">
+            {{selectComponentRef.count}} fournisseurs sélectionnés
+          </span>
         </div>
       </div>
       <div style="padding-top: 30.5px;padding-bottom: 40px;" class="select-comp-but">

@@ -28,7 +28,7 @@ export class SupplierTableComponent implements OnInit,AfterViewInit {
 
   itemsToDisplay: Array<any> = [];
   indexInfo: Number = -1;
-  infoType: String = '';
+  infoType: String = 'NONE';
   infoPopup: any;
   toggleModification: Boolean = false;
   interloc: any;
@@ -75,6 +75,7 @@ export class SupplierTableComponent implements OnInit,AfterViewInit {
       .get('/api/supplier/count')
       .subscribe(res => {
         this.nbOfRows = res.body['count'];
+        this.suppliersData.emit(res.body['count']);
       })
     ;
     this.httpService
@@ -143,7 +144,7 @@ export class SupplierTableComponent implements OnInit,AfterViewInit {
               that.itemsToDisplay = that.data.slice(that.tableParams.start, that.tableParams.start + that.tableParams.length);
               // console.log('length =', that.data);
               that.myTable = true;
-              this.suppliersData.emit(that.data.length);
+              // this.suppliersData.emit(that.data.length);
               callback({
                 recordsTotal: that.nbOfRows, // grand total avant filtre
                 recordsFiltered: that.nbOfRows, // Nb d'onglet pagination
@@ -236,6 +237,7 @@ export class SupplierTableComponent implements OnInit,AfterViewInit {
       .get('/api/supplier/count', firstQParams)
       .subscribe(res => {
         that.nbOfRows = res.body['count'];
+        this.suppliersData.emit(res.body['count']);
       })
     ;
   }
@@ -268,6 +270,7 @@ export class SupplierTableComponent implements OnInit,AfterViewInit {
     if(this.indexInfo === i && this.infoType === 'SUPPLIER') {
       this.indexInfo = -1;
       this.infoPopup = {};
+      this.infoType = 'NONE';
     } else {
       this.infoType = 'SUPPLIER';
       this.infoPopup = item;
@@ -282,6 +285,7 @@ export class SupplierTableComponent implements OnInit,AfterViewInit {
     if(this.indexInfo === i && this.infoType === 'INTERLOC') {
       this.indexInfo = -1;
       this.infoPopup = {};
+      this.infoType = 'NONE';
     } else {
       this.infoType = 'INTERLOC';
       this.infoPopup = item;
