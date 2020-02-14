@@ -7,7 +7,7 @@
   </div>
   <div class="row nopadding  col-lg-11 col-md-11 col-sm-7 col-8" style="padding-top: 45px !important; padding-bottom: 25px !important;">
     <div class="col-lg-7 col-md-12 col-sm-10 col-8 title nopadding">
-      <span style="padding-right: 20px;">{{groupName}}</span>
+      <span class="group-details-name" style="padding-right: 20px;">{{groupName}}</span>
       <span class="item-count">
         <span class="count-style">{{suppliers.length | i18nPlural: itemPluralCount['suppliers']}}</span> 
         {{suppliers.length | i18nPlural: itemPluralMapping['suppliers']}}
@@ -112,7 +112,7 @@
                   </button>
                 </div>
                 <div class="col-5" style="padding-right: 0px !important;">
-                  <button [disabled]="!activateReminders || !documentsSettings.frequency" style="height: 36px" type="button" class="btn btn-primary save-btn" (click)="save()">
+                  <button [disabled]="!activateReminders || !documentsSettings.frequency" style="height: 36px; background-color: #4390EF !important;" type="button" class="btn btn-primary save-btn" (click)="save()">
                     <span class="button-txt">Enregistrer</span>
                   </button>
                 </div>
@@ -130,23 +130,25 @@
   <div class="modal-body">
     <div class="supplier-modal-title">Confirmation</div>
     <div style="padding-top: 30.5px;padding-bottom: 40px;" class="select-comp-but">
-        <div class="container">
-          <div class="row">
-            <div class="col nopadding" style="padding-left: 40px !important;">
-              <button style="float: right;width: 100%;" type="button" class="btn btn-outline-normsup prec-btn-group text-capitalize"
-                (click)="hideModal()">
-                <span class="button-txt">Annuler</span>
-              </button>
-            </div>
-            <div class="col nopadding" style="padding-right: 40px !important;">
-              <button style="border-radius: 5px;float: left;width: 100%;" type="button"
-                class="btn btn-primary text-capitalize next-btn-group" (click)="deleteGroup()">
-                <span class="button-txt">Accepter</span>
-              </button>
-            </div>
+      <div class="container">
+        <div class="row">
+          <div class="delete-grp-txt">Voulez-vous vraiment supprimer ce groupe ?</div>
+        </div>
+        <div class="row">
+          <div class="col nopadding" style="padding-left: 40px !important;">
+            <button style="float: right;width: 100%;" type="button" class="btn btn-outline-normsup prec-btn-group text-capitalize"
+              (click)="hideModal()">
+              <span class="button-txt">Annuler</span>
+            </button>
+          </div>
+          <div class="col nopadding" style="padding-right: 40px !important;">
+            <button type="button" class="btn btn-primary text-capitalize next-btn-group del-grp-btn" (click)="deleteGroup()">
+              <span class="button-txt">Accepter</span>
+            </button>
           </div>
         </div>
       </div>
+    </div>
   </div>
 </ng-template>
 <ng-template #modifyGroupModal>

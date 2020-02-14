@@ -1682,3 +1682,31 @@ td {
 //     font-size: 12px;
 //     text-transform: capitalize;
 // }
+
+// Export page custom style
+
+.export-container {
+    .form-control {
+        font-family: 'Roboto Regular';
+        font-size: 14px;
+        letter-spacing: 0;
+        color: #4E5983;
+
+        &::placeholder {
+            color: #4E5983;
+        }
+
+        &:disabled {
+            background-color: white;
+            &::placeholder {
+                color: #D3D3D3 !important;
+            }
+        }
+    }
+
+    .select-group {
+        .form-control:disabled {
+            color: #D3D3D3 !important;
+        }
+    }
+}

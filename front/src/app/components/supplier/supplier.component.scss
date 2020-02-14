@@ -274,17 +274,25 @@ hr {
 .prec-btn-supplier {
   border: 1px solid #C7E0FF !important;
   color: #4E5983 !important;
-  font-family: 'Avenir Heavy';
+  font-family: 'Roboto Regular';
   font-size: 13px;
   padding: 6px 37px !important;
+
+  &:hover {
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
+  }
 }
 
 .next-btn-supplier {
   color: #4E5983;
-  font-family: 'Avenir Heavy';
+  font-family: 'Roboto Regular';
   font-size: 13px;
   padding: 6px 46px !important;
   color: #FFFFFF;
+
+  &:hover {
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
+  }
 }
 
 .interloc-title {

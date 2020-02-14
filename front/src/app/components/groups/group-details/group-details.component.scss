@@ -147,3 +147,26 @@
     cursor: pointer;
     text-align: right;
 }
+
+.group-details-name {
+    font-family: 'Roboto Bold';
+    font-size: 25px;
+    letter-spacing: 0;
+    color: #4390EF;
+}
+.delete-grp-txt {
+    width: 100%;
+    text-align: center;
+    padding-bottom: 30px;
+    font-family: 'Roboto Regular';
+    font-size: 15px;
+    letter-spacing: 0;
+    color: #4E5983;
+}
+.del-grp-btn {
+    border-radius: 5px;
+    float: left;
+    width: 100%;
+    padding-bottom: 8px !important;
+    padding-top: 8px !important;
+}

@@ -1,6 +1,6 @@
 <div class="container export-container" style="padding: 0px 0px 80px 0px !important;">
-  <div class="col-lg-auto">
-    
+  <div class="col-lg-1">
+    &nbsp;
   </div>
   <div class="col-lg-10">
   <div class="export-body">
@@ -21,10 +21,10 @@
                 <label class="form-check-label" for="inlineCheckbox1">Groupe</label>
               </div>
             </div>
-            <div class="d-block select-cont row-input-style">
+            <div class="d-block select-cont row-input-style select-group">
               <select [disabled]="!exportType.group" class="form-control" id="groupChoice"  name="groupChoice" [(ngModel)]="groupChosen" (change)="choseGroup(groupChosen)">
                 <option [ngValue]="undefined" disabled>Choisir groupe</option>
-                <option *ngFor="let c of groups" [ngValue]="c">{{c.name}}</option>
+                <option *ngFor="let c of groups" [ngValue]="c">{{c.name | titlecase}}</option>
               </select>
             </div>
           </div>
@@ -123,6 +123,6 @@
   </div>
   </div>
   <div class="col-lg-1">
-
+    &nbsp;
   </div>
 </div>

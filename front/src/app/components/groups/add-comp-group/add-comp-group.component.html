@@ -2,13 +2,13 @@
   <div style="display: block;">
     &nbsp;
     <button type="button" style="cursor:pointer;width:20px;height:20px;" class="close pull-right" aria-label="Close"
-      (click)="hideModal()">
+      (click)="closeModal()">
       <embed src="../../../assets/img/close-icn.svg" style="height: 16px; cursor:pointer;pointer-events: none;" />
     </button>
   </div>
-  <div *ngIf="state !== 'newDoc' && type !== 'MODIFICATION'" class="supplier-modal-title">Nouveau Groupe</div>
-  <div *ngIf="state !== 'newDoc' && type === 'MODIFICATION'" class="supplier-modal-title">Modifier Groupe</div>
-  <div *ngIf="state === 'newDoc'" class="supplier-modal-title">Félicitations</div>
+  <div *ngIf="state !== 'newGroup' && type !== 'MODIFICATION'" class="supplier-modal-title">Nouveau Groupe</div>
+  <div *ngIf="state !== 'newGroup' && type === 'MODIFICATION'" class="supplier-modal-title">Modifier Groupe</div>
+  <div *ngIf="state === 'newGroup'" class="supplier-modal-title">Félicitations</div>
 </div>
 <div *ngIf="state === 'groupName'">
   <div class="row search-company" [ngClass]="{'fade-in': state === 'groupName', 'fade-away': state !== 'groupName'}">
@@ -87,17 +87,17 @@
       </div>
       <div class="doc-form-check">
         <div class="form-check form-check-inline normsup-checkbox-cont">
-          <input class="form-check-input normsup-checkbox" type="checkbox" id="legalCheckbox1" value="option1" disabled
+          <input class="form-check-input normsup-checkbox" type="checkbox" id="legalCheckbox1" value="option1"
             [(ngModel)]="documentsSettings.legal.urssaf">
           <label class="form-check-label" for="legalCheckbox1">URSSAF</label>
         </div>
         <div class="form-check form-check-inline normsup-checkbox-cont">
-          <input class="form-check-input normsup-checkbox" type="checkbox" id="legalCheckbox2" value="option2" disabled
+          <input class="form-check-input normsup-checkbox" type="checkbox" id="legalCheckbox2" value="option2"
             [(ngModel)]="documentsSettings.legal.lnte">
           <label class="form-check-label" for="legalCheckbox2">LNTE</label>
         </div>
         <div class="form-check form-check-inline normsup-checkbox-cont">
-          <input class="form-check-input normsup-checkbox" type="checkbox" id="legalCheckbox3" value="option3" disabled
+          <input class="form-check-input normsup-checkbox" type="checkbox" id="legalCheckbox3" value="option3"
             [(ngModel)]="documentsSettings.legal.kbis">
           <label class="form-check-label" for="legalCheckbox3">KBIS</label>
         </div>
@@ -110,12 +110,21 @@
       </div>
       <div class="" style="width: 100%;">
         <select class="form-control" id="compDoc" name="compDoc"
-          [(ngModel)]="documentsSettings.comp">
-          <option [ngValue]="value" [disabled]="true">Choisir document</option>
+          [(ngModel)]="documentChosen">
+          <option *ngFor="let c of documents" [ngValue]="c" [disabled]="c.available === false">{{c.name}}</option>
+          <!-- <option [ngValue]="value" [disabled]="true">Choisir document</option>
           <option [ngValue]="value" [disabled]="false">Type un</option>
           <option [ngValue]="value" [disabled]="false">Type deux</option>
-          <option [ngValue]="value" [disabled]="false">Type trois</option>
+          <option [ngValue]="value" [disabled]="false">Type trois</option> -->
         </select>
+      </div>
+      <div class="add-comp-doc" style="padding-top: 10px;">
+        <span style="cursor: pointer;" (click)="addDocumentType()">
+          <embed src="../../../assets/img/plus-add-icn.svg" style="height: 10px;padding-right: 8px;" /><span class="add-doc-link">Ajouter un document</span>
+        </span>
+      </div>
+      <div class="comp-doc-list" *ngIf="documentsToRequest.length > 0">
+        <span *ngFor="let doc of documentsToRequest" class="doc-list">{{ doc | uppercase }}</span>
       </div>
     </div>
   </div>

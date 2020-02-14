@@ -36,6 +36,16 @@ export class AddCompGroupComponent implements OnInit {
   group: any = {
     name: ''
   };
+
+  documents: Array<any> = [
+    { name: 'Choisir document', value: undefined, available: false },
+    { name: 'Compdoc1', value: 'compdoc1', available: true},
+    { name: 'Compdoc2', value: 'compdoc2', available: true},
+    { name: 'Compdoc3', value: 'compdoc3', available: true},
+  ];
+  documentsToRequest: any[] = <any>[];
+  documentChosen: any;
+
   searchSupplier: String = '';
   suppliers: any[] = <any>[];
 
@@ -137,6 +147,8 @@ export class AddCompGroupComponent implements OnInit {
       this.group.name = '';
       this.selectedSuppliers = [];
       this.suppliers = [];
+      this.documentsToRequest = [];
+      this.documentChosen = {};
     }
     this.changeModal.emit(val);
     this.state = val;
@@ -228,4 +240,20 @@ export class AddCompGroupComponent implements OnInit {
   private closeModal() {
     this.changeModal.emit('hide');
   }
+
+  addDocumentType() {
+    if(this.documentChosen.value !== undefined) {
+      console.log('this.documentChosen = ', this.documentChosen);
+      this.documentsToRequest.push(this.documentChosen.value);
+      this.documents.map(obj => {
+        if(obj.value === this.documentChosen.value) {
+          obj.available = false;
+          // break;
+        }
+      });
+      this.documentChosen = this.documents[0];
+    }
+    console.log('this.documentChosen', this.documentChosen);
+  }
+
 }
