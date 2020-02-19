@@ -88,6 +88,7 @@
     border-radius: 5px !important;
     width: 155px;
     text-transform: none;
+    background-color: #4390EF !important;
 }
 
 .doc-list {
@@ -111,3 +112,21 @@
     cursor: pointer;
 }
 
+.middle-txt-style {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    padding-bottom: 18px;
+}
+
+.grp-cont-pos {
+    float: right;
+    min-width: 180px;
+}
+
+.supp-cont-pos {
+    float: left;
+    min-width: 180px;
+}

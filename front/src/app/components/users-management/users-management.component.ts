@@ -42,14 +42,8 @@ export class UsersManagementComponent implements OnInit {
     four: false
   };
 
-  itemPluralMapping = {
-    'supplier': {
-      '=0': 'n\'avez aucun fournisseur',
-      '=1': 'un fournisseur',
-      'other': '# fournisseurs'
-    }
-  };
 
+  dataLength: any = 1;
   modalConfig = {
     animated: true,
     class: 'modal-dialog-centered modal-sm'
@@ -57,6 +51,20 @@ export class UsersManagementComponent implements OnInit {
   itemsDisplay: Array<any> = [];
   items = [];
 
+  itemPluralMapping = {
+    'users': {
+      '=0': 'Aucun utilisateur',
+      '=1': 'utilisateur',
+      'other': 'utilisateurs'
+    }
+  };
+
+  itemPluralCount = {
+    'users': {
+      '=0': '',
+      'other': '#'
+    }
+  };
 
   constructor(
     private modalService: BsModalService,

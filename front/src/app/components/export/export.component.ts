@@ -37,7 +37,7 @@ export class ExportComponent implements OnInit {
   firstGroupLoad: Boolean = true;
   groups: any;
   documents: Array<any> = [
-    { name: 'Choisir document', value: undefined, available: false },
+    // { name: 'Choisir document', value: undefined, available: false },
     { name: 'KBIS', value: 'kbis', available: true},
     { name: 'LNTE', value: 'lnte', available: true},
     { name: 'URSSAF', value: 'urssaf', available: true},
@@ -87,7 +87,8 @@ export class ExportComponent implements OnInit {
   }
 
   addDocumentType() {
-    if(this.documentChosen.value !== undefined) {
+    console.log('this', this.documentChosen);
+    if(this.documentChosen !== undefined && this.documentChosen.value !== undefined) {
       console.log('this.documentChosen = ', this.documentChosen);
       this.documentsToRequest.push(this.documentChosen.value);
       this.documents.map(obj => {

@@ -369,6 +369,14 @@ td {
     // padding-left: 25px;
     white-space: nowrap;
 }
+.count-placement {
+    // font-size: 16px !important;
+    padding-left: 35px;
+    height: 100%;
+    display: inline-block;
+    line-height: 30px;
+    vertical-align: middle;
+  }
 
 .status-icn {
     text-align: center;
@@ -1187,6 +1195,19 @@ td {
     transform-origin: 0 0;
 }
 
+.custom-label-center-active {
+    -webkit-transform: translateY(-14px) scale(1);
+    transform: translateY(-14px) scale(1);
+    -webkit-transform-origin: 0 0;
+    transform-origin: 0 0;
+}
+
+
+.align-custom-label {
+    width: 100%;
+    text-align: center;
+}
+
 .lowered-opac {
     opacity: 0.49;
 }
@@ -1325,6 +1346,7 @@ td {
     font-size: 14px;
     letter-spacing: 0;
     color: #4390EF;
+    padding-right: 3px;
 }
 
 .component-padding {
@@ -1650,6 +1672,12 @@ td {
         float: left !important;
         flex: 0 0 20% !important;
         max-width: 20% !important;
+    }
+
+    .col-lg-10-half {
+        // float: left !important;
+        flex: 0 0 88% !important;
+        max-width: 88% !important;
     }
 }
 

@@ -265,6 +265,11 @@ hr {
             background: #353559;
             color: white !important;
             box-shadow: 12px 12px 12px 12px rgba(117, 117, 117, 0.03);
+            
+
+            .selectDataChild {
+                border-bottom: none !important;
+            }
             p {
                 color: white !important;
             }

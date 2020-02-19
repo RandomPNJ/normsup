@@ -1,17 +1,44 @@
-<div class="container main-cont" style="padding-left: 50px !important;">
-    <div class="cont-wrapper">
-      <div class="row nopadding" style="padding-top: 45px !important;">
+<div class="container">
+  <div class="col-lg-1">
+    &nbsp;
+  </div>
+  <div class="col-lg-10">
+    <div class="main-cont-umanag">
+      <div class="container nopadding" style="padding-bottom: 45px !important; padding-top: 45px !important;">
+        <div class="row nopadding">
+          <div class="col" style="padding-left: 50px;">
+            <span class="title">Gestion utilisateur</span>
+            
+            <span class="item-count count-placement" *ngIf="dataLength !== -1"><span class="count-style" *ngIf="dataLength !== -1">{{dataLength| i18nPlural: itemPluralCount['users']}}</span>{{dataLength| i18nPlural: itemPluralMapping['users']}}</span>
+          </div>
+          <div class="justify-content-end">
+            <div class="col-lg-auto col-md-auto">
+              <button (click)="openModal(template, 'Supplier')" type="button" class="btn btn-primary custom-normsup-button nopadding">
+                <span class="add-supplier-txt"><embed style="height: 10px;" src="../../../assets/img/plus-icn.svg"/> Ajouter un fournisseur</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      <!-- </div> -->
+      <!-- <div class="row nopadding" style="">
         <div class="col title">Mes utilisateurs</div>
         <div class="col-lg-auto col-md-auto content-cont">
             <button style="height: 30px" (click)="openModal(template, 'Supplier')" type="button" class="btn btn-primary custom-normsup-button nopadding"><span class="add-user-txt"><embed style="height: 10px;" src="../../../assets/img/plus-icn.svg"/> Ajouter un utilisateur</span></button>
         </div>
-      </div>
-      <div class="sub-cont">
-        <div class="table-cont">
-          <app-users-table (modifyUser)="fillUser($event)"></app-users-table>
+      </div> -->
+      <div class="row nopadding">
+        <div class="sub-cont" style="width: 100%;">
+          <div class="table-cont">
+            <app-users-table (modifyUser)="fillUser($event)"></app-users-table>
+          </div>
         </div>
       </div>
+      </div>
     </div>
+  </div>
+  <div class="col-lg-1">
+    &nbsp;
+  </div>
     <ng-template class="test" #template>
         <div class="modal-header own-modal-header-supplier">
           </div>
@@ -78,4 +105,4 @@
           </div>
         </div>
       </ng-template>
-  </div>
+</div>
