@@ -4,12 +4,12 @@
   </div>
   <div class="col-lg-10">
     <div class="main-cont-umanag">
-      <div class="container nopadding" style="padding-bottom: 45px !important; padding-top: 45px !important;">
+      <div class="container nopadding" style="margin-bottom: 45px !important; padding-top: 45px !important;">
         <div class="row nopadding">
           <div class="col" style="padding-left: 50px;">
             <span class="title">Gestion utilisateur</span>
             
-            <span class="item-count count-placement" *ngIf="dataLength !== -1"><span class="count-style" *ngIf="dataLength !== -1">{{dataLength| i18nPlural: itemPluralCount['users']}}</span>{{dataLength| i18nPlural: itemPluralMapping['users']}}</span>
+            <span class="item-count count-placement" *ngIf="dataLength !== -1"><span class="count-style" *ngIf="dataLength !== -1">{{usersTableRef.dataSize | i18nPlural: itemPluralCount['users']}}</span>{{usersTableRef.dataSize | i18nPlural: itemPluralMapping['users']}}</span>
           </div>
           <div class="justify-content-end">
             <div class="col-lg-auto col-md-auto">
@@ -29,7 +29,7 @@
       <div class="row nopadding">
         <div class="sub-cont" style="width: 100%;">
           <div class="table-cont">
-            <app-users-table (modifyUser)="fillUser($event)"></app-users-table>
+            <app-users-table #usersTable (modifyUser)="fillUser($event)"></app-users-table>
           </div>
         </div>
       </div>
@@ -42,12 +42,6 @@
     <ng-template class="test" #template>
         <div class="modal-header own-modal-header-supplier">
           </div>
-        <!-- <div class="modal-header">
-          <h4 class="modal-title pull-left">Nouvel utilisateur</h4>
-          <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div> -->
         <div class="modal-body">
           <div class="normsup-mod-header">
             <div style="display: block;">
@@ -64,26 +58,26 @@
                   <div class="container">
                     <div style="padding: 20px 60px 10px 50px !important;" class="row">
                       <div class="form-group  col s6 nopadding">
-                        <input (focus)="focus.one=true" (blur)="focus.one=false" id="name" name="name" type="text" class="form-control custom-normsup-input-nb" [(ngModel)]="userToAdd.name">
+                        <input (focus)="focus.one=true" (blur)="focus.one=false" id="name" name="name" type="text" class="form-control custom-normsup-input-nb input-style-umag" [(ngModel)]="userToAdd.name">
                         <label style="width: 100% !important;text-align: center !important;" [ngClass]="{'lowered-opac': !userToAdd.name && focus.one === false, 'custom-label-input-test-active': userToAdd.name || focus.one === true}" class="custom-normsup-label-test" for="name">Prénom</label>
                       </div>
                     </div>
                     <div style="padding: 10px 60px 10px 50px !important;" class="row">
                       <div class="form-group  col s6 nopadding">
-                        <input (focus)="focus.two=true" (blur)="focus.two=false" id="lastname" name="lastname" type="text" class="form-control custom-normsup-input-nb" [(ngModel)]="userToAdd.lastname">
+                        <input (focus)="focus.two=true" (blur)="focus.two=false" id="lastname" name="lastname" type="text" class="form-control custom-normsup-input-nb input-style-umag" [(ngModel)]="userToAdd.lastname">
                         <label style="width: 100% !important;text-align: center !important;" [ngClass]="{'lowered-opac': !userToAdd.lastname && focus.two === false, 'custom-label-input-test-active': userToAdd.lastname || focus.two === true}" class="custom-normsup-label-test" for="lastname">Nom</label>
                       </div>
                     </div>
                     <div style="padding: 10px 60px 10px 50px !important;" class="row">
                       <div class="form-group col s6 nopadding">
-                        <input (focus)="focus.three=true" (blur)="focus.three=false" id="email" name="email" type="text" class="form-control custom-normsup-input-nb" [(ngModel)]="userToAdd.email">
+                        <input (focus)="focus.three=true" (blur)="focus.three=false" id="email" name="email" type="text" class="form-control custom-normsup-input-nb input-style-umag" [(ngModel)]="userToAdd.email">
                         <label style="width: 100% !important;text-align: center !important;" [ngClass]="{'lowered-opac': !userToAdd.email && focus.three === false, 'custom-label-input-test-active': userToAdd.email || focus.three === true}" class="custom-normsup-label-test" for="email">Email</label>
                       </div>
                     </div>
                     <div style="padding: 10px 60px 10px 50px !important;" class="row">
                       <div class="form-group col s6 nopadding">
                         <label class="active user-select-text" for="role">Role</label>
-                        <select class="form-control custom-select custom-select-normsup" id="role"  name="role" [(ngModel)]="userToAdd.role">
+                        <select class="form-control custom-select custom-select-normsup input-style-umag" id="role"  name="role" [(ngModel)]="userToAdd.role">
                           <option *ngFor="let c of roles" [ngValue]="c.value" [disabled]="c.name === ' '">{{c.name}}</option>
                         </select>
                       </div>

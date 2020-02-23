@@ -324,6 +324,7 @@ th {
     font-family: 'Roboto Bold' !important;
     padding: 11px 17px 11px 4px !important;
     font-weight: unset !important;
+    color: #4E5983 !important;
 }
 
 td {
@@ -1525,6 +1526,21 @@ td {
     }
 }
 
+
+.alert-checkbox {
+
+    .normsup-checkbox-cont [type="checkbox"]:not(:checked) + label:before, .normsup-checkbox-cont [type="checkbox"]:checked + label:before {
+        top: -9px;
+        right: 45px;
+        left: unset;
+    }
+    .normsup-checkbox-cont [type="checkbox"]:not(:checked) + label:after, .normsup-checkbox-cont [type="checkbox"]:checked + label:after {
+        top: -6px;
+        right: 48px;
+        left: unset;
+    }
+    
+}
 .export-checkbox [type="checkbox"]:not(:checked) + label, .normsup-checkbox-cont [type="checkbox"]:checked + label {
     line-height: 1.4 !important;
 }
@@ -1650,6 +1666,13 @@ td {
     color: #4E5983 !important;
 }
 
+.rm-robo-15 {
+    font-family: 'Roboto Medium' !important;
+    font-size: 14px !important;
+    letter-spacing: 0 !important;
+    color: #4E5983 !important;
+}
+
 .normsup-navbar {
 
     .navbar {
@@ -1737,4 +1760,57 @@ td {
             color: #D3D3D3 !important;
         }
     }
+}
+
+
+.main-cont-umanag {
+
+    .table-responsive {
+        overflow-y: hidden;
+    }
+}
+
+.cs-alert-switch {
+
+    .custom-switch {
+        padding-left: 2.25rem;
+        padding-bottom: 1rem; // added for positioning
+      }
+      
+      .custom-control-label { // added for alignment with the switch
+        padding-top: 0.5rem;
+        padding-left: 2rem;
+        padding-bottom: 0.1rem;
+      }
+      
+      .custom-switch .custom-control-label::before {
+        left: -2.4rem;
+        height: 1.8rem;
+        width: 3.4rem;    // it was 1.75rem before. Sliding way is longer than before.
+        pointer-events: all;
+        border-radius: 1rem;
+      }
+      
+      .custom-switch .custom-control-label::after {
+        top: calc(0.2rem + 2px);
+        left: calc(-2.4rem + 2px);
+        width: calc(2rem - 4px);   // it was calc(1rem - 4px) before. Oval is bigger than before.
+        height: calc(2rem - 4px);  // it was calc(1rem - 4px) before. Oval is bigger than before.
+        background-color: #adb5bd;
+        border-radius: 2rem; //   it was 0.5rem before. Oval is bigger than before.
+        transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out, -webkit-transform 0.15s ease-in-out;
+        transition: transform 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        transition: transform 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out, -webkit-transform 0.15s ease-in-out;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .custom-switch .custom-control-label::after {
+          transition: none;
+        }
+      }
+      
+      .custom-switch .custom-control-input:checked ~ .custom-control-label::after {
+        background-color: #fff;
+        -webkit-transform: translateX(1.6rem); //translateX(0.75rem);
+        transform: translateX(1.6rem); //translateX(0.75rem);
+      }
 }

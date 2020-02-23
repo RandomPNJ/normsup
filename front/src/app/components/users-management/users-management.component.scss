@@ -1,6 +1,5 @@
 .main-cont-umanag {
   margin-top: 95px;
-  // padding-left: 50px !important;
   background-color: white;
   box-shadow: 0 7px 15px 0 rgba(0, 51, 90, 0.04);
   border-radius: 6px;
@@ -105,7 +104,7 @@ hr {
   }
 
   .title {
-    color: #4692EF;
+    color: #4390EF;
     // padding: 10px 0px 10px 10px;
     padding: 0px !important;
     font-weight: 500;
@@ -121,7 +120,7 @@ hr {
     padding: 5.5px 28px 5.5px 22.5px;
     text-transform: none;
   }
-  
+
   .submit-btn {
     margin: auto;
     display: -webkit-box;
@@ -260,3 +259,12 @@ hr {
     text-align: center !important;
     margin-bottom: 0px !important;
   }
+
+.input-style-umag {
+  font-family: 'Roboto Regular';
+  letter-spacing: 0;
+  color: #4E5983;
+  font-size: 15px;
+  text-align-last: center;
+  text-align: center;
+}

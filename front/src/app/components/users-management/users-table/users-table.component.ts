@@ -38,9 +38,7 @@ export class UsersTableComponent implements OnInit {
     { name: 'Utilisateur', value: 'user'},
     { name: 'Invité', value: 'guest'},
   ];
-
-
-
+  dataSize: any = 0;
 
   constructor(private httpService: HttpService) { }
 
@@ -84,16 +82,13 @@ export class UsersTableComponent implements OnInit {
       },
       ajax: (dataTablesParameters: any, callback: any) => {
         const action = this.compareParams(dataTablesParameters);
-        // that.tableParams = dataTablesParameters;
-        // if()
         console.log('tableParams', dataTablesParameters);
-        dataTablesParameters.company = 'Fakeclient';
-        // if(action === 'query') {
           that.httpService
             .get('/api/users', dataTablesParameters)
             .subscribe(resp => {
               that.items = that.items.concat(resp.body['items']);
               that.itemsToDisplay = that.items.slice(that.tableParams.start, that.tableParams.start + that.tableParams.length);
+              that.dataSize = that.items.length;
 
               that.myTable = true;
               callback({
@@ -104,9 +99,6 @@ export class UsersTableComponent implements OnInit {
             }, err => {
               console.log('/api/users err', err);
             });
-        // } else if(action === 'redraw') {
-        //   that.itemsToDisplay = that.items.slice(that.tableParams.start, that.tableParams.start + that.tableParams.length);
-        // }
       },
       preDrawCallback: function(settings) {
         that.tableParams.start = settings._iDisplayStart;

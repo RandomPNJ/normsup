@@ -1,18 +1,18 @@
-.main-cont {
-  margin-top: 50px;
+.alert-cont {
+  padding-top: 75px;
+  border-radius: 6px;
+  padding-left: 107px;
+}
+
+.cont-wrapper {
   background-color: white;
-  box-shadow: 0 7px 15px 0 rgba(0, 51, 90, 0.04);
+  max-width: 458px;
   border-radius: 6px;
 }
 
 .title {
-  color: #382244;
-  font-family: "Montserrat", sans-serif;
-  padding: 10px 0px 10px 10px;
-  font-weight: 500;
-  font-size: 21px;
-  text-transform: uppercase;
-  display: block;
+  font-size: 25px !important;
+  padding: 30px 0px 30px 35px !important;
 }
 
 .table-header {
@@ -24,11 +24,22 @@
   display: inline-block;
 }
 
-.sub-cont {
-  padding: 25px 0px 20px 25px;
-  font-size: 12px;
+.alert-sub-cont {
+  padding-left: 35px;
 }
 
+.alert-subtitle-cont {
+  background: rgba(243, 247, 252, 0.39);
+}
+
+.alert-subtitle {
+  font-family: 'Roboto Bold';
+  font-size: 15px;
+  letter-spacing: 0;
+  color: #4E5983;
+  padding: 16px 0px 15px 35px;
+  opacity: 1 !important;
+}
 .card-style {
   border-radius: 5px;
 }
@@ -111,11 +122,40 @@ h2 {
     display: inline-block;
 }
 
-.toggle-alert-btn {
-    display: inline-block;
-}
-
 .txt-styling {
     font-weight: 500;
     font-size: 12px;
+}
+
+.alert-row {
+  padding: 20px 0px;
+}
+
+.cs-alert-switch {
+  position: relative;
+}
+
+.toggle-alert {
+  position: absolute;
+  right: 50px;
+  bottom: 15px;
+}
+
+.alert-type-txt {
+  padding-top: 18px;
+  padding-bottom: 20px;
+}
+
+.alert-btn {
+  background-color: #4390EF !important;
+  text-transform: unset;
+  border-radius: 5px !important;
+}
+
+.alert-save-btn {
+  font-family: 'Roboto Medium';
+  font-size: 13px;
+  letter-spacing: 0;
+  color: #FFFFFF;
+  padding: 0px 45px;
 }

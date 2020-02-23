@@ -16,6 +16,7 @@ declare var require: any;
 export class UsersManagementComponent implements OnInit {
 
   @ViewChild('template') public modal: TemplateRef<any>;
+  @ViewChild('usersTable') public usersTableRef: TemplateRef<any>;
 
   sidebarVisible: Boolean = true;
   subscriptions: Subscription[] = [];

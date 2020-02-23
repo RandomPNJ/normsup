@@ -3,22 +3,23 @@
     width="100%" style="height: 100%;">
     <tbody *ngIf="myTable">
       <tr *ngFor="let item of items; let i = index">
-        <td>
-          <div class="badge-container content-cont container">
+        <td style="border-top: none !important;text-align: center;">
+          <div style="width: 20%; display: inline-block;">&nbsp;</div>
+          <div [ngClass]="{'custom-tbl-border': i !== items.length - 1, 'last-custom-tbl-border': i === items.length - 1 }" class="badge-container content-cont container row-space">
             <div class="row h-100  cent">
-              <span class="col-9   assign-link nopadding">{{item.name}} {{item.lastname}}</span>
+              <span class="name-style nopadding">{{item.name}} {{item.lastname}}</span>
             </div>
           </div>
         </td>
-        <td>
-          <div class="badge-container content-cont container">
+        <td class="row-border" [ngClass]="{'noborder': i === items.length - 1}">
+          <div class="badge-container content-cont container row-space">
             <div class="row h-100 cent">
-              <span class="name-txt">{{item.email}}</span>
+              <span class="email-style">{{item.email}}</span>
             </div>
           </div>
         </td>
-        <td>
-          <div class="badge-container content-cont container">
+        <td class="row-border" [ngClass]="{'noborder': i === items.length - 1}">
+          <div class="badge-container content-cont container row-space">
             <div class="row h-100 cent">
               <select class="form-control custom-normsup-select" id="role"  name="role" [(ngModel)]="item.rolename" style="color: #4E5983;">
                 <option *ngFor="let c of roles" [ngValue]="c.value" [disabled]="c.name === ' '">{{c.name}}</option>
@@ -26,15 +27,16 @@
             </div>
           </div>
         </td>
-        <td>
-          <div id="util-btns" class="badge-container content-cont">
+        <td style="border-top: none !important;text-align: center;">
+          <div id="util-btns" [ngClass]="{'custom-tbl-border-right': i !== items.length - 1, 'last-custom-tbl-border-right': i === items.length - 1}" class="badge-container content-cont row-space">
             <div class="badge-container content-cont container">
-              <div class="row h-100 cent">
+              <div class="row h-100 cent" style="padding-right: 33px;">
                 <button style="box-shadow: none;" type="button"
                   class="btn btn-outline-normsup default-btn-table" style="color: #4E5983 !important;border: 1px solid #C7E0FF !important;box-shadow: none !important; font-size: 13px !important;">Supprimer</button>
               </div>
             </div>
           </div>
+          <div style="width: 20%; display: inline-block;">&nbsp;</div>
         </td>
       </tr>
     </tbody>
