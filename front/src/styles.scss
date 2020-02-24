@@ -523,7 +523,7 @@ td {
     text-align: center;
     color: #4390EF;
     font-size: 15px;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Roboto Regular', sans-serif;
 }
 
 .name-txt {
@@ -533,7 +533,7 @@ td {
     text-align: center;
     font-size: 15px;
     color: #4E5983;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Roboto Regular', sans-serif;
 }
 
 .arw-dwn {
@@ -1360,7 +1360,7 @@ td {
 
 .addSupp-label {
     text-align: center;
-    font-family: 'Roboto';
+    font-family: 'Roboto Regular';
     font-size: 11px;
     letter-spacing: 0;
     color: #4390EF;
@@ -1531,12 +1531,12 @@ td {
 
     .normsup-checkbox-cont [type="checkbox"]:not(:checked) + label:before, .normsup-checkbox-cont [type="checkbox"]:checked + label:before {
         top: -9px;
-        right: 45px;
+        right: 67px;
         left: unset;
     }
     .normsup-checkbox-cont [type="checkbox"]:not(:checked) + label:after, .normsup-checkbox-cont [type="checkbox"]:checked + label:after {
         top: -6px;
-        right: 48px;
+        right: 70px;
         left: unset;
     }
     
@@ -1669,6 +1669,13 @@ td {
 .rm-robo-15 {
     font-family: 'Roboto Medium' !important;
     font-size: 14px !important;
+    letter-spacing: 0 !important;
+    color: #4E5983 !important;
+}
+
+.rb-robo-15 {
+    font-family: 'Roboto Bold' !important;
+    font-size: 15px !important;
     letter-spacing: 0 !important;
     color: #4E5983 !important;
 }

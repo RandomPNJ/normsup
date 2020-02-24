@@ -7,6 +7,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SupplierUploadPageComponent implements OnInit {
 
+
+  documentStatus: any = {
+    urssaf: true,
+    lnte: false,
+    kbis: false
+  };
+  
+  type: string = 'LEGAL';
+
   constructor() { }
 
   ngOnInit() {

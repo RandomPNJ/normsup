@@ -29,8 +29,8 @@
 
 .upload-logo {
     text-align: center;
-    padding-bottom: 12rem;
-    padding-top: 9rem;
+    padding-bottom: 56px;
+    padding-top: 66px;
 }
 
 .upload-subtitle {
@@ -39,13 +39,14 @@
     color: #4E5983;
     width: 100%;
     text-align: center;
-    padding-bottom: 5rem;
+    padding-bottom: 50px;
 }
 
 .doc-type-choice {
     text-align: center;
     width: 100%;
     font-size: 15px;
+    padding-bottom: 35px;
 }
 
 .doc-type-overlay {
@@ -66,7 +67,76 @@
 }
 
 .disabled-type {
-    background-color: white;
+    // background-color: white;
     color: #4E5983;
     opacity: 0.5;
+}
+
+.document-card {
+    border-radius: 10px;
+    z-index: 99;
+    display: inline-block;
+}
+
+.uploaded-doc-card {
+    background-color: #FFF;
+    box-shadow: 0px 0px 15px #0000001A;
+}
+
+.upload-doc-card {
+    border: 1px dashed rgba(67, 144, 239, 0.2);
+    height: 100%;
+    // opacity: 0.2;
+}
+.upload-file-txt {
+    text-align: center;
+    font-family: 'Roboto Medium';
+    font-size: 13px;
+    letter-spacing: 0;
+    color: #4390EF;
+    opacity: 0.2;
+    padding-bottom: 53px;
+    width: 70px;
+    margin: 0 auto;
+    cursor: pointer;
+}
+.upload-txt-cont {
+    padding-top: 8px;
+}
+
+
+.upload-doc-img {
+    padding: 50px 75px 10px 75px;
+}
+
+#toUpload {
+    height: 100%;
+
+    .upload-doc-img {
+        padding: 49px 75px 11px 75px;
+    }
+}
+
+.ufile-name {
+    width: 100%;
+    text-align: center;
+    padding-bottom: 25.75px;
+}
+
+
+
+.del-file-btn {
+    padding-top: 6px !important;
+    padding-bottom: 6px !important;
+    margin: 0px !important;
+    .button-txt {
+        font-family: 'Avenir Heavy';
+        letter-spacing: 0;
+        color: #4E5983;
+        font-size: 13px;
+    }
+}
+
+.test-up-txt {
+    width: 70px;
 }
