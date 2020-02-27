@@ -1,0 +1,195 @@
+.upload-title {
+    font-family: 'Roboto Medium';
+    font-size: 15px;
+    color: #4E5983;
+    width: 100%;
+    text-align: center;
+    padding-bottom: 5px;
+}
+
+
+
+.upload-subtitle {
+    font-family: 'Roboto Light';
+    font-size: 13px;
+    color: #4E5983;
+    width: 100%;
+    text-align: center;
+    padding-bottom: 50px;
+}
+
+.doc-type-choice {
+    text-align: center;
+    width: 100%;
+    font-size: 15px;
+    padding-bottom: 20px;
+}
+
+.doc-type-overlay {
+    padding: 5px 12px;
+    border-radius: 30px;
+    display: inline-block;
+    cursor: pointer;
+}
+  
+.type-txt {
+    font-family: 'Roboto Medium';
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.active-type {
+    color: #FFF;
+    background-color: #4390EF;
+}
+
+.disabled-type {
+    // background-color: white;
+    color: #4E5983;
+    opacity: 0.5;
+}
+
+.document-card {
+    border-radius: 10px;
+    z-index: 99;
+    display: inline-block;
+    margin-top: 15px;
+    margin-right: 15px;
+    margin-left: 15px;
+
+    // &:first-child {
+    //     margin-right: 15px;
+    //     margin-left: 0px;
+    // }
+}
+
+.uploaded-doc-card {
+    background-color: #FFF;
+    box-shadow: 0px 0px 15px #0000001A;
+}
+
+.upload-doc-card {
+    // height: 100%;
+    background-image: url('../../../../assets/img/upload-border@2x.png');
+    background-size: cover;
+    background-repeat: round;
+}
+.upload-file-txt {
+    text-align: center;
+    font-family: 'Roboto Medium';
+    font-size: 13px;
+    letter-spacing: 0;
+    color: #4390EF;
+    opacity: 0.2;
+    padding-bottom: 53px;
+    width: 70px;
+    margin: 0 auto;
+    cursor: default;
+}
+.upload-txt-cont {
+    padding: 17px 58px 0px 58px;
+}
+
+
+.upload-doc-img {
+    padding: 50px 75px 10px 75px;
+}
+
+
+
+#toUpload {
+    height: 100%;
+
+    .upload-doc-img {
+        padding: 49px 75px 11px 75px;
+    }
+}
+
+.ufile-name {
+    width: 100%;
+    text-align: center;
+    padding-bottom: 25.75px;
+}
+
+
+
+.del-file-btn {
+    padding-top: 5px !important;
+    padding-bottom: 5px !important;
+    margin: 0px !important;
+    border: 1px solid #C7E0FF !important;
+
+    .button-txt {
+        font-family: 'Avenir Heavy';
+        letter-spacing: 0;
+        color: #4E5983;
+        font-size: 13px;
+    }
+}
+
+.test-up-txt {
+    width: 70px;
+}
+
+.legal-tab {
+    max-width: 84px;
+}
+
+.comp-tab {
+    max-width: 156px;
+}
+
+.btn-primary-normsup {
+    min-width: unset !important;
+}
+.upload-save {
+    font-family: 'Roboto Medium';
+    font-size: 13px;
+    letter-spacing: 0;
+    color: #FFFFFF;
+    text-transform: none;
+}
+
+.upload-save-btn {
+    padding: 7px 22px 8px 22px !important;
+    margin: 0px;
+}
+
+.upload-info-txt {
+    padding-top: 102px;
+    margin-bottom: 35px;
+    width: 100%;
+    text-align: center;
+}
+
+.filepicker{
+    -webkit-appearance: none;
+    position:absolute;
+    top:1px;
+    right:1px;
+    width: 40px;
+    height: 40px;
+    text-indent: 100em;
+    background: url('../../../../assets/img/upload-file-icn.svg');
+    background-size: cover;
+    overflow: hidden;
+    cursor: pointer;
+    outline: none;
+}
+
+.upload-file-cont {
+    height: 48px;
+    width: 40px;
+    margin: 48px auto 0px auto;
+}
+
+.upload-doc-imgbis {
+    // padding: 50px 75px 10px 75px;
+    height: 48px;
+}
+
+.doc-subtxt {
+    width: 100%;
+    text-align: center;
+    padding-top: 17px;
+}

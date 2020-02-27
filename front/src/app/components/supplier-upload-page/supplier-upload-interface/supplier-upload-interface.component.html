@@ -1,0 +1,130 @@
+<div class="row">
+  <div class="upload-title">
+    UPLOADER VOS DOCUMENTS
+  </div>
+  <div class="upload-subtitle">
+    Taille maximum des fichiers 20 Mb en .pdf
+  </div>
+  <div class="container nopadding">
+    <div class="doc-type-choice row justify-content-center">
+      <div [ngClass]="{'active-type': type === 'LEGAL', 'disabled-type': type !== 'LEGAL'}"
+        class="doc-type-overlay legal-tab" style="margin-right: 15px;" (click)="switchType('LEGAL')">
+        <embed [hidden]="type === 'LEGAL'" style="height: 16px; padding-right: 7px; vertical-align: middle;"
+          src="../../../../assets/img/gray-legal-icn.svg" (click)="switchType('LEGAL')" />
+        <embed [hidden]="type !== 'LEGAL'" style="height: 16px; padding-right: 7px;vertical-align: middle;"
+          src="../../../../assets/img/white-legal-icn.svg" />
+        <span class="type-txt">Légal</span>
+      </div>
+      <div [ngClass]="{'active-type': type === 'COMP', 'disabled-type': type !== 'COMP'}"
+        class="doc-type-overlay comp-tab" (click)="switchType('COMP')">
+        <embed [hidden]="type === 'COMP'" style="height: 16px; padding-right: 7px;vertical-align: middle;"
+          src="../../../../assets/img/gray-comp-icn.svg" (click)="switchType('LEGAL')" />
+        <embed [hidden]="type !== 'COMP'" style="height: 16px; padding-right: 7px;vertical-align: middle;"
+          src="../../../../assets/img/white-comp-icn.svg" />
+        <span class="type-txt">Complémentaire</span>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row justify-content-center" [hidden]="type !== 'LEGAL'" style="min-height: 198px; max-height: 209px;">
+  <div>
+    <div class="document-card"
+      [ngClass]="{'uploaded-doc-card': documentStatus.urssaf, 'upload-doc-card': !documentStatus.urssaf}">
+      <div *ngIf="!documentStatus.urssaf" id="toUpload">
+        <embed class="upload-doc-img" src="../../../assets/img/upload-file-icn.svg" />
+        <div class="upload-txt-cont">
+          <div class="upload-file-txt">Uploader votre fichier</div>
+        </div>
+      </div>
+      <div *ngIf="documentStatus.urssaf">
+        <embed class="upload-doc-img" src="../../../assets/img/uploaded-doc-img.svg" />
+        <div class="rb-robo-15 ufile-name">Nom du fichier.pdf</div>
+        <div style="padding-bottom: 18px;text-align: center;">
+          <button type="button" class="btn btn-outline-normsup text-capitalize del-file-btn">
+            <span class="button-txt">Supprimer</span>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="rm-robo-15 doc-subtxt">URSSAF*</div>
+  </div>
+  <div>
+    <div class="document-card"
+      [ngClass]="{'uploaded-doc-card': documentStatus.lnte, 'upload-doc-card': !documentStatus.lnte}">
+      <div *ngIf="!documentStatus.lnte" id="toUpload">
+        <div class="input-group upload-file-cont">
+          <input type="file" class="filepicker upload-doc-imgbis">
+        </div>
+        <div class="upload-txt-cont">
+          <div class="upload-file-txt">Uploader votre fichier</div>
+        </div>
+      </div>
+      <div *ngIf="documentStatus.lnte">
+        <embed class="upload-doc-img" src="../../../assets/img/uploaded-doc-img.svg" />
+        <div class="rb-robo-15 ufile-name">Nom du fichier.pdf</div>
+        <div style="padding-bottom: 20px;text-align: center;">
+          <button type="button" class="btn btn-outline-normsup text-capitalize del-file-btn">
+            <span class="button-txt">Supprimer</span>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="rm-robo-15 doc-subtxt">LNTE*</div>
+  </div>
+  <div>
+    <div class="document-card"
+      [ngClass]="{'uploaded-doc-card': documentStatus.kbis, 'upload-doc-card': !documentStatus.kbis}">
+      <div *ngIf="!documentStatus.kbis" id="toUpload">
+        <div class="input-group upload-file-cont">
+          <input type="file" class="filepicker upload-doc-imgbis">
+        </div>
+        <div class="upload-txt-cont">
+          <div class="upload-file-txt">Uploader votre fichier</div>
+        </div>
+      </div>
+      <div *ngIf="documentStatus.kbis">
+        <embed class="upload-doc-img" src="../../../assets/img/uploaded-doc-img.svg" />
+        <div class="rb-robo-15 ufile-name">Nom du fichier.pdf</div>
+        <div style="padding-bottom: 20px;text-align: center;">
+          <button type="button" class="btn btn-outline-normsup text-capitalize del-file-btn">
+            <span class="button-txt">Supprimer</span>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="rm-robo-15 doc-subtxt">KBIS*</div>
+  </div>
+
+</div>
+<div class="row justify-content-center" [hidden]="type !== 'COMP'">
+  <div class="uploaded-doc-card document-card" *ngFor="let item of compDocs">
+    <div>
+      <embed class="upload-doc-img" src="../../../assets/img/uploaded-doc-img.svg" />
+      <div class="rb-robo-15 ufile-name">Nom du fichier.pdf</div>
+      <div style="padding-bottom: 20px;text-align: center;">
+        <button type="button" class="btn btn-outline-normsup text-capitalize del-file-btn">
+          <span class="button-txt">Supprimer</span>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="document-card upload-doc-card">
+    <div id="toUpload">
+      <div class="input-group upload-file-cont">
+        <input type="file" class="filepicker upload-doc-imgbis">
+      </div>
+      <div class="upload-txt-cont">
+        <div class="upload-file-txt">Uploader votre fichier</div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row justify-content-center" style="padding-top: 115px;">
+  <button class="btn btn-primary btn-primary-normsup upload-save-btn">
+    <span class="upload-save">Envoyez vos documents</span>
+  </button>
+
+  <div class="rm-robo-15 upload-info-txt">
+    * Fichiers obligatoire
+  </div>
+</div>
