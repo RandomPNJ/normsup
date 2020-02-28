@@ -56,7 +56,7 @@
     margin-top: 15px;
     margin-right: 15px;
     margin-left: 15px;
-
+    z-index: 9999;
     // &:first-child {
     //     margin-right: 15px;
     //     margin-left: 0px;
@@ -109,6 +109,11 @@
     width: 100%;
     text-align: center;
     padding-bottom: 25.75px;
+    max-width: 170px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    margin: 0 auto;
 }
 
 
@@ -153,6 +158,7 @@
 .upload-save-btn {
     padding: 7px 22px 8px 22px !important;
     margin: 0px;
+    z-index: 9999;
 }
 
 .upload-info-txt {
@@ -192,4 +198,9 @@
     width: 100%;
     text-align: center;
     padding-top: 17px;
+}
+
+
+.row {
+    z-index: 9999 !important;
 }

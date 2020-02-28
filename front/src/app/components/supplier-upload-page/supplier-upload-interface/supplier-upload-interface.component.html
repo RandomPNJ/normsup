@@ -31,14 +31,16 @@
     <div class="document-card"
       [ngClass]="{'uploaded-doc-card': documentStatus.urssaf, 'upload-doc-card': !documentStatus.urssaf}">
       <div *ngIf="!documentStatus.urssaf" id="toUpload">
-        <embed class="upload-doc-img" src="../../../assets/img/upload-file-icn.svg" />
+        <div class="input-group upload-file-cont">
+          <input type="file" class="filepicker upload-doc-imgbis" [(ngModel)]="urssafDocument" (change)="inputFilechange($event, 'Urssaf')">
+        </div>
         <div class="upload-txt-cont">
           <div class="upload-file-txt">Uploader votre fichier</div>
         </div>
       </div>
       <div *ngIf="documentStatus.urssaf">
         <embed class="upload-doc-img" src="../../../assets/img/uploaded-doc-img.svg" />
-        <div class="rb-robo-15 ufile-name">Nom du fichier.pdf</div>
+        <div class="rb-robo-15 ufile-name">{{urssafDocument.name}}</div>
         <div style="padding-bottom: 18px;text-align: center;">
           <button type="button" class="btn btn-outline-normsup text-capitalize del-file-btn">
             <span class="button-txt">Supprimer</span>
@@ -53,7 +55,7 @@
       [ngClass]="{'uploaded-doc-card': documentStatus.lnte, 'upload-doc-card': !documentStatus.lnte}">
       <div *ngIf="!documentStatus.lnte" id="toUpload">
         <div class="input-group upload-file-cont">
-          <input type="file" class="filepicker upload-doc-imgbis">
+          <input type="file" class="filepicker upload-doc-imgbis" [(ngModel)]="lnteDocument" (change)="inputFilechange($event, 'Lnte')">
         </div>
         <div class="upload-txt-cont">
           <div class="upload-file-txt">Uploader votre fichier</div>
@@ -61,7 +63,7 @@
       </div>
       <div *ngIf="documentStatus.lnte">
         <embed class="upload-doc-img" src="../../../assets/img/uploaded-doc-img.svg" />
-        <div class="rb-robo-15 ufile-name">Nom du fichier.pdf</div>
+        <div class="rb-robo-15 ufile-name">{{lnteDocument.name}}</div>
         <div style="padding-bottom: 20px;text-align: center;">
           <button type="button" class="btn btn-outline-normsup text-capitalize del-file-btn">
             <span class="button-txt">Supprimer</span>
@@ -76,7 +78,7 @@
       [ngClass]="{'uploaded-doc-card': documentStatus.kbis, 'upload-doc-card': !documentStatus.kbis}">
       <div *ngIf="!documentStatus.kbis" id="toUpload">
         <div class="input-group upload-file-cont">
-          <input type="file" class="filepicker upload-doc-imgbis">
+          <input type="file" class="filepicker upload-doc-imgbis" [(ngModel)]="kbisDocument" (change)="inputFilechange($event, 'Kbis')">
         </div>
         <div class="upload-txt-cont">
           <div class="upload-file-txt">Uploader votre fichier</div>
@@ -84,7 +86,7 @@
       </div>
       <div *ngIf="documentStatus.kbis">
         <embed class="upload-doc-img" src="../../../assets/img/uploaded-doc-img.svg" />
-        <div class="rb-robo-15 ufile-name">Nom du fichier.pdf</div>
+        <div class="rb-robo-15 ufile-name">{{kbisDocument.name}}</div>
         <div style="padding-bottom: 20px;text-align: center;">
           <button type="button" class="btn btn-outline-normsup text-capitalize del-file-btn">
             <span class="button-txt">Supprimer</span>
@@ -111,7 +113,7 @@
   <div class="document-card upload-doc-card">
     <div id="toUpload">
       <div class="input-group upload-file-cont">
-        <input type="file" class="filepicker upload-doc-imgbis">
+        <input type="file" class="filepicker upload-doc-imgbis" [(ngModel)]="compDocument" (change)="inputFilechange($event, 'Comp')">
       </div>
       <div class="upload-txt-cont">
         <div class="upload-file-txt">Uploader votre fichier</div>
@@ -120,7 +122,7 @@
   </div>
 </div>
 <div class="row justify-content-center" style="padding-top: 115px;">
-  <button class="btn btn-primary btn-primary-normsup upload-save-btn">
+  <button class="btn btn-primary btn-primary-normsup upload-save-btn" (click)="sendDocuments()">
     <span class="upload-save">Envoyez vos documents</span>
   </button>
 
