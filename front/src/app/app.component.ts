@@ -22,6 +22,8 @@ export class AppComponent {
             if(this.router && this.router.url) {
               if(this.router.url.startsWith('/upload')){
                 this.sidebar = 1;
+              } else {
+                this.sidebar = 0;
               }
             } else {
               this.sidebar = 0;

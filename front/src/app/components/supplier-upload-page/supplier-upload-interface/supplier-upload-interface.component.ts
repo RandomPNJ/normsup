@@ -37,8 +37,6 @@ export class SupplierUploadInterfaceComponent implements OnInit {
   }
 
   inputFilechange(e, type) {
-    console.log('inputFilechange', e)
-    console.log('inputFilechange', e.target.files['0'])
     if(e.target && e.target.files && e.target.files['0']) {
       switch(type) {
         case 'Comp':
@@ -69,12 +67,7 @@ export class SupplierUploadInterfaceComponent implements OnInit {
 
   deleteCompDoc(item) {
     remove(this.compDocs, (n) => {
-      console.log('n name', n.name);
-      console.log('item name', item.name);
-      console.log('n.name === item.name', n.name === item.name);
-      console.log('\n\n\n')
       return n.name === item.name;
     });
-    console.log('deleteCompDoc', this.compDocs);
   }
 }
