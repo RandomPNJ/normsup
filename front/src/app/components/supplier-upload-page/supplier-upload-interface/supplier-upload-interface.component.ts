@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { remove } from 'lodash';
 
 @Component({
   selector: 'app-supplier-upload-interface',
@@ -16,33 +17,6 @@ export class SupplierUploadInterfaceComponent implements OnInit {
   };
   
   compDocs: any[] = [
-    {
-      name: 'CompDocOne'
-    },
-    {
-      name: 'CompDocTwo'
-    },
-    {
-      name: 'CompDocThree'
-    },
-    {
-      name: 'CompDocOne'
-    },
-    {
-      name: 'CompDocTwo'
-    },
-    {
-      name: 'CompDocThree'
-    },
-    {
-      name: 'CompDocOne'
-    },
-    {
-      name: 'CompDocTwo'
-    },
-    {
-      name: 'CompDocThree'
-    }
   ]
   type: string = 'LEGAL';
 
@@ -68,7 +42,9 @@ export class SupplierUploadInterfaceComponent implements OnInit {
     if(e.target && e.target.files && e.target.files['0']) {
       switch(type) {
         case 'Comp':
-          this.compDocument = e.target.files['0'];
+          this.compDocs.push(e.target.files['0']);
+          this.compDocument = '';
+          console.log('compDocs', this.compDocs);
           break;
         case 'Kbis':
           this.kbisDocument = e.target.files['0'];
@@ -91,4 +67,14 @@ export class SupplierUploadInterfaceComponent implements OnInit {
     this.router.navigate(['upload', 'success']);
   }
 
+  deleteCompDoc(item) {
+    remove(this.compDocs, (n) => {
+      console.log('n name', n.name);
+      console.log('item name', item.name);
+      console.log('n.name === item.name', n.name === item.name);
+      console.log('\n\n\n')
+      return n.name === item.name;
+    });
+    console.log('deleteCompDoc', this.compDocs);
+  }
 }

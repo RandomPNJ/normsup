@@ -91,7 +91,7 @@ body {
 }
 
 body {
-    overflow: hidden;
+    // overflow: hidden;
 }
 
 .header h1 {
@@ -1668,7 +1668,14 @@ td {
 
 .rm-robo-15 {
     font-family: 'Roboto Medium' !important;
-    font-size: 14px !important;
+    font-size: 15px !important;
+    letter-spacing: 0 !important;
+    color: #4E5983 !important;
+}
+
+.rm-robo-13 {
+    font-family: 'Roboto Medium' !important;
+    font-size: 13px !important;
     letter-spacing: 0 !important;
     color: #4E5983 !important;
 }

@@ -1,7 +1,6 @@
-<div>
-    <app-sidebar></app-sidebar>
+<div style="height: 100%;" *ngIf="sidebar !== 2">
+    <app-sidebar *ngIf="sidebar === 0"></app-sidebar>
     <notif></notif>
-    <!-- <app-header-bar></app-header-bar> -->
     <router-outlet></router-outlet>
 </div>
 

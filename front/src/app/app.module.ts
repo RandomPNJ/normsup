@@ -56,6 +56,8 @@ import { GroupListComponent } from './components/groups/group-list/group-list.co
 import { ExportComponent } from './components/export/export.component';
 import { LogoutPageComponent } from './components/logout-page/logout-page.component';
 import { SupplierUploadPageComponent } from './components/supplier-upload-page/supplier-upload-page.component';
+import { SupplierUploadSuccessComponent } from './components/supplier-upload-page/supplier-upload-success/supplier-upload-success.component';
+import { SupplierUploadInterfaceComponent } from './components/supplier-upload-page/supplier-upload-interface/supplier-upload-interface.component';
 
 @NgModule({
   declarations: [
@@ -91,6 +93,8 @@ import { SupplierUploadPageComponent } from './components/supplier-upload-page/s
     ExportComponent,
     LogoutPageComponent,
     SupplierUploadPageComponent,
+    SupplierUploadSuccessComponent,
+    SupplierUploadInterfaceComponent,
   ],
   imports: [
     BrowserModule,

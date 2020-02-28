@@ -11,7 +11,7 @@ export class LoggedinGuard implements CanActivate {
 
   constructor(private authService: AuthService, private router: Router) {}
 
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> | Promise<any> | any {
+  canActivate(route: ActivatedRouteSnapshot): Observable<any> | Promise<any> | any {
     const res = this.authService.isLoggedIn();
     console.log('route.routeConfig.path', route.routeConfig.path)
     if(res === false && route.routeConfig.path !== 'login') {

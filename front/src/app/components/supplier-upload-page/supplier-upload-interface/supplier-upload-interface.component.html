@@ -102,9 +102,9 @@
   <div class="uploaded-doc-card document-card" *ngFor="let item of compDocs">
     <div>
       <embed class="upload-doc-img" src="../../../assets/img/uploaded-doc-img.svg" />
-      <div class="rb-robo-15 ufile-name">Nom du fichier.pdf</div>
+      <div class="rb-robo-15 ufile-name">{{item.name}}</div>
       <div style="padding-bottom: 20px;text-align: center;">
-        <button type="button" class="btn btn-outline-normsup text-capitalize del-file-btn">
+        <button type="button" class="btn btn-outline-normsup text-capitalize del-file-btn" (click)="deleteCompDoc(item)">
           <span class="button-txt">Supprimer</span>
         </button>
       </div>
