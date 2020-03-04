@@ -242,7 +242,7 @@ export class SupplierTableComponent implements OnInit,AfterViewInit {
     ;
   }
 
-  filterByGroup(): void {
+  filterByGroup(val): void {
     // console.log(this.dtElement);
     this.datatableElement.dtInstance.then((dtInstance: DataTables.Api) => {
       dtInstance.draw();

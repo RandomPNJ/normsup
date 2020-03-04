@@ -18,7 +18,6 @@ export class AuthService implements OnInit {
    }
 
   ngOnInit() {
-    // this.isLogged  = new BehaviorSubject<any>(this.isLoggedIn());
   }
   public login(username: String, password: String): Observable<any> {
     const body = {};
@@ -46,5 +45,7 @@ export class AuthService implements OnInit {
       return false;
     }
   }
+
+  
 
 }

@@ -102,7 +102,7 @@ export class AddCompGroupComponent implements OnInit {
     );
   }
 
-  private loadSupplier(searchSupplier) {
+  public loadSupplier(searchSupplier) {
 
     let uri;
     if(searchSupplier && searchSupplier !== '') {
@@ -121,7 +121,7 @@ export class AddCompGroupComponent implements OnInit {
     ;
   }
 
-  private previous(val) {
+  public previous(val) {
     if(val === 'groupName') {
       this.changeModal.emit(val);
       this.state = val;
@@ -132,7 +132,7 @@ export class AddCompGroupComponent implements OnInit {
     }
   }
 
-  private nextStep(val) {
+  public nextStep(val) {
     if(val === 'groupMembers' && this.type === 'MODIFICATION') {
 
     }
@@ -154,7 +154,7 @@ export class AddCompGroupComponent implements OnInit {
     this.state = val;
   }
 
-  private checkGroupName(name) {
+  public checkGroupName(name) {
     if(this.type === 'MODIFICATION') {
       return this.nextStep('groupMembers'); 
     } else {
@@ -178,7 +178,7 @@ export class AddCompGroupComponent implements OnInit {
   }
 
   //TODO: Rework this function, I made this on a hurry so it's very poorly written
-  private createGroup() {
+  public createGroup() {
     const docSettings = {
       comp_docs: '',
       frequency: '5d'
@@ -237,10 +237,14 @@ export class AddCompGroupComponent implements OnInit {
     ;
   }
 
-  private closeModal() {
+  public closeModal() {
     this.changeModal.emit('hide');
   }
 
+  // What is this for ???
+  getSelectedSuppliers(e)  {
+
+  }
   addDocumentType() {
     if(this.documentChosen.value !== undefined) {
       console.log('this.documentChosen = ', this.documentChosen);

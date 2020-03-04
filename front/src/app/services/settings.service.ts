@@ -5,7 +5,7 @@ import { Product } from '../models/Product';
 import { BrowserStorageService } from 'src/app/services/storageService';
 import { Configuration } from '../config/environment';
 import { map, filter, catchError, mergeMap } from 'rxjs/operators';
-import { Observable, ObservableInput, throwError, Subject } from 'rxjs';
+import { Observable, ObservableInput, throwError, Subject, BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -14,8 +14,12 @@ export class SettingsService {
 
   apiToken = '';
   private httpOptions = {};
+  public profileModif: BehaviorSubject<any>;
+
   constructor(private httpService: HttpService, private http: HttpClient,
-    private bsService: BrowserStorageService) { }
+    private bsService: BrowserStorageService) { 
+      this.profileModif  = new BehaviorSubject<any>(this.profileModification());
+    }
 
 
   getToken() {
@@ -50,4 +54,15 @@ export class SettingsService {
       return throwError(errMsg);
   }
 
+  public profileModification(): any {
+    let loggedUser = this.bsService.getLocalStorage('current_user');
+    loggedUser = JSON.parse(loggedUser);
+    console.log('profileModification', loggedUser)
+    if(loggedUser && loggedUser.username) {
+      // I do this to preserve data coherency, as API return user in data property
+      return loggedUser;
+    } else {
+      return false;
+    }
+  }
 }

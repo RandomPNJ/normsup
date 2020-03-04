@@ -20,6 +20,8 @@ import { LogoutPageComponent } from './components/logout-page/logout-page.compon
 import { SupplierUploadPageComponent } from './components/supplier-upload-page/supplier-upload-page.component';
 import { SupplierUploadSuccessComponent } from './components/supplier-upload-page/supplier-upload-success/supplier-upload-success.component';
 import { SupplierUploadInterfaceComponent } from './components/supplier-upload-page/supplier-upload-interface/supplier-upload-interface.component';
+import { BackofficeComponent } from './components/backoffice/backoffice.component';
+import { BackofficeGuard } from './auth/backoffice.guard';
 
 const routes: Routes = [
   { path: 'upload', component: SupplierUploadPageComponent, 
@@ -45,6 +47,12 @@ const routes: Routes = [
       { path: 'export', component: ExportComponent },
       { path: 'users', component: UsersManagementComponent },
       { path: '', pathMatch: 'full', redirectTo: 'main'},
+    ]
+  },
+  {
+    path: 'backoffice', component: BackofficeComponent, canActivate: [BackofficeGuard], 
+    children: [
+
     ]
   },
   { path: '',

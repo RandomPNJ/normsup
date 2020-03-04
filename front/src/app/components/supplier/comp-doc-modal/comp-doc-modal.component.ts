@@ -34,7 +34,7 @@ export class CompDocModalComponent implements OnInit {
   };
   dtOptions: DataTables.Settings = {};
   myTable: Boolean = false;
-
+  addCompDoc: Boolean = true;
   itemPluralMappingNum = {
     'documents': {
       '=0': 'Aucun Document',

@@ -95,7 +95,7 @@ export class SupplierComponent implements OnInit {
   valueWidth: Boolean = false;
   itemsDisplay: Array<any> = [];
   dataLength = -1;
-
+  items: any;
   companies: any[] = [];
 
   constructor(

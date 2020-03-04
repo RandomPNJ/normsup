@@ -3,6 +3,7 @@ import { Router, ActivatedRoute, ActivationEnd, ActivationStart, NavigationStart
 import { BrowserStorageService } from 'src/app/services/storageService';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
+import { SettingsService } from 'src/app/services/settings.service';
 
 @Component({
   selector: 'app-header-bar',
@@ -26,11 +27,13 @@ export class HeaderBarComponent implements OnInit {
   dropdownSecondBtn = 'Add data';
 
   isLoggedIn: Subscription;
+  profileSub: Subscription;
 
   constructor(private router: Router,
     private route: ActivatedRoute,
     private bsService: BrowserStorageService,
-    private authService: AuthService) {
+    private authService: AuthService,
+    private settingsService: SettingsService) {
   }
 
   ngOnInit() {
@@ -41,6 +44,14 @@ export class HeaderBarComponent implements OnInit {
       }
       this.showHeader = !!res;
       console.log('showHeader ', this.showHeader)
+    });
+    this.profileSub = this.settingsService.profileModif.subscribe(res => {
+      console.log('user res uno =', res);
+      console.log('user res uno2 =', typeof res);
+      if(res && res.name) {
+        console.log('user res dos =', res);
+        this.user = res;
+      }
     });
   }
 

@@ -43,6 +43,7 @@ export class ExportComponent implements OnInit {
     { name: 'URSSAF', value: 'urssaf', available: true},
   ];
   documentChosen: any;
+  groupChosen: any;
   groupsChosen: Array<any> = [];
   suppliersChosen: Array<any> = [];
   documentsToRequest: Array<string> = [];
@@ -133,7 +134,7 @@ export class ExportComponent implements OnInit {
     }
   }
 
-  choseSupplier() {
+  choseSupplier(rt) {
     if(typeof this.supplierSelected === 'string') {
       return;
     }

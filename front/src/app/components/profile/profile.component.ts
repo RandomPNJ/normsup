@@ -7,6 +7,7 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { combineLatest, Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
+import { SettingsService } from 'src/app/services/settings.service';
 
 @Component({
   selector: 'app-profile',
@@ -78,7 +79,8 @@ export class ProfileComponent implements OnInit {
     private bsService: BrowserStorageService, 
     private changeDetection: ChangeDetectorRef,
     private notifService: NotifService,
-    private modalService: BsModalService,) { }
+    private modalService: BsModalService,
+    private settingsService: SettingsService) { }
 
   ngOnInit() {
     this.token = this.bsService.getLocalStorage('token');
@@ -108,6 +110,7 @@ export class ProfileComponent implements OnInit {
         this.notifService.success('Utilisateur modifié avec succès.');
         let user = JSON.stringify(this.userInfo);
         this.bsService.setLocalStorage('current_user', user);
+        this.settingsService.profileModif.next(this.userInfo);
       })
     ;
   }

@@ -22,7 +22,8 @@ export class LoginPageComponent implements OnInit, OnDestroy {
   };
   credentials = {
     username: '',
-    password: ''
+    password: '',
+    cacheConnected: false
   };
   iserror = 'hide';
   iserror1 = 'hide';

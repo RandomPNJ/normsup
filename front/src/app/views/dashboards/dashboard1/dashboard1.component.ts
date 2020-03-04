@@ -49,7 +49,7 @@ export class Dashboard1Component implements OnInit, AfterViewInit {
 		],
 		datasets: [
 			{
-				data: [70, 30],
+				data: [80, 20],
 				backgroundColor: [
 					"#4390EF",
 					"#C7E0FF"

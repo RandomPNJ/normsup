@@ -58,6 +58,9 @@ import { LogoutPageComponent } from './components/logout-page/logout-page.compon
 import { SupplierUploadPageComponent } from './components/supplier-upload-page/supplier-upload-page.component';
 import { SupplierUploadSuccessComponent } from './components/supplier-upload-page/supplier-upload-success/supplier-upload-success.component';
 import { SupplierUploadInterfaceComponent } from './components/supplier-upload-page/supplier-upload-interface/supplier-upload-interface.component';
+import { BackofficeUsersComponent } from './components/backoffice-users/backoffice-users.component';
+import { BackofficeUsersTableComponent } from './components/backoffice-users/backoffice-users-table/backoffice-users-table.component';
+import { BackofficeComponent } from './components/backoffice/backoffice.component';
 
 @NgModule({
   declarations: [
@@ -95,6 +98,9 @@ import { SupplierUploadInterfaceComponent } from './components/supplier-upload-p
     SupplierUploadPageComponent,
     SupplierUploadSuccessComponent,
     SupplierUploadInterfaceComponent,
+    BackofficeUsersComponent,
+    BackofficeUsersTableComponent,
+    BackofficeComponent,
   ],
   imports: [
     BrowserModule,

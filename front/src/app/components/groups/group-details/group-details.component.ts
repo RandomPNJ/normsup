@@ -179,7 +179,7 @@ export class GroupDetailsComponent implements OnInit {
     ;
   }
 
-  private save() {
+  public save() {
     const data = {
       frequency: '',
       activated: 0,
@@ -213,7 +213,7 @@ export class GroupDetailsComponent implements OnInit {
     ;
   }
 
-  private spontReminder() {
+  public spontReminder() {
 
   }
 
@@ -230,6 +230,5 @@ export class GroupDetailsComponent implements OnInit {
       })
     ;
   }
-
 
 }
