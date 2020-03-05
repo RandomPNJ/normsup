@@ -5,6 +5,7 @@ import { cloneDeep } from 'lodash';
 import { ProductService } from 'src/app/services/product.service';
 import * as moment from 'moment';
 import { HttpService } from 'src/app/services/http.service';
+import { UsersTableComponent } from './users-table/users-table.component';
 
 declare var require: any;
 
@@ -16,7 +17,7 @@ declare var require: any;
 export class UsersManagementComponent implements OnInit {
 
   @ViewChild('template') public modal: TemplateRef<any>;
-  @ViewChild('usersTable') public usersTableRef: TemplateRef<any>;
+  @ViewChild('usersTable') public usersTableRef: UsersTableComponent;
 
   sidebarVisible: Boolean = true;
   subscriptions: Subscription[] = [];
@@ -139,6 +140,7 @@ export class UsersManagementComponent implements OnInit {
     this.apiService.postData('/api/users/register', { user: data })
       .subscribe(res => {
           this.hideModal('');
+          this.usersTableRef.reload();
         }, err => {
       })
     ;

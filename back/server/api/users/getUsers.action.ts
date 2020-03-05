@@ -16,7 +16,7 @@ export function getUsers(req, UsersRegistry) {
     const params = req.params;
     // Unset this after
     // params.org = 1;
-
+    params.org = req.decoded.organisation;
     if(!params.org) {
         const error = new Error(`Invalid request, org must be specified.`);
         error['statusCode'] = 400;

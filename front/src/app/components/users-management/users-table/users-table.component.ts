@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, ViewChild } from '@angular/core';
 import { HttpService } from 'src/app/services/http.service';
 import { HttpParams } from '@angular/common/http';
 import { DataTableDirective } from 'angular-datatables';
@@ -11,6 +11,7 @@ import { cloneDeep } from 'lodash';
 })
 export class UsersTableComponent implements OnInit {
 
+  @ViewChild(DataTableDirective) datatableElement: DataTableDirective;
   @Output() modifyUser = new EventEmitter<string>();
   loggedUser = {
     username: 'lob123',
@@ -25,18 +26,19 @@ export class UsersTableComponent implements OnInit {
   };
   tableParams: any = {
     start: 0,
-    length: 9
+    length: 50
   };
   items = [
   ];
+  reloadVar: Boolean = false;
   myTable: Boolean = false;
   itemsToDisplay: Array<any> = [];
   dtOptions: DataTables.Settings = {};
   roles: Array<any> = [
-    { name : ' ', value: ' '},
-    { name: 'Admin', value: 'admin'},
-    { name: 'Utilisateur', value: 'user'},
-    { name: 'Invité', value: 'guest'},
+    { name: ' ', value: ' ' },
+    { name: 'Admin', value: 'admin' },
+    { name: 'Utilisateur', value: 'user' },
+    { name: 'Invité', value: 'guest' },
   ];
   dataSize: any = 0;
 
@@ -67,22 +69,39 @@ export class UsersTableComponent implements OnInit {
       serverSide: true,
       processing: false,
       language: {
-          lengthMenu: 'Voir _MENU_ résultats par page',
-          zeroRecords: 'Aucun résultat trouvé',
-          info: 'Page _PAGE_ sur _PAGES_',
-          infoEmpty: 'Aucun résultat disponible',
-          search: 'Rechercher:',
-          infoFiltered: '(filtré sur un total de _MAX_ résultats)',
-          paginate: {
-              first:      'Premier',
-              last:       'Dernier',
-              next:       'Suivant',
-              previous:   'Précedent'
-          },
+        lengthMenu: 'Voir _MENU_ résultats par page',
+        zeroRecords: 'Aucun résultat trouvé',
+        info: 'Page _PAGE_ sur _PAGES_',
+        infoEmpty: 'Aucun résultat disponible',
+        search: 'Rechercher:',
+        infoFiltered: '(filtré sur un total de _MAX_ résultats)',
+        paginate: {
+          first: 'Premier',
+          last: 'Dernier',
+          next: 'Suivant',
+          previous: 'Précedent'
+        },
       },
       ajax: (dataTablesParameters: any, callback: any) => {
         const action = this.compareParams(dataTablesParameters);
-        console.log('tableParams', dataTablesParameters);
+        if (that.reloadVar === true) {
+          setTimeout(() => {that.httpService
+            .get('/api/users', dataTablesParameters)
+            .subscribe(resp => {
+              that.items = resp.body['items'];
+              that.itemsToDisplay = that.items.slice(that.tableParams.start, that.tableParams.start + that.tableParams.length);
+              that.dataSize = that.items.length;
+              that.reloadVar = false;
+              that.myTable = true;
+              callback({
+                recordsTotal: that.items.length,
+                recordsFiltered: that.items.length,
+                data: []
+              });
+            }, err => {
+              console.log('/api/users err', err);
+            })},1000);
+        } else {
           that.httpService
             .get('/api/users', dataTablesParameters)
             .subscribe(resp => {
@@ -99,8 +118,9 @@ export class UsersTableComponent implements OnInit {
             }, err => {
               console.log('/api/users err', err);
             });
+        }
       },
-      preDrawCallback: function(settings) {
+      preDrawCallback: function (settings) {
         that.tableParams.start = settings._iDisplayStart;
         that.tableParams.length = settings._iDisplayLength;
       },
@@ -123,17 +143,17 @@ export class UsersTableComponent implements OnInit {
 
   compareParams(datatableParams) {
     // TODO : Ordering with multiple columns
-    if(!this.tableParams.start) {
+    if (!this.tableParams.start) {
       this.tableParams = cloneDeep(datatableParams);
       return 'query';
     }
-    if(this.tableParams.start !== datatableParams.start && this.items.length <= datatableParams.start) {
+    if (this.tableParams.start !== datatableParams.start && this.items.length <= datatableParams.start) {
       this.tableParams = cloneDeep(datatableParams);
       return 'query';
-    } else if(this.tableParams.search !== datatableParams.search.value) {
+    } else if (this.tableParams.search !== datatableParams.search.value) {
       this.tableParams = cloneDeep(datatableParams);
       return 'query';
-    } else if(this.tableParams.length !== datatableParams.length) {
+    } else if (this.tableParams.length !== datatableParams.length) {
       this.tableParams = cloneDeep(datatableParams);
 
       return 'query';
@@ -145,12 +165,20 @@ export class UsersTableComponent implements OnInit {
     // }
 
   }
+
+  reload() {
+    console.log('reload');
+    this.reloadVar = true;
+    this.datatableElement.dtInstance.then((dtInstance: DataTables.Api) => {
+      dtInstance.ajax.reload();
+    });
+  }
   delete(item) {
 
   }
 
   edit(item) {
-    if(item) {
+    if (item) {
       this.modifyUser.emit(item);
     }
   }

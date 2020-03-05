@@ -26,6 +26,8 @@ export function createUser(req, UsersRegistry) {
     });
 
     data.create_time = new Date();
+    // organisation -> real company of the user
+    // client -> main client that pays for normsup
     if(creator.organisation) {
         data.client = creator.organisation;
     }
@@ -33,8 +35,9 @@ export function createUser(req, UsersRegistry) {
         data.createdBy = creator.username;
     }
     // this removes white spaces I think
-    data.username = data.name.replace(/\s+/g, '') + "_" + data.lastname.replace(/\s+/g, '');;
-
+    data.username = data.name.replace(/\s+/g, '') + "_" + data.lastname.replace(/\s+/g, '');
+    data.username = data.username.substring(0, 16);
+    loggerT.verbose('data.username', data.username)
     // If no password generated, generate one
     if(!data.password) {
         data.password = 'randompassword';
