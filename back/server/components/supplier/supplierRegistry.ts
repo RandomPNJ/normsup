@@ -369,7 +369,7 @@ export default class SupplierRegistry {
                                 let query2 = {
                                     timeout: 40000
                                 };
-                                representative['organisation_id'] = res.insertId;
+                                representative['organisation_id'] = res[0].id;
                                 representative['added_by'] = user.id;
                                 query2['sql'] = Query.INSERT_REPRESENTATIVE;
                                 query2['values'] = [representative]
