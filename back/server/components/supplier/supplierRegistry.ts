@@ -352,6 +352,36 @@ export default class SupplierRegistry {
             })
             .catch(err => {
                 loggerT.error('ERROR ON FIRST QUERY createSuppliers : ', err);
+                if(err.message.includes("Duplicate entry")) {
+                    query['sql'] = Query.QUERY_GET_SUPPLIER_LAMBDA
+                    query['values'] = [data.siret, data.siret, data.siret];
+                    return this.mysql.query(query)
+                        .then(res => {
+                            console.log('err recreate', res);
+                            if(res && res[0] && res[0].id) {
+                                loggerT.verbose('FIRST QUERY RES ==== ', res);
+                                let newInsert = {};
+                                newInsert['supplier_id'] = res[0].id;
+                                newInsert['client_id'] = user.organisation;
+                                query['sql']    = Query.INSERT_REL;
+                                query['values'] = [newInsert];
+
+                                let query2 = {
+                                    timeout: 40000
+                                };
+                                representative['organisation_id'] = res.insertId;
+                                representative['added_by'] = user.id;
+                                query2['sql'] = Query.INSERT_REPRESENTATIVE;
+                                query2['values'] = [representative]
+
+                                return Promise.all[
+                                    this.mysql.query(query),
+                                    this.mysql.query(query2)]
+                                ;
+                            }
+                        })
+                    ;
+                }
                 return Promise.reject(err);
             })
         ;
