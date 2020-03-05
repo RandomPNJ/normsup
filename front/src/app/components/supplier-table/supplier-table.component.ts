@@ -277,15 +277,6 @@ export class SupplierTableComponent implements OnInit,AfterViewInit {
     console.log(item);
   }
 
-  // reload(dataInput?: any) {
-  //   this.myTable = true;
-  //   this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-  //     // Destroy the table first
-  //     dtInstance.destroy();
-  //     // Call the dtTrigger to rerender again
-  //     this.dtTrigger.next();
-  //   });
-  // }
 
   openSupplierInfo(item, i) {
     this.modifySupplier(false);
@@ -359,8 +350,13 @@ export class SupplierTableComponent implements OnInit,AfterViewInit {
     
   }
 
-  deleteSupplier() {
-    
+  deleteSupplier(supplier) {
+    this.httpService
+      .post('/api/supplier/delete/' + supplier.id)
+      .subscribe(res => {
+
+      })
+    ;
   }
   openModal(template: TemplateRef<any>, modalType: String) {
     const _combine = combineLatest(

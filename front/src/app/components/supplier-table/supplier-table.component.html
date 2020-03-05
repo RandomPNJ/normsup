@@ -131,7 +131,7 @@
                 </div>
                 <div class="form-row">
                   <div *ngIf="!toggleModification" style="padding-bottom: 13px;" class="infosupplier"> Adresse du siège social: 
-                    <span class="infosupplier-value">{{infoPopup.address}}, {{infoPopup.postalCode}} {{infoPopup.city}}</span>
+                    <span class="infosupplier-value">{{infoPopup.address ? infoPopup.address + "," : ""}} {{infoPopup.postalCode}} {{infoPopup.city}}</span>
                   </div>
                   <div *ngIf="toggleModification" class="form-group">
                     <label class="infosupplier col-auto nopadding" style="padding-right: 10px !important;" for="supplierAddress">Adresse du siège social:</label>
@@ -141,13 +141,13 @@
                   </div>
                 </div>
                 <div style="padding-bottom: 21px;" class="form-row">
-                  <span *ngIf="!toggleModification" style="display: inline-block; min-width: 190px;" class="infosupplier">Capital social: 
+                  <!-- <span *ngIf="!toggleModification" style="display: inline-block; min-width: 190px;" class="infosupplier">Capital social: 
                     <span class="infosupplier-value">{{infoPopup.asset}}1000000000 €</span>
                   </span>
                   <div *ngIf="toggleModification" class="form-group col-6">
                     <label class="infosupplier col-auto nopadding" style="padding-right: 10px !important;" for="supplierAsset">Capital social:</label>
                     <input class="form-control col-6" [(ngModel)]="supplier.asset" id="supplierAsset" style="display: inline-block !important;" placeholder="Capital Social"/>
-                  </div>
+                  </div> -->
                   <span *ngIf="!toggleModification"class="infosupplier">Secteur d'activité: 
                     <span class="infosupplier-value">{{infoPopup.legalUnit}}</span>
                   </span>
@@ -176,7 +176,7 @@
                       <div class="v-legend-cont nopadding">
                         <div style="line-height: 17px;">
                           <span class="legend-txt">
-                            <button *ngIf="!toggleModification" style="box-shadow: none;" (click)="deleteSupplier()" type="button" class="btn btn-outline-normsup default-btn-table infosup-btn">
+                            <button *ngIf="!toggleModification" style="box-shadow: none;" (click)="deleteSupplier(infoPopup)" type="button" class="btn btn-outline-normsup default-btn-table infosup-btn">
                               Supprimer
                             </button>
                             <button *ngIf="toggleModification" style="box-shadow: none;" (click)="modifySupplier()" type="button" class="btn btn-outline-normsup default-btn-table infosup-btn">

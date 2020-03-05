@@ -20,6 +20,8 @@ export default class SupplierRegistry {
         */
         let v = '';
         let values = [];
+        values.push(data.company);
+
         if(data.company) { 
             v += 'C'; 
             values.push(data.company);
@@ -387,6 +389,39 @@ export default class SupplierRegistry {
         ;
     }
 
+    public deleteSupplier(id, client) {
+        let query = {
+            timeout: 40000
+        };
+        let query2 = {
+            timeout: 40000
+        };
+
+        query['sql'] = Query.DELETE_SUPPLIER_RELATION;
+        query['values'] = [id, client];
+
+        query2['sql'] = Query.DELETE_SUPPLIER_REPRES;
+        query2['values'] = [id, client];
+
+        return this.mysql.query(query)
+            .then((res, fields) => {
+                loggerT.verbose('QUERY RES deleteGroup ==== ', res);
+
+                return this.mysql.query(query2)
+                    .then(res => {
+                        return Promise.resolve(res);
+                    })
+                    .catch(err => {
+                        loggerT.error('ERROR ON QUERY deleteGroupMembers.');
+                        return Promise.reject(err);
+                    })
+            })
+            .catch(err => {
+                loggerT.error('ERROR ON QUERY deleteGroup.');
+                return Promise.reject(err);
+            })
+        ;
+    }
     public modifyGroupReminders(id, data) {
         let query = {
             timeout: 40000

@@ -100,7 +100,7 @@ export class UsersTableComponent implements OnInit {
               });
             }, err => {
               console.log('/api/users err', err);
-            })},1000);
+            })}, 2500);
         } else {
           that.httpService
             .get('/api/users', dataTablesParameters)
