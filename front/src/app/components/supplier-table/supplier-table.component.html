@@ -1,18 +1,13 @@
 <div style="max-width: 200px;" class="form-group">
-  <!-- <label style="color: #333;" for="groupSelect"></label> -->
   <select class="form-control select-grp custom-select" id="groupSelect" [(ngModel)]="groupSelect"
     (change)="filterByGroup($event.target.value)">
     <option style="text-transform: capitalize;" *ngFor="let c of groups" [ngValue]="c.id" [disabled]="c.id === ''">
       {{c.name}}</option>
-    <!-- <option value="" selected disabled>Choisir un groupe</option>
-      <option>A</option>
-      <option>B</option>
-      <option>C</option> -->
   </select>
 </div>
 <div class="table-responsive">
   <table datatable [dtOptions]="dtOptions" id="tableComp" class="table display pageResize hover compact supplier-table" cellspacing="0"
-    width="100%" style="height: 100%;">
+    width="100%" style="height: 100%;" #suppliersTable>
     <!-- <thead>
     <tr>
       <th class="th-sm">Nom du fournisseur</th>
@@ -211,11 +206,11 @@
                 <div class="col-9 nopadding">
                   <div class="vert-alignement">
                     <span style="padding-right: 37px" class="infosupplier">Téléphone: 
-                      <span *ngIf="!toggleModification" class="infosupplier-value">{{infoPopup.phone_number}}0130732721</span>
+                      <span *ngIf="!toggleModification" class="infosupplier-value">{{(infoPopup.phone_number) ? infoPopup.phone_number : "Aucun numéro"}}</span>
                       <input *ngIf="toggleModification" [(ngModel)]="interloc.phone_number" class="infosupplier-value"/>
                     </span>
                     <span class="infosupplier">Adresse mail: 
-                      <span *ngIf="!toggleModification" class="infosupplier-value">{{infoPopup.email}}dade-dzazdazzaz@gmail.com</span>
+                      <span *ngIf="!toggleModification" class="infosupplier-value">{{(infoPopup.email) ? infoPopup.email : "Aucun email"}}</span>
                       <input *ngIf="toggleModification" [(ngModel)]="interloc.email"  class="infosupplier-value" />
                     </span>
                   </div>

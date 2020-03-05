@@ -65,7 +65,7 @@ export class UsersTableComponent implements OnInit {
       info: false,
       // pageLength: 10,
       serverSide: true,
-      processing: true,
+      processing: false,
       language: {
           lengthMenu: 'Voir _MENU_ résultats par page',
           zeroRecords: 'Aucun résultat trouvé',

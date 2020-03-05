@@ -24,6 +24,7 @@ export class SupplierTableComponent implements OnInit,AfterViewInit {
   @Output() infoModal = new EventEmitter<string>();
   @Input() items: Array<any> = [];
   @Output() suppliersData: EventEmitter<number> =   new EventEmitter();
+  
 
 
   itemsToDisplay: Array<any> = [];
@@ -121,7 +122,7 @@ export class SupplierTableComponent implements OnInit,AfterViewInit {
           infoEmpty: 'Aucun résultat disponible',
           search: '',
           searchPlaceholder: "Rechercher un fournisseur",
-          infoFiltered: '(filtré sur un total de _MAX_ résultats)',
+          // infoFiltered: '(filtré sur un total de _MAX_ résultats)',
           paginate: {
               first:      'Premier',
               last:       'Dernier',
@@ -240,6 +241,27 @@ export class SupplierTableComponent implements OnInit,AfterViewInit {
         this.suppliersData.emit(res.body['count']);
       })
     ;
+  }
+
+  reload() {
+    this.datatableElement.dtInstance.then((dtInstance: DataTables.Api) => {
+      this.httpService
+        .get('/api/supplier', this.tableParams)
+        .subscribe(resp => {
+          console.log(resp);
+          this.data = resp.body['items'];
+          this.itemsToDisplay = this.data.slice(this.tableParams.start, this.tableParams.start + this.tableParams.length);
+          // this.myTable = true;
+        });
+        this.httpService
+          .get('/api/supplier/count')
+          .subscribe(res => {
+            this.nbOfRows = res.body['count'];
+            this.suppliersData.emit(res.body['count']);
+          })
+        ;
+      dtInstance.ajax.reload();
+    });
   }
 
   filterByGroup(val): void {

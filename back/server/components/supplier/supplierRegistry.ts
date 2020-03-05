@@ -341,7 +341,7 @@ export default class SupplierRegistry {
                     timeout: 40000
                 };
                 representative['organisation_id'] = res.insertId;
-                representative['added_by'] = user.id;
+                representative['added_by'] = user.organisation;
                 query2['sql'] = Query.INSERT_REPRESENTATIVE;
                 query2['values'] = [representative]
 
@@ -370,7 +370,7 @@ export default class SupplierRegistry {
                                     timeout: 40000
                                 };
                                 representative['organisation_id'] = res[0].id;
-                                representative['added_by'] = user.id;
+                                representative['added_by'] = user.organisation;
                                 query2['sql'] = Query.INSERT_REPRESENTATIVE;
                                 query2['values'] = [representative]
 

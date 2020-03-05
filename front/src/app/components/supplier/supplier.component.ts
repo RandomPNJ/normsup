@@ -241,6 +241,7 @@ export class SupplierComponent implements OnInit {
     this.apiService.postData('/api/supplier/define_supplier', data)
     .subscribe(res => {
       this.hideModal('');
+      this.child.reload();
       console.log('Res ', res);
     }, err => {
       console.log('Error, ', err);
