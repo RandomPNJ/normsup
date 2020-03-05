@@ -4,7 +4,7 @@
       <span class="top-txt">Statut des documents</span>
       <div class="pull-right doc-modal-type" style="cursor: default;">
         <div class="doc-type-overlay disabled-type">
-          <embed style="height: 25px; padding-right: 7px; vertical-align: middle;"
+          <img style="height: 25px; padding-right: 7px; vertical-align: middle;"
             src="../../../../assets/img/gray-legal-icn.svg" /><span class="type-txt">Légal</span></div>
         <div class="doc-type-overlay active-type"><img style="height: 25px; padding-right: 7px;"
             src="../../../../assets/img/white-comp-icn.svg" /><span class="type-txt">Complémentaire</span></div>
@@ -47,7 +47,7 @@
         <td (click)="openSupplierInfo(item)">
           <div class="badge-container content-cont container">
             <div class="row h-100 cent">
-              <embed src="../../../../assets/img/doc-icn.svg" />
+              <img src="../../../../assets/img/doc-icn.svg" />
               <span style="cursor: pointer;" class="col-9 assign-link">{{item.filename | uppercase }}</span>
             </div>
           </div>
@@ -57,11 +57,11 @@
             <div class="row h-100 cent">
               <div *ngIf="item.status" class="doc-state-cont">
                 <!-- <img class="valid-icn-png" src="../../../../assets/img/valid-icn-png.png"/> -->
-                <embed class="valid-icn valid-icn-shadow" src="../../../../assets/img/valid-icn.svg" />
+                <img class="valid-icn valid-icn-shadow" src="../../../../assets/img/valid-icn.svg" />
                 <span class="status-txt">À jour</span>
               </div>
               <div *ngIf="!item.status" class="doc-state-cont">
-                <embed class="valid-icn valid-icn-shadow" src="../../../../assets/img/invalid-icn.svg" />
+                <img class="valid-icn valid-icn-shadow" src="../../../../assets/img/invalid-icn.svg" />
                 <span class="status-txt">Non à jour</span>
               </div>
             </div>

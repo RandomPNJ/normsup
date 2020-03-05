@@ -2,7 +2,7 @@
     <nav role="navigation" style="padding-bottom: 0px;padding-top: 0px;" class="navbar navbar-expand-sm navbar-dark">
          <a routerLink="/dashboard/main" class="navbar-brand brand-logo" style="padding-left: 85px !important;">
             <img class="logo-img" src="../../../assets/img/normsup-logo.png" alt="Logo">
-            <!-- <embed src="../../../assets/img/logo-header-bar.svg" class="header-logo" (click)="redirect('dashboard/main')"> -->
+            <!-- <img src="../../../assets/img/logo-header-bar.svg" class="header-logo" (click)="redirect('dashboard/main')"> -->
         </a>
         <div style="margin-top: 0px;" class=" logout flyover-subcont media d-flex align-items-center">
             <img src="https://res.cloudinary.com/mhmd/image/upload/v1556074849/avatar-1_tcnd60.png" alt="..." width="31" class="rounded-circle shadow-sm">
@@ -15,25 +15,25 @@
                     <div [hidden]='!isLogout' class="dropContent" style="z-index: 1000 !important;">
                         <div class='selectData' id="profile" routerLink="/dashboard/profile">
                             <div class="selectDataChild">
-                                <embed class="header-drop-icn" src="../../../assets/img/profile-icn.svg" style="height: 13px;"alt="">
+                                <img class="header-drop-icn" src="../../../assets/img/profile-icn.svg" style="height: 13px;"alt="">
                                 <p>Mon compte</p>
                             </div>
                         </div>
                         <div class='selectData' id="users" routerLink="/dashboard/users">
                             <div class="selectDataChild">
-                                <embed class="header-drop-icn" src="../../../assets/img/users-icn.svg" style="height: 17px;padding-right: 18px;"alt="">
+                                <img class="header-drop-icn" src="../../../assets/img/users-icn.svg" style="height: 17px;padding-right: 18px;"alt="">
                                 <p>Gestion des utilisateurs</p>
                             </div>
                         </div>
                         <div class='selectData' id="contact" routerLink="/dashboard/alerts">
                             <div class="selectDataChild">
-                                <embed class="header-drop-icn" src="../../../assets/img/alert-icn.svg" style="height: 13px;"alt="">
+                                <img class="header-drop-icn" src="../../../assets/img/alert-icn.svg" style="height: 13px;"alt="">
                                 <p>Alerte</p>
                             </div>
                         </div>
                         <div class='selectData' id="contact" (click)="logOut()">
                             <div class="selectDataChild">
-                                <embed class="header-drop-icn" src="../../../assets/img/logout-icn.svg" style="height: 12px;" alt="" style="padding-right: 20px !important;">
+                                <img class="header-drop-icn" src="../../../assets/img/logout-icn.svg" style="height: 12px;" alt="" style="padding-right: 20px !important;">
                                 <p>Déconnexion</p>
                             </div>
                         </div>

@@ -18,6 +18,7 @@ import UserRegistry from './components/users/usersRegistry';
 import DocumentsRegistry from './components/documents/documentsRegistry';
 import SupplierRegistry from './components/supplier/supplierRegistry';
 import SettingsRegistry from './components/settings/settingsRegistry';
+import AdminRegistry from './components/admin/adminRegistry';
 import AuthRegistry from './components/auth/authRegistry';
 
 const app = global['app'] || new ServiceManager({ retryUpAndRunning: -1 });
@@ -92,6 +93,8 @@ function start(app: any, config: any): any {
   app.set('UsersRegistry', userRegistry, {onLoad: true});
   const settingsRegistry = new SettingsRegistry(sqlDB);
   app.set('SettingsRegistry', settingsRegistry, {onLoad: true});
+  const adminRegistry = new AdminRegistry(sqlDB);
+  app.set('AdminRegistry', adminRegistry, {onLoad: true});
 
 
   return app.waitForUpAndRunning()

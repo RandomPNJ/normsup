@@ -315,6 +315,8 @@ export class Dashboard1Component implements OnInit, AfterViewInit {
 		}
 	};
 
+	
+
 	constructor(private http: HttpService) {
 		// Custom tooltip
 		Chart.defaults.global.tooltips.custom = function(tooltip) {
@@ -545,15 +547,15 @@ export class Dashboard1Component implements OnInit, AfterViewInit {
 		let reminders: Array<any> = [
 			{
 				groupName: 'Groupe 1',
-				reminderAt: 1571475600,
+				reminderAt: this.toTimestamp(this.addDays(2).toDateString()),
 			},
 			{
 				groupName: 'Groupe 2',
-				reminderAt: 1571475600,
+				reminderAt: this.addDays(3),
 			},
 			{
 				groupName: 'Groupe 3',
-				reminderAt: 1571475600,
+				reminderAt: this.addDays(5),
 			},
 		];
 		reminders.forEach(reminder => {
@@ -605,4 +607,15 @@ export class Dashboard1Component implements OnInit, AfterViewInit {
 		return Promise.resolve(true);
 	}
 
+	public addDays = function(days) {
+		var date = new Date(this.valueOf());
+		date.setDate(date.getDate() + days);
+		return date;
+	}
+
+	public toTimestamp(strDate){
+		var datum = Date.parse(strDate);
+		return datum/1000;
+	}
 }
+

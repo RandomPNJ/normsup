@@ -84,7 +84,7 @@ export class BackofficeUsersTableComponent implements OnInit {
           const action = this.compareParams(dataTablesParameters);
           console.log('tableParams', dataTablesParameters);
             that.httpService
-              .get('/api/users', dataTablesParameters)
+              .get('/api/admin/users', dataTablesParameters)
               .subscribe(resp => {
                 that.items = that.items.concat(resp.body['items']);
                 that.itemsToDisplay = that.items.slice(that.tableParams.start, that.tableParams.start + that.tableParams.length);

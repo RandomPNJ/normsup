@@ -22,6 +22,7 @@ import { SupplierUploadSuccessComponent } from './components/supplier-upload-pag
 import { SupplierUploadInterfaceComponent } from './components/supplier-upload-page/supplier-upload-interface/supplier-upload-interface.component';
 import { BackofficeComponent } from './components/backoffice/backoffice.component';
 import { BackofficeGuard } from './auth/backoffice.guard';
+import { BackofficeUsersComponent } from './components/backoffice-users/backoffice-users.component';
 
 const routes: Routes = [
   { path: 'upload', component: SupplierUploadPageComponent, 
@@ -52,7 +53,7 @@ const routes: Routes = [
   {
     path: 'backoffice', component: BackofficeComponent, canActivate: [BackofficeGuard], 
     children: [
-
+      { path: 'users', component: BackofficeUsersComponent },
     ]
   },
   { path: '',

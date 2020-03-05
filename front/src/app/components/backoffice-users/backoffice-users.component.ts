@@ -133,9 +133,9 @@ export class BackofficeUsersComponent implements OnInit {
   // TODO: modify this, we only need JWT
   addUser(data: any) {
     console.log('User', data);
-    const user = 
-
-    this.apiService.postData('/api/users/register', { user: data })
+    // const user = 
+    data.organisation = '2';
+    this.apiService.postData('/api/admin/users/register', { user: data })
       .subscribe(res => {
           this.hideModal('');
         }, err => {

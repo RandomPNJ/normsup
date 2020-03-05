@@ -9,17 +9,17 @@
     <div class="doc-type-choice row justify-content-center">
       <div [ngClass]="{'active-type': type === 'LEGAL', 'disabled-type': type !== 'LEGAL'}"
         class="doc-type-overlay legal-tab" style="margin-right: 15px;" (click)="switchType('LEGAL')">
-        <embed [hidden]="type === 'LEGAL'" style="height: 16px; padding-right: 7px; vertical-align: middle;"
+        <img [hidden]="type === 'LEGAL'" style="height: 16px; padding-right: 7px; vertical-align: middle;"
           src="../../../../assets/img/gray-legal-icn.svg" (click)="switchType('LEGAL')" />
-        <embed [hidden]="type !== 'LEGAL'" style="height: 16px; padding-right: 7px;vertical-align: middle;"
+        <img [hidden]="type !== 'LEGAL'" style="height: 16px; padding-right: 7px;vertical-align: middle;"
           src="../../../../assets/img/white-legal-icn.svg" />
         <span class="type-txt">Légal</span>
       </div>
       <div [ngClass]="{'active-type': type === 'COMP', 'disabled-type': type !== 'COMP'}"
         class="doc-type-overlay comp-tab" (click)="switchType('COMP')">
-        <embed [hidden]="type === 'COMP'" style="height: 16px; padding-right: 7px;vertical-align: middle;"
+        <img [hidden]="type === 'COMP'" style="height: 16px; padding-right: 7px;vertical-align: middle;"
           src="../../../../assets/img/gray-comp-icn.svg" (click)="switchType('LEGAL')" />
-        <embed [hidden]="type !== 'COMP'" style="height: 16px; padding-right: 7px;vertical-align: middle;"
+        <img [hidden]="type !== 'COMP'" style="height: 16px; padding-right: 7px;vertical-align: middle;"
           src="../../../../assets/img/white-comp-icn.svg" />
         <span class="type-txt">Complémentaire</span>
       </div>
@@ -39,7 +39,7 @@
         </div>
       </div>
       <div *ngIf="documentStatus.urssaf">
-        <embed class="upload-doc-img" src="../../../assets/img/uploaded-doc-img.svg" />
+        <img class="upload-doc-img" src="../../../assets/img/uploaded-doc-img.svg" />
         <div class="rb-robo-15 ufile-name">{{urssafDocument.name}}</div>
         <div style="padding-bottom: 18px;text-align: center;">
           <button type="button" class="btn btn-outline-normsup text-capitalize del-file-btn">
@@ -62,7 +62,7 @@
         </div>
       </div>
       <div *ngIf="documentStatus.lnte">
-        <embed class="upload-doc-img" src="../../../assets/img/uploaded-doc-img.svg" />
+        <img class="upload-doc-img" src="../../../assets/img/uploaded-doc-img.svg" />
         <div class="rb-robo-15 ufile-name">{{lnteDocument.name}}</div>
         <div style="padding-bottom: 20px;text-align: center;">
           <button type="button" class="btn btn-outline-normsup text-capitalize del-file-btn">
@@ -85,7 +85,7 @@
         </div>
       </div>
       <div *ngIf="documentStatus.kbis">
-        <embed class="upload-doc-img" src="../../../assets/img/uploaded-doc-img.svg" />
+        <img class="upload-doc-img" src="../../../assets/img/uploaded-doc-img.svg" />
         <div class="rb-robo-15 ufile-name">{{kbisDocument.name}}</div>
         <div style="padding-bottom: 20px;text-align: center;">
           <button type="button" class="btn btn-outline-normsup text-capitalize del-file-btn">
@@ -101,7 +101,7 @@
 <div class="row justify-content-center" [hidden]="type !== 'COMP'">
   <div class="uploaded-doc-card document-card" *ngFor="let item of compDocs">
     <div>
-      <embed class="upload-doc-img" src="../../../assets/img/uploaded-doc-img.svg" />
+      <img class="upload-doc-img" src="../../../assets/img/uploaded-doc-img.svg" />
       <div class="rb-robo-15 ufile-name">{{item.name}}</div>
       <div style="padding-bottom: 20px;text-align: center;">
         <button type="button" class="btn btn-outline-normsup text-capitalize del-file-btn" (click)="deleteCompDoc(item)">

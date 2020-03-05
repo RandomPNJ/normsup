@@ -8,22 +8,14 @@ export default {
     method: 'get',
     uriPattern: '',
     services: [''],
-    handler: (req, res, app) => getUsers(req, app.get('UsersRegistry')),
+    handler: (req, res, app) => getUsers(req, app.get('AdminRegistry')),
 };
 
-export function getUsers(req, UsersRegistry) {
+export function getUsers(req, AdminRegistry) {
     let data;
     const params = req.params;
-    // Unset this after
-    // params.org = 1;
 
-    if(!params.org) {
-        const error = new Error(`Invalid request, org must be specified.`);
-        error['statusCode'] = 400;
-        throw error;
-    }
-
-    return UsersRegistry.getUsers(params)
+    return AdminRegistry.getUsers(params)
         .then(res => {
             let result = {
                 items: res

@@ -3,7 +3,7 @@
     &nbsp;
     <button type="button" style="cursor:pointer;width:20px;height:20px;" class="close pull-right" aria-label="Close"
       (click)="closeModal()">
-      <embed src="../../../assets/img/close-icn.svg" style="height: 16px; cursor:pointer;pointer-events: none;" />
+      <img src="../../../assets/img/close-icn.svg" style="height: 16px; cursor:pointer;pointer-events: none;" />
     </button>
   </div>
   <div *ngIf="state !== 'newGroup' && type !== 'MODIFICATION'" class="supplier-modal-title">Nouveau Groupe</div>
@@ -120,7 +120,7 @@
       </div>
       <div class="add-comp-doc" style="padding-top: 10px;">
         <span style="cursor: pointer;" (click)="addDocumentType()">
-          <embed src="../../../assets/img/plus-add-icn.svg" style="height: 10px;padding-right: 8px;" /><span class="add-doc-link">Ajouter un document</span>
+          <img src="../../../assets/img/plus-add-icn.svg" style="height: 10px;padding-right: 8px;" /><span class="add-doc-link">Ajouter un document</span>
         </span>
       </div>
       <div class="comp-doc-list" *ngIf="documentsToRequest.length > 0">

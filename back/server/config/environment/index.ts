@@ -109,6 +109,13 @@ export default {
         { name: 'manageReminders', uriPattern: '/reminders/manage', method: 'post' },
         { name: 'getReminders', uriPattern: '/reminders/:id', method: 'get' },
       ]
+    },
+    admin: {
+      uri: '/api/admin',
+      actions: [
+        { name: 'getUsers', uriPattern: '/users', method: 'get' },
+        { name: 'registerUser', uriPattern: '/users/register', method: 'post' },
+      ]
     }
   },
 
