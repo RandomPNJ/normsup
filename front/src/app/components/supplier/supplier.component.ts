@@ -76,7 +76,7 @@ export class SupplierComponent implements OnInit {
   itemPluralCount = {
     'suppliers': {
       '=0': '',
-      '=1': '',
+      '=1': '#',
       'other': '#'
     }
   };

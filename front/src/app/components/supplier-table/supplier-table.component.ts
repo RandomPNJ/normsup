@@ -4,7 +4,7 @@ import { HttpService } from 'src/app/services/http.service';
 // import {Configuration} from '../../../../config/environment.local';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import 'datatables.net';
-import { cloneDeep } from 'lodash';
+import { cloneDeep, remove } from 'lodash';
 import { combineLatest, Subscription } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
 import { NotifService } from 'src/app/services/notif.service';
@@ -354,10 +354,20 @@ export class SupplierTableComponent implements OnInit,AfterViewInit {
     this.httpService
       .post('/api/supplier/delete/' + supplier.id)
       .subscribe(res => {
-
+        this.notif.success('Fournisseur supprimé.');
+        remove(this.data, (n) => {
+          return n.id === supplier.id })
+        ;
+        this.itemsToDisplay = this.data.slice(this.tableParams.start, this.tableParams.start + this.tableParams.length);
+        this.nbOfRows -= 1;
+        this.indexInfo = -1;
+        this.infoPopup = {};
+        this.infoType = 'NONE';
+        this.suppliersData.emit(this.data.length);
       })
     ;
   }
+
   openModal(template: TemplateRef<any>, modalType: String) {
     const _combine = combineLatest(
       this.modalService.onShow,
