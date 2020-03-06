@@ -1037,6 +1037,10 @@ td {
     color: #4390EF;
     font-size: 10px !important;
     opacity: 1;
+    &:hover {
+        box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15) !important;
+        outline: 0;
+    }
 }
 
 // ng select style
@@ -1699,7 +1703,7 @@ td {
     box-shadow: unset !important;
 
     &:hover {
-        box-shadow: unset !important;
+        // box-shadow: unset !important;
     }
 }
 
