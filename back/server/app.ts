@@ -89,7 +89,7 @@ function start(app: any, config: any): any {
   app.set('SupplierRegistry', supplierRegistry, {onLoad: true});
   const docRegistry = new DocumentsRegistry(sqlDB, s3Client);
   app.set('DocumentsRegistry', docRegistry, {onLoad: true});
-  const userRegistry = new UserRegistry(sqlDB);
+  const userRegistry = new UserRegistry(sqlDB, s3Client);
   app.set('UsersRegistry', userRegistry, {onLoad: true});
   const settingsRegistry = new SettingsRegistry(sqlDB);
   app.set('SettingsRegistry', settingsRegistry, {onLoad: true});

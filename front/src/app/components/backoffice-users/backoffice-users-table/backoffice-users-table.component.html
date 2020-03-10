@@ -21,6 +21,13 @@
         <td class="row-border" [ngClass]="{'noborder': i === items.length - 1}">
           <div class="badge-container content-cont container row-space">
             <div class="row h-100 cent">
+              <span class="email-style">{{item.org_name}}</span>
+            </div>
+          </div>
+        </td>
+        <td class="row-border" [ngClass]="{'noborder': i === items.length - 1}">
+          <div class="badge-container content-cont container row-space">
+            <div class="row h-100 cent">
               <select class="form-control custom-normsup-select" id="role"  name="role" [(ngModel)]="item.rolename" style="color: #4E5983;">
                 <option *ngFor="let c of roles" [ngValue]="c.value" [disabled]="c.name === ' '">{{c.name}}</option>
               </select>

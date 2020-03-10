@@ -67,6 +67,33 @@ export class HttpService implements OnDestroy {
       );
   }
 
+  public uploadDocument<t>(actionUrl: string, body?: any): Observable<HttpResponse<t>> {
+    return this._http.post<t>(Configuration.serverUrl + actionUrl, body, {
+      headers: {
+        'Authorization': `Bearer ${this.bsService.getLocalStorage('token')}`
+      },
+      responseType: 'json',
+      observe: 'response'
+    })
+      .pipe(
+        // retry(1),
+        catchError(this.handleError.bind(this))
+      );
+  }
+
+  public getPicture<t>(actionUrl: string, params?: HttpParams): Observable<HttpResponse<t>> {
+    return this._http.get<t>(Configuration.serverUrl + actionUrl, {
+      responseType: "blob",
+      observe: 'response',
+      headers: {
+        'Authorization': `Bearer ${this.bsService.getLocalStorage('token')}`
+      }
+    })
+      .pipe(
+        catchError(this.handleError.bind(this))
+      );
+  }
+
   public put<t>(actionUrl: string, body?: any): Observable<HttpResponse<t>> {
     return this._http.put<t>(Configuration.serverUrl + actionUrl, body, {
         headers: {

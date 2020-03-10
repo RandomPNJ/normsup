@@ -26,11 +26,6 @@ export function createUser(req, UsersRegistry) {
     });
 
     data.create_time = new Date();
-    // organisation -> real company of the user
-    // client -> main client that pays for normsup
-    if(creator.organisation) {
-        data.client = creator.organisation;
-    }
     if(creator.username) {
         data.createdBy = creator.username;
     }

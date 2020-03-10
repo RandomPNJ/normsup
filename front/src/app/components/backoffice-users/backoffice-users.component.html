@@ -83,6 +83,13 @@
                           </select>
                         </div>
                       </div>
+                      <div class="form-group row-input-style">
+                        <ng-template #rt let-r="result" let-t="term">
+                          <ngb-highlight [result]="r.org_name" [term]="t"></ngb-highlight>
+                        </ng-template>
+                        <input id="typeahead-http" type="text" class="form-control" aria-describedby="supplierHelp" 
+                        [ngbTypeahead]="searchSupplier" placeholder="Rechercher" [resultTemplate]="rt" [inputFormatter]="formatter" [(ngModel)]="supplierSelected">
+                      </div>
                     </div>
                   <div class="select-comp-but">
                     <div class="container">

@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { DaterangepickerConfig } from 'ng2-daterangepicker';
 import { HttpService } from 'src/app/services/http.service';
-import { find, filter, remove } from 'lodash'
+import { find, filter, remove } from 'lodash';
 import { debounceTime, distinctUntilChanged, map, tap, switchMap, catchError } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { HttpParams } from '@angular/common/http';

@@ -74,6 +74,33 @@ export default class AdminRegistry {
         ;
     }
 
+    public getClients(data) {
+        let query = {
+            timeout: 40000
+        };
+
+        if(data) {
+            data += '%'
+        } else {
+            data = '%'
+        }
+
+
+        query['sql'] = Query.QUERY_GET_CLIENTS;
+        query['values'] = [data];
+
+        return this.mysql.query(query)
+            .then(res => {
+                loggerT.verbose('QUERY RES ==== ', res);
+                return Promise.resolve(res);
+            })
+            .catch(err => {
+                loggerT.error('ERROR ON QUERY getUsers.');
+                return Promise.reject(err);
+            })
+        ;
+    }
+
     private getRoleID(role) {
         if(role === 'admin') {
             return 1;

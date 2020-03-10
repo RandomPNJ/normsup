@@ -5,6 +5,7 @@ import { ModalComponent } from '../modal/modal.component';
 import { AuthService } from 'src/app/services/auth.service';
 import { Subscription } from 'rxjs';
 import { Configuration } from '../../config/environment';
+import { HttpService } from 'src/app/services/http.service';
 
 
 @Component({
@@ -37,6 +38,7 @@ export class LoginPageComponent implements OnInit, OnDestroy {
   errMsg: String;
   constructor(private router: Router,
     private bsService: BrowserStorageService,
+    private httpService: HttpService,
     public authService: AuthService) { }
 
   ngOnInit() {

@@ -4,6 +4,7 @@ import { BrowserStorageService } from 'src/app/services/storageService';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 import { SettingsService } from 'src/app/services/settings.service';
+import { HttpService } from 'src/app/services/http.service';
 
 @Component({
   selector: 'app-header-bar',
@@ -25,7 +26,7 @@ export class HeaderBarComponent implements OnInit {
   showHeader;
   isLogout: Boolean = false;
   dropdownSecondBtn = 'Add data';
-
+  profilePic: any;
   isLoggedIn: Subscription;
   profileSub: Subscription;
 
@@ -33,10 +34,21 @@ export class HeaderBarComponent implements OnInit {
     private route: ActivatedRoute,
     private bsService: BrowserStorageService,
     private authService: AuthService,
+    private httpService: HttpService,
     private settingsService: SettingsService) {
   }
 
   ngOnInit() {
+    this.httpService.getPicture('/api/users/picture')
+      .subscribe(res => {
+        console.log('/api/users/picture res', res);
+        // this.profilePicUrl = URL.createObjectURL(res.body);
+        // this.profilePicUrl = res.body;
+        return this.createImageFromBlob(<Blob>res.body);
+      }, err => {
+        console.log('/api/users/picture err', err);
+      })
+    ;
     this.isLoggedIn = this.authService.isLogged.subscribe(res => {
       console.log('res =', res);
       if(res !== false && res.data) {
@@ -54,6 +66,7 @@ export class HeaderBarComponent implements OnInit {
       }
     });
   }
+
 
   secondBtn(route) {
     if (route && route !== '') {
@@ -93,4 +106,15 @@ export class HeaderBarComponent implements OnInit {
   getHeaderStyle() {
     return 'whiteHeader';
   }
+
+  createImageFromBlob(image: Blob) {
+    let reader = new FileReader(); //you need file reader for read blob data to base64 image data.
+    reader.addEventListener("load", () => {
+       this.profilePic = reader.result; // here is the result you got from reader
+    }, false);
+ 
+    if (image) {
+       reader.readAsDataURL(image);
+    }
+ }
 }

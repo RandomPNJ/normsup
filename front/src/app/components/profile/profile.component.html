@@ -21,8 +21,13 @@
             </div>
             <div *ngIf="loading === false" class="profile-card-body">
               <div class="profile-circle-cont">
-                <div class="add-pic">
+                <!-- <div class="add-pic">
                   <img src="../../../assets/img/add-pic.svg" />
+                </div> -->
+                <div class="input-group upload-file-cont">
+                  <img src="/src/assets/img/bin.svg" class="del-pic-icn" *ngIf="imgURL" (click)="deletePicture()">
+                  <input type="file" class="filepicker upload-doc-imgbis" [(ngModel)]="pictureFile" (change)="loadPicture($event)" [hidden]="imgURL">
+                  <img [src]="imgURL" height="200" *ngIf="imgURL" class="img-preview">
                 </div>
               </div>
               <div class="container nopadding">
@@ -67,7 +72,7 @@
                 <div style="" class="save-btn-cont">
                   <div class="row nopadding">
                     <div class="center-btn">
-                      <button style="border-radius: 5px;width: 137px;" type="button" class="btn btn-primary text-capitalize next-btn-supplier" (click)="sendModifications()" [disabled]="(userInfo.name === user.name && userInfo.lastname === user.lastname && userInfo.phonenumber === user.phonenumber && userInfo.email === user.email && userInfo.address === user.address && userInfo.postalCode === user.postalCode && userInfo.city === user.city)">
+                      <button style="border-radius: 5px;width: 137px;" type="button" class="btn btn-primary text-capitalize next-btn-supplier" (click)="sendModifications()" [disabled]="(userInfo.name === user.name && userInfo.lastname === user.lastname && userInfo.phonenumber === user.phonenumber && userInfo.email === user.email && userInfo.address === user.address && userInfo.postalCode === user.postalCode && userInfo.city === user.city && selectedPicture === false)">
                         <span class="button-txt">Enregistrer</span>
                       </button>
                     </div>

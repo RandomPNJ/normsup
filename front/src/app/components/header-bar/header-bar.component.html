@@ -5,7 +5,7 @@
             <!-- <img src="../../../assets/img/logo-header-bar.svg" class="header-logo" (click)="redirect('dashboard/main')"> -->
         </a>
         <div style="margin-top: 0px;" class=" logout flyover-subcont media d-flex align-items-center">
-            <img src="https://res.cloudinary.com/mhmd/image/upload/v1556074849/avatar-1_tcnd60.png" alt="..." width="31" class="rounded-circle shadow-sm">
+            <img *ngIf="profilePic" [src]="profilePic" alt="..." width="31" class="rounded-circle shadow-sm">
             <div class="" style="display: flex;align-items: center;width: 100%;" (click)='dropbox()' (clickOutside)="closeDropdown()">
                 <div style="width: 100%;" class="inline-b">
                 <h4  style="width:100%;max-width: 80px;" class="m-0 one-liner show-username">{{user.name}}</h4>

@@ -1,10 +1,12 @@
 import { ChangeDetectorRef, Component, OnInit, ViewChild, TemplateRef, ElementRef, Input } from '@angular/core';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
-import { combineLatest, Subscription } from 'rxjs';
-import { cloneDeep } from 'lodash';
+import { combineLatest, Subscription, Observable, of } from 'rxjs';
+import { find, filter, remove, cloneDeep } from 'lodash';
 import { ProductService } from 'src/app/services/product.service';
 import * as moment from 'moment';
 import { HttpService } from 'src/app/services/http.service';
+import { debounceTime, distinctUntilChanged, tap, switchMap, map, catchError } from 'rxjs/operators';
+import { HttpParams } from '@angular/common/http';
 
 declare var require: any;
 @Component({
@@ -42,6 +44,9 @@ export class BackofficeUsersComponent implements OnInit {
     four: false
   };
 
+  supplierSelected: any;
+  searching: Boolean = false;
+  searchFailed: Boolean = false;
 
   dataLength: any = 1;
   modalConfig = {
@@ -65,6 +70,23 @@ export class BackofficeUsersComponent implements OnInit {
       'other': '#'
     }
   };
+
+  searchSupplier = (text$: Observable<string>) =>
+    text$.pipe(
+      debounceTime(300),
+      distinctUntilChanged(),
+      tap(() => this.searching = true),
+      switchMap(term =>
+        this.httpService.get('/api/admin/clients', new HttpParams().set('search', term)).pipe(
+          tap(() => this.searchFailed = false),
+          map(response => response.body['items']),
+          catchError(() => {
+            this.searchFailed = true;
+            return of([]);
+          }))
+      ),
+      tap(() => this.searching = false)
+    );
 
   constructor(
     private modalService: BsModalService,
@@ -128,6 +150,7 @@ export class BackofficeUsersComponent implements OnInit {
     this.userToAdd.role = record.role;
     this.openModal(this.modal, 'ModifyUser');
   }
+
 
 
   // TODO: modify this, we only need JWT

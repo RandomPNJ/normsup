@@ -75,3 +75,117 @@ ADD PRIMARY KEY (`group_id`);
 ## Applied
 
 True
+
+## Date
+
+
+10-03-2020
+
+## Comment
+
+Make `documents` id column auto increment
+
+## Query
+
+ALTER TABLE `normsup`.`document` 
+CHANGE COLUMN `id` `id` INT(11) NOT NULL AUTO_INCREMENT;
+
+
+
+## Applied
+
+True
+
+
+## Date
+
+
+10-03-2020
+
+## Comment
+
+Drop from table `user` column client and make column organisation NOT NULL
+
+## Query
+
+ALTER TABLE `normsup`.`user`
+    DROP COLUMN `client`,
+    CHANGE COLUMN `organisation` `organisation` INT(11) NOT NULL ;
+
+
+
+## Applied
+
+True
+
+## Date
+
+
+10-03-2020
+
+## Comment
+
+Create table `suppliers`
+
+## Query
+
+CREATE TABLE `normsup`.`suppliers` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `client_id` INT NOT NULL,
+  `org_id` INT NOT NULL,
+  `created_at` VARCHAR(45) NULL DEFAULT 'CURRENT_TIMESTAMP',
+  `name` VARCHAR(45) NULL DEFAULT '',
+  `lastname` VARCHAR(45) NULL DEFAULT '',
+  `email` VARCHAR(45) NULL DEFAULT '',
+  PRIMARY KEY (`id`));
+
+
+## Applied
+
+True
+
+
+## Date
+
+
+10-03-2020
+
+## Comment
+
+Add on table `suppliers` validity_date column
+
+## Query
+
+
+ALTER TABLE `normsup`.`suppliers` 
+ADD COLUMN `validity_date` DATETIME NOT NULL AFTER `email`;
+
+
+
+## Applied
+
+True
+
+
+## Date
+
+
+10-03-2020
+
+## Comment
+
+Add on table `user` profile picture url
+
+## Query
+
+
+ALTER TABLE `normsup`.`user` 
+ADD COLUMN `picture_url` VARCHAR(255) NULL DEFAULT '' AFTER `city`;
+
+
+
+## Applied
+
+True
+
+

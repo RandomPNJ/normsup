@@ -7,23 +7,23 @@ export default {
     method: 'post',
     uriPattern: '/upload',
     services: [''],
-    handler: (req, res, app) => createDocument(req, res, app.get('DocumentsRegistry')),
+    handler: (req, res, app) => uploadPicture(req, res, app.get('UsersRegistry')),
 };
 
-export function createDocument(req, res, DocumentsRegistry) {
+export function uploadPicture(req, res, UsersRegistry) {
     if (!req.decoded) {
         return Promise.reject(`Cannot get user informations, invalid request.`);
     }
 
     // Protect from no files
-    let docs = req.files;
-    loggerT.verbose('Creating document.');
+    let picture = req.file;
+    loggerT.verbose('Uploading picture.');
 
-    // loggerT.verbose('req', Object.keys(req.files));
+    // loggerT.verbose('req', req);
     // loggerT.verbose('req originalname', req.files[0].originalname);
     // loggerT.verbose('req fieldname', req.files[0].fieldname);
 
-    return DocumentsRegistry.createDocument(docs, req.decoded)
+    return UsersRegistry.uploadPicture(picture, req.decoded)
         .then(res => {
             // loggerT.verbose('Res  = ', res);
             return res;

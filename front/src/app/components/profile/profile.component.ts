@@ -4,7 +4,7 @@ import { cloneDeep } from 'lodash';
 import { BrowserStorageService } from 'src/app/services/storageService';
 import { NotifService } from 'src/app/services/notif.service';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
-import { combineLatest, Subscription } from 'rxjs';
+import { combineLatest, Subscription, forkJoin } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
 import { SettingsService } from 'src/app/services/settings.service';
@@ -57,6 +57,12 @@ export class ProfileComponent implements OnInit {
     seven: false
   };
 
+  imagePath: any;
+  imgURL: any;
+  selectedPicture: Boolean = false;
+  pictureFile: any;
+  pictureObj: any;
+
   modifyPasswordToggle: Boolean= false;
   modifyPwdFocus: any = {
     one: false,
@@ -105,14 +111,76 @@ export class ProfileComponent implements OnInit {
 
 
   sendModifications() {
-    return this.apiService.put('/api/users/modify/' + this.id, this.userInfo)
-      .subscribe(res => {
-        this.notifService.success('Utilisateur modifié avec succès.');
-        let user = JSON.stringify(this.userInfo);
-        this.bsService.setLocalStorage('current_user', user);
-        this.settingsService.profileModif.next(this.userInfo);
-      })
-    ;
+    let main_form: FormData = new FormData();
+    let calls = [];
+    if(this.selectedPicture === true && this.pictureObj) {
+      console.log('this.pictureFile', this.pictureObj);
+      main_form.append('file', this.pictureObj);
+      // forkJoin(
+      //   this.apiService.put('/api/users/modify/' + this.id, this.userInfo),
+      //   this.apiService.post('/api/users/upload', main_form)
+      // )
+      //   .subscribe(res => {
+      //     console.log('forkjoin res', res);
+      //   })
+      // ;
+      return this.apiService.uploadDocument('/api/users/upload', main_form)
+        .subscribe(res => {
+          this.notifService.success('Utilisateur modifié avec succès.');
+          let user = JSON.stringify(this.userInfo);
+          this.bsService.setLocalStorage('current_user', user);
+          this.settingsService.profileModif.next(this.userInfo);
+        })
+      ;
+    } else {
+      return this.apiService.put('/api/users/modify/' + this.id, this.userInfo)
+        .subscribe(res => {
+          this.notifService.success('Utilisateur modifié avec succès.');
+          let user = JSON.stringify(this.userInfo);
+          this.bsService.setLocalStorage('current_user', user);
+          this.settingsService.profileModif.next(this.userInfo);
+        })
+      ;
+    }
+
+    // return this.apiService.put('/api/users/modify/' + this.id, this.userInfo)
+    //   .subscribe(res => {
+    //     this.notifService.success('Utilisateur modifié avec succès.');
+    //     let user = JSON.stringify(this.userInfo);
+    //     this.bsService.setLocalStorage('current_user', user);
+    //     this.settingsService.profileModif.next(this.userInfo);
+    //   })
+    // ;
+  }
+
+  loadPicture(e) {
+    let pic;
+
+    if(e.target && e.target.files && e.target.files['0']) {
+      pic = e.target.files['0'];
+      var mimeType = pic.type;
+      if (mimeType.match(/image\/*/) == null) {
+        return this.notifService.error('Merci de sélectionner une image.');
+      }
+
+      var reader = new FileReader();
+      this.imagePath = pic;
+      reader.readAsDataURL(pic); 
+      reader.onload = (_event) => { 
+        this.imgURL = reader.result; 
+      }
+      this.selectedPicture = true;
+      this.pictureObj = pic;
+    }
+  }
+
+  deletePicture() {
+    this.imagePath = null;
+    this.imgURL = null;
+    this.pictureFile = '';
+    this.selectedPicture = false;
+    this.pictureObj = null;
+    return;
   }
 
   modifyPasswordFn() {

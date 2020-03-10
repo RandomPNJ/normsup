@@ -45,8 +45,8 @@ export default {
     multipartUploadThreshold: 20971520, // this is the default (20 MB)
     multipartUploadSize: 15728640, // this is the default (15 MB)
     s3Options: {
-      accessKeyId: 'AKIASFDGPSTARKFFW44O',
-      secretAccessKey: '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',
+      accessKeyId: 'AKIASFDGPSTATLP53JNR',
+      secretAccessKey: '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',
     },
   },
 
@@ -64,6 +64,8 @@ export default {
         { name: 'createUser', uriPattern: '/register', method: 'post' },
         { name: 'modifyUser', uriPattern: '/modify/:id', method: 'put' },
         { name: 'modifyPassword', uriPattern: '/modify/:id/modify_password', method: 'post' },
+        { name: 'uploadPicture', uriPattern: '/upload', method: 'post' },
+        { name: 'getPicture', uriPattern: '/picture', method: 'get' },
         { name: 'deleteUser', uriPattern: '/delete/:id', method: 'post' },
         { name: 'getUsers', uriPattern: '', method: 'get' },
         { name: 'getUser', uriPattern: '/getOne/:id', method: 'get' },
@@ -115,6 +117,7 @@ export default {
       uri: '/api/admin',
       actions: [
         { name: 'getUsers', uriPattern: '/users', method: 'get' },
+        { name: 'getClients', uriPattern: '/clients', method: 'get' },
         { name: 'registerUser', uriPattern: '/users/register', method: 'post' },
       ]
     }

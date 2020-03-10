@@ -112,6 +112,9 @@ export class BackofficeUsersTableComponent implements OnInit {
             title: 'Email',
           },
           {
+            title: 'Organisation',
+          },
+          {
             title: 'Rôle',
           },
           {

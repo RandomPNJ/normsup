@@ -8,8 +8,6 @@ export const UserSchema = Joi.object({
     password: Joi.string().optional(),
     role: Joi.string().optional().allow(''),
     create_time: Joi.string().optional().allow(''),
-    // id: Joi.string().optional(),
-    organisation: Joi.string().optional(),
     client: Joi.number(),
     createdBy: Joi.string().optional(),
 });

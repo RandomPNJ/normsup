@@ -32,9 +32,9 @@ export class UsersManagementComponent implements OnInit {
   addInterloc: Boolean = false;
   roles: Array<any> = [
     { name : ' ', value: ' '},
-    { name: 'Admin', value: 'admin'},
+    { name: 'Administrateur', value: 'admin'},
     { name: 'Utilisateur', value: 'user'},
-    { name: 'Invité', value: 'guest'},
+    // { name: 'Invité', value: 'guest'},
   ];
 
   focus: any = {

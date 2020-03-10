@@ -45,45 +45,59 @@ export default class SupplierRegistry {
     }
 
 
-    public createDocument(file, meta, user) {
+    public createDocument(files, user) {
+        const paths = [];
 
-        const path = meta.category + '/' + meta.filename;
+        files.map(file => {
+            loggerT.verbose('file name ===', file.originalname);
+            let type;
+            if(file.originalname.charAt(0) === 'k') {
+                type = 'KBIS';
+            } else if(file.originalname.charAt(0) === 'u') {
+                type = 'URSSAF';
+            } else if(file.originalname.charAt(0) === 'l') {
+                type = 'LNTE';
+            } else if(file.originalname.charAt(0) === 'c') {
+                type = 'COMP';
+            } else {
+                return;
+            }
 
-        // let data = {
-        //     path: path,
-        //     filename: meta.filename,
-        //     uploadedBy: user.id,
-        //     client: user.client,
-        //     size: file.size,
-        //     type: file.mimetype,
-        //     category: meta.category
-        // };
-        // loggerT.verbose('METADATA === ', data);
-        return this.uploadFile(file, path)
-            .then((res, err) => {
-                if(err) {
-                    return err;
-                }
-                let data = {
-                    path: path,
-                    filename: meta.filename,
-                    uploadedBy: user.id,
-                    client: user.client,
-                    size: file.size,
-                    type: file.mimetype,
-                    category: meta.category
-                };
+            file.originalname = file.originalname.substring(1);
+            file.originalname = file.originalname.replace(/ /g, "_");
+            let path = type + '/' + file.originalname;
+            paths.push({path: type + '/' + file.originalname, file: file, type: type});
+        });
 
-                return this.createMetadata(data);
-
+        return Promise
+            .map(paths, (path) => {
+                return this.uploadFile(path.file, path.path)
+                    .then(() => {
+                        let currentFile = path.file;
+                        let data = {
+                            path: path.path,
+                            filename: currentFile.originalname,
+                            uploadedBy: user.id,
+                            client: user.client,
+                            size: currentFile.size,
+                            format: currentFile.mimetype,
+                            category: path.type
+                        };
+        
+                        return this.createMetadata(data);
+                    });
+            })
+            .then((res) => {
+                return res;
             })
         ;
+
     }
 
     private uploadFile(file, key) {
 
         return this.s3.upload({
-            Bucket: 'normsup-storage',
+            Bucket: 'normsup',
             Key: key,
             Body: file.buffer,
             ContentType: file.mimetype,

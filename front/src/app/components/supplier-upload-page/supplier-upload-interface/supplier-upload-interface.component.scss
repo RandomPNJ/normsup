@@ -56,7 +56,7 @@
     margin-top: 15px;
     margin-right: 15px;
     margin-left: 15px;
-    z-index: 9999;
+    z-index: 1000;
     // &:first-child {
     //     margin-right: 15px;
     //     margin-left: 0px;
@@ -123,7 +123,7 @@
     padding-bottom: 5px !important;
     margin: 0px !important;
     border: 1px solid #C7E0FF !important;
-
+    z-index: 1000;
     .button-txt {
         font-family: 'Avenir Heavy';
         letter-spacing: 0;
@@ -203,4 +203,10 @@
 
 .row {
     z-index: 9999 !important;
+}
+
+.button-txt {
+    font-family: 'Roboto Medium';
+    font-size: 13px;
+    letter-spacing: 0;
 }

@@ -16,14 +16,7 @@ export function createUser(req, AdminRegistry) {
     let data;
     const creator = req.decoded;
 
-    UserSchema.validate(req.body.user, (err, val) => {
-        if (err && err.details[0].message) {
-            const error = new Error(`Invalid request, error message: ${err.details[0].message}.`);
-            error['statusCode'] = 400;
-            throw error;
-        }
-        data = _.cloneDeep(val);
-    });
+    data = req.body.user;
     loggerT.verbose('admin createUser data', data);
     data.create_time = new Date();
     // if(!data.organisation && creator.organisation) {

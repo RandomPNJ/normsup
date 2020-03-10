@@ -103,6 +103,7 @@ export default (expressApp) => {
   });
 
   // Multer to upload files
-  expressApp.use('/api/documents/upload', upload.single('file'));
+  expressApp.use('/api/documents/upload', upload.array('files', 3));
+  expressApp.use('/api/users/upload', upload.single('file'));
 
 };

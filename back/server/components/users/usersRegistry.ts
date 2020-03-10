@@ -4,6 +4,7 @@ import * as Query from './queries';
 import config from '../../config/environment/index';
 import * as bcrypt from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
+import * as uuid from 'uuid/v4';
 
 // const fakeData = require('./fakeData.json');
 declare var loggerT: any;
@@ -12,9 +13,10 @@ export default class UserRegistry {
 
     private mysql: any;
     private refreshTokens: any;
-
-    public constructor(mysql) {
+    private s3: any;
+    public constructor(mysql, s3Client) {
         this.mysql = mysql;
+        this.s3 = s3Client;
         this.refreshTokens = {};
     }
 
@@ -250,6 +252,49 @@ export default class UserRegistry {
         ;
     }
 
+    public uploadPicture(file, user) {
+        let query = {
+            timeout: 40000
+        };
+        let name = uuid();
+        let path = 'PROFILEPIC/' + name;
+
+        query['sql']    = Query.UPDATE_PROFILE_PIC;
+        query['values'] = [path, user.id];
+        
+
+        return this.uploadFile(file, path)
+            .then(() => {
+                return this.mysql.query(query)
+                    .then(res => {
+                        loggerT.verbose('QUERY RES ==== ', res);
+                        return Promise.resolve(res);
+                    })
+                    .catch(err => {
+                        loggerT.error('ERROR ON QUERY updateProfilePic.');
+                        return Promise.reject(err);
+                    })
+                ;
+            })
+            .catch(err => {
+                loggerT.error('ERROR ON QUERY uploadFile.');
+                return Promise.reject(err);
+            })
+        ;
+    }
+
+    private uploadFile(file, key) {
+
+        return this.s3.upload({
+            Bucket: 'normsup',
+            Key: key,
+            Body: file.buffer,
+            ContentType: file.mimetype,
+            ACL: 'public-read'
+        }).promise()
+        ;
+    }
+
     private getRoleID(role) {
         if(role === 'admin') {
             return 1;
@@ -260,6 +305,35 @@ export default class UserRegistry {
         }
     }
 
+
+    public getPicture(id) {
+        return this.runQuery('FIND_USER_BY_ID', [id])
+            .then((res) => {
+                loggerT.verbose('User res', res);
+                if(res && res[0] && res[0].picture_url) {
+                    return this.getPictureFromDB(res[0].picture_url);
+                }
+            });
+    }
+
+
+    private getPictureFromDB(path) {
+        return this.s3.getObject({
+            Bucket: 'normsup',
+            Key: path
+        }).promise()
+        ;
+    }
+    public runQuery(queryType, params) {
+        let query = {
+            timeout: 40000
+        };
+
+        query['sql']    = Query[queryType];
+        query['values'] = params;
+
+        return this.mysql.query(query, params);
+    }
     public setRefreshToken(uuid, username) {
         return this.refreshTokens[uuid] = username;
     }

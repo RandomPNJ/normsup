@@ -1833,3 +1833,20 @@ td {
         transform: translateX(1.6rem); //translateX(0.75rem);
       }
 }
+
+.delete-modal-txt {
+    width: 100% !important;
+    text-align: center !important;
+    padding-bottom: 30px !important;
+    font-family: 'Roboto Regular' !important;
+    font-size: 15px !important;
+    letter-spacing: 0 !important;
+    color: #4E5983 !important;
+}
+.del-modal-btn {
+    border-radius: 5px !important;
+    float: left !important;
+    width: 100% !important;
+    padding-bottom: 8px !important;
+    padding-top: 8px !important;
+}
