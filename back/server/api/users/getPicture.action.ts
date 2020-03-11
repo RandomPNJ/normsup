@@ -22,9 +22,16 @@ export function getPicture(res, req, UsersRegistry) {
 
     return UsersRegistry.getPicture(req.decoded.id)
         .then(result => {
-            res.set({'Content-Type': 'image/png'});
-            res.attachment('profile-pic.png');
-            return res.send(result.Body);
+            loggerT.verbose('result', result);
+            if(result) {
+                res.set({'Content-Type': 'image/png'});
+                res.attachment('profile-pic.png');
+                return res.send(result.Body);
+            } else {
+                return res.status(404).json({
+                    msg: 'No picture found.'
+                });
+            }
         })
         .catch(err => {
             return err;

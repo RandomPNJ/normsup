@@ -44,6 +44,9 @@ export class HeaderBarComponent implements OnInit {
         console.log('/api/users/picture res', res);
         // this.profilePicUrl = URL.createObjectURL(res.body);
         // this.profilePicUrl = res.body;
+        if(res.body) {
+          console.log('res.body');
+        }
         return this.createImageFromBlob(<Blob>res.body);
       }, err => {
         console.log('/api/users/picture err', err);
