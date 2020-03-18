@@ -13,10 +13,13 @@ import { Observable, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { NotifService } from '../services/notif.service';
 import { BrowserStorageService } from '../services/storageService';
+import { CookieService } from 'ngx-cookie-service';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class HttpConfigInterceptor implements HttpInterceptor {
-    constructor(private notifService: NotifService) { }
+    constructor(private notifService: NotifService, private bsService: BrowserStorageService,
+        private cookieService: CookieService, private router: Router) { }
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
         if(request.url.indexOf('data.opendatasoft.com') === -1 ) {
@@ -43,6 +46,10 @@ export class HttpConfigInterceptor implements HttpInterceptor {
                 return event;
             }),
             catchError((error: HttpErrorResponse) => {
+                console.log('error', error);
+                if(error.error && error.error.message.indexOf('User is not authentified') !== -1) {
+                    this.logOutUser();
+                }
                 let data = {};
                 data = {
                     reason: error && error.error && error.error.reason ? error.error.reason : '',
@@ -51,5 +58,14 @@ export class HttpConfigInterceptor implements HttpInterceptor {
                 // this.errorDialogService.openDialog(data);
                 return throwError(error);
             }));
+    }
+
+
+    logOutUser() {
+        this.bsService.clearLocalStorage();
+        this.cookieService.delete('auth');
+        this.cookieService.delete('refresh');
+        this.router.navigate(['login']);
+        this.notifService.error('Veuillez vous authentifier.');
     }
 }
