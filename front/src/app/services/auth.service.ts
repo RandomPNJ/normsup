@@ -4,6 +4,7 @@ import { Configuration } from '../config/environment';
 import { BrowserStorageService } from 'src/app/services/storageService';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,12 +14,14 @@ export class AuthService implements OnInit {
 
   public isLogged: BehaviorSubject<any>;
 
-  constructor(private http: HttpClient, private bsService: BrowserStorageService) {
+  constructor(private http: HttpClient, private bsService: BrowserStorageService,
+    private cookieService: CookieService) {
     this.isLogged  = new BehaviorSubject<any>(this.isLoggedIn());
    }
 
   ngOnInit() {
   }
+
   public login(username: String, password: String): Observable<any> {
     const body = {};
     body['username'] = username;
@@ -27,6 +30,22 @@ export class AuthService implements OnInit {
 
     return this.http
       .post(Configuration.serverUrl + '/api/auth/login', body, {headers: headers})
+      .pipe(map((response: any) => {
+        this.isLogged.next(response);
+        console.log('[AuthService] Response login', response);
+        return response;
+      })
+    );
+  }
+
+  public loginAsSupplier(username: String, password: String): Observable<any> {
+    const body = {};
+    body['username'] = username;
+    body['password'] = password;
+    const headers = new HttpHeaders({'Content-Type': 'application/json'});
+
+    return this.http
+      .post(Configuration.serverUrl + '/api/auth/supplier-login', body, {headers: headers})
       .pipe(map((response: any) => {
         this.isLogged.next(response);
         return response;
@@ -45,7 +64,6 @@ export class AuthService implements OnInit {
       return false;
     }
   }
-
   
 
 }

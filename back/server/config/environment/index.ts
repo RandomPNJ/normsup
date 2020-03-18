@@ -12,6 +12,9 @@ export default {
   jwt: {
     expirationTime: 86400
   },
+  supplierJWT: {
+    expirationTime: 14400
+  },
   LOG_DIR: process.env.LOG_DIR || 'logs',
 
   loggers: {
@@ -77,6 +80,7 @@ export default {
       actions: [
         { name: 'getSuppliers', uriPattern: '', method: 'get' },
         { name: 'createSupplier', uriPattern: '/define_supplier', method: 'post' },
+        { name: 'createSupplierUser', uriPattern: '/define_supplier_user', method: 'post' },
         { name: 'modifySupplier', uriPattern: '/modify_supplier/:id', method: 'put' },
         { name: 'countSuppliers', uriPattern: '/count', method: 'get' },
         { name: 'deleteSupplier', uriPattern: '/delete/:id', method: 'post' },
@@ -86,8 +90,10 @@ export default {
         { name: 'checkGroup', uriPattern: '/group/check_availability', method: 'get' },
         { name: 'createGroup', uriPattern: '/define_group', method: 'post' },
         { name: 'deleteGroup', uriPattern: '/group/:id/delete', method: 'post' },
+        { name: 'deleteRepresentative', uriPattern: '/representatives/:id/delete', method: 'delete' },
         { name: 'modifyGroupReminders', uriPattern: '/group/:id/modify_reminders', method: 'post' },
         { name: 'modifyGroup', uriPattern: '/group/:id/modify_group', method: 'post' },
+        { name: 'modifyRepresentative', uriPattern: '/modify_representative/:id', method: 'post' },
       ],
     },
     documents: {
@@ -102,6 +108,7 @@ export default {
       actions: [
         { name: 'login', uriPattern: '/login', method: 'post' },
         { name: 'refreshToken', uriPattern: '/refresh_token', method: 'post' },
+        { name: 'supplierLogin', uriPattern: '/supplier-login', method: 'post' },
       ]
     },
     settings: {
@@ -118,7 +125,10 @@ export default {
       actions: [
         { name: 'getUsers', uriPattern: '/users', method: 'get' },
         { name: 'getClients', uriPattern: '/clients', method: 'get' },
+        { name: 'getSuppliers', uriPattern: '/suppliers', method: 'get' },
+        { name: 'getSuppliersUsers', uriPattern: '/suppliers/users', method: 'get' },
         { name: 'registerUser', uriPattern: '/users/register', method: 'post' },
+        { name: 'createSupplierUser', uriPattern: '/suppliers/register', method: 'post' },
       ]
     }
   },

@@ -18,6 +18,8 @@ export class LegalDocModalComponent implements OnInit {
   @ViewChild(DataTableDirective) datatableElement: DataTableDirective;
   @ViewChild('addDocModal') addModalRef: TemplateRef<any>;
 
+
+  // USELESS ???
   public uploader: FileUploader = new FileUploader({ 
     url: Configuration.serverUrl + '/api/documents/upload', 
     removeAfterUpload: true, 

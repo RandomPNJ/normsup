@@ -31,8 +31,7 @@ export class UploadService {
   public post<t>(actionUrl: string, body?: any): Observable<HttpResponse<t>> {
     return this._http.post<t>(Configuration.serverUrl + actionUrl, body, {
       headers: {
-        'Content-Type': 'multipart/form-data',
-        'Authorization': `Bearer ${this.bsService.getLocalStorage('token')}`
+        'Content-Type': 'multipart/form-data'
       },
       responseType: 'json',
       observe: 'response'
@@ -44,8 +43,7 @@ export class UploadService {
   }
 
   public refreshToken() {
-    const refreshTok = this.bsService.getLocalStorage('refreshToken');
-    return this.post('/api/auth/refresh_token', {refreshToken: refreshTok})
+    return this.post('/api/auth/refresh_token')
       .subscribe(res => {
         this.setDataInBS({data: res.body['data'], token: res.body['token'], refreshToken: res.body['refreshToken']});
         this.notifService.error('Votre session a expirée, veuillez actualiser la page.');
@@ -79,8 +77,8 @@ export class UploadService {
 
   public setDataInBS(data) {
     this.bsService.setLocalStorage('current_user', JSON.stringify(data['data']));
-    this.bsService.setLocalStorage('token', data['token']);
-    this.bsService.setLocalStorage('refreshToken', data['refreshToken']);
+    // this.bsService.setLocalStorage('token', data['token']);
+    // this.bsService.setLocalStorage('refreshToken', data['refreshToken']);
   }
 
   public handleError(error: HttpErrorResponse) {

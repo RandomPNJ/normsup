@@ -43,8 +43,7 @@ export class HttpService implements OnDestroy {
       responseType: 'json',
       observe: 'response',
       headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${this.bsService.getLocalStorage('token')}`
+        'Content-Type': 'application/json'
       }
     })
       .pipe(
@@ -55,8 +54,7 @@ export class HttpService implements OnDestroy {
   public post<t>(actionUrl: string, body?: any): Observable<HttpResponse<t>> {
     return this._http.post<t>(Configuration.serverUrl + actionUrl, body, {
       headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${this.bsService.getLocalStorage('token')}`
+        'Content-Type': 'application/json'
       },
       responseType: 'json',
       observe: 'response'
@@ -70,10 +68,10 @@ export class HttpService implements OnDestroy {
   public uploadDocument<t>(actionUrl: string, body?: any): Observable<HttpResponse<t>> {
     return this._http.post<t>(Configuration.serverUrl + actionUrl, body, {
       headers: {
-        'Authorization': `Bearer ${this.bsService.getLocalStorage('token')}`
       },
       responseType: 'json',
-      observe: 'response'
+      observe: 'response',
+      // withCredentials: true
     })
       .pipe(
         // retry(1),
@@ -83,10 +81,9 @@ export class HttpService implements OnDestroy {
 
   public getPicture<t>(actionUrl: string, params?: HttpParams): Observable<HttpResponse<t>> {
     return this._http.get<t>(Configuration.serverUrl + actionUrl, {
-      responseType: "blob",
       observe: 'response',
+      responseType: "blob" as 'json',
       headers: {
-        'Authorization': `Bearer ${this.bsService.getLocalStorage('token')}`
       }
     })
       .pipe(
@@ -98,7 +95,20 @@ export class HttpService implements OnDestroy {
     return this._http.put<t>(Configuration.serverUrl + actionUrl, body, {
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${this.bsService.getLocalStorage('token')}`
+        },
+        responseType: 'json',
+        observe: 'response'
+      })
+      .pipe(
+        // retry(1),
+        catchError(this.handleError.bind(this))
+      );
+  }
+
+  public delete<t>(actionUrl: string): Observable<HttpResponse<t>> {
+    return this._http.delete<t>(Configuration.serverUrl + actionUrl, {
+        headers: {
+          'Content-Type': 'application/json',
         },
         responseType: 'json',
         observe: 'response'
@@ -110,8 +120,8 @@ export class HttpService implements OnDestroy {
   }
 
   public refreshToken() {
-    const refreshTok = this.bsService.getLocalStorage('refreshToken');
-    return this.post('/api/auth/refresh_token', {refreshToken: refreshTok})
+    // const refreshTok = this.bsService.getLocalStorage('refreshToken');
+    return this.post('/api/auth/refresh_token')
       .subscribe(res => {
         this.setDataInBS({data: res.body['data'], token: res.body['token'], refreshToken: res.body['refreshToken']});
         this.notifService.error('Votre session a expirée, veuillez actualiser la page.');
@@ -145,8 +155,8 @@ export class HttpService implements OnDestroy {
 
   public setDataInBS(data) {
     this.bsService.setLocalStorage('current_user', JSON.stringify(data['data']));
-    this.bsService.setLocalStorage('token', data['token']);
-    this.bsService.setLocalStorage('refreshToken', data['refreshToken']);
+    // this.bsService.setLocalStorage('token', data['token']);
+    // this.bsService.setLocalStorage('refreshToken', data['refreshToken']);
   }
 
   public handleError(error: HttpErrorResponse) {

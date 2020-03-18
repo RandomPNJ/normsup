@@ -21,14 +21,18 @@ declare var loggerIO: any;
 
 const methodOverride = require('method-override');
 const moment = require('moment');
+const cookieParser = require('cookie-parser');
+
 const secret = config.secret;
 
 export default (expressApp) => {
+
   const storage = multer.memoryStorage();
   const upload = multer({ storage: storage });
 
   expressApp.use(helmet());
   expressApp.use(compression());
+  expressApp.use(cookieParser());
   expressApp.use(bodyParser.urlencoded({ limit: '50mb', extended: false, parameterLimit: 50000}));
   expressApp.use(bodyParser.json({ limit: '50mb' }));
   expressApp.use(methodOverride());
@@ -68,6 +72,7 @@ export default (expressApp) => {
       method: req.method,
       datetime: moment.utc().toISOString(),
     });
+    // loggerT.verbose('Req cookies ==', req.cookies.auth);
     next();
   });
 
@@ -80,12 +85,9 @@ export default (expressApp) => {
   // lets create our strategy for web token
   let strategy = new JwtStrategy(jwtOptions, 
     (jwtPayload, next) => {
-    console.log('payload received', jwtPayload);
-    // let user = getUser({ id: jwtPayload.id });
     if (Date.now() > jwtPayload.expires) {
       return next('jwt expired');
     }
-
     return next(null, jwtPayload);
   });
 
@@ -96,7 +98,7 @@ export default (expressApp) => {
   // Authentification middleware
   const AuthMiddleware = new AuthenticatorMiddleware();
   expressApp.use('/api', (req, res, next) => {
-    if(req.url === '/auth/login' || req.url === '/auth/refresh_token') {
+    if(req.url === '/auth/login' || req.url === '/auth/refresh_token' || req.url === '/auth/supplier-login') {
       return next();
     }
     AuthMiddleware.use(req, res, next);

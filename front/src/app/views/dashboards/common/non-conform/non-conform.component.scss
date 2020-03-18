@@ -1,0 +1,27 @@
+.card-txt {
+    font-size: 14px;
+    font-family: 'Roboto Regular';
+    display: block;
+    color: #4E5983;
+    text-align: center;
+    -webkit-user-select: none; /* Safari */        
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+/Edge */
+    user-select: none; /* Standard */
+}
+
+.nb {
+    font-size: 35px;
+    font-family: 'Roboto Black';
+    display: block;
+    color: #4390EF;
+    text-align: center;
+    -webkit-user-select: none; /* Safari */        
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+/Edge */
+    user-select: none; /* Standard */
+}
+
+.non-valid {
+    color: #C7E0FF !important;
+}

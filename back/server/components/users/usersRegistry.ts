@@ -309,7 +309,7 @@ export default class UserRegistry {
     public getPicture(id) {
         return this.runQuery('FIND_USER_BY_ID', [id])
             .then((res) => {
-                loggerT.verbose('User res', res);
+                // loggerT.verbose('User res', res);
                 if(res && res[0] && res[0].picture_url) {
                     return this.getPictureFromDB(res[0].picture_url);
                 }
@@ -334,6 +334,8 @@ export default class UserRegistry {
 
         return this.mysql.query(query, params);
     }
+
+    // MIGHT CREATE MEMORY OVERLOAD ???????
     public setRefreshToken(uuid, username) {
         return this.refreshTokens[uuid] = username;
     }
@@ -350,6 +352,10 @@ export default class UserRegistry {
 
     public getAllRefreshTokens() {
         return this.refreshTokens;
+    }
+
+    public getUserFromDB(userID) {
+        
     }
 
     private throwError(message?: string): void {

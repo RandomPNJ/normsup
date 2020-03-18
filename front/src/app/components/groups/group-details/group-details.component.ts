@@ -43,9 +43,10 @@ export class GroupDetailsComponent implements OnInit {
     { name: 'Complémentaire deux', value: 'comptwo'},
   ];
   frequency: Array<any> = [
-    { name: '5 jours', value: '5d'},
-    { name: '7 jours', value: '7d'},
-    { name: '10 jours', value: '10d'},
+    // { name: '5 jours', value: '5d'},
+    // { name: '7 jours', value: '7d'},
+    { name: '15 jours', value: '15d'},
+    { name: '30 jours', value: '30d'},
   ];
   itemPluralCount = {
     'suppliers': {

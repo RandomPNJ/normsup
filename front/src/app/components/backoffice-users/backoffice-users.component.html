@@ -8,14 +8,13 @@
         <div class="container nopadding" style="margin-bottom: 45px !important; padding-top: 45px !important;">
           <div class="row nopadding">
             <div class="col" style="padding-left: 50px;">
-              <span class="title">Gestion utilisateur</span>
-              
+              <span class="title">Gestion utilisateur (Clients)</span>
               <span class="item-count count-placement" *ngIf="dataLength !== -1"><span class="count-style" *ngIf="dataLength !== -1">{{usersTableRef.dataSize | i18nPlural: itemPluralCount['users']}}</span>{{usersTableRef.dataSize | i18nPlural: itemPluralMapping['users']}}</span>
             </div>
             <div class="justify-content-end">
               <div class="col-lg-auto col-md-auto">
                 <button (click)="openModal(template, 'Supplier')" type="button" class="btn btn-primary custom-normsup-button nopadding">
-                  <span class="add-supplier-txt"><img style="height: 10px;" src="../../../assets/img/plus-icn.svg"/> Ajouter un fournisseur</span>
+                  <span class="add-supplier-txt"><img style="height: 10px;" src="../../../assets/img/plus-icn.svg"/> Ajouter un utilisateur</span>
                 </button>
               </div>
             </div>

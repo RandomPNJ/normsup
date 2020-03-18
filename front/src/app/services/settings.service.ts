@@ -23,15 +23,9 @@ export class SettingsService {
 
 
   getToken() {
-    if (this.bsService.getLocalStorage('token')) {
-      this.apiToken = this.bsService.getLocalStorage('token');
-    } else {
-      this.apiToken = '';
-    }
     this.httpOptions = {
       headers: new HttpHeaders({
-        'Content-Type':  'application/json',
-        'X-Access-token': this.apiToken
+        'Content-Type':  'application/json'
       })
     };
   }

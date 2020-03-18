@@ -205,6 +205,30 @@
               </div>
             </div>
           </div>
+          <div class="container nopadding" *ngIf="modalState === 'supplierSuccess'">
+            <div style="padding-left: 0px !important; padding-right: 0px !important;" class="container">
+              <div class="row" style="margin: auto;text-align: center;padding-top: 29px;">
+                <div class="optional-txt">Votre fournisseur a été ajouté avec succès !</div>
+              </div>
+            </div>
+            <div style="padding-top: 30px;" class="select-comp-but">
+              <div class="row nopadding">
+                <div class="col nopadding" style="text-align: center;">
+                  <button style="text-transform: none;" type="button" class="btn btn-outline-normsup new-group-btn"
+                    (click)="nextState('enterSiret')">
+                    <span class="button-txt">Nouveau fournisseur</span>
+                  </button>
+                <!-- </div> -->
+                <!-- <div class="col nopadding"> -->
+                  <button style="border-radius: 5px;" type="button"
+                    class="btn btn-primary text-capitalize next-btn-group"
+                    (click)="hideModal()">
+                    <span class="button-txt">Continuer</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
       </div>
       <div class="modal-footer own-modal-footer-supplier">
 

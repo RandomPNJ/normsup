@@ -4,7 +4,8 @@ import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { FileUploadModule } from 'ng2-file-upload';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import {HttpClientModule} from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+
 import {HttpModule} from '@angular/http';
 import { Daterangepicker } from 'ng2-daterangepicker';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
@@ -61,6 +62,11 @@ import { SupplierUploadInterfaceComponent } from './components/supplier-upload-p
 import { BackofficeUsersComponent } from './components/backoffice-users/backoffice-users.component';
 import { BackofficeUsersTableComponent } from './components/backoffice-users/backoffice-users-table/backoffice-users-table.component';
 import { BackofficeComponent } from './components/backoffice/backoffice.component';
+import { SupplierLoginPageComponent } from './components/supplier-login-page/supplier-login-page.component';
+import { BackofficeSuppliersComponent } from './components/backoffice-suppliers/backoffice-suppliers.component';
+import { BackofficeSuppliersTableComponent } from './components/backoffice-suppliers/backoffice-suppliers-table/backoffice-suppliers-table.component';
+import { CookieService } from 'ngx-cookie-service';
+import { HttpConfigInterceptor} from './interceptors/httpconfig.interceptor';
 
 @NgModule({
   declarations: [
@@ -101,6 +107,9 @@ import { BackofficeComponent } from './components/backoffice/backoffice.componen
     BackofficeUsersComponent,
     BackofficeUsersTableComponent,
     BackofficeComponent,
+    SupplierLoginPageComponent,
+    BackofficeSuppliersComponent,
+    BackofficeSuppliersTableComponent,
   ],
   imports: [
     BrowserModule,
@@ -138,6 +147,8 @@ import { BackofficeComponent } from './components/backoffice/backoffice.componen
     GuestGuard,
     LoggedinGuard,
     NotifService,
+    CookieService,
+    { provide: HTTP_INTERCEPTORS, useClass: HttpConfigInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })

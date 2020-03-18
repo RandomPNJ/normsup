@@ -314,7 +314,7 @@ export class SupplierTableComponent implements OnInit,AfterViewInit {
       return;
     }
     if(this.toggleModification === false) {
-      this.interloc = this.infoPopup;
+      this.interloc = cloneDeep(this.infoPopup);
       this.toggleModification = true;
     } else if(this.toggleModification === true) {
       this.interloc = {};
@@ -329,7 +329,7 @@ export class SupplierTableComponent implements OnInit,AfterViewInit {
       return;
     }
     if(this.toggleModification === false) {
-      this.supplier = this.infoPopup;
+      this.supplier = cloneDeep(this.infoPopup);
       this.toggleModification = true;
     } else if(this.toggleModification === true) {
       this.supplier = {};
@@ -343,13 +343,70 @@ export class SupplierTableComponent implements OnInit,AfterViewInit {
   }
 
   confirmInterlocModification() {
-
-  }
-
-  deleteInterloc() {
+    let data = {
+      name: this.interloc.name,
+      email: this.interloc.email,
+      phonenumber: this.interloc.phonenumber,
+      lastname: this.interloc.lastname,
+    };
     
+    return this.httpService.post('/api/supplier/modify_representative/' + this.interloc.repres_id, data)
+      .subscribe(res => {
+        this.notif.success('Interlocuteur modifié avec succès.');
+        this.infoPopup.phonenumber = this.interloc.phonenumber;
+        this.infoPopup.email = this.interloc.email;
+        // Not useful yet
+        // this.infoPopup.name = this.interloc.name;
+        // this.infoPopup.lastname = this.interloc.lastname;
+
+        this.interloc = {};
+        this.toggleModification = false;
+        console.log('[confirmInterlocModification] res', res);
+      }, err => {
+        console.log('[confirmInterlocModification] err', err);
+        this.notif.error('Erreur, veuillez réessayer plus tard.');
+        this.interloc = {};
+        this.toggleModification = false;
+      })
+    ;
   }
 
+  deleteInterloc(i) {
+    return this.httpService.delete('/api/supplier/representatives/' + this.infoPopup.repres_id + '/delete')
+      .subscribe(res => {
+        console.log('deleteInterloc res', res);
+        this.deleteLocalInterlocInfo(i);
+        this.notif.success('Interlocuteur supprimé.');
+      }, err => {
+        console.log('deleteInterloc err', err);
+        this.notif.error('Erreur lors de la suppression de l\'interlocuteur, veuillez réessayer plus tard.');
+      })
+    ;
+  }
+
+  deleteLocalInterlocInfo(i) {
+    delete this.itemsToDisplay[i].name;
+    delete this.itemsToDisplay[i].lastname;
+    delete this.itemsToDisplay[i].phonenumber;
+    delete this.itemsToDisplay[i].repres_id;
+    delete this.itemsToDisplay[i].repres_creation;
+    delete this.itemsToDisplay[i].repres_added_by;
+    delete this.itemsToDisplay[i].repres_client_id;
+    delete this.itemsToDisplay[i].createdAt;
+
+    delete this.data[this.tableParams.start + i].name;
+    delete this.data[this.tableParams.start + i].lastname;
+    delete this.data[this.tableParams.start + i].phonenumber;
+    delete this.data[this.tableParams.start + i].repres_id;
+    delete this.data[this.tableParams.start + i].repres_creation;
+    delete this.data[this.tableParams.start + i].repres_added_by;
+    delete this.data[this.tableParams.start + i].repres_client_id;
+    delete this.data[this.tableParams.start + i].createdAt;
+
+    this.indexInfo = -1;
+    this.infoPopup = {};
+    this.infoType = 'NONE';
+  }
   deleteSupplier(supplier) {
     this.httpService
       .post('/api/supplier/delete/' + supplier.id)

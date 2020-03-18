@@ -74,6 +74,30 @@ export default class AdminRegistry {
         ;
     }
 
+    public getSuppliersUsers(data) {
+        let query = {
+            timeout: 40000
+        };
+
+        if(data.start) {
+            query['sql']    = Query.QUERY_GET_SUPPLIERS_USERS_OFFLIM;
+            query['values'] = [data.company, data.limit, data.start];
+        } else {
+            query['sql'] = Query.QUERY_GET_SUPPLIERS_USERS;
+            query['values'] = [];
+        }
+        return this.mysql.query(query)
+            .then(res => {
+                loggerT.verbose('QUERY RES ==== ', res);
+                return Promise.resolve(res);
+            })
+            .catch(err => {
+                loggerT.error('ERROR ON QUERY getSuppliers.');
+                return Promise.reject(err);
+            })
+        ;
+    }
+
     public getClients(data) {
         let query = {
             timeout: 40000
@@ -88,6 +112,40 @@ export default class AdminRegistry {
 
         query['sql'] = Query.QUERY_GET_CLIENTS;
         query['values'] = [data];
+
+        return this.mysql.query(query)
+            .then(res => {
+                loggerT.verbose('QUERY RES ==== ', res);
+                return Promise.resolve(res);
+            })
+            .catch(err => {
+                loggerT.error('ERROR ON QUERY getUsers.');
+                return Promise.reject(err);
+            })
+        ;
+    }
+
+    public getSuppliers(data) {
+        let query = {
+            timeout: 40000
+        };
+
+        if(data.search) {
+            data.search += '%'
+        } else {
+            data.search = '%'
+        }
+
+        if(data.clientID) {
+            query['sql'] = Query.GET_SUPPLIERS_CLIENTID;
+            query['values'] = [data.clientID, data.search, data.search];
+        } else {
+            query['sql'] = Query.GET_SUPPLIERS;
+            query['values'] = [data.search, data.search];
+        }
+
+        loggerT.verbose('query["sql"]', query['sql'])
+        loggerT.verbose('query["values"]', query['values'])
 
         return this.mysql.query(query)
             .then(res => {

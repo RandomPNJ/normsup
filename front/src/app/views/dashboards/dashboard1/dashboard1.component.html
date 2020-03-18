@@ -2,69 +2,17 @@
   <div class="col-lg-12">
     <div class="row wow fadeIn first-row">
       <div class="col-lg-2-half col-md-3 infocard">
-        <mdb-card class="canvaCard normsup-card-border" style="border: 1px solid #4390EF;">
-          <mdb-card-body>
-            <div class="row">
-              <div class="col" style="display: inline-block;">
-                <span class="nb">
-                  300
-                </span>
-                <span class="card-txt">
-                  Fournisseurs
-                </span>
-              </div>
-            </div>
-          </mdb-card-body>
-        </mdb-card>
+        <app-stats-card></app-stats-card>
       </div>
   
       <div class="col-lg-2-half col-md-3 infocard">
-        <mdb-card class="canvaCard">
-          <mdb-card-body>
-            <div class="row">
-              <div class="col" style="display: inline-block;">
-                <span class="nb">
-                  240
-                </span>
-                <span class="card-txt">
-                  Conformes
-                </span>
-              </div>
-            </div>
-          </mdb-card-body>
-        </mdb-card>
+        <app-stats-card2></app-stats-card2>
       </div>
       <div class="col-lg-2-half col-md-3 infocard">
-        <mdb-card class="canvaCard">
-          <mdb-card-body>
-            <div class="row">
-              <div class="col" style="display: inline-block;">
-                <span class="nb non-valid">
-                  60
-                </span>
-                <span class="card-txt">
-                  Non conformes
-                </span>
-              </div>
-            </div>
-          </mdb-card-body>
-        </mdb-card>
+        <app-non-conform></app-non-conform>
       </div>
       <div class="col-lg-2-half col-md-3 infocard">
-        <mdb-card class="canvaCard">
-          <mdb-card-body>
-            <div class="row">
-              <div class="col" style="display: inline-block;">
-                <span class="nb non-valid">
-                  50
-                </span>
-                <span class="card-txt">
-                  Hors ligne
-                </span>
-              </div>
-            </div>
-          </mdb-card-body>
-        </mdb-card>
+        <app-offline-card></app-offline-card>
       </div>
   
       <div class="col-lg-2-half">
@@ -93,7 +41,7 @@
         </div>
       </div>
       <div class="col-lg-6 col-md-6 mb-4" style="padding-right: 0px !important;">
-        <div class="card second-card-row">
+        <!-- <div class="card second-card-row">
           <div class="box-title">Prochaines relances</div>
           <div class="card-body reminders-card">
             <table class="table">
@@ -113,7 +61,8 @@
               </tbody>
             </table>
           </div>
-        </div>
+        </div> -->
+        <app-dash-group-card></app-dash-group-card>
       </div>
     </div>
   

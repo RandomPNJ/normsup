@@ -1,0 +1,214 @@
+.loginContainer {
+    background-color: #F3F7FC;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    width: 100%;
+    height: 100%;
+    margin: 0px !important;
+    position: absolute;
+}
+
+.loginContainer a {
+    padding: 31px;
+    height: 39px !important;
+}
+
+.container {
+    max-width: 400px;
+    text-align: center;
+    top: 50%;
+    position: absolute;
+    margin-top: -200px;
+    left: 0%;
+    right: 0%;
+    width: 100%;
+
+}
+
+
+.login-box {
+    // width: 400px;
+}
+.container h1 {
+    font-size: 28px;
+    font-weight: 200;
+    margin: 25px 0 20px 0;
+}
+
+.colorDiv {
+    padding: 30px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0px 0px 55px #4390EF1A;
+}
+
+.error {
+    height: 18px;
+    width: 233px;
+    color: #484848;
+    // font-family: Metropolis;
+    font-size: 13px;
+    font-weight: 200;
+    line-height: 18px;
+}
+
+.hide {
+    display: none;
+}
+
+button i {
+    margin-left: 0px;
+}
+
+::-webkit-input-placeholder {
+    font-weight: 300;
+    color: #A3A6B6;
+}
+
+ :-moz-placeholder {
+    /* Firefox 18- */
+    font-weight: 300;
+    color: #A3A6B6;
+}
+
+ ::-moz-placeholder {
+    /* Firefox 19+ */
+    font-weight: 300;
+    color: #A3A6B6;
+}
+
+ :-ms-input-placeholder {
+    font-weight: 300;
+    color: #A3A6B6;
+}
+
+/* Change autocomplete styles in WebKit */
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  -webkit-text-fill-color: #A3A6B6;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+
+/* enable absolute positioning */
+.inner-addon { 
+    position: relative; 
+}
+
+/* style icon */
+.inner-addon .material-icons {
+  position: absolute;
+  padding: 10px;
+  pointer-events: none;
+}
+
+/* align icon */
+.left-addon .material-icons  { left:  0px;}
+.right-addon .material-icons { right: 0px;}
+
+/* add padding  */
+.left-addon input  { padding-left:  30px; }
+.right-addon input { padding-right: 30px; }
+
+.searchText {
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+    font-family: 'Roboto Regular';
+    font-size: 13px;
+    letter-spacing: 0;
+    color: #4390EF;
+    line-height: 22px;
+    font-size: 12px;
+    text-transform: capitalize;
+}
+
+.stayConnected {
+    font-weight: 400;
+}
+.submit-btn {
+    margin: auto;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    justify-content: center;
+    background-color: lightblue;
+    border-color: lightblue;
+    color: white;
+    border-radius: 5px;
+}  
+
+.login-icn {
+    color: white;
+    position: absolute;
+    right: 9px;
+    top: 7px;
+}
+
+.input-style {
+    height: 35px;
+    border-radius: 10px !important;
+}
+
+.login-input-container {
+    padding: 0px 60px;
+}
+
+.login-checkbox {
+    flex-flow: column wrap;
+    display: flex;
+    align-items: center;
+    padding-top: 25px;
+}
+
+.normsup-checkbox-cont [type="checkbox"]:not(:checked) + label, .normsup-checkbox-cont [type="checkbox"]:checked + label {
+    line-height: 1.6 !important;
+}
+
+.login-btn-cont {
+    padding-top: 26.250px;
+}
+
+.forgot-password-lnk {
+    padding-top: 25px;
+    cursor: pointer;
+    color: #4E5983;
+    font-size: 14px;
+    font-family: 'Roboto Regular';
+    opacity: 0.5;
+    text-decoration: underline;
+    width: 100%;
+    text-align: center;
+}
+.virtualBg {
+    position: absolute;
+    width: 100%;
+    z-index: 0;
+    bottom: 0;
+}
+
+.custom-label-input-test-active {
+    text-align: center;
+    width: 100%;
+}
+
+.supplier-login-title {
+    width: 100%;
+    text-align: center;
+    font-family: 'Roboto Bold';
+    font-size: 15px;
+    letter-spacing: 0;
+    color: #4390EF;
+    padding: 15px 0px 5px 0px;
+    cursor: default;
+}

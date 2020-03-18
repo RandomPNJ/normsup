@@ -27,9 +27,8 @@ export function createSupplier(req, res, SupplierRegistry) {
 
     if(data.dateCreation) {
         data.dateCreation = new Date(data.dateCreation);
-    } else {
-        data.dateCreation = new Date();
     }
+
     return SupplierRegistry.createSupplier(data, req.decoded, representative)
         .then(res => {
             return res;

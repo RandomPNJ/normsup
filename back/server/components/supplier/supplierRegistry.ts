@@ -1,9 +1,10 @@
 import { Promise, any } from 'bluebird';
 import * as _ from 'lodash';
+import * as HelperQueries from '../helpers/dbhelpers';
 import * as Query from './queries';
 import config from '../../config/environment/index';
+import * as bcrypt from 'bcrypt';
 
-const fakeData = require('./fakeData.json');
 declare var loggerT: any;
 
 export default class SupplierRegistry {
@@ -154,6 +155,35 @@ export default class SupplierRegistry {
             .catch(err => {
                 loggerT.error('ERROR ON QUERY deleteGroup.');
                 return Promise.reject(err);
+            })
+        ;
+    }
+    public deleteRepresentative(id, userID) {
+        return HelperQueries.getUserFromDB(userID)
+            .then(res => {
+                let user = res[0];
+                let query = {
+                    timeout: 40000
+                };
+                loggerT.verbose('[deleteRepresentative] id === ', id);
+                loggerT.verbose('[deleteRepresentative] res === ', res);
+                query['sql'] = Query.DELETE_REPRES;
+                query['values'] = [id, user.organisation];
+        
+                return this.mysql.query(query)
+                    .then((res, fields) => {
+                        loggerT.verbose('QUERY RES deleteRepresentative ==== ', res);
+                        return res;
+                    })
+                    .catch(err => {
+                        loggerT.error('ERROR ON QUERY deleteRepresentative.');
+                        return Promise.reject(err);
+                    })
+                ;
+        
+            })
+            .catch(err => {
+                Promise.reject('[SupplierRegistry] Could not get user from database, query aborted.');
             })
         ;
     }
@@ -320,71 +350,94 @@ export default class SupplierRegistry {
         ;
     }
 
-    public createSupplier(data, user, representative) {
-        loggerT.verbose('Data : ', data);
-        if(!data.dateCreation)
-            data.dateCreation = new Date();
-        let query = {
-            timeout: 40000
-        };
-        query['sql']    = Query.INSERT_SUPPLIER;
-        query['values'] = [data];
-
-        return this.mysql.query(query)
+    public createSupplier(data, userID, representative) {
+        return HelperQueries.getUserFromDB(userID)
             .then(res => {
-                loggerT.verbose('FIRST QUERY RES ==== ', res);
-                let newInsert = {};
-                newInsert['supplier_id'] = res.insertId;
-                newInsert['client_id'] = user.organisation;
-                query['sql']    = Query.INSERT_REL;
-                query['values'] = [newInsert];
-
-                let query2 = {
+                let user = res[0];
+                if(!data.dateCreation)
+                    data.dateCreation = new Date();
+                let query = {
                     timeout: 40000
                 };
-                representative['organisation_id'] = res.insertId;
-                representative['added_by'] = user.organisation;
-                query2['sql'] = Query.INSERT_REPRESENTATIVE;
-                query2['values'] = [representative]
-
-                return Promise.all[
-                    this.mysql.query(query),
-                    this.mysql.query(query2)]
+                query['sql']    = Query.INSERT_SUPPLIER;
+                query['values'] = [data];
+        
+                return this.mysql.query(query)
+                    .then(res => {
+                        loggerT.verbose('FIRST QUERY RES ==== ', res);
+                        let newInsert = {};
+        
+                        newInsert['supplier_id'] = res.insertId;
+                        newInsert['client_id'] = user.organisation;
+                        query['sql']    = Query.INSERT_REL;
+                        query['values'] = [newInsert];
+        
+                        let query2 = { timeout: 40000 };
+                        let query3 = { timeout: 40000 };
+        
+                        representative['organisation_id'] = res.insertId;
+                        representative['added_by'] = user.id;
+                        representative['client_id'] = user.organisation;
+        
+                        query2['sql'] = Query.INSERT_REPRESENTATIVE;
+                        query2['values'] = [representative]
+        
+                        query3['sql'] = Query.INSERT_SUPP_CONFORMITY;
+                        query3['values'] = [{supplier_id: res.insertId, client_id: user.organisation}];
+        
+                        return this.allSkippingErrors([
+                            this.mysql.query(query),
+                            this.mysql.query(query2),
+                            this.mysql.query(query3)])
+                        ;
+                    })
+                    .catch(err => {
+                        loggerT.error('ERROR ON FIRST QUERY createSuppliers : ', err);
+                        if(err.message.includes("Duplicate entry")) {
+                            query['sql'] = Query.QUERY_GET_SUPPLIER_INFO;
+                            query['values'] = [data.siret, data.siret, data.siret];
+                            return this.mysql.query(query)
+                                .then(res => {
+                                    console.log('err recreate', res);
+                                    if(res && res[0] && res[0].id) {
+                                        let newInsert = {};
+                                        newInsert['supplier_id'] = res[0].id;
+                                        newInsert['client_id'] = user.organisation;
+                                        query['sql']    = Query.INSERT_REL;
+                                        query['values'] = [newInsert];
+        
+                                        let query2 = {
+                                            timeout: 40000
+                                        };
+                                        let query3 = {
+                                            timeout: 40000
+                                        };
+        
+                                        representative['organisation_id'] = res[0].id;
+                                        representative['added_by'] = user.id;
+                                        representative['client_id'] = user.organisation;
+        
+                                        query2['sql'] = Query.INSERT_REPRESENTATIVE;
+                                        query2['values'] = [representative]
+        
+                                        query3['sql'] = Query.INSERT_SUPP_CONFORMITY;
+                                        query3['values'] = [{supplier_id: res.insertId, client_id: user.organisation}];
+        
+                                        return this.allSkippingErrors([
+                                            this.mysql.query(query),
+                                            this.mysql.query(query2),
+                                            this.mysql.query(query3)])
+                                        ;
+                                    }
+                                })
+                            ;
+                        }
+                        return Promise.reject(err);
+                    })
                 ;
             })
             .catch(err => {
-                loggerT.error('ERROR ON FIRST QUERY createSuppliers : ', err);
-                if(err.message.includes("Duplicate entry")) {
-                    query['sql'] = Query.QUERY_GET_SUPPLIER_LAMBDA
-                    query['values'] = [data.siret, data.siret, data.siret];
-                    return this.mysql.query(query)
-                        .then(res => {
-                            console.log('err recreate', res);
-                            if(res && res[0] && res[0].id) {
-                                loggerT.verbose('FIRST QUERY RES ==== ', res);
-                                let newInsert = {};
-                                newInsert['supplier_id'] = res[0].id;
-                                newInsert['client_id'] = user.organisation;
-                                query['sql']    = Query.INSERT_REL;
-                                query['values'] = [newInsert];
-
-                                let query2 = {
-                                    timeout: 40000
-                                };
-                                representative['organisation_id'] = res[0].id;
-                                representative['added_by'] = user.organisation;
-                                query2['sql'] = Query.INSERT_REPRESENTATIVE;
-                                query2['values'] = [representative]
-
-                                return Promise.all[
-                                    this.mysql.query(query),
-                                    this.mysql.query(query2)]
-                                ;
-                            }
-                        })
-                    ;
-                }
-                return Promise.reject(err);
+                Promise.reject('[SupplierRegistry] Could not get user from database, query aborted.');
             })
         ;
     }
@@ -442,6 +495,93 @@ export default class SupplierRegistry {
         ;
     }
 
+    public getConformCount(data, id) {
+        let query = {
+            timeout: 40000
+        };
+
+        query['sql']    = Query.QUERY_COUNT_SUPPLIERS_CLIENT;
+        query['values'] = [data.client];
+
+        return this.mysql.query(query)
+            .then((res, fields) => {
+                loggerT.verbose('fields', fields)
+                loggerT.verbose('QUERY RES ==== ', res);
+                return Promise.resolve(res[0][Object.keys(res[0])[0]]);
+            })
+            .catch(err => {
+                loggerT.error('ERROR ON QUERY getSuppliers.');
+                return Promise.reject(err);
+            })
+        ;
+    }
+
+    public login(username, password) {
+        let query = {
+            timeout: 40000
+        };
+        loggerT.verbose('username ', username)
+        query['sql']    = Query.FIND_USER_BY_NAME_EMAIL;
+        query['values'] = [username];
+
+        return this.mysql.query(query)
+            .then(res => {
+                if(res.length === 0) {
+                    return Promise.reject({statusCode: 404, msg: 'User not found.'});
+                }
+                let user = res[0];
+                if(new Date() > new Date(user.validity_date)) {
+                    return Promise.reject({statusCode: 400, msg: 'Too late.'});
+                }
+                return bcrypt.compare(password, user.password)
+                    .then(res => {
+                        if(res === true) {
+                            const payload = {
+                                email: user.email,
+                                name: user.name,
+                                lastname: user.lastname,
+                                organisation: user.org_id,
+                                client: user.client_id,
+                                createTime: new Date(user.created_at),
+                                validityDate: user.validity_date
+                            };
+                            return Promise.resolve(payload);
+                        }
+                        return Promise.reject({statusCode: 400, msg: 'Wrong credentials.'});
+                    })
+                    .catch(err => {
+                        loggerT.verbose('test err3', err);
+                    })
+                ;
+            })
+            .catch(err => {
+                return Promise.reject({statusCode: err.statusCode ? err.statusCode : 500, msg: err.msg});
+            })
+        ;
+    }
+
+    public createSupplierUser(data) {
+        loggerT.verbose('Data : ', data);
+
+        let query = {
+            timeout: 40000
+        };
+        query['sql']    = Query.INSERT_SUPPLIER_USER;
+        query['values'] = [data];
+
+        return this.mysql.query(query)
+            .then(res => {
+                loggerT.verbose('FIRST QUERY RES ==== ', res);
+
+                return Promise.resolve(res)
+                ;
+            })
+            .catch(err => {
+                loggerT.error('ERROR ON FIRST QUERY createSuppliers : ', err);
+                return Promise.reject(err);
+            })
+        ;
+    }
 
     public createGroup(data, suppliers, remindersData) {
         loggerT.verbose('Group data', data);
@@ -486,10 +626,49 @@ export default class SupplierRegistry {
         ;
     }
 
+    public updateRepresentative(repres, id, userID) {
+        // let user;
+        // HelperQueries.getUserFromDB(userID)
+        //     .then(res => {
+        //         user = res
+        //     })
+        //     .catch(err => {
+        //         Promise.reject('[SupplierRegistry] Could not get user from database, query aborted.');
+        //     })
+        // ;
+        let query = {
+            timeout: 40000
+        };
+        loggerT.verbose('updateRepresentative data ', repres);
+        loggerT.verbose('updateRepresentative id ', id);
+        query['sql']    = Query.UPDATE_REPRES;
+        query['values'] = [repres.name, repres.lastname, repres.phonenumber, repres.email, id, userID.organisation];
+
+        return this.mysql.query(query)
+            .then(res => {
+                loggerT.verbose('FIRST QUERY updateRepresentative RES ==== ', res);
+
+                return Promise.resolve(res)
+                ;
+            })
+            .catch(err => {
+                loggerT.error('ERROR ON FIRST QUERY updateRepresentative : ', err);
+                return Promise.reject(err);
+            })
+        ;
+    }
+
     private throwError(message?: string): void {
         if (message) {
             throw new Error(message);
         }
         throw new Error();
+    }
+
+    private allSkippingErrors(promises) {
+        let errs = [];
+        return Promise.all(
+          promises.map(p => p.catch(error => errs.push(error)))
+        )
     }
 }

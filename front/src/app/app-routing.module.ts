@@ -23,13 +23,20 @@ import { SupplierUploadInterfaceComponent } from './components/supplier-upload-p
 import { BackofficeComponent } from './components/backoffice/backoffice.component';
 import { BackofficeGuard } from './auth/backoffice.guard';
 import { BackofficeUsersComponent } from './components/backoffice-users/backoffice-users.component';
+import { SupplierLoginPageComponent } from './components/supplier-login-page/supplier-login-page.component';
+import { BackofficeSuppliersComponent } from './components/backoffice-suppliers/backoffice-suppliers.component';
 
 const routes: Routes = [
-  { path: 'upload', component: SupplierUploadPageComponent, 
+  { path: 'supplier',
     children: [
-      { path: '', component: SupplierUploadInterfaceComponent },
-      { path: 'success', component: SupplierUploadSuccessComponent },
-    ] 
+      { path: 'login', component: SupplierLoginPageComponent },
+      { path: 'upload', component: SupplierUploadPageComponent, 
+        children: [
+          { path: '', component: SupplierUploadInterfaceComponent },
+          { path: 'success', component: SupplierUploadSuccessComponent },
+        ]
+      },
+    ]
   },
   { path: 'login', component: LoginPageComponent, canActivate: [LoggedinGuard] },
   { path: 'logout', component: LogoutPageComponent },
@@ -54,6 +61,7 @@ const routes: Routes = [
     path: 'backoffice', component: BackofficeComponent, canActivate: [BackofficeGuard], 
     children: [
       { path: 'users', component: BackofficeUsersComponent },
+      { path: 'suppliers', component: BackofficeSuppliersComponent },
     ]
   },
   { path: '',

@@ -454,7 +454,7 @@ export class Dashboard1Component implements OnInit, AfterViewInit {
 	}
 
 	ngOnInit() {
-		this.getReminderData();
+		// this.getReminderData();
 		this.getConformityRateData()
 			.then(() => {
 				this.showConformityChart = true;
@@ -495,73 +495,6 @@ export class Dashboard1Component implements OnInit, AfterViewInit {
 			//@ts-ignore
 			lineAtIndex: [this.chartDatasets.datasets[0].data.length - 1]
 		});
-	}
-
-	dayUntil(timestamp) {
-		let todateSec = new Date(timestamp * 1000);
-		let fromdateSec = new Date();
-
-		// if (todateSec < fromdateSec)
-			// alert('To date must be grater that from date!');
-
-		// Calculate days between dates
-		let millisecondsPerDay = 86400 * 1000; // Day in milliseconds
-		fromdateSec.setHours(0, 0, 0, 1); // Start just after midnight
-		todateSec.setHours(23, 59, 59, 999); // End just before midnight
-		let diff = todateSec.getTime() - fromdateSec.getTime(); // Milliseconds between datetime objects 
-		let days = Math.ceil(diff / millisecondsPerDay);
-
-		// Subtract two weekend days for every week in between
-		let weeks = Math.floor(days / 7);
-		days = days - (weeks * 2);
-
-		// Handle special cases
-		let fromdateDay = fromdateSec.getDay();
-		let todateDay = todateSec.getDay();
-
-		// Remove weekend not previously removed. 
-		if (fromdateDay - todateDay > 1)
-			days = days - 2;
-
-		// Remove start day if span starts on Sunday but ends before Saturday
-		if (fromdateDay == 0 && todateDay != 6)
-			days = days - 1;
-
-		// Remove end day if span ends on Saturday but starts after Sunday
-		if (todateDay === 6 && fromdateDay !== 0) {
-			days = days - 1;
-		}
-		let leaveDays = days;
-		//@ts-ignore
-		if (leaveDays === 'NaN' || leaveDays === '' || leaveDays <= '0' || leaveDays == 'undefined') {
-			//@ts-ignore
-			leaveDays = '';
-		} else {
-			leaveDays = days;
-		}
-
-		return days;
-	}
-
-	getReminderData() {
-		let reminders: Array<any> = [
-			{
-				groupName: 'Groupe 1',
-				reminderAt: this.toTimestamp(this.addDays(2).toDateString()),
-			},
-			{
-				groupName: 'Groupe 2',
-				reminderAt: this.addDays(3),
-			},
-			{
-				groupName: 'Groupe 3',
-				reminderAt: this.addDays(5),
-			},
-		];
-		reminders.forEach(reminder => {
-			reminder.daysUntil = this.dayUntil(reminder.reminderAt);
-		});
-		this.reminders = reminders;
 	}
 
 	getConformityRateData() {
@@ -607,15 +540,5 @@ export class Dashboard1Component implements OnInit, AfterViewInit {
 		return Promise.resolve(true);
 	}
 
-	public addDays = function(days) {
-		var date = new Date(this.valueOf());
-		date.setDate(date.getDate() + days);
-		return date;
-	}
-
-	public toTimestamp(strDate){
-		var datum = Date.parse(strDate);
-		return datum/1000;
-	}
 }
 

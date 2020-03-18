@@ -26,7 +26,6 @@ export class ProfileComponent implements OnInit {
     class: 'modal-dialog-centered modal-sm'
   };
 
-  token: any;
   loading: Boolean = true;
   id: Number;
   user: any = {
@@ -81,7 +80,6 @@ export class ProfileComponent implements OnInit {
     private apiService: HttpService,
     private authService: AuthService,
     private router: Router, 
-    private bs: BrowserStorageService,
     private bsService: BrowserStorageService, 
     private changeDetection: ChangeDetectorRef,
     private notifService: NotifService,
@@ -89,7 +87,6 @@ export class ProfileComponent implements OnInit {
     private settingsService: SettingsService) { }
 
   ngOnInit() {
-    this.token = this.bsService.getLocalStorage('token');
     this.id = JSON.parse(this.bsService.getLocalStorage('current_user')).id;
     this.apiService.get('/api/users/current')
       .subscribe(res => {
@@ -102,7 +99,7 @@ export class ProfileComponent implements OnInit {
           setTimeout(() => {
             this.authService.isLogged.next(false);
             this.router.navigate(['/login']);
-            this.bs.clearLocalStorage();
+            this.bsService.clearLocalStorage();
           }, 2500);
         }
       })
@@ -217,7 +214,7 @@ export class ProfileComponent implements OnInit {
             setTimeout(() => {
               this.authService.isLogged.next(false);
               this.router.navigate(['/login']);
-              this.bs.clearLocalStorage();
+              this.bsService.clearLocalStorage();
             }, 2500);
           } else if(err.msg === 'Wrong credentials.') {
             this.modifyPwdErr = 'Mot de passe renseigné invalide.';

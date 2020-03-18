@@ -6,7 +6,6 @@ import { UploadService } from 'src/app/services/upload.service';
 import { Subscription, combineLatest } from 'rxjs';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { NotifService } from 'src/app/services/notif.service';
-import { pbkdf2 } from 'crypto';
 
 @Component({
   selector: 'app-supplier-upload-interface',

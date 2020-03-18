@@ -1,0 +1,112 @@
+<div style="overflow: auto;height: 100%;">
+  <div class="container">
+    <div class="col-lg-1">
+      &nbsp;
+    </div>
+    <div class="col-lg-10">
+      <div class="main-cont-umanag">
+        <div class="container nopadding" style="margin-bottom: 45px !important; padding-top: 45px !important;">
+          <div class="row nopadding">
+            <div class="col" style="padding-left: 50px;">
+              <span class="title">Gestion utilisateur (Fournisseurs)</span>
+              
+              <span class="item-count count-placement" *ngIf="dataLength !== -1"><span class="count-style" *ngIf="dataLength !== -1">{{usersTableRef.dataSize | i18nPlural: itemPluralCount['users']}}</span>{{usersTableRef.dataSize | i18nPlural: itemPluralMapping['users']}}</span>
+            </div>
+            <div class="justify-content-end">
+              <div class="col-lg-auto col-md-auto">
+                <button (click)="openModal(template, 'Supplier')" type="button" class="btn btn-primary custom-normsup-button nopadding">
+                  <span class="add-supplier-txt"><img style="height: 10px;" src="../../../assets/img/plus-icn.svg"/> Ajouter un fournisseur</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        <div class="row nopadding">
+          <div class="sub-cont" style="width: 100%;">
+            <div class="table-cont">
+              <app-backoffice-suppliers-table #usersTable (modifyUser)="fillUser($event)"></app-backoffice-suppliers-table>
+            </div>
+          </div>
+        </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-1">
+      &nbsp;
+    </div>
+      <ng-template class="test" #template>
+          <div class="modal-header own-modal-header-supplier">
+            </div>
+          <div class="modal-body">
+            <div class="normsup-mod-header">
+              <div style="display: block;">
+                &nbsp;
+                <button type="button" style="cursor:pointer;width:20px;height:20px;" class="close pull-right" aria-label="Close" (click)="hideModal('mainModal')">
+                  <img src="../../../assets/img/close-icn.svg" style="height: 16px; cursor:pointer;pointer-events: none;" />
+                </button>
+              </div>
+              <div class="supplier-modal-title">Nouvel utilisateur (fournisseur)</div>
+            </div>
+            <div class="container">
+              <div class="row fade-in">
+                <form autocomplete="new-password" action="#" class="form-style">
+                    <div class="container">
+                      <div style="padding: 20px 60px 10px 50px !important;" class="row">
+                        <div class="form-group  col s6 nopadding">
+                          <input (focus)="focus.one=true" (blur)="focus.one=false" id="name" name="name" type="text" class="form-control custom-normsup-input-nb input-style-umag" [(ngModel)]="userToAdd.name">
+                          <label style="width: 100% !important;text-align: center !important;" [ngClass]="{'lowered-opac': !userToAdd.name && focus.one === false, 'custom-label-input-test-active': userToAdd.name || focus.one === true}" class="custom-normsup-label-test" for="name">Prénom</label>
+                        </div>
+                      </div>
+                      <div style="padding: 10px 60px 10px 50px !important;" class="row">
+                        <div class="form-group  col s6 nopadding">
+                          <input (focus)="focus.two=true" (blur)="focus.two=false" id="lastname" name="lastname" type="text" class="form-control custom-normsup-input-nb input-style-umag" [(ngModel)]="userToAdd.lastname">
+                          <label style="width: 100% !important;text-align: center !important;" [ngClass]="{'lowered-opac': !userToAdd.lastname && focus.two === false, 'custom-label-input-test-active': userToAdd.lastname || focus.two === true}" class="custom-normsup-label-test" for="lastname">Nom</label>
+                        </div>
+                      </div>
+                      <div style="padding: 10px 60px 10px 50px !important;" class="row">
+                        <div class="form-group col s6 nopadding">
+                          <input (focus)="focus.three=true" (blur)="focus.three=false" id="email" name="email" type="text" class="form-control custom-normsup-input-nb input-style-umag" [(ngModel)]="userToAdd.email">
+                          <label style="width: 100% !important;text-align: center !important;" [ngClass]="{'lowered-opac': !userToAdd.email && focus.three === false, 'custom-label-input-test-active': userToAdd.email || focus.three === true}" class="custom-normsup-label-test" for="email">Email</label>
+                        </div>
+                      </div>
+                      <div style="padding: 10px 60px 10px 50px !important;" class="row">
+                        <div class="form-group col s6 nopadding">
+                          <input OnlyNumber='true' (focus)="focus.four=true" (blur)="focus.four=false" id="validity" name="validity" type="text" class="form-control custom-normsup-input-nb input-style-umag" [(ngModel)]="userToAdd.validity">
+                          <label style="width: 100% !important;text-align: center !important;" [ngClass]="{'lowered-opac': !userToAdd.validity && focus.four === false, 'custom-label-input-test-active': userToAdd.validity || focus.four === true}" class="custom-normsup-label-test" for="validity">Durée validité</label>
+                        </div>
+                      </div>
+                      <div class="form-group row-input-style" style="padding: 10px 45px 0px 35px !important;">
+                        <ng-template #rt let-r="result" let-t="term">
+                          <ngb-highlight [result]="r.org_name" [term]="t"></ngb-highlight>
+                        </ng-template>
+                        <input (focus)="focus.five=true" (blur)="focus.five=false" id="clientSearch" name="clientSearch"  type="text" class="form-control" aria-describedby="clientHelp" 
+                        class="form-control custom-normsup-input-nb input-style-umag" [editable]='false' [ngbTypeahead]="searchClients" [resultTemplate]="rt" [inputFormatter]="formatter" [(ngModel)]="clientSelected" [ngModelOptions]="{standalone: true}">
+                        <label [ngClass]="{'lowered-opac': !clientSelected && focus.five === false, 'custom-label-input-test-active': clientSelected || focus.five === true}" class="custom-normsup-label-test typeahead-label-style" for="clientSearch">Client</label>
+                      </div>
+                      <div class="form-group row-input-style" style="padding: 10px 45px 10px 35px !important;">
+                        <ng-template #rt2 let-r="result" let-t="term">
+                          <ngb-highlight [result]="r.denomination" [term]="t"></ngb-highlight>
+                        </ng-template>
+                        <input [disabled]="!clientSelected" (focus)="focus.six=true" (blur)="focus.six=false"  id="supplierSearch" name="supplierSearch" type="text" class="form-control" aria-describedby="supplierHelp"
+                        [editable]='false' class="form-control custom-normsup-input-nb input-style-umag" [ngbTypeahead]="searchSuppliers" [resultTemplate]="rt2" [inputFormatter]="formatter2" [(ngModel)]="supplierSelected" [ngModelOptions]="{standalone: true}">
+                        <label [ngClass]="{'lowered-opac': !supplierSelected && focus.six === false, 'custom-label-input-test-active': supplierSelected || focus.six === true}" class="custom-normsup-label-test typeahead-label-style" for="supplierSearch">Organisation</label>
+                      </div>
+                    </div>
+                  <div class="select-comp-but">
+                    <div class="container">
+                      <div class="row nopadding" style="padding: 10px 0px 40px 0px !important;">
+                        <div class="center-btn">
+                            <button style="width: 137px;" type="button" class="btn btn-primary text-capitalize btn-primary-normsup" (click)="addUser(userToAdd)">
+                              <span class="button-txt">Valider</span>
+                            </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+  </div>
+
+</div>

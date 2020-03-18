@@ -1,0 +1,21 @@
+<div class="card second-card-row">
+  <div class="box-title">Prochaines relances</div>
+  <div class="card-body reminders-card">
+    <table class="table" *ngIf="reminders.length > 0">
+      <thead class="table-head-style">
+        <tr>
+          <th>Nom du groupe</th>
+          <th>Jours avant relance</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of reminders">
+          <td class="group-txt">{{item.groupName}}</td>
+          <td class="reminder-txt">{{item.daysUntil}} jours</td>
+          <td style="text-align: center;"><button class="btn btn-normsup btn-modify">Modifier</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

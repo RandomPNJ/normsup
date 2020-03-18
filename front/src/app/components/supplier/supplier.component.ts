@@ -90,7 +90,7 @@ export class SupplierComponent implements OnInit {
 
   modalConfig = {
     animated: true,
-    class: 'modal-dialog-centered'
+    class: 'modal-dialog-centered modal-medium'
   };
   valueWidth: Boolean = false;
   itemsDisplay: Array<any> = [];
@@ -155,7 +155,7 @@ export class SupplierComponent implements OnInit {
     this.subscriptions = [];
   }
 
-  hideModal(type) {
+  hideModal(type?) {
     console.log('type ===', type);
     if (!this.modalRef) {
       return;
@@ -176,6 +176,7 @@ export class SupplierComponent implements OnInit {
   }
 
   searchCompany(id: any) {
+    this.searchCompany404 = false;
     const params = '&rows=1&q=' + id;
     this.apiService.getCompany(params)
     .subscribe(res => {
@@ -240,7 +241,8 @@ export class SupplierComponent implements OnInit {
     data.comp.denomination = data.comp.denomination.charAt(0).toUpperCase() + data.comp.denomination.toLowerCase().slice(1);
     this.apiService.postData('/api/supplier/define_supplier', data)
     .subscribe(res => {
-      this.hideModal('');
+      // this.hideModal('');
+      this.nextState('supplierSuccess');
       this.child.reload();
       console.log('Res ', res);
     }, err => {
@@ -267,6 +269,27 @@ export class SupplierComponent implements OnInit {
       this.modalRef.setClass('modal-dialog-centered modal-lg');
     }
   }
+
+  nextState(state: String) {
+    if(state === 'supplierSuccess') {
+      this.modalState = state;
+      this.companyToAdd = {};
+      this.modalRef.setClass('modal-dialog-centered modal-medium');
+    } else if(state === 'enterSiret') {
+      this.modalState = state;
+      this.companyToAdd = {};
+      this.searchCompanyID = '';
+      this.searchCompany404 = false;
+      this.interloc = {
+        name: '',
+        lastname: '',
+        phonenumber: '',
+        email: ''
+      };
+      this.modalRef.setClass('modal-dialog-centered modal-sm');
+    }
+  }
+
   setModalClass() {
     this.valueWidth = !this.valueWidth;
     const modalWidth = this.valueWidth ? 'modal-lg' : 'modal-sm';

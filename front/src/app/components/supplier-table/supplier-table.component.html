@@ -25,7 +25,7 @@
             <div class="row h-100  cent">
               <span class="col-9   assign-link nopadding">{{item.denomination | titlecase }}</span>
               <span style="text-align: left;" class="col-2 nopadding">
-                <img class="arw-dwn" src="../../../assets/img/arrow-down@2x.png" *ngIf="infoType === 'NONE' || infoType === 'INTERLOC'"/>
+                <img class="arw-dwn" src="../../../assets/img/arrow-down@2x.png" *ngIf="infoType === 'NONE' || infoType === 'INTERLOC' || (indexInfo !== i && infoType === 'SUPPLIER')"/>
                 <img class="arw-dwn" src="../../../assets/img/arrow-up@2x.png" *ngIf="indexInfo === i  && infoType === 'SUPPLIER'"/>
               </span>
             </div>
@@ -37,7 +37,7 @@
             <div class="row h-100 cent">
               <span class="name-txt">{{item.name}} {{item.lastname}}</span>
               <span style="text-align: left; color: #4E5983; padding-left: 8px;" class="">
-                <img class="arw-dwn" src="../../../assets/img/blue-arw-dwn@2x.png"  *ngIf="infoType === 'NONE' || infoType === 'SUPPLIER'"/>
+                <img class="arw-dwn" src="../../../assets/img/blue-arw-dwn@2x.png"  *ngIf="infoType === 'NONE' || infoType === 'SUPPLIER' || (indexInfo !== i && infoType === 'INTERLOC')"/>
                 <img class="arw-dwn" src="../../../assets/img/blue-arrow-up@2x.png"  *ngIf="indexInfo === i && infoType === 'INTERLOC'"/>
               </span>
             </div>
@@ -108,7 +108,7 @@
             <div class="row nopadding header-infosup">
               <div class="col nopadding supp-info-header">Informations Entreprise</div>
               <div class="v-legend-cont nopadding infosup-date">
-                Ajouté le 02/10/2019
+                Ajouté le {{infoPopup.createdAt | date:'d MMM y, H:mm':'UTC +1'}}
               </div>
             </div>
             <div class="row nopadding value-cont">
@@ -199,15 +199,15 @@
               <div class="row nopadding header-infosup">
                 <div class="col nopadding supp-info-header">Informations Interlocuteur</div>
                 <div class="v-legend-cont nopadding infosup-date">
-                  Ajouté le 02/10/2019
+                  Ajouté le {{infoPopup.repres_creation | date:'d MMM y, H:mm':'UTC +1'}}  
                 </div>
               </div>
               <div class="row nopadding value-cont">
                 <div class="col-9 nopadding">
                   <div class="vert-alignement">
                     <span style="padding-right: 37px" class="infosupplier">Téléphone: 
-                      <span *ngIf="!toggleModification" class="infosupplier-value">{{(infoPopup.phone_number) ? infoPopup.phone_number : "Aucun numéro"}}</span>
-                      <input *ngIf="toggleModification" [(ngModel)]="interloc.phone_number" class="infosupplier-value"/>
+                      <span *ngIf="!toggleModification" class="infosupplier-value">{{(infoPopup.phonenumber) ? infoPopup.phonenumber : "Aucun numéro"}}</span>
+                      <input *ngIf="toggleModification" [(ngModel)]="interloc.phonenumber" class="infosupplier-value"/>
                     </span>
                     <span class="infosupplier">Adresse mail: 
                       <span *ngIf="!toggleModification" class="infosupplier-value">{{(infoPopup.email) ? infoPopup.email : "Aucun email"}}</span>
@@ -227,7 +227,7 @@
                     </span>
                     <span style="display: inline-block;">
                       <button *ngIf="!toggleModification" style="box-shadow: none;"
-                        (click)="deleteInterloc()" type="button"
+                        (click)="deleteInterloc(indexInfo, infoPopup.id)" type="button"
                         class="btn btn-outline-normsup default-btn-table infosup-btn">Supprimer</button>
                       <button *ngIf="toggleModification" style="box-shadow: none;"
                         (click)="modifyInterloc()" type="button"
@@ -250,13 +250,20 @@
             </div>
           </div>
         </td>
-        <td *ngIf="indexInfo != -1 && i > indexInfo" style="cursor: pointer;" 
+        <td *ngIf="(indexInfo != -1 && i > indexInfo) && (item.name || item.lastname)" style="cursor: pointer;" 
           (click)="openInterlocInfo(item, i)">
           <div class="badge-container content-cont container">
             <div class="row h-100 cent">
-              <span class="name-txt">Prénom Nom</span>
+              <span class="name-txt">{{item.name}} {{item.lastname}}</span>
               <span style="text-align: left; color: #4E5983; padding-left: 8px;" class=""><img class="arw-dwn"
                   src="../../../assets/img/blue-arw-dwn@2x.png" /></span>
+            </div>
+          </div>
+        </td>
+        <td *ngIf="(indexInfo != -1 && i > indexInfo) && (!item.name || !item.lastname)">
+          <div class="badge-container content-cont container">
+            <div class="row h-100 cent">
+              <span>Pas d'interlocuteur enregistré</span>
             </div>
           </div>
         </td>

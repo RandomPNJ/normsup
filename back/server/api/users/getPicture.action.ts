@@ -13,7 +13,8 @@ export default {
 
 export function getPicture(res, req, UsersRegistry) {
 
-    loggerT.verbose('Req decoded ', req.decoded);
+    // loggerT.verbose('Req cookies ', req.cookies);
+    // const uid = req.cookies.authentication;
     if(!req.decoded) {
         const error = new Error(`Invalid request, could not get information from token.`);
         error['statusCode'] = 400;
@@ -22,7 +23,7 @@ export function getPicture(res, req, UsersRegistry) {
 
     return UsersRegistry.getPicture(req.decoded.id)
         .then(result => {
-            loggerT.verbose('result', result);
+            // loggerT.verbose('result', result);
             if(result) {
                 res.set({'Content-Type': 'image/png'});
                 res.attachment('profile-pic.png');

@@ -47,6 +47,7 @@ export default class SupplierRegistry {
 
     public createDocument(files, user) {
         const paths = [];
+        const promises = [];
 
         files.map(file => {
             loggerT.verbose('file name ===', file.originalname);
@@ -65,7 +66,7 @@ export default class SupplierRegistry {
 
             file.originalname = file.originalname.substring(1);
             file.originalname = file.originalname.replace(/ /g, "_");
-            let path = type + '/' + file.originalname;
+            promises.push(this.uploadFile(file, type + '/' + file.originalname));
             paths.push({path: type + '/' + file.originalname, file: file, type: type});
         });
 
@@ -84,13 +85,21 @@ export default class SupplierRegistry {
                             category: path.type
                         };
         
-                        return this.createMetadata(data);
+                        return this.createMetadata(data, user);
                     });
             })
             .then((res) => {
                 return res;
             })
         ;
+        // return this.allSkippingErrors(promises)
+        //     .then(res => {
+        //         loggerT.verbose('[SupplierRegistry] createDocument res ', res);
+        //     })
+        //     .then(err => {
+        //         loggerT.error('[SupplierRegistry] createDocument err ', err);
+        //     })
+        // ;
 
     }
 
@@ -106,22 +115,34 @@ export default class SupplierRegistry {
         ;
     }
 
-    private createMetadata(data) {
+    private allSkippingErrors(promises) {
+        return Promise.all(
+          promises.map(p => p.catch(error => null))
+        )
+    }
+
+    private createMetadata(data, user) {
         let query = {
+            timeout: 40000
+        };
+        let query2 = {
             timeout: 40000
         };
 
         query['sql']    = Query.INSERT_DOC_METADATA;
         query['values'] = [data];
-        
-        return this.mysql.query(query)
-            .then(res => {
-                loggerT.verbose('QUERY RES ==== ', res);
-                return Promise.resolve(res);
+
+        query2['sql']    = Query.UPSERT_SUPPLIER_CONFORMIATY;
+        query2['values'] = [data.type.toLowerCase(), user.org_id, 1, data.type.toLowerCase(), 1];
+
+        let promises = [this.mysql.query(query), this.mysql.query(query2)];
+
+        return Promise
+            .map(promises, (promise) => {
+                loggerT.verbose('[createMetadata] promise map')
             })
-            .catch(err => {
-                loggerT.error('ERROR ON QUERY getSuppliers.');
-                return Promise.reject(err);
+            .then((res) => {
+                return res;
             })
         ;
     }

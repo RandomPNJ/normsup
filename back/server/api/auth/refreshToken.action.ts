@@ -6,27 +6,32 @@ export default {
     method: 'post',
     uriPattern: '/refresh_token',
     services: [''],
-    handler: (req, res, app) => getNewRefreshToken(req.body, res, app.get('UsersRegistry'), app.get('refreshTokens')),
+    handler: (req, res, app) => getNewRefreshToken(req, res, app.get('UsersRegistry'), app.get('refreshTokens')),
 };
 
-export function getNewRefreshToken(body, res, UserRegistry, refreshTok) {
+export function getNewRefreshToken(req, res, UserRegistry, refreshTok) {
 
     loggerT.info(`Refreshing token.`);
 
-    if(!body.refreshToken || (body.refreshToken && refreshTok[body.refreshToken] !== undefined)) {
-        const err = new Error(`No refresh token provided.`);
+    if(!req.cookies || !req.cookies.refresh || !refreshTok[req.cookies.refresh]) {
+        const err = new Error(`Refresh token invalid.`);
         err['statusCode'] = 400;
         throw err;
     }
+    // if(!body.refreshToken || (body.refreshToken && refreshTok[body.refreshToken] !== undefined)) {
+    //     const err = new Error(`No refresh token provided.`);
+    //     err['statusCode'] = 400;
+    //     throw err;
+    // }
 
     loggerT.verbose('refreshTokens = ', UserRegistry.getAllRefreshTokens());
-    let username = UserRegistry.getUsernameFromRefreshTok(body.refreshToken);
+    let username = UserRegistry.getUsernameFromRefreshTok(req.cookies.refresh);
     loggerT.verbose('username =', username);
 
     return UserRegistry.refreshToken(username)
         .then(result => {
             let tok = UserRegistry.genToken(result);
-            UserRegistry.deleteRefreshToken(body.refreshToken);
+            UserRegistry.deleteRefreshToken(req.cookies.refresh);
             let newRefreshToken = uuid();
             UserRegistry.setRefreshToken(newRefreshToken, username)
             return res.status(200).json({

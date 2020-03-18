@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 import { SettingsService } from 'src/app/services/settings.service';
 import { HttpService } from 'src/app/services/http.service';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-header-bar',
@@ -35,18 +36,13 @@ export class HeaderBarComponent implements OnInit {
     private bsService: BrowserStorageService,
     private authService: AuthService,
     private httpService: HttpService,
+    private cookieService: CookieService,
     private settingsService: SettingsService) {
   }
 
   ngOnInit() {
     this.httpService.getPicture('/api/users/picture')
       .subscribe(res => {
-        console.log('/api/users/picture res', res);
-        // this.profilePicUrl = URL.createObjectURL(res.body);
-        // this.profilePicUrl = res.body;
-        if(res.body) {
-          console.log('res.body');
-        }
         return this.createImageFromBlob(<Blob>res.body);
       }, err => {
         console.log('/api/users/picture err', err);
@@ -102,8 +98,11 @@ export class HeaderBarComponent implements OnInit {
 
   logOut() {
     this.bsService.clearLocalStorage();
+    this.cookieService.delete('auth');
+    this.cookieService.delete('refresh');
     this.showHeader = false;
     this.router.navigate(['/logout']);
+    // this.router.navigate(['/login']);
   }
 
   getHeaderStyle() {

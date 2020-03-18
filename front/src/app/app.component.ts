@@ -20,7 +20,7 @@ export class AppComponent {
         if (e instanceof NavigationEnd) {
             // Function you want to call here
             if(this.router && this.router.url) {
-              if(this.router.url.startsWith('/upload')){
+              if(this.router.url.startsWith('/supplier')){
                 this.sidebar = 1;
               } else {
                 this.sidebar = 0;

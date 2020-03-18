@@ -26,11 +26,17 @@ export function login(body, res, UserRegistry) {
             let tok = UserRegistry.genToken(result);
             let refreshUUID = uuid();
             UserRegistry.setRefreshToken(refreshUUID, user.username);
-
-            return res.status(200).json({
+            res.cookie('refresh', refreshUUID, {
+                // maxAge: 900000,
+                expires: new Date(2147483647000),
+                httpOnly: true
+            });
+            return res.cookie('auth', tok, {
+                // maxAge: 900000,
+                expires: new Date(2147483647000),
+                httpOnly: true
+            }).send({
                 data: result,
-                token: tok,
-                refreshToken: refreshUUID,
                 msg: 'Success'
             });
         })
