@@ -38,7 +38,7 @@ export default (expressApp) => {
   expressApp.use(methodOverride());
   let origin;
   let accessControlAllowOrigin = '*';
-  const allowedOrigins = ['http://localhost:4200'];
+  const allowedOrigins = ['http://localhost:4200', 'app.normsup.com'];
 
   // Disable caching
   expressApp.use(helmet.noCache());
