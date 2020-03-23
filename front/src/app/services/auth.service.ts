@@ -22,10 +22,11 @@ export class AuthService implements OnInit {
   ngOnInit() {
   }
 
-  public login(username: String, password: String): Observable<any> {
+  public login(username: String, password: String, stayConnected: Boolean): Observable<any> {
     const body = {};
     body['username'] = username;
     body['password'] = password;
+    body['stayConnected'] = stayConnected;
     const headers = new HttpHeaders({'Content-Type': 'application/json'});
 
     return this.http

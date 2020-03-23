@@ -67,6 +67,7 @@ import { BackofficeSuppliersComponent } from './components/backoffice-suppliers/
 import { BackofficeSuppliersTableComponent } from './components/backoffice-suppliers/backoffice-suppliers-table/backoffice-suppliers-table.component';
 import { CookieService } from 'ngx-cookie-service';
 import { HttpConfigInterceptor} from './interceptors/httpconfig.interceptor';
+import { AddRepresentativeComponent } from './components/supplier/add-representative/add-representative.component';
 
 @NgModule({
   declarations: [
@@ -110,6 +111,7 @@ import { HttpConfigInterceptor} from './interceptors/httpconfig.interceptor';
     SupplierLoginPageComponent,
     BackofficeSuppliersComponent,
     BackofficeSuppliersTableComponent,
+    AddRepresentativeComponent,
   ],
   imports: [
     BrowserModule,

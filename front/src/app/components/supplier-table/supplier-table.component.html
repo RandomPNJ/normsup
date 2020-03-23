@@ -46,7 +46,10 @@
         <td *ngIf="(indexInfo == -1 || i <= indexInfo) && (!item.name || !item.lastname)">
           <div class="badge-container content-cont container">
             <div class="row h-100 cent">
-              <span>Pas d'interlocuteur enregistré</span>
+              <span class="no-interloc-txt">Pas d'interlocuteur enregistré</span>
+              <span class="add-interloc" (click)="openAddInterlocModal(item)">
+                <i class="fas fa-user-plus"></i>
+              </span>
             </div>
           </div>
         </td>
@@ -205,14 +208,28 @@
               <div class="row nopadding value-cont">
                 <div class="col-9 nopadding">
                   <div class="vert-alignement">
-                    <span style="padding-right: 37px" class="infosupplier">Téléphone: 
-                      <span *ngIf="!toggleModification" class="infosupplier-value">{{(infoPopup.phonenumber) ? infoPopup.phonenumber : "Aucun numéro"}}</span>
-                      <input *ngIf="toggleModification" [(ngModel)]="interloc.phonenumber" class="infosupplier-value"/>
-                    </span>
-                    <span class="infosupplier">Adresse mail: 
-                      <span *ngIf="!toggleModification" class="infosupplier-value">{{(infoPopup.email) ? infoPopup.email : "Aucun email"}}</span>
-                      <input *ngIf="toggleModification" [(ngModel)]="interloc.email"  class="infosupplier-value" />
-                    </span>
+                    <div class="container">
+                      <div class="row" style="padding-bottom: 5px;">
+                        <span style="padding-right: 37px" class="infosupplier col-6 nopadding">Prénom: 
+                          <span *ngIf="!toggleModification" class="infosupplier-value">{{(infoPopup.name) ? infoPopup.name : ""}}</span>
+                          <input *ngIf="toggleModification" [(ngModel)]="interloc.name" class="infosupplier-value custom-normsup-input-nb"/>
+                        </span>
+                        <span class="infosupplier col-6 nopadding">Nom: 
+                          <span *ngIf="!toggleModification" class="infosupplier-value">{{(infoPopup.lastname) ? infoPopup.lastname : ""}}</span>
+                          <input *ngIf="toggleModification" [(ngModel)]="interloc.lastname"  class="infosupplier-value custom-normsup-input-nb" />
+                        </span>
+                      </div>
+                      <div class="row">
+                        <span style="padding-right: 37px" class="infosupplier col-6 nopadding">Téléphone: 
+                          <span *ngIf="!toggleModification" class="infosupplier-value">{{(infoPopup.phonenumber) ? infoPopup.phonenumber : "Aucun numéro"}}</span>
+                          <input *ngIf="toggleModification" [(ngModel)]="interloc.phonenumber" class="infosupplier-value custom-normsup-input-nb"/>
+                        </span>
+                        <span class="infosupplier col-6 nopadding">Adresse mail: 
+                          <span *ngIf="!toggleModification" class="infosupplier-value">{{(infoPopup.email) ? infoPopup.email : "Aucun email"}}</span>
+                          <input *ngIf="toggleModification" [(ngModel)]="interloc.email"  class="infosupplier-value custom-normsup-input-nb" />
+                        </span>
+                      </div>
+                    </div>
                   </div>
                 </div>
                 <div style="text-align: right;" class="col-3 nopadding">
@@ -221,7 +238,7 @@
                       <button *ngIf="!toggleModification" style="box-shadow: none;" (click)="modifyInterloc()" type="button" class="btn btn-outline-normsup default-btn-table infosup-btn">
                         Modifier
                       </button>
-                      <button *ngIf="toggleModification" style="box-shadow: none;" (click)="confirmInterlocModification()" type="button" class="btn btn-outline-normsup default-btn-table infosup-btn">
+                      <button [disabled]="interloc.name === infoPopup.name && interloc.lastname === infoPopup.lastname && interloc.email === infoPopup.email && interloc.email === infoPopup.email" *ngIf="toggleModification" style="box-shadow: none;" (click)="confirmInterlocModification()" type="button" class="btn btn-outline-normsup default-btn-table infosup-btn">
                         Confirmer
                       </button>
                     </span>
@@ -263,7 +280,10 @@
         <td *ngIf="(indexInfo != -1 && i > indexInfo) && (!item.name || !item.lastname)">
           <div class="badge-container content-cont container">
             <div class="row h-100 cent">
-              <span>Pas d'interlocuteur enregistré</span>
+              <span class="no-interloc-txt">Pas d'interlocuteur enregistré</span>
+              <span class="add-interloc" (click)="openAddInterlocModal(item)">
+                <i class="fas fa-user-plus"></i>
+              </span>
             </div>
           </div>
         </td>

@@ -1,8 +1,6 @@
 <div class="container main-cont" style="max-width: 933px;">
   <div class="cont-wrapper">
-    <!-- <div>
-      
-    </div> -->
+
     <div class="sub-cont">
       <div class="container nopadding" style="padding-bottom: 45px !important; padding-top: 20px !important;">
         <div class="row nopadding">
@@ -248,5 +246,16 @@
         <div class="modal-footer" style="padding: 4px;border-style: none !important;">
         </div>
     </ng-template>
+    <ng-template class="test" #addInterloc>
+      <div class="modal-header own-modal-header-supplier">
+      </div>
+      <div class="modal-body">
+        <app-add-representative [supplierInfo]="addRepresCompInfo" (hideModal)="hideModal($event)" (addInterlocModal)="addInterlocModal($event)"> </app-add-representative>
+      </div>
+      <div class="modal-footer own-modal-footer-supplier">
+    
+      </div>
+    </ng-template>
   </div>
 </div>
+

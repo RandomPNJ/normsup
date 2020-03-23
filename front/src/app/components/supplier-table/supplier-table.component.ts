@@ -4,7 +4,7 @@ import { HttpService } from 'src/app/services/http.service';
 // import {Configuration} from '../../../../config/environment.local';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import 'datatables.net';
-import { cloneDeep, remove } from 'lodash';
+import { cloneDeep, remove, forEach } from 'lodash';
 import { combineLatest, Subscription } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
 import { NotifService } from 'src/app/services/notif.service';
@@ -353,13 +353,9 @@ export class SupplierTableComponent implements OnInit,AfterViewInit {
     return this.httpService.post('/api/supplier/modify_representative/' + this.interloc.repres_id, data)
       .subscribe(res => {
         this.notif.success('Interlocuteur modifié avec succès.');
-        this.infoPopup.phonenumber = this.interloc.phonenumber;
-        this.infoPopup.email = this.interloc.email;
-        // Not useful yet
-        // this.infoPopup.name = this.interloc.name;
-        // this.infoPopup.lastname = this.interloc.lastname;
-
-        this.interloc = {};
+        this.updateLocalData(this.indexInfo);
+        
+        
         this.toggleModification = false;
         console.log('[confirmInterlocModification] res', res);
       }, err => {
@@ -369,6 +365,17 @@ export class SupplierTableComponent implements OnInit,AfterViewInit {
         this.toggleModification = false;
       })
     ;
+  }
+
+  updateLocalData(i) {
+    this.data[i + this.tableParams.start] = cloneDeep(this.interloc);
+    this.itemsToDisplay[i] = cloneDeep(this.interloc);
+    this.infoPopup.phonenumber = this.interloc.phonenumber;
+    this.infoPopup.email = this.interloc.email;
+    this.infoPopup.name = this.interloc.name;
+    this.infoPopup.lastname = this.interloc.lastname;
+
+    this.interloc = {};
   }
 
   deleteInterloc(i) {
@@ -485,4 +492,33 @@ export class SupplierTableComponent implements OnInit,AfterViewInit {
       return;
     }
   }
+
+  openAddInterlocModal(item) {
+    if(item) {
+      console.log(item);
+      const data: any = {data: item, type: 'AddInterloc'};
+      this.infoModal.emit(data);
+    } else {
+      return;
+    }
+  }
+  updateInterlocData(data) {
+    forEach(this.data, res => {
+      if(res.id === data.supplierID) {
+        res['name'] = data.name;
+        res['lastname'] = data.lastname;
+        res['phonenumber'] = data.phonenumber;
+        res['email'] = data.email;
+      }
+    });
+    forEach(this.itemsToDisplay, res => {
+      if(res.id === data.supplierID) {
+        res['name'] = data.name;
+        res['lastname'] = data.lastname;
+        res['phonenumber'] = data.phonenumber;
+        res['email'] = data.email;
+      }
+    });
+  }
 }
+

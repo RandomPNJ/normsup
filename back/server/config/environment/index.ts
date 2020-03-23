@@ -81,6 +81,7 @@ export default {
         { name: 'getSuppliers', uriPattern: '', method: 'get' },
         { name: 'createSupplier', uriPattern: '/define_supplier', method: 'post' },
         { name: 'createSupplierUser', uriPattern: '/define_supplier_user', method: 'post' },
+        { name: 'createRepresentative', uriPattern: '/define_representative', method: 'post' },
         { name: 'modifySupplier', uriPattern: '/modify_supplier/:id', method: 'put' },
         { name: 'countSuppliers', uriPattern: '/count', method: 'get' },
         { name: 'deleteSupplier', uriPattern: '/delete/:id', method: 'post' },

@@ -58,7 +58,7 @@ export class LoginPageComponent implements OnInit, OnDestroy {
     console.log('this.credentials', this.credentials);
     if (this.credentials['username'] !== '' && this.credentials['password'] !== '') {
       this.isLoader = true;
-      this.subscription = this.authService.login(this.credentials['username'], this.credentials['password'])
+      this.subscription = this.authService.login(this.credentials['username'], this.credentials['password'], this.credentials['cacheConnected'])
         .subscribe((res) => {
           this.isLoader = false;
           if (res['msg'] === 'Wrong password.') {

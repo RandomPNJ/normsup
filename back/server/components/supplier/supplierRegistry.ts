@@ -442,6 +442,36 @@ export default class SupplierRegistry {
         ;
     }
 
+    public createRepresentative(representative, supplierID, userID) {
+        return HelperQueries.getUserFromDB(userID)
+            .then(res => {
+                let user = res[0];
+                let query = { timeout: 40000 };
+        
+                representative['organisation_id'] = supplierID;
+                representative['added_by'] = user.id;
+                representative['client_id'] = user.organisation;
+
+                query['sql'] = Query.INSERT_REPRESENTATIVE;
+                query['values'] = [representative]
+        
+                return this.mysql.query(query)
+                    .then((res, fields) => {
+                        loggerT.verbose('QUERY RES deleteRepresentative ==== ', res);
+                        return res;
+                    })
+                    .catch(err => {
+                        loggerT.error('ERROR ON QUERY deleteRepresentative.');
+                        return Promise.reject(err);
+                    })
+                ;
+        
+            })
+            .catch(err => {
+                Promise.reject('[SupplierRegistry] Could not get user from database, query aborted.');
+            })
+        ;
+    }
     public deleteSupplier(id, client) {
         let query = {
             timeout: 40000

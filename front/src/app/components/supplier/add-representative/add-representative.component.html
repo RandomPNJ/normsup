@@ -1,0 +1,69 @@
+
+    <div class="mod-header">
+      <div style="display: block;">
+        &nbsp;
+        <button type="button" style="cursor:pointer;width:20px;height:20px;" class="close pull-right" aria-label="Close" (click)="hideModal('mainModal')">
+          <img src="../../../assets/img/close-icn.svg" style="height: 16px; cursor:pointer;pointer-events: none;" />
+        </button>
+      </div>
+      <div class="supplier-modal-title">Nouvel interlocuteur</div>
+    </div>
+    <div class="container nopadding" *ngIf="modalState === 'interlocInfo'">
+      <div style="padding-left: 0px !important; padding-right: 0px !important;" class="container add-interloc">
+        <!-- <div class="row" style="margin: auto;text-align: center;padding-top: 29px;">
+          <div class="interloc-title">3. Information sur l'interlocuteur</div>
+        </div> -->
+        <div style="padding-bottom: 40px;padding-top: 49px;margin: auto;padding-left: 53px;padding-right: 54px;" class="row">
+          <div style="margin-right: 30px !important;" class="input-field  col s6 nopadding">
+            <input (focus)="interlocFocus.one=true" (blur)="interlocFocus.one=false"  id="interloc-name" name="interloc-name" type="text" class="form-control  custom-normsup-input-nb" [(ngModel)]="interloc.name">
+            <label [ngClass]="{'lowered-opac': !interloc.name && interlocFocus.one === false, 'custom-label-input-test-active': interloc.name || interlocFocus.one === true}" class="custom-normsup-label-test" for="interloc-name">Prénom</label>
+          </div>
+          <div class="input-field col s6 nopadding">
+            <input (focus)="interlocFocus.two=true" (blur)="interlocFocus.two=false"  id="interloc-lastname" name="interloc-lastname" type="text" class="form-control  custom-normsup-input-nb" [(ngModel)]="interloc.lastname">
+            <label [ngClass]="{'lowered-opac': !interloc.lastname && interlocFocus.two === false, 'custom-label-input-test-active': interloc.lastname || interlocFocus.two === true}" class="custom-normsup-label-test" for="interloc-lastname">Nom</label>
+          </div>
+        </div>
+        <div style="margin: auto;padding-left: 53px;padding-right: 54px;" class="row">
+          <div style="margin-right: 30px !important;" class="input-field col s6 nopadding">
+            <input (focus)="interlocFocus.three=true" (blur)="interlocFocus.three=false" id="interloc-phone" name="interloc-phone" type="text" class="form-control  custom-normsup-input-nb" [(ngModel)]="interloc.phonenumber" OnlyNumber='true' >
+            <label [ngClass]="{'lowered-opac': !interloc.phonenumber && interlocFocus.three === false, 'custom-label-input-test-active': interloc.phonenumber || interlocFocus.three === true}" class="custom-normsup-label-test" for="interloc-phone">Téléphone</label>
+          </div>
+          <div class="input-field col s6 nopadding">
+            <input #interlocEmail="ngModel" (focus)="interlocFocus.four=true" (blur)="interlocFocus.four=false" [class.is-invalid]="interlocEmail.invalid && interlocEmail.touched"
+            id="interloc-mail" name="interloc-mail" type="text" required pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$" class="form-control  custom-normsup-input-nb" [(ngModel)]="interloc.email">
+            <label [ngClass]="{'lowered-opac': !interloc.email && interlocFocus.four === false, 'custom-label-input-test-active': interloc.email || interlocFocus.four === true}" class="custom-normsup-label-test" for="interloc-mail">Email</label>
+          </div>
+        </div>
+      </div>
+      <div style="padding-top: 30.5px;" class="select-comp-but">
+        <div class="row nopadding">
+          <div class="" style="margin: 0 auto;">
+            <button style="border-radius: 5px;margin: 0px;" type="button" class="btn btn-primary text-capitalize next-btn-supplier" (click)="addInterloc()" [disabled]="interlocEmail.invalid || (!interloc.name || !interloc.lastname || !interloc.phonenumber || !interloc.email)">
+              <span class="button-txt">Ajouter</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+      <div class="container nopadding" *ngIf="modalState === 'interlocSuccess'">
+        <div style="padding-left: 0px !important; padding-right: 0px !important;" class="container">
+          <div class="row" style="margin: auto;text-align: center;padding-top: 29px;">
+            <div class="optional-txt">Votre interlocuteur a été ajouté avec succès !</div>
+          </div>
+        </div>
+        <div style="padding-top: 30px;" class="select-comp-but">
+          <div class="row nopadding">
+            <div class="col nopadding" style="text-align: center;">
+              <!-- <button style="text-transform: none;" type="button" class="btn btn-outline-normsup new-group-btn"
+                (click)="previous('interlocInfo')">
+                <span class="button-txt">Précédent</span>
+              </button> -->
+              <button style="border-radius: 5px;" type="button"
+                class="btn btn-primary text-capitalize next-btn-group"
+                (click)="hideModalEvent()">
+                <span class="button-txt">Fermer</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>

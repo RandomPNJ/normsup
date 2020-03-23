@@ -23,6 +23,7 @@ export class SupplierComponent implements OnInit {
   @ViewChild('template') public addSuppRef: TemplateRef<any>;
   @ViewChild('compDoc') public compModalRef: TemplateRef<any>;
   @ViewChild('legalDoc') public legalModalRef: TemplateRef<any>;
+  @ViewChild('addInterloc') public addInterlocRef: TemplateRef<any>;
 
   showCount: Boolean = false;
   subscriptions: Subscription[] = [];
@@ -73,6 +74,10 @@ export class SupplierComponent implements OnInit {
       kbis: true,
     }
   };
+
+  // Add interloc modal
+  addRepresCompInfo: any;
+
   itemPluralCount = {
     'suppliers': {
       '=0': '',
@@ -138,7 +143,7 @@ export class SupplierComponent implements OnInit {
       config.class += ' modal-medium';
     } else if (modalType == 'Supplier' && (this.modalState === 'compInfo' || this.modalState === 'interlocInfo')) {
       config.class += ' modal-lg';
-    } else if (modalType == 'Supplier' && this.modalState === 'docInfo'){
+    } else if ((modalType == 'Supplier' && this.modalState === 'docInfo') || modalType == 'AddInterloc'){
       config.class += ' modal-medium';
     }
     if(modalType === 'AddDoc') {
@@ -168,6 +173,9 @@ export class SupplierComponent implements OnInit {
       this.searchCompanyID = '';
       this.valueWidth = false;
       this.companyToAdd = {};
+      this.compDocInfo = {};
+      this.legalDocInfo = {};
+      this.addRepresCompInfo = {};
       this.searchCompany404 = false;
       this.interloc = {name: '', lastname: '', phone: '', mail: ''};
       this.supplierInfo = {};
@@ -224,6 +232,10 @@ export class SupplierComponent implements OnInit {
         case 'AddDoc':
             this.openModal(event.data, 'AddDoc');
             break;
+        case 'AddInterloc':
+            this.addRepresCompInfo = event.data;
+            this.openModal(this.addInterlocRef, 'AddInterloc');
+            break;
       }
     } else {
       return;
@@ -237,17 +249,16 @@ export class SupplierComponent implements OnInit {
   }
 
   addCompany(data: any) {
-    console.log('Company', data);
     data.comp.denomination = data.comp.denomination.charAt(0).toUpperCase() + data.comp.denomination.toLowerCase().slice(1);
     this.apiService.postData('/api/supplier/define_supplier', data)
-    .subscribe(res => {
-      // this.hideModal('');
-      this.nextState('supplierSuccess');
-      this.child.reload();
-      console.log('Res ', res);
-    }, err => {
-      console.log('Error, ', err);
-    });
+      .subscribe(res => {
+        // this.hideModal('');
+        this.nextState('supplierSuccess');
+        this.child.reload();
+      }, err => {
+        console.log('Error, ', err);
+      })
+    ;
   }
 
   suppliersDataUpdate(e) {
@@ -306,4 +317,12 @@ export class SupplierComponent implements OnInit {
     this.modalState = 'docInfo';
   }
 
+  addInterlocModal(e) {
+    if(e) {
+      this.child.updateInterlocData(e);
+    }
+    this.hideModal();
+  }
 }
+
+
