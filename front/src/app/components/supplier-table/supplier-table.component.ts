@@ -132,8 +132,6 @@ export class SupplierTableComponent implements OnInit,AfterViewInit {
       },
       ajax: (dataTablesParameters: any, callback: any) => {
         const action = this.compareParams(dataTablesParameters);
-        // that.tableParams = dataTablesParameters;
-        // if()
         console.log('tableParams', this.tableParams);
         this.tableParams.company = 'Fakeclient';
         if(action === 'query') {
@@ -222,7 +220,7 @@ export class SupplierTableComponent implements OnInit,AfterViewInit {
     }
     if(this.tableParams.length !== datatableParams.length) {
       this.tableParams.length = datatableParams.length;
-      action = 'query';
+      action = 'redraw';
     }
     return action;
 

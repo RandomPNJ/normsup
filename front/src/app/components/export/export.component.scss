@@ -97,6 +97,8 @@
     font-family: 'Roboto Medium';
     font-size: 15px;
     color: #4E5983;
+    padding-left: 10px;
+    text-align: left;
 }
 
 .undisplay {
@@ -107,7 +109,8 @@
 }
 
 .trash-icn {
-    padding-left: 8px;
+    padding-left: 18px;
+    width: 100%;
     display: inline-block;
     cursor: pointer;
 }

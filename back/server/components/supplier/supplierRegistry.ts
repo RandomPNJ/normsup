@@ -26,12 +26,12 @@ export default class SupplierRegistry {
         if(data.company) { 
             v += 'C'; 
             values.push(data.company);
-            loggerT.verbose('Values three === ', values);
+            // loggerT.verbose('Values three === ', values);
         }
         if(data.group) { 
             v += 'G'; 
             values.push(data.group);
-            loggerT.verbose('Values four === ', values);
+            // loggerT.verbose('Values four === ', values);
         }
         if(data.search) { 
             v += 'SE';
@@ -39,18 +39,36 @@ export default class SupplierRegistry {
             values.push(data.search);
             values.push(data.search);
             values.push(data.search);
-            loggerT.verbose('Values two === ', values);
+            // loggerT.verbose('Values two === ', values);
         }
         if(data.start || data.start === 0) { 
             v += 'S';
             values.push(data.limit);
             values.push(data.start);
-            loggerT.verbose('Values one === ', values);
+            // loggerT.verbose('Values one === ', values);
         }
 
         const final = config.queries[v];
-        loggerT.verbose('Values final === ', values);
+        loggerT.verbose('String final === ', v);
         loggerT.verbose('Query final === ', final);
+
+        if(v === 'C') {
+            values = [data.company, data.company, data.company];
+        } else if(v === 'CGSES') {
+            values = [data.group, data.company, data.company, data.company, data.group, data.search, data.search, data.search, data.limit, data.start];
+        } else if(v === 'CGSE') {
+            values = [data.company, data.company, data.company, data.limit, data.start];
+        } else if(v === 'CGS') {
+            values = [data.group, data.company, data.company, data.company, data.group, data.limit, data.start];
+        } else if(v === 'CG') {
+            loggerT.verbose('QUERY QUERY_GET_GROUP_SUPPLIERS, QUERY NOT USED BEFORE');
+        } else if(v === 'CSES') {
+            values = [data.company, data.company, data.company, data.search, data.search, data.search, data.limit, data.start];
+        } else if(v === 'CS') {
+            values = [data.company, data.company, data.company, data.limit, data.start];
+        } else if(v === 'CSE') {
+            values = [data.company, data.company, data.company, data.search, data.search, data.search];
+        }
         return {
             type: final,
             values: values
@@ -69,7 +87,7 @@ export default class SupplierRegistry {
         return this.mysql.query(query)
             .then((res, fields) => {
                 loggerT.verbose('fields', fields)
-                loggerT.verbose('QUERY RES ==== ', res);
+                // loggerT.verbose('QUERY RES ==== ', res);
                 return Promise.resolve(res);
             })
             .catch(err => {
@@ -94,7 +112,7 @@ export default class SupplierRegistry {
         return this.mysql.query(query)
             .then((res, fields) => {
                 loggerT.verbose('fields', fields)
-                loggerT.verbose('QUERY RES ==== ', res);
+                // loggerT.verbose('QUERY RES ==== ', res);
                 return Promise.resolve(res);
             })
             .catch(err => {
@@ -115,7 +133,7 @@ export default class SupplierRegistry {
         return this.mysql.query(query)
             .then((res, fields) => {
                 loggerT.verbose('fields', fields)
-                loggerT.verbose('QUERY RES ==== ', res);
+                // loggerT.verbose('QUERY RES ==== ', res);
                 return Promise.resolve(res);
             })
             .catch(err => {
@@ -273,7 +291,7 @@ export default class SupplierRegistry {
         return this.mysql.query(query)
             .then((res, fields) => {
                 loggerT.verbose('fields', fields)
-                loggerT.verbose('QUERY RES ==== ', res);
+                // loggerT.verbose('QUERY RES ==== ', res);
                 return Promise.resolve(res);
             })
             .catch(err => {
@@ -295,7 +313,7 @@ export default class SupplierRegistry {
         return this.mysql.query(query)
             .then((res, fields) => {
                 loggerT.verbose('fields', fields)
-                loggerT.verbose('QUERY RES ==== ', res);
+                // loggerT.verbose('QUERY RES ==== ', res);
                 if(res && res.length > 0) {
                     finalRes = {
                         exists: true
@@ -340,7 +358,7 @@ export default class SupplierRegistry {
         return this.mysql.query(query)
             .then((res, fields) => {
                 loggerT.verbose('fields', fields)
-                loggerT.verbose('QUERY RES ==== ', res);
+                // loggerT.verbose('QUERY RES ==== ', res);
                 return Promise.resolve(res[0][Object.keys(res[0])[0]]);
             })
             .catch(err => {
@@ -398,7 +416,7 @@ export default class SupplierRegistry {
                             query['values'] = [data.siret, data.siret, data.siret];
                             return this.mysql.query(query)
                                 .then(res => {
-                                    console.log('err recreate', res);
+                                    // console.log('err recreate', res);
                                     if(res && res[0] && res[0].id) {
                                         let newInsert = {};
                                         newInsert['supplier_id'] = res[0].id;
@@ -515,7 +533,7 @@ export default class SupplierRegistry {
 
         return this.mysql.query(query)
             .then(res => {
-                loggerT.verbose('QUERY RES ==== ', res);
+                // loggerT.verbose('QUERY RES ==== ', res);
                 return Promise.resolve(res);
             })
             .catch(err => {
@@ -536,7 +554,7 @@ export default class SupplierRegistry {
         return this.mysql.query(query)
             .then((res, fields) => {
                 loggerT.verbose('fields', fields)
-                loggerT.verbose('QUERY RES ==== ', res);
+                // loggerT.verbose('QUERY RES ==== ', res);
                 return Promise.resolve(res[0][Object.keys(res[0])[0]]);
             })
             .catch(err => {
