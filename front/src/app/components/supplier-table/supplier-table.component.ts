@@ -377,7 +377,7 @@ export class SupplierTableComponent implements OnInit,AfterViewInit {
   }
 
   deleteInterloc(i) {
-    return this.httpService.delete('/api/supplier/representatives/' + this.infoPopup.repres_id + '/delete')
+    return this.httpService.delete('/api/supplier/representatives/' + this.infoPopup.id + '/delete')
       .subscribe(res => {
         console.log('deleteInterloc res', res);
         this.deleteLocalInterlocInfo(i);

@@ -128,7 +128,7 @@ export class SupplierComponent implements OnInit {
         this.searchCompanyID = '';
         this.companyToAdd = {};
         this.searchCompany404 = false;
-        this.interloc = {name: '', lastname: '', phone: '', mail: ''};
+        this.interloc = {name: '', lastname: '', phonenumber: '', email: ''};
         this.supplierInfo = {};
         this.unsubscribe();
       })
@@ -310,6 +310,7 @@ export class SupplierComponent implements OnInit {
 
   interlocInfo() {
     this.modalState = 'interlocInfo';
+    console.log('this.interloc', this.interloc);
   }
 
   docInfo() {

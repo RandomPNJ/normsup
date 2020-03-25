@@ -55,6 +55,7 @@ export class AuthService implements OnInit {
   }
 
   public isLoggedIn(): any {
+    // let logged = this.cookieService.get('auth');
     let loggedUser = this.bsService.getLocalStorage('current_user');
     console.log('logged', loggedUser);
     loggedUser = JSON.parse(loggedUser);

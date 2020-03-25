@@ -14,7 +14,7 @@ export class AddRepresentativeComponent implements OnInit {
   @Input('supplierInfo') supplierInfo: any;
   
   modalState: String = 'interlocInfo';
-  interloc: any = {
+  interlocObj: any = {
 
   };
   interlocFocus: any = {
@@ -39,7 +39,7 @@ export class AddRepresentativeComponent implements OnInit {
 
   addInterloc() {
     let body = {
-      repres: cloneDeep(this.interloc)
+      repres: cloneDeep(this.interlocObj)
     };
     if(this.supplierInfo && this.supplierInfo.id) {
       body['supplierID'] = this.supplierInfo.id;
@@ -61,7 +61,7 @@ export class AddRepresentativeComponent implements OnInit {
   }
 
   hideModalEvent() {
-    this.interloc.supplierID = this.supplierInfo.id;
-    this.addInterlocModal.emit(this.interloc);
+    this.interlocObj.supplierID = this.supplierInfo.id;
+    this.addInterlocModal.emit(this.interlocObj);
   }
 }

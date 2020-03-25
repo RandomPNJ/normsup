@@ -9,36 +9,36 @@
       <div class="supplier-modal-title">Nouvel interlocuteur</div>
     </div>
     <div class="container nopadding" *ngIf="modalState === 'interlocInfo'">
-      <div style="padding-left: 0px !important; padding-right: 0px !important;" class="container add-interloc">
+      <div style="padding-left: 0px !important; padding-right: 0px !important;" class="container add-interlocObj">
         <!-- <div class="row" style="margin: auto;text-align: center;padding-top: 29px;">
-          <div class="interloc-title">3. Information sur l'interlocuteur</div>
+          <div class="interlocObj-title">3. Information sur l'interlocuteur</div>
         </div> -->
         <div style="padding-bottom: 40px;padding-top: 49px;margin: auto;padding-left: 53px;padding-right: 54px;" class="row">
           <div style="margin-right: 30px !important;" class="input-field  col s6 nopadding">
-            <input (focus)="interlocFocus.one=true" (blur)="interlocFocus.one=false"  id="interloc-name" name="interloc-name" type="text" class="form-control  custom-normsup-input-nb" [(ngModel)]="interloc.name">
-            <label [ngClass]="{'lowered-opac': !interloc.name && interlocFocus.one === false, 'custom-label-input-test-active': interloc.name || interlocFocus.one === true}" class="custom-normsup-label-test" for="interloc-name">Prénom</label>
+            <input (focus)="interlocFocus.one=true" (blur)="interlocFocus.one=false"  id="interlocObj-name" name="interlocObj-name" type="text" class="form-control  custom-normsup-input-nb" [(ngModel)]="interlocObj.name">
+            <label [ngClass]="{'lowered-opac': !interlocObj.name && interlocFocus.one === false, 'custom-label-input-test-active': interlocObj.name || interlocFocus.one === true}" class="custom-normsup-label-test" for="interlocObj-name">Prénom</label>
           </div>
           <div class="input-field col s6 nopadding">
-            <input (focus)="interlocFocus.two=true" (blur)="interlocFocus.two=false"  id="interloc-lastname" name="interloc-lastname" type="text" class="form-control  custom-normsup-input-nb" [(ngModel)]="interloc.lastname">
-            <label [ngClass]="{'lowered-opac': !interloc.lastname && interlocFocus.two === false, 'custom-label-input-test-active': interloc.lastname || interlocFocus.two === true}" class="custom-normsup-label-test" for="interloc-lastname">Nom</label>
+            <input (focus)="interlocFocus.two=true" (blur)="interlocFocus.two=false"  id="interlocObj-lastname" name="interlocObj-lastname" type="text" class="form-control  custom-normsup-input-nb" [(ngModel)]="interlocObj.lastname">
+            <label [ngClass]="{'lowered-opac': !interlocObj.lastname && interlocFocus.two === false, 'custom-label-input-test-active': interlocObj.lastname || interlocFocus.two === true}" class="custom-normsup-label-test" for="interlocObj-lastname">Nom</label>
           </div>
         </div>
         <div style="margin: auto;padding-left: 53px;padding-right: 54px;" class="row">
           <div style="margin-right: 30px !important;" class="input-field col s6 nopadding">
-            <input (focus)="interlocFocus.three=true" (blur)="interlocFocus.three=false" id="interloc-phone" name="interloc-phone" type="text" class="form-control  custom-normsup-input-nb" [(ngModel)]="interloc.phonenumber" OnlyNumber='true' >
-            <label [ngClass]="{'lowered-opac': !interloc.phonenumber && interlocFocus.three === false, 'custom-label-input-test-active': interloc.phonenumber || interlocFocus.three === true}" class="custom-normsup-label-test" for="interloc-phone">Téléphone</label>
+            <input (focus)="interlocFocus.three=true" (blur)="interlocFocus.three=false" id="interlocObj-phone" name="interlocObj-phone" type="text" class="form-control  custom-normsup-input-nb" [(ngModel)]="interlocObj.phonenumber" OnlyNumber='true' >
+            <label [ngClass]="{'lowered-opac': !interlocObj.phonenumber && interlocFocus.three === false, 'custom-label-input-test-active': interlocObj.phonenumber || interlocFocus.three === true}" class="custom-normsup-label-test" for="interlocObj-phone">Téléphone</label>
           </div>
           <div class="input-field col s6 nopadding">
             <input #interlocEmail="ngModel" (focus)="interlocFocus.four=true" (blur)="interlocFocus.four=false" [class.is-invalid]="interlocEmail.invalid && interlocEmail.touched"
-            id="interloc-mail" name="interloc-mail" type="text" required pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$" class="form-control  custom-normsup-input-nb" [(ngModel)]="interloc.email">
-            <label [ngClass]="{'lowered-opac': !interloc.email && interlocFocus.four === false, 'custom-label-input-test-active': interloc.email || interlocFocus.four === true}" class="custom-normsup-label-test" for="interloc-mail">Email</label>
+            id="interlocObj-mail" name="interlocObj-mail" type="text" required pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$" class="form-control  custom-normsup-input-nb" [(ngModel)]="interlocObj.email">
+            <label [ngClass]="{'lowered-opac': !interlocObj.email && interlocFocus.four === false, 'custom-label-input-test-active': interlocObj.email || interlocFocus.four === true}" class="custom-normsup-label-test" for="interlocObj-mail">Email</label>
           </div>
         </div>
       </div>
       <div style="padding-top: 30.5px;" class="select-comp-but">
         <div class="row nopadding">
           <div class="" style="margin: 0 auto;">
-            <button style="border-radius: 5px;margin: 0px;" type="button" class="btn btn-primary text-capitalize next-btn-supplier" (click)="addInterloc()" [disabled]="interlocEmail.invalid || (!interloc.name || !interloc.lastname || !interloc.phonenumber || !interloc.email)">
+            <button style="border-radius: 5px;margin: 0px;" type="button" class="btn btn-primary text-capitalize next-btn-supplier" (click)="addInterloc()" [disabled]="interlocEmail.invalid || (!interlocObj.name || !interlocObj.lastname || !interlocObj.phonenumber || !interlocObj.email)">
               <span class="button-txt">Ajouter</span>
             </button>
           </div>

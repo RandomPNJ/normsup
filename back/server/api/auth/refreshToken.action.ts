@@ -6,23 +6,20 @@ export default {
     method: 'post',
     uriPattern: '/refresh_token',
     services: [''],
-    handler: (req, res, app) => getNewRefreshToken(req, res, app.get('UsersRegistry'), app.get('refreshTokens')),
+    handler: (req, res, app) => getNewRefreshToken(req, res, app.get('UsersRegistry')),
 };
 
-export function getNewRefreshToken(req, res, UserRegistry, refreshTok) {
+export function getNewRefreshToken(req, res, UserRegistry) {
 
     loggerT.info(`Refreshing token.`);
+    loggerT.verbose('refreshTokens = ', UserRegistry.getAllRefreshTokens());
 
+    let refreshTok = UserRegistry.getAllRefreshTokens();
     if(!req.cookies || !req.cookies.refresh || !refreshTok[req.cookies.refresh]) {
         const err = new Error(`Refresh token invalid.`);
         err['statusCode'] = 400;
         throw err;
     }
-    // if(!body.refreshToken || (body.refreshToken && refreshTok[body.refreshToken] !== undefined)) {
-    //     const err = new Error(`No refresh token provided.`);
-    //     err['statusCode'] = 400;
-    //     throw err;
-    // }
 
     loggerT.verbose('refreshTokens = ', UserRegistry.getAllRefreshTokens());
     let username = UserRegistry.getUsernameFromRefreshTok(req.cookies.refresh);

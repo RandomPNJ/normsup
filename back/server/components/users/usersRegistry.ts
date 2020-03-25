@@ -324,6 +324,7 @@ export default class UserRegistry {
         }).promise()
         ;
     }
+
     public runQuery(queryType, params) {
         let query = {
             timeout: 40000

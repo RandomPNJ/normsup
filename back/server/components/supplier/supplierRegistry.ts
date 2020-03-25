@@ -185,7 +185,7 @@ export default class SupplierRegistry {
                 };
                 loggerT.verbose('[deleteRepresentative] id === ', id);
                 loggerT.verbose('[deleteRepresentative] res === ', res);
-                query['sql'] = Query.DELETE_REPRES;
+                query['sql'] = Query.DELETE_SUPPLIER_REPRES;
                 query['values'] = [id, user.organisation];
         
                 return this.mysql.query(query)

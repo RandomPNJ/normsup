@@ -22,6 +22,8 @@ export function deleteRepresentative(req, res, SupplierRegistry) {
         throw error;
     }
 
+
+    loggerT.verbose('deleteRepresentative req.decoded', req.decoded);
     return SupplierRegistry.deleteRepresentative(req.params.id, req.decoded)
         .then(res => {
             loggerT.verbose('Res  = ', res);
