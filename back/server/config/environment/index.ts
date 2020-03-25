@@ -2,7 +2,7 @@ import * as _ from 'lodash';
 
 
 export default {
-  appName: 'Roger back',
+  appName: 'Normsup Server',
   env: process.env.NODE_ENV || 'local',
   port: process.env.PORT || 8080,
   ip: process.env.IP || '0.0.0.0',
@@ -10,7 +10,8 @@ export default {
   // api: {apiName: { url, routes}} // if using API
   secret: 'eZyo2k4p',
   jwt: {
-    expirationTime: 86400
+    // expirationTime: 86400
+    expirationTime: '180d'
   },
   supplierJWT: {
     expirationTime: 14400
