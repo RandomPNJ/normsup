@@ -205,21 +205,21 @@ export class SupplierComponent implements OnInit {
               this.searchCompany404 = false;
               this.supplierErrExists = false;
             } else {
-              // this.apiService.getCompany(params)
-              //   .subscribe(apiDATA => {
-              //     if(apiDATA && apiDATA.records && apiDATA.records instanceof Array && apiDATA.records[0] && apiDATA.records[0].siren !== '') {
-              //       this.fillCompany(apiDATA.records[0].fields);
-              //       this.modalRef.setClass('modal-dialog-centered modal-lg');
-              //       this.modalState = 'compInfo';
-              //       this.searchCompany404 = false;
-              //     } else {
-              //       this.searchCompany404 = true;
-              //     }
-              //   }, err => {
-              //     console.log('Error, ', err);
-              //     this.searchCompany404 = true;
-              //   })
-              // ;
+              this.apiService.getCompany(params)
+                .subscribe(apiDATA => {
+                  if(apiDATA && apiDATA.records && apiDATA.records instanceof Array && apiDATA.records[0] && apiDATA.records[0].siren !== '') {
+                    this.fillCompany(apiDATA.records[0].fields);
+                    this.modalRef.setClass('modal-dialog-centered modal-lg');
+                    this.modalState = 'compInfo';
+                    this.searchCompany404 = false;
+                  } else {
+                    this.searchCompany404 = true;
+                  }
+                }, err => {
+                  console.log('Error, ', err);
+                  this.searchCompany404 = true;
+                })
+              ;
             }
           }
         }
