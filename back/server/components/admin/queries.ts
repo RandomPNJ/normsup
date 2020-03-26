@@ -1,4 +1,4 @@
-export const INSERT_USER = 'INSERT INTO `user` (name, lastname, email, password, username, organisation, client ,create_time,createdBy) values (?,?,?,?,?,?,?,?,?)';
+export const INSERT_USER = 'INSERT INTO `user` (name, lastname, email, password, username, organisation ,create_time,createdBy) values (?,?,?,?,?,?,?,?)';
 export const INSERT_CLIENT = 'INSERT INTO `client` (org_name, address, postalCode, create_time, city, country) values (?, ?, ?, ?, ?, ?)';
 export const INSERT_ROLE = 'INSERT INTO `user_roles` (userID, roleID) VALUES (?, ?)';
 

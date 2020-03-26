@@ -86,7 +86,7 @@
                         <ng-template #rt let-r="result" let-t="term">
                           <ngb-highlight [result]="r.org_name" [term]="t"></ngb-highlight>
                         </ng-template>
-                        <input id="typeahead-http" type="text" class="form-control" aria-describedby="supplierHelp" 
+                        <input id="typeahead-http" type="text" class="form-control" aria-describedby="supplierHelp"  [ngModelOptions]="{standalone: true}"
                         [ngbTypeahead]="searchSupplier" placeholder="Rechercher" [resultTemplate]="rt" [inputFormatter]="formatter" [(ngModel)]="supplierSelected">
                       </div>
                     </div>

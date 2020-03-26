@@ -336,6 +336,76 @@ export default class SupplierRegistry {
         ;
     }
 
+    public checkSupplier(userID, data) {
+        return HelperQueries.getUserFromDB(userID)
+            .then(res => {
+                let user = res[0];
+                let query = {
+                    timeout: 40000
+                };
+                if(data && data.siret) {
+                    query['sql'] = Query.QUERY_CHECK_SUPPLIER_AVAIL;
+                    query['values'] = [data.siret, data.siret];
+                }
+                let finalRes;
+                return this.mysql.query(query)
+                    .then((res, fields) => {
+                        // loggerT.verbose('res', res);
+                        if(res && res.length > 0) {
+                            let company;
+                            for (let i = 0; i < res.length; i++) {
+                                if (res[i]['client_id'] === user.organisation) {
+                                    company = _.cloneDeep(res[i]);
+                                    break;
+                                }
+                            }
+                            
+                            if(company) {
+                                finalRes = {
+                                    exists: true,
+                                    hasCompany: true,
+                                    company: company
+                                };
+                            } else {
+                                if(res[0]) {
+                                    company = res[0];
+                                    delete company['id']; 
+                                    delete company['client_id']; 
+                                } else {
+                                    company = {};
+                                }
+
+                                finalRes = {
+                                    exists: false,
+                                    hasCompany: company ? true : false,
+                                    company: company
+                                };
+                            }
+                            return Promise.resolve(finalRes);
+                        } else {
+                            finalRes = {
+                                exists: false,
+                                hasCompany: false,
+                                company: {}
+                            };
+                            return Promise.resolve(finalRes);
+                        }
+                    })
+                    .catch(err => {
+                        loggerT.error('ERROR ON QUERY getSuppliers.');
+                        finalRes = {
+                            exists: false
+                        };
+                        return Promise.resolve(finalRes);
+                    })
+                ;
+            })
+            .catch(err => {
+                Promise.reject('[SupplierRegistry] Could not get user from database, query aborted.');
+            })
+        ;
+    }
+
     public countSuppliers(data, user) {
         let query = {
             timeout: 40000
@@ -377,9 +447,11 @@ export default class SupplierRegistry {
                 let query = {
                     timeout: 40000
                 };
+                data.added_by_org = user.organisation;
                 query['sql']    = Query.INSERT_SUPPLIER;
                 query['values'] = [data];
         
+
                 return this.mysql.query(query)
                     .then(res => {
                         loggerT.verbose('FIRST QUERY RES ==== ', res);
@@ -392,22 +464,24 @@ export default class SupplierRegistry {
         
                         let query2 = { timeout: 40000 };
                         let query3 = { timeout: 40000 };
-        
                         representative['organisation_id'] = res.insertId;
                         representative['added_by'] = user.id;
                         representative['client_id'] = user.organisation;
-        
+                        
                         query2['sql'] = Query.INSERT_REPRESENTATIVE;
                         query2['values'] = [representative]
-        
+                        
                         query3['sql'] = Query.INSERT_SUPP_CONFORMITY;
                         query3['values'] = [{supplier_id: res.insertId, client_id: user.organisation}];
-        
-                        return this.allSkippingErrors([
+                        let promises = [
                             this.mysql.query(query),
-                            this.mysql.query(query2),
-                            this.mysql.query(query3)])
-                        ;
+                            this.mysql.query(query3)
+                        ];
+                        if(representative.name && representative.lastname && representative.email && representative.phonenumber) {
+                            promises.push(this.mysql.query(query2));
+                        }
+        
+                        return this.allSkippingErrors(promises);
                     })
                     .catch(err => {
                         loggerT.error('ERROR ON FIRST QUERY createSuppliers : ', err);
@@ -465,7 +539,7 @@ export default class SupplierRegistry {
             .then(res => {
                 let user = res[0];
                 let query = { timeout: 40000 };
-        
+                
                 representative['organisation_id'] = supplierID;
                 representative['added_by'] = user.id;
                 representative['client_id'] = user.organisation;
@@ -475,11 +549,11 @@ export default class SupplierRegistry {
         
                 return this.mysql.query(query)
                     .then((res, fields) => {
-                        loggerT.verbose('QUERY RES deleteRepresentative ==== ', res);
+                        loggerT.verbose('QUERY RES 35279847400016 ==== ', res);
                         return res;
                     })
                     .catch(err => {
-                        loggerT.error('ERROR ON QUERY deleteRepresentative.');
+                        loggerT.error('ERROR ON QUERY 35279847400016.', err);
                         return Promise.reject(err);
                     })
                 ;
@@ -498,30 +572,43 @@ export default class SupplierRegistry {
             timeout: 40000
         };
 
+        let query3 = {
+            timeout: 40000
+        };
+
+        query3['sql'] = Query.DELETE_SUPPLIER;
+        query3['values'] = [id, client];
+    
         query['sql'] = Query.DELETE_SUPPLIER_RELATION;
         query['values'] = [id, client];
 
         query2['sql'] = Query.DELETE_SUPPLIER_REPRES;
         query2['values'] = [id, client];
-
-        return this.mysql.query(query)
-            .then((res, fields) => {
-                loggerT.verbose('QUERY RES deleteGroup ==== ', res);
-
-                return this.mysql.query(query2)
-                    .then(res => {
-                        return Promise.resolve(res);
+        return this.mysql.query(query3)
+            .then(() => {
+                return this.mysql.query(query)
+                    .then((res, fields) => {
+                        loggerT.verbose('QUERY RES deleteGroup ==== ', res);
+        
+                        return this.mysql.query(query2)
+                            .then(res => {
+                                return Promise.resolve(res);
+                            })
+                            .catch(err => {
+                                loggerT.error('ERROR ON QUERY DELETE_SUPPLIER_REPRES.');
+                                return Promise.reject(err);
+                            })
                     })
                     .catch(err => {
-                        loggerT.error('ERROR ON QUERY deleteGroupMembers.');
+                        loggerT.error('ERROR ON QUERY DELETE_SUPPLIER_RELATION.');
                         return Promise.reject(err);
                     })
+                ;
             })
             .catch(err => {
-                loggerT.error('ERROR ON QUERY deleteGroup.');
+                loggerT.error('ERROR ON QUERY DELETE_SUPPLIER.');
                 return Promise.reject(err);
             })
-        ;
     }
     public modifyGroupReminders(id, data) {
         let query = {

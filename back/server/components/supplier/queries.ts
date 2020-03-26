@@ -45,6 +45,8 @@ export const QUERY_COUNT_SUPPLIERS_CLIENT = 'SELECT COUNT(*) FROM `organisations
 export const QUERY_COUNT_SUPPLIERS_SEARCH = 'SELECT COUNT(*) FROM `organisations`  AS o LEFT JOIN `client_supplier_relation` as c ON o.id = c.supplier_id WHERE c.client_id = ? AND `denomination` LIKE ?';
 export const QUERY_COUNT_SUPPLIERS = 'SELECT COUNT(*) FROM `organisations`';
 
+export const QUERY_CHECK_SUPPLIER_AVAIL = 'SELECT o.id, o.siret, o.address, o.siren, o.denomination, o.country, o.city, o.dateCreation, o.legalUnit, o.postalCode, csr.client_id FROM `organisations` as o LEFT JOIN `client_supplier_relation` as csr ON o.id = csr.supplier_id WHERE siret = ? OR siren = ?';
+
 export const INSERT_SUPPLIER = 'INSERT INTO `organisations` SET ?';
 export const INSERT_SUPP_CONFORMITY = 'INSERT INTO `supplier_conformity` SET ?';
 export const INSERT_GROUP = 'INSERT INTO `groups` SET ?';
@@ -62,9 +64,11 @@ export const DELETE_ALL_GRP_MEM = 'DELETE FROM `group_members` WHERE group_id = 
 export const UPDATE_GROUP = 'UPDATE `groups` SET name = ? WHERE id = ? AND client_id = ?';
 export const DELETE_SUPPLIER_RELATION = 'DELETE FROM `client_supplier_relation` WHERE supplier_id = ? AND client_id = ?';
 export const DELETE_SUPPLIER_REPRES = 'DELETE FROM `representatives` WHERE organisation_id = ? AND client_id = ?';
+export const DELETE_SUPPLIER = 'DELETE FROM `organisations` WHERE id = ? AND added_by_org = ?';
 
 export const UPDATE_REPRES = 'UPDATE `representatives` SET name=?, lastname=?, phonenumber=?, email=? WHERE id = ? AND client_id = ?'
 export const DELETE_REPRES = 'DELETE FROM `representatives` WHERE id = ? AND client_id = ?';
+
 
 /** SUPPLIERS QUERY */
 export const FIND_USER_BY_NAME_EMAIL = 'SELECT created_at,org_id,client_id,name,lastname,email,validity_date,password FROM `suppliers` WHERE `email` = ? LIMIT 1';

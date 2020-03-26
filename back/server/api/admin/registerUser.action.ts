@@ -17,17 +17,13 @@ export function createUser(req, AdminRegistry) {
     const creator = req.decoded;
 
     data = req.body.user;
+    data.organisation = req.body.client.id;
+
     loggerT.verbose('admin createUser data', data);
     data.create_time = new Date();
-    // if(!data.organisation && creator.organisation) {
-    //     data.client = creator.organisation;
-    // }
-    // if(creator.username) {
-    //     data.createdBy = creator.username;
-    // }
     // this removes white spaces I think
     data.username = data.name.replace(/\s+/g, '') + "_" + data.lastname.replace(/\s+/g, '');;
-
+    data.username = data.username.substring(0, 16);
     // If no password generated, generate one
     if(!data.password) {
         data.password = 'randompassword';

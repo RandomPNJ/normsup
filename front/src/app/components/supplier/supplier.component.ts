@@ -9,6 +9,7 @@ import { map, filter, catchError, mergeMap } from 'rxjs/operators';
 import { ProductService } from 'src/app/services/product.service';
 import * as moment from 'moment';
 import { HttpService } from 'src/app/services/http.service';
+import { HttpParams } from '@angular/common/http';
 
 declare var require: any;
 
@@ -29,6 +30,7 @@ export class SupplierComponent implements OnInit {
   subscriptions: Subscription[] = [];
   searchCompanyID: string;
   searchCompany404: Boolean = false;
+  supplierErrExists: Boolean = false;
   modalRef: BsModalRef;
   subModalRef: BsModalRef;
   supplierNmb = 7;
@@ -186,20 +188,46 @@ export class SupplierComponent implements OnInit {
   searchCompany(id: any) {
     this.searchCompany404 = false;
     const params = '&rows=1&q=' + id;
-    this.apiService.getCompany(params)
-    .subscribe(res => {
-      if(res && res.records && res.records instanceof Array && res.records[0] && res.records[0].siren !== '') {
-        this.fillCompany(res.records[0].fields);
-        this.modalRef.setClass('modal-dialog-centered modal-lg');
-        this.modalState = 'compInfo';
-        this.searchCompany404 = false;
-      } else {
-        this.searchCompany404 = true;
-      }
-    }, err => {
-      console.log('Error, ', err);
-      this.searchCompany404 = true;
-    });
+    let p =  new HttpParams().append('siret', id);
+    this.httpService.get('/api/supplier/available', p)
+      .subscribe(res => {
+        console.log('searchCompany res', res);
+        let result = res.body;
+        if(result && result.hasOwnProperty('exists')) {
+          if(result['exists'] === true) {
+            this.supplierErrExists = true;
+          } else if(result['exists'] === false) {
+            if(result['hasCompany'] && result['hasCompany'] !== {}) {
+              this.companyToAdd = result['company'];
+              delete this.companyToAdd.country;
+              this.modalRef.setClass('modal-dialog-centered modal-lg');
+              this.modalState = 'compInfo';
+              this.searchCompany404 = false;
+              this.supplierErrExists = false;
+            } else {
+              // this.apiService.getCompany(params)
+              //   .subscribe(apiDATA => {
+              //     if(apiDATA && apiDATA.records && apiDATA.records instanceof Array && apiDATA.records[0] && apiDATA.records[0].siren !== '') {
+              //       this.fillCompany(apiDATA.records[0].fields);
+              //       this.modalRef.setClass('modal-dialog-centered modal-lg');
+              //       this.modalState = 'compInfo';
+              //       this.searchCompany404 = false;
+              //     } else {
+              //       this.searchCompany404 = true;
+              //     }
+              //   }, err => {
+              //     console.log('Error, ', err);
+              //     this.searchCompany404 = true;
+              //   })
+              // ;
+            }
+          }
+        }
+      }, err => {
+        console.log('searchCompany err', err);
+      })
+    ;
+    
   }
 
   fillCompany(record: any) {

@@ -20,7 +20,7 @@ export default class AdminRegistry {
         };
         const that = this;
         query['sql']    = Query.INSERT_USER;
-        query['values'] = [data.name, data.lastname, data.email, data.password, data.username, data.organisation, data.organisation, data.create_time, user.id];
+        query['values'] = [data.name, data.lastname, data.email, data.password, data.username, data.organisation, data.create_time, user.id];
 
         return this.mysql.query(query)
             .then(res => {

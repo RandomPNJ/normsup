@@ -79,6 +79,7 @@ export default {
     suppliers: {
       uri : '/api/supplier',
       actions: [
+        { name: 'checkSupplier', uriPattern: '/available', method: 'get' },
         { name: 'getSuppliers', uriPattern: '', method: 'get' },
         { name: 'createSupplier', uriPattern: '/define_supplier', method: 'post' },
         { name: 'createSupplierUser', uriPattern: '/define_supplier_user', method: 'post' },

@@ -88,6 +88,8 @@ export class BackofficeUsersComponent implements OnInit {
       tap(() => this.searching = false)
     );
 
+    formatter = (x: any) => x.org_name;
+
   constructor(
     private modalService: BsModalService,
     private apiService: ProductService,
@@ -156,10 +158,11 @@ export class BackofficeUsersComponent implements OnInit {
   // TODO: modify this, we only need JWT
   addUser(data: any) {
     console.log('User', data);
-    // const user = 
-    data.organisation = '2';
-    this.apiService.postData('/api/admin/users/register', { user: data })
+    console.log('supplierSelected', this.supplierSelected);
+    this.apiService.postData('/api/admin/users/register', { user: data, client: this.supplierSelected })
       .subscribe(res => {
+          this.supplierSelected = {};
+          this.userToAdd = {};
           this.hideModal('');
         }, err => {
       })
