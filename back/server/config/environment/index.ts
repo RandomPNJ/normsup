@@ -6,6 +6,7 @@ export default {
   env: process.env.NODE_ENV || 'local',
   port: process.env.PORT || 8080,
   ip: process.env.IP || '0.0.0.0',
+  momentLocale: 'fr',
 
   // api: {apiName: { url, routes}} // if using API
   secret: 'eZyo2k4p',

@@ -23,7 +23,7 @@ export class HttpConfigInterceptor implements HttpInterceptor {
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
         if(request.url.indexOf('data.opendatasoft.com') === -1 ) {
-            if(!request.headers.has('Content-Type')) {
+            if(!request.headers.has('Content-Type') && request.url.indexOf('/api/documents/upload') === -1) {
                 request = request.clone({ headers: request.headers.set('Content-Type', 'application/json') });
             }
     

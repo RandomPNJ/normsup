@@ -60,6 +60,8 @@
     "mysql2": "^1.6.5",
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",
+    "pdf2json": "^1.2.0",
+    "pdfreader": "^1.0.6",
     "promise-mysql": "^4.0.4",
     "request": "^2.79.0",
     "request-promise": "^4.2.1",

@@ -3,6 +3,7 @@ import { Promise } from 'bluebird';
 import * as path from 'path';
 import * as fs from 'fs';
 import * as AWSDK from 'aws-sdk';
+import * as moment from 'moment';
 
 import ServiceManager from './config/serviceManager/index';
 import config from './config/environment/index';
@@ -31,6 +32,8 @@ declare var loggerT: any;
 declare var loggerIO: any;
 
 function start(app: any, config: any): any {
+  moment.locale(config.momentLocale);
+  
 
   // Initialisation des loggers/monitoring
   loggers.init(config.env, config.LOG_DIR, config.loggers, app);
@@ -43,7 +46,7 @@ function start(app: any, config: any): any {
 
   loggerT.info(`Démarrage du module ${config.appName}`);
 
-
+  
   // init static config
   app.set('config', config, { private: true });
   if (!app.has('integration')) {

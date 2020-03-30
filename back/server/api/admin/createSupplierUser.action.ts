@@ -49,7 +49,8 @@ export function createSupplierUser(req, SuppliersRegistry) {
                 loggerT.verbose('createSupplierUser res', res);
                 let response = {
                     statusCode: 200,
-                    msg: 'User successfully created.'
+                    msg: 'User successfully created.',
+                    password: data.password
                 };
 
                 return response;

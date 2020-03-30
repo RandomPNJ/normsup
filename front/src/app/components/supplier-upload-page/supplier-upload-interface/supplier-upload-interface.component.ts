@@ -100,22 +100,20 @@ export class SupplierUploadInterfaceComponent implements OnInit {
 
     if(type === 'LEGAL') {
       if(this.kbisDocument) {
-        // console.log('kbis');
         main_form.append('files', this.kbisDocument, 'k' + this.kbisDocument.name);
       }
       if(this.lnteDocument) {
-        // console.log('lnte');
         main_form.append('files',this.lnteDocument,  'l' + this.lnteDocument.name);
       }
       if(this.urssafDocument) {
-        // console.log('urssaf');
         main_form.append('files', this.urssafDocument, 'u' + this.urssafDocument.name);
       }
       
       return this.httpService
         .uploadDocument('/api/documents/upload', main_form)
         .subscribe(res => {
-          // this.router.navigate(['upload', 'success']);
+          // Decomment this after
+          this.router.navigate(['upload', 'success']);
           return this.openModal(this.uploadConfirmationModal);
         })
       ;

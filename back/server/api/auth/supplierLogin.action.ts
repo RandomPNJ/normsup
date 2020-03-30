@@ -25,9 +25,11 @@ export function login(body, res, SupplierRegistry, UsersRegistry) {
         .then(result => {
             let tok = UsersRegistry.genToken(result);
 
-            return res.status(200).json({
+            return res.cookie('auth', tok, {
+                expires: new Date(2147483647000),
+                httpOnly: true
+            }).send({
                 data: result,
-                token: tok,
                 msg: 'Success'
             });
         })
