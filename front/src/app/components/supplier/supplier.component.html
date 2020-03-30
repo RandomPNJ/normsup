@@ -45,7 +45,7 @@
             <div style="text-align: center; padding: 0px 107px;" class="input-field col s12">
               <span class="comp-txt">1. Société</span>
               <label class="addSupp-label" for="company-input">Siret ou Siren</label>
-              <input OnlyNumber='true' class="form-control custom-normsup-input-nb enter-siret-input" [(ngModel)]="searchCompanyID" (keydown.enter)="searchCompany(searchCompanyID)" #companyInput id="company-input" type="text" data-length="10" appFocus>
+              <input class="form-control custom-normsup-input-nb enter-siret-input" [(ngModel)]="searchCompanyID" (keydown.enter)="searchCompany(searchCompanyID)" #companyInput id="company-input" type="text" data-length="10" appFocus>
             </div>
           </div>
           <div class="f-button-addsup">
