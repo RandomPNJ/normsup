@@ -143,7 +143,7 @@ export default class UserRegistry {
                             loggerT.verbose('[getUser] QUERY2 RES ==== ', res);
                             let data = [];
                             if(res.length > 0 ) {
-                                res.length.forEach(e => {
+                                res.forEach(e => {
                                     data.push(e.name);
                                 });
                             }
