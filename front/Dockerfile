@@ -1,40 +1,27 @@
-#############
-### build ###
-#############
+FROM node:8
 
-# base image
-FROM node:8 as build
+RUN mkdir -p /usr/src/app && \
+  chown -R node:node /usr/src/app && \
+  chown -R node:node /usr/local/lib/node_modules && \
+  chown -R node:node /usr/local/bin/
 
-# set working directory
-WORKDIR /app
-
-# add `/app/node_modules/.bin` to $PATH
-ENV PATH /app/node_modules/.bin:$PATH
-
-# install and cache app dependencies
-COPY package.json /app/package.json
 RUN npm install -g npm@5.6.0
-RUN npm install
+
+USER node
+ADD package.json /tmp/package.json
+
+RUN ls /tmp
+
 RUN npm install -g @angular/cli@6.2.7
+RUN cd /tmp && npm install && \
+  mv /tmp/node_modules /usr/src/app/node_modules
 
-# add app
-COPY . /app
+ADD . /usr/src/app
+WORKDIR /usr/src/app
 
-# generate build
-RUN ng build --output-path=dist
+# RUN npm install -g @angular/cli@6.2.7
+# RUN cd /usr/src/app && npm install
 
-############
-### prod ###
-############
+USER root
 
-# base image
-FROM nginx:1.16.0-alpine
-
-# copy artifact build from the 'build environment'
-COPY --from=build /app/dist /usr/share/nginx/html
-
-# expose port 80
-EXPOSE 80
-
-# run nginx
-CMD ["nginx", "-g", "daemon off;"]
+EXPOSE 4200
