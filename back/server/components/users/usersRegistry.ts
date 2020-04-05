@@ -159,7 +159,7 @@ export default class UserRegistry {
                 }
             })
             .catch(err => {
-                loggerT.error('ERROR ON QUERY getUsers.');
+                loggerT.error('ERROR ON QUERY getUsers, err', err);
                 err.message = 'Error when getting user';
                 return Promise.reject(err);
             })
