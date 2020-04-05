@@ -8,36 +8,35 @@ export default {
     method: 'get',
     uriPattern: '',
     services: [''],
-    handler: (req, res, app) => getCurrentUser(req, res, app.get('UsersRegistry'), app.get('AuthRegistry')),
+    handler: (req, res, app) => getCurrentLogged(req, res, app.get('SupplierRegistry'), app.get('AuthRegistry')),
 };
 
-export function getCurrentUser(req, res, UsersRegistry, AuthRegistry) {
+export function getCurrentLogged(req, res, SupplierRegistry, AuthRegistry) {
     let decoded;
-    loggerT.verbose('Getting current logged user.');
+    loggerT.verbose('Getting current logged supplier cookie', req.cookies.auth);
     // if(!req.decoded) {
     //     return {
     //         authentified: false,
-    //         user: {}
+    //         supplier: {}
     //     };
     // }
 
     return AuthRegistry.validateToken(req.cookies.auth).then((res) => {
-        if (res.code === 200 && res.token.id) {
+        if (res.code === 200) {
             decoded = res.token;
-            loggerT.verbose('Getting current logged user with id:', res.token);
+            loggerT.verbose('Getting current logged supplier with id:', res.token);
 
-            return UsersRegistry.getUser(decoded.id)
-                .then(result => {
-                    loggerT.verbose('[getCurrentUser] Final result ', result);
-                    if(result && result.id) {
+            return SupplierRegistry.getCurrentLogged(decoded)
+                .then(res => {
+                    if(res && res[0]) {
                         return {
                             authentified: true,
-                            user: result
+                            supplier: res[0]
                         };
                     } else {
                         return {
                             authentified: false,
-                            user: {}
+                            supplier: {}
                         };
                     }
                 })
@@ -48,7 +47,7 @@ export function getCurrentUser(req, res, UsersRegistry, AuthRegistry) {
         } else {
             return {
                 authentified: false,
-                user: {}
+                supplier: {}
             };
         }
     }, (err) => {

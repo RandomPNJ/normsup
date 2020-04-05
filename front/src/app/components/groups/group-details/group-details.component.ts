@@ -74,7 +74,7 @@ export class GroupDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.id = parseInt(this.route.snapshot.paramMap.get("id"), 10);
-    this.httpService.get('/api/supplier/group/'+ this.id)
+    this.httpService.get('/api/suppliers/group/'+ this.id)
       .subscribe(res => {
         if(res.body && res.body['items']) {
           this.groupName = res.body['items'][0]['name'];
@@ -100,7 +100,7 @@ export class GroupDetailsComponent implements OnInit {
       })
     ;
     
-    this.httpService.get('/api/supplier/group/'+ this.id + '/members')
+    this.httpService.get('/api/suppliers/group/'+ this.id + '/members')
       .subscribe(res => {
         if(res.body && res.body['items']) {
           this.suppliers = res.body['items'];
@@ -170,7 +170,7 @@ export class GroupDetailsComponent implements OnInit {
   }
 
   private reloadMembers() {
-    this.httpService.get('/api/supplier/group/'+ this.id + '/members')
+    this.httpService.get('/api/suppliers/group/'+ this.id + '/members')
       .subscribe(res => {
         if(res.body && res.body['items']) {
           this.suppliers = res.body['items'];
@@ -205,7 +205,7 @@ export class GroupDetailsComponent implements OnInit {
     if(this.documentsSettings.frequency) {
       data['frequency'] = this.documentsSettings.frequency;
     }
-    this.httpService.post('/api/supplier/group/'+ this.id + '/modify_reminders', data)
+    this.httpService.post('/api/suppliers/group/'+ this.id + '/modify_reminders', data)
       .subscribe(res => {
         this.notif.success('Paramètres modifiés avec succès.');
       }, err => {
@@ -219,7 +219,7 @@ export class GroupDetailsComponent implements OnInit {
   }
 
   private deleteGroup() {
-    this.httpService.post('/api/supplier/group/'+ this.id + '/delete')
+    this.httpService.post('/api/suppliers/group/'+ this.id + '/delete')
       .subscribe(res => {
         console.log('res', res);
         this.router.navigate(['dashboard', 'groups', {action: 'deleted'}]);

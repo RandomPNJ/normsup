@@ -189,7 +189,7 @@ export class SupplierComponent implements OnInit {
     this.searchCompany404 = false;
     const params = '&rows=1&q=' + id;
     let p =  new HttpParams().append('siret', id);
-    this.httpService.get('/api/supplier/available', p)
+    this.httpService.get('/api/suppliers/available', p)
       .subscribe(res => {
         console.log('searchCompany res', res);
         let result = res.body;
@@ -278,7 +278,7 @@ export class SupplierComponent implements OnInit {
 
   addCompany(data: any) {
     data.comp.denomination = data.comp.denomination.charAt(0).toUpperCase() + data.comp.denomination.toLowerCase().slice(1);
-    this.apiService.postData('/api/supplier/define_supplier', data)
+    this.apiService.postData('/api/suppliers/define_supplier', data)
       .subscribe(res => {
         // this.hideModal('');
         this.nextState('supplierSuccess');

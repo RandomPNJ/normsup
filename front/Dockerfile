@@ -1,27 +1,40 @@
-FROM node:8
+#############
+### build ###
+#############
 
-RUN mkdir -p /usr/src/app && \
-  chown -R node:node /usr/src/app && \
-  chown -R node:node /usr/local/lib/node_modules && \
-  chown -R node:node /usr/local/bin/
+# base image
+FROM node:8 as build
 
+# set working directory
+WORKDIR /app
+
+# add `/app/node_modules/.bin` to $PATH
+ENV PATH /app/node_modules/.bin:$PATH
+
+# install and cache app dependencies
+COPY package.json /app/package.json
 RUN npm install -g npm@5.6.0
-
-USER node
-ADD package.json /tmp/package.json
-
-RUN ls /tmp
-
+RUN npm install
 RUN npm install -g @angular/cli@6.2.7
-RUN cd /tmp && npm install && \
-  mv /tmp/node_modules /usr/src/app/node_modules
 
-ADD . /usr/src/app
-WORKDIR /usr/src/app
+# add app
+COPY . /app
 
-# RUN npm install -g @angular/cli@6.2.7
-# RUN cd /usr/src/app && npm install
+# generate build
+RUN ng build --output-path=dist
 
-USER root
+############
+### prod ###
+############
 
-EXPOSE 4200
+# base image
+FROM nginx:1.16.0-alpine
+
+# copy artifact build from the 'build environment'
+COPY --from=build /app/dist /usr/share/nginx/html
+
+# expose port 80
+EXPOSE 80
+
+# run nginx
+CMD ["nginx", "-g", "daemon off;"]

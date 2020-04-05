@@ -15,6 +15,24 @@ export default class SupplierRegistry {
         this.mysql = mysql;
     }
 
+    private fromDBtoClient(data) {
+        let result;
+        // loggerT.verbose('[fromDBtoClient] DATA', data);
+        if(Array.isArray(data)) {
+            loggerT.verbose('isArray');
+            data.map(item => {
+                if(item['comp_docs_count'])
+                    item['comp_docs_count'] = parseInt(item['comp_docs_count'], 10);
+            });
+        }
+        // loggerT.verbose('[fromDBtoClient] RESULT', data);
+        return data;
+    }
+
+    private fromClienttoDB(data) {
+
+    }
+
     public getQueryType(data: any) {
         /*
          * start search company group
@@ -87,7 +105,8 @@ export default class SupplierRegistry {
         return this.mysql.query(query)
             .then((res, fields) => {
                 loggerT.verbose('fields', fields)
-                // loggerT.verbose('QUERY RES ==== ', res);
+                loggerT.verbose('QUERY RES ==== ', res);
+                res = this.fromDBtoClient(res);
                 return Promise.resolve(res);
             })
             .catch(err => {
@@ -672,6 +691,7 @@ export default class SupplierRegistry {
                     .then(res => {
                         if(res === true) {
                             const payload = {
+                                id: user.id,
                                 email: user.email,
                                 name: user.name,
                                 lastname: user.lastname,
@@ -691,6 +711,26 @@ export default class SupplierRegistry {
             })
             .catch(err => {
                 return Promise.reject({statusCode: err.statusCode ? err.statusCode : 500, msg: err.msg});
+            })
+        ;
+    }
+
+    public getCurrentLogged(data) {
+        let query = {
+            timeout: 40000
+        };
+
+        query['sql']    = Query.FIND_SUPPLIER_BY_ID;
+        query['values'] = [data.id];
+
+        return this.mysql.query(query)
+            .then(res => {
+                loggerT.verbose('QUERY RES ==== ', res);
+                return Promise.resolve(res);
+            })
+            .catch(err => {
+                loggerT.error('ERROR ON QUERY getUsers.');
+                return Promise.reject(err);
             })
         ;
     }

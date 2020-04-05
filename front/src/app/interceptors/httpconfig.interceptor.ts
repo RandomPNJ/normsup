@@ -40,15 +40,15 @@ export class HttpConfigInterceptor implements HttpInterceptor {
         return next.handle(request).pipe(
             map((event: HttpEvent<any>) => {
                 if (event instanceof HttpResponse) {
-                    console.log('event--->>>', event);
+                    // console.log('event--->>>', event);
                     // this.errorDialogService.openDialog(event);
                 }
                 return event;
             }),
             catchError((error: HttpErrorResponse) => {
-                console.log('error', error);
-                if(error.error && error.error.message.indexOf('User is not authentified') !== -1) {
-                    this.logOutUser();
+                // console.log('error', error);
+                if(error.error && error.error.message && error.error.message.indexOf('User is not authentified') !== -1) {
+                    // this.logOutUser();
                 }
                 let data = {};
                 data = {

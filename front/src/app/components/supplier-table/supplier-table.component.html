@@ -66,7 +66,7 @@
         <td *ngIf="indexInfo == -1 || i <= indexInfo">
           <div class="badge-container content-cont container">
             <div class="row flex-grow-1 h-100" style="margin-bottom: 0px;">
-              <div style="padding-right: 5px;" class="doc-cont col-6 h-100" (click)="openLegalDocModal(item)"
+              <div style="padding-right: 5px;" class="doc-cont h-100" [ngClass]="{'col-6': item.comp_docs_count > 0, 'col-12': item.comp_docs_count === 0}" (click)="openLegalDocModal(item)"
                 data-toggle="modal" data-target="#exampleModalCenter">
                 <span class="doc-icn-cont">
                   <img style="height: 25px; display: block;" src="../../../assets/img/legal-icn@2x.png" />
@@ -77,7 +77,7 @@
                   <span style="text-decoration: underline;" class="fix-middle align-txt doc-type-txt">Légal</span>
                 </span>
               </div>
-              <div class="doc-cont col-6 h-100" (click)="openCompDocModal(item)">
+              <div class="doc-cont col-6 h-100" (click)="openCompDocModal(item)" *ngIf="item.comp_docs_count > 0">
                 <span class="doc-icn-cont">
                   <img style="height: 25px;" src="../../../assets/img/comp-icn@2x.png" />
                   <img class="valid-state-icn-two valid-icn-shadow" *ngIf="false"
@@ -300,7 +300,7 @@
         <td *ngIf="indexInfo != -1 && i > indexInfo">
           <div class="badge-container content-cont container">
             <div class="row flex-grow-1 h-100" style="margin-bottom: 0px;">
-              <div style="padding-right: 5px;" class="doc-cont col-6 h-100" (click)="openLegalDocModal(item)"
+              <div style="padding-right: 5px;" class="doc-cont h-100" [ngClass]="{'col-6': item.comp_docs_count > 0, 'col-12': item.comp_docs_count === 0}" (click)="openLegalDocModal(item)"
                 data-toggle="modal" data-target="#exampleModalCenter">
                 <span class="doc-icn-cont">
                   <img style="height: 25px; display: block;" src="../../../assets/img/legal-icn@2x.png" />
@@ -311,7 +311,7 @@
                   <span style="text-decoration: underline;" class="fix-middle align-txt doc-type-txt">Légal</span>
                 </span>
               </div>
-              <div class="doc-cont col-6 h-100" (click)="openCompDocModal(item)">
+              <div class="doc-cont col-6 h-100" (click)="openCompDocModal(item)" *ngIf="item.comp_docs_count > 0">
                 <span class="doc-icn-cont">
                   <img style="height: 25px;" src="../../../assets/img/comp-icn@2x.png" />
                   <img class="valid-state-icn-two valid-icn-shadow" *ngIf="false"

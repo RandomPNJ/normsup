@@ -112,8 +112,6 @@ export class SupplierUploadInterfaceComponent implements OnInit {
       return this.httpService
         .uploadDocument('/api/documents/upload', main_form)
         .subscribe(res => {
-          // Decomment this after
-          this.router.navigate(['upload', 'success']);
           return this.openModal(this.uploadConfirmationModal);
         })
       ;
@@ -126,8 +124,9 @@ export class SupplierUploadInterfaceComponent implements OnInit {
       return this.httpService
         .uploadDocument('/api/documents/upload', main_form)
         .subscribe(res => {
-          // this.router.navigate(['upload', 'success']);
           return this.openModal(this.uploadConfirmationModal);
+        }, err => {
+          return;
         })
       ;
     } else {
@@ -200,7 +199,7 @@ export class SupplierUploadInterfaceComponent implements OnInit {
   }
 
   navigateSuccessPage() {
-    this.router.navigate(['upload', 'success']);
+    this.router.navigate(['supplier', 'upload', 'success']);
   }
 
 

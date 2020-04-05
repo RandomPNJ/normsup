@@ -73,6 +73,7 @@ export class LoginPageComponent implements OnInit, OnDestroy {
             this.showModal();
           } else {
             this.bsService.setLocalStorage('current_user', JSON.stringify(res['data']));
+            // this.authService.loginType.next('USER');
             // this.bsService.setLocalStorage('token', res['token']);
             // this.bsService.setLocalStorage('refreshToken', res['refreshToken']);
             this.router.navigate(['/dashboard/main']);

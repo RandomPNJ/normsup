@@ -43,7 +43,7 @@ export class AddRepresentativeComponent implements OnInit {
     };
     if(this.supplierInfo && this.supplierInfo.id) {
       body['supplierID'] = this.supplierInfo.id;
-      this.httpService.post('/api/supplier/define_representative', body)
+      this.httpService.post('/api/suppliers/define_representative', body)
         .subscribe(res => {
           console.log('[AddRepresentativeComponent] res', res);
           this.modalState = 'interlocSuccess';

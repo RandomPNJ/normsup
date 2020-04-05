@@ -28,7 +28,7 @@ services:
     extends:
       file: compose-default.yml
       service: client_build
-    command: ng serve --host=0.0.0.0 --disable-host-check --watch --poll=1000
+    # command: ng serve --host=0.0.0.0 --disable-host-check --watch --poll=1000
     container_name: client.normsup
     volumes:
       - ./front/src:/usr/src/app/src
@@ -36,7 +36,7 @@ services:
       - ./front/tslint.json:/usr/src/app/tslint.json
       # - ./front/config/environment.local.ts:/usr/src/app/src/app/config/environment.ts
     ports:
-      - 127.0.0.1:4200:4200
+      - 127.0.0.1:4200:80
     networks:
       - normsup
 

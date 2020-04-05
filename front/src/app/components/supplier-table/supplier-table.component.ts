@@ -73,14 +73,14 @@ export class SupplierTableComponent implements OnInit,AfterViewInit {
   ngOnInit() {
     // First query to get the number of rows
     this.httpService
-      .get('/api/supplier/count')
+      .get('/api/suppliers/count')
       .subscribe(res => {
         this.nbOfRows = res.body['count'];
         this.suppliersData.emit(res.body['count']);
       })
     ;
     this.httpService
-      .get('/api/supplier/groups')
+      .get('/api/suppliers/groups')
       .subscribe(res => {
         this.groups = this.groups.concat(res.body['items']);
       }, err => {
@@ -136,7 +136,7 @@ export class SupplierTableComponent implements OnInit,AfterViewInit {
         this.tableParams.company = 'Fakeclient';
         if(action === 'query') {
           that.httpService
-            .get('/api/supplier', this.tableParams)
+            .get('/api/suppliers', this.tableParams)
             .subscribe(resp => {
               // console.log(resp);
               that.data = that.data.concat(resp.body['items']);
@@ -233,7 +233,7 @@ export class SupplierTableComponent implements OnInit,AfterViewInit {
       firstQParams = firstQParams.set('search', search);
     }
     return this.httpService
-      .get('/api/supplier/count', firstQParams)
+      .get('/api/suppliers/count', firstQParams)
       .subscribe(res => {
         that.nbOfRows = res.body['count'];
         this.suppliersData.emit(res.body['count']);
@@ -244,7 +244,7 @@ export class SupplierTableComponent implements OnInit,AfterViewInit {
   reload() {
     this.datatableElement.dtInstance.then((dtInstance: DataTables.Api) => {
       this.httpService
-        .get('/api/supplier', this.tableParams)
+        .get('/api/suppliers', this.tableParams)
         .subscribe(resp => {
           console.log(resp);
           this.data = resp.body['items'];
@@ -252,7 +252,7 @@ export class SupplierTableComponent implements OnInit,AfterViewInit {
           // this.myTable = true;
         });
         this.httpService
-          .get('/api/supplier/count')
+          .get('/api/suppliers/count')
           .subscribe(res => {
             this.nbOfRows = res.body['count'];
             this.suppliersData.emit(res.body['count']);
@@ -348,7 +348,7 @@ export class SupplierTableComponent implements OnInit,AfterViewInit {
       lastname: this.interloc.lastname,
     };
     
-    return this.httpService.post('/api/supplier/modify_representative/' + this.interloc.repres_id, data)
+    return this.httpService.post('/api/suppliers/modify_representative/' + this.interloc.repres_id, data)
       .subscribe(res => {
         this.notif.success('Interlocuteur modifié avec succès.');
         this.updateLocalData(this.indexInfo);
@@ -377,7 +377,7 @@ export class SupplierTableComponent implements OnInit,AfterViewInit {
   }
 
   deleteInterloc(i) {
-    return this.httpService.delete('/api/supplier/representatives/' + this.infoPopup.id + '/delete')
+    return this.httpService.delete('/api/suppliers/representatives/' + this.infoPopup.id + '/delete')
       .subscribe(res => {
         console.log('deleteInterloc res', res);
         this.deleteLocalInterlocInfo(i);
@@ -414,7 +414,7 @@ export class SupplierTableComponent implements OnInit,AfterViewInit {
   }
   deleteSupplier(supplier) {
     this.httpService
-      .post('/api/supplier/delete/' + supplier.id)
+      .post('/api/suppliers/delete/' + supplier.id)
       .subscribe(res => {
         this.notif.success('Fournisseur supprimé.');
         remove(this.data, (n) => {

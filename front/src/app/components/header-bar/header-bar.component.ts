@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Router, ActivatedRoute, ActivationEnd, ActivationStart, NavigationStart, ResolveStart } from '@angular/router';
 import { BrowserStorageService } from 'src/app/services/storageService';
 import { Subscription } from 'rxjs';
@@ -14,6 +14,8 @@ import { CookieService } from 'ngx-cookie-service';
 })
 
 export class HeaderBarComponent implements OnInit {
+  @Input() currentUser: any;
+  
   logoImg;
   title;
   xceedLogo = '../../../assets/img/Logo_XCEED_color.svg';
@@ -41,27 +43,18 @@ export class HeaderBarComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log('this.currentUser', this.currentUser);
     this.httpService.getPicture('/api/users/picture')
       .subscribe(res => {
         return this.createImageFromBlob(<Blob>res.body);
       }, err => {
-        console.log('/api/users/picture err', err);
+        return err;
+        // console.log('/api/users/picture err', err);
       })
     ;
-    this.isLoggedIn = this.authService.isLogged.subscribe(res => {
-      console.log('res =', res);
-      if(res !== false && res.data) {
-        this.user = res.data;
-      }
-      this.showHeader = !!res;
-      console.log('showHeader ', this.showHeader)
-    });
     this.profileSub = this.settingsService.profileModif.subscribe(res => {
-      console.log('user res uno =', res);
-      console.log('user res uno2 =', typeof res);
       if(res && res.name) {
-        console.log('user res dos =', res);
-        this.user = res;
+        this.currentUser = res;
       }
     });
   }
@@ -75,7 +68,6 @@ export class HeaderBarComponent implements OnInit {
 
   backToLogin() {
     // this.router.navigate(['login']);
-    console.log(this.route.url);
   }
 
   redirect(route){
@@ -97,12 +89,20 @@ export class HeaderBarComponent implements OnInit {
   }
 
   logOut() {
-    this.bsService.clearLocalStorage();
-    this.cookieService.delete('auth');
-    this.cookieService.delete('refresh');
-    this.showHeader = false;
-    this.router.navigate(['/logout']);
-    // this.router.navigate(['/login']);
+    return this.httpService
+      .post('/api/auth/logout')
+      .subscribe(() => {
+        this.cookieService.deleteAll('/', 'localhost');
+        this.bsService.clearLocalStorage();
+        this.router.navigate(['logout']);
+        // this.cookieService.delete('auth', '/', 'localhost');
+      }, err => {
+        console.log('Could not disconnect err :', err);
+        this.cookieService.deleteAll('/');
+        this.bsService.clearLocalStorage();
+        // this.router.navigate(['logout']);
+      })
+    ;
   }
 
   getHeaderStyle() {

@@ -23,6 +23,8 @@ export function login(body, res, SupplierRegistry, UsersRegistry) {
 
     return SupplierRegistry.login(user.username, user.password)
         .then(result => {
+            loggerT.verbose('SupplierRegistry LOGIN RES', result);
+            result.type = 'SUPPLIER';
             let tok = UsersRegistry.genToken(result);
 
             return res.cookie('auth', tok, {

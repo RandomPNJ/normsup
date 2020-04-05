@@ -25,9 +25,10 @@ import { BackofficeGuard } from './auth/backoffice.guard';
 import { BackofficeUsersComponent } from './components/backoffice-users/backoffice-users.component';
 import { SupplierLoginPageComponent } from './components/supplier-login-page/supplier-login-page.component';
 import { BackofficeSuppliersComponent } from './components/backoffice-suppliers/backoffice-suppliers.component';
+import { GuestGuard } from './auth/guest.guard';
 
 const routes: Routes = [
-  { path: 'supplier',
+  { path: 'supplier', canActivate: [GuestGuard],
     children: [
       { path: 'login', component: SupplierLoginPageComponent },
       { path: 'upload', component: SupplierUploadPageComponent, 

@@ -37,8 +37,7 @@ export class UsersTableComponent implements OnInit {
   roles: Array<any> = [
     { name: ' ', value: ' ' },
     { name: 'Admin', value: 'admin' },
-    { name: 'Utilisateur', value: 'user' },
-    { name: 'Invité', value: 'guest' },
+    { name: 'Utilisateur', value: 'user' }
   ];
   dataSize: any = 0;
 

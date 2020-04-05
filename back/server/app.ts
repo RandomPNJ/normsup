@@ -98,6 +98,8 @@ function start(app: any, config: any): any {
   app.set('SettingsRegistry', settingsRegistry, {onLoad: true});
   const adminRegistry = new AdminRegistry(sqlDB);
   app.set('AdminRegistry', adminRegistry, {onLoad: true});
+  const authRegistry = new AuthRegistry();
+  app.set('AuthRegistry', authRegistry, {onLoad: true});
 
 
   return app.waitForUpAndRunning()

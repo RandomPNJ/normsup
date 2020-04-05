@@ -12,33 +12,49 @@ export class LoggedinGuard implements CanActivate {
   constructor(private authService: AuthService, private router: Router) {}
 
   canActivate(route: ActivatedRouteSnapshot): Observable<any> | Promise<any> | any {
-    const res = this.authService.isLoggedIn();
-    console.log('route.routeConfig.path', route.routeConfig.path)
-    if(res === false && route.routeConfig.path !== 'login') {
-      this.router.navigate(['/login']);
-      return false;
-    } else if(res === false && route.routeConfig.path !== 'login') {
-      // this.router.navigate(['/login']);
-      return false;
-    } else if(route.routeConfig.path === 'login' && res) {
-      this.router.navigate(['/dashboard/main']);
-      return true;
-    } else if(route.data.roles && res.role) {
-      let accepted = false;
-      for(const role of route.data.roles) {
-        if(role === res.role.toUppercase()) {
-          accepted = true;
-          break;
+    return this.authService.isLoggedIn('USER').pipe(
+      map(res => {
+
+        if(res['authentified'] === false && route.routeConfig.path === 'login') {
+          // Not connected but wants to access login page
+          return true;
+        } else if(res['authentified'] === false && route.routeConfig.path !== 'login') {
+          // Not connected but doesn't want to access login, so we redirect to login
+          this.router.navigate(['/login']);
+          return false;
+        } else if(res['authentified'] && res['user']) {
+          // Connected, we check if type is USER
+
+          if(route.routeConfig.path === 'login') {
+            // If connected and wanted to go to login, redirect to dashboard main
+
+            this.router.navigate(['/dashboard/main']);
+            return true;
+          } else if(res['user'].role && route.data.roles) {
+            // Checks role before accessing page
+
+            let accepted = false;
+            for(const role of route.data.roles) {
+              if(role === res['user'].role.toUpperCase()) {
+                accepted = true;
+                break;
+              }
+            }
+
+            if(accepted) {
+              return accepted;
+            } else {
+              // Not allowed to go to this page
+              this.router.navigate(['dashboard', 'main']);
+            }
+          }
+          else {
+            return true;
+          }
+        } else {
+          return false;
         }
-      }
-      if(accepted) {
-        return accepted;
-      } else {
-        this.router.navigate(['/']);
-        return accepted;
-      }
-    } else {
-      return true;
-    }
+      })
+    )
   }
 }

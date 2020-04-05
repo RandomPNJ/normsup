@@ -15,6 +15,7 @@ services:
     command: bash -c "(grunt build && npm run deploy;) && grunt"
     environment:
       PORT: 8080
+      NODE_ENV: prod
     volumes:
       - ./back/server:/usr/src/app/server
       - ./back/tsconfig.json:/usr/src/app/tsconfig.json # TS filenames get added automatically to this file on build
@@ -28,7 +29,7 @@ services:
     extends:
       file: compose-default.yml
       service: client_build
-    command: ng serve --host 0.0.0.0 --disable-host-check --watch --poll=1000
+    # command: ng serve --host 0.0.0.0 --disable-host-check --watch --poll=1000
     container_name: client.normsup
     volumes:
       - ./front/src:/usr/src/app/src
@@ -36,7 +37,7 @@ services:
       - ./front/tslint.json:/usr/src/app/tslint.json
       - ./front/config/environment.local.ts:/usr/src/app/src/app/config/environment.ts
     ports:
-      - 4200:4200
+      - 4200:80
     networks:
       - normsup
 

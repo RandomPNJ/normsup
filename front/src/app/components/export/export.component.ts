@@ -54,7 +54,7 @@ export class ExportComponent implements OnInit {
       distinctUntilChanged(),
       tap(() => this.searching = true),
       switchMap(term =>
-        this.httpService.get('/api/supplier', new HttpParams().set('search', term)).pipe(
+        this.httpService.get('/api/suppliers', new HttpParams().set('search', term)).pipe(
           tap(() => this.searchFailed = false),
           map(response => response.body['items']),
           catchError(() => {
@@ -109,7 +109,7 @@ export class ExportComponent implements OnInit {
     }
     if(this.firstGroupLoad === true) {
       this.httpService
-        .get('/api/supplier/groups')
+        .get('/api/suppliers/groups')
         .subscribe(res => {
           this.groups = res.body['items'];
           this.firstGroupLoad = false;

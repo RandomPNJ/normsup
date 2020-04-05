@@ -86,7 +86,7 @@ export default (expressApp) => {
   let strategy = new JwtStrategy(jwtOptions, 
     (jwtPayload, next) => {
     if (Date.now() > jwtPayload.expires) {
-      return next('jwt expired');
+      return next('Token expired');
     }
     return next(null, jwtPayload);
   });
@@ -98,7 +98,8 @@ export default (expressApp) => {
   // Authentification middleware
   const AuthMiddleware = new AuthenticatorMiddleware();
   expressApp.use('/api', (req, res, next) => {
-    if(req.url === '/auth/login' || req.url === '/auth/refresh_token' || req.url === '/auth/supplier-login') {
+    if(req.url === '/auth/login' || req.url === '/auth/refresh_token' || req.url === '/auth/supplier-login'
+      || req.url === '/supplier/currentSupplier' || req.url === '/users/current') {
       return next();
     }
     AuthMiddleware.use(req, res, next);

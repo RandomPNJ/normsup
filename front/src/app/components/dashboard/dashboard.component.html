@@ -1,5 +1,5 @@
-<div class="">
-  <app-header-bar></app-header-bar>
+<div *ngIf="authorized" class="">
+  <app-header-bar *ngIf="user" [currentUser]="user"></app-header-bar>
   <div [ngClass]="{'sidebar-padding': sidebarVisible}" class="dash-bg">
     <!-- <div class="container profile-flyover">
       <div class="row">

@@ -13,7 +13,7 @@ export class StatsCardComponent implements OnInit {
 
   ngOnInit() {
     this.httpService
-      .get('/api/supplier/count')
+      .get('/api/suppliers/count')
       .subscribe(res => {
         console.log('count res', res);
         if(res.body && res.body['count']) {

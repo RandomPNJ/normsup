@@ -1,5 +1,7 @@
 import { cloneDeep } from 'lodash';
 import * as moment from 'moment';
+import * as pdfparser from 'pdf2json';
+import * as _ from 'lodash';
 
 declare var loggerT: any;
 
@@ -11,21 +13,19 @@ export default {
 };
 
 export function createDocument(req, res, DocumentsRegistry) {
-    if (!req.decoded) {
-        return Promise.reject(`Cannot get user informations, invalid request.`);
+    if (!req.decoded && req.decoded.type === 'SUPPLIER') {
+        return Promise.reject(`Cannot get user informations or user is not a supplier.`);
     }
 
-    // Protect from no files
-    let docs = req.files;
     loggerT.verbose('Creating document.');
 
-    // loggerT.verbose('req', Object.keys(req.files));
-    // loggerT.verbose('req originalname', req.files[0].originalname);
-    // loggerT.verbose('req fieldname', req.files[0].fieldname);
+    loggerT.verbose('Creating document USER :', req.decoded);
+
+    let docs = req.files;
 
     return DocumentsRegistry.createDocument(docs, req.decoded)
         .then(res => {
-            // loggerT.verbose('Res  = ', res);
+            loggerT.verbose('FINAL RES  = ', res);
             return res;
         })
         .catch(err => {

@@ -133,11 +133,34 @@ export default class UserRegistry {
         }
         return this.mysql.query(query)
             .then(res => {
-                loggerT.verbose('QUERY RES ==== ', res);
-                return Promise.resolve(res);
+                loggerT.verbose('[getUser] QUERY RES ==== ', res);
+                if(res && res[0] && res[0].id) {
+                    query['sql'] = Query.GET_USER_ROLES;
+                    query['values'] = [id];
+                    let user = res[0];
+                    return this.mysql.query(query)
+                        .then(res => {
+                            loggerT.verbose('[getUser] QUERY2 RES ==== ', res);
+                            let data = [];
+                            if(res.length > 0 ) {
+                                res.length.forEach(e => {
+                                    data.push(e.name);
+                                });
+                            }
+                            user.roles = data;
+                            return Promise.resolve(user);
+
+                        })
+                        .catch(err => {
+                            err.message = 'Error when getting user roles';
+                            return Promise.reject(err);
+                        })
+                    ;
+                }
             })
             .catch(err => {
                 loggerT.error('ERROR ON QUERY getUsers.');
+                err.message = 'Error when getting user';
                 return Promise.reject(err);
             })
         ;

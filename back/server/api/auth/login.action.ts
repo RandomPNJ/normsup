@@ -27,6 +27,7 @@ export function login(body, res, UserRegistry) {
 
     return UserRegistry.login(user.username, user.password)
         .then(result => {
+            result.type = 'USER';
             let tok = UserRegistry.genToken(result);
             let refreshUUID = uuid();
             UserRegistry.setRefreshToken(refreshUUID, user.username);

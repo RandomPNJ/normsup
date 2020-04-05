@@ -67,7 +67,7 @@ export class AddCompGroupComponent implements OnInit {
   ngOnInit() {
     this.group.name = this.groupName;
     if(this.type === 'MODIFICATION' && this.id) {
-      this.http.get('/api/supplier/group/'+ this.id + '/members')
+      this.http.get('/api/suppliers/group/'+ this.id + '/members')
         .subscribe(res => {
           if(res.body && res.body['items']) {
             this.onInitSuppliers = res.body['items'];
@@ -78,7 +78,7 @@ export class AddCompGroupComponent implements OnInit {
         })
       ;
     }
-    this.http.get('/api/supplier?search=')
+    this.http.get('/api/suppliers?search=')
       .subscribe(res => {
         if(res && res.body && res.body['items']) {
           this.suppliers = res.body['items'];
@@ -94,7 +94,7 @@ export class AddCompGroupComponent implements OnInit {
       debounceTime(1000),
       distinctUntilChanged(),
       tap(() => this.suppliersLoading = true),
-      switchMap(term => this.http.get('/api/supplier?search='+term).pipe(
+      switchMap(term => this.http.get('/api/suppliers?search='+term).pipe(
         catchError(() => of([])), // empty list on error
         tap(() => this.suppliersLoading = false)
       )),
@@ -106,9 +106,9 @@ export class AddCompGroupComponent implements OnInit {
 
     let uri;
     if(searchSupplier && searchSupplier !== '') {
-      uri = '/api/supplier?search='+searchSupplier;
+      uri = '/api/suppliers?search='+searchSupplier;
     } else {
-      uri = '/api/supplier';
+      uri = '/api/suppliers';
     }
 
     return this.http.get(uri)
@@ -160,7 +160,7 @@ export class AddCompGroupComponent implements OnInit {
     } else {
       let params = new HttpParams();
       params = params.set('name', name);
-      this.http.get('/api/supplier/group/check_availability', params)
+      this.http.get('/api/suppliers/group/check_availability', params)
         .subscribe(res => {
           if(res.body['items'].exists) {
             this.showAlreadyExistsErr = true;
@@ -213,10 +213,10 @@ export class AddCompGroupComponent implements OnInit {
     });
     
     if(this.type === 'MODIFICATION' && this.id) {
-      uri = '/api/supplier/group/' + this.id +'/modify_group';
+      uri = '/api/suppliers/group/' + this.id +'/modify_group';
       data = {name: this.group.name, suppliers: suppToAdd, deleteSuppliers: suppToDelete, remindersSettings: docSettings};
     } else {
-      uri = '/api/supplier/define_group';
+      uri = '/api/suppliers/define_group';
       data = {name: this.group.name, suppliers: suppToAdd, remindersSettings: docSettings};
     }
 

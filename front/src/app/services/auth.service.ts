@@ -5,6 +5,8 @@ import { BrowserStorageService } from 'src/app/services/storageService';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { CookieService } from 'ngx-cookie-service';
+import { Router } from '@angular/router';
+import { NotifService } from './notif.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,10 +15,14 @@ import { CookieService } from 'ngx-cookie-service';
 export class AuthService implements OnInit {
 
   public isLogged: BehaviorSubject<any>;
+  public isLoggedSupplier: BehaviorSubject<any>;
+  public loginType: BehaviorSubject<any>;
 
   constructor(private http: HttpClient, private bsService: BrowserStorageService,
-    private cookieService: CookieService) {
-    this.isLogged  = new BehaviorSubject<any>(this.isLoggedIn());
+    private cookieService: CookieService, private router: Router, private notifService: NotifService) {
+    this.isLogged  = new BehaviorSubject<any>(this.isLoggedIn('USER'));
+    // this.isLoggedSupplier  = new BehaviorSubject<any>(this.isLoggedIn('SUPPLIER'));
+    // this.loginType = new BehaviorSubject<any>(this.getUserType());
    }
 
   ngOnInit() {
@@ -54,18 +60,47 @@ export class AuthService implements OnInit {
     );
   }
 
-  public isLoggedIn(): any {
-    // let logged = this.cookieService.get('auth');
-    let loggedUser = this.bsService.getLocalStorage('current_user');
-    console.log('logged', loggedUser);
-    loggedUser = JSON.parse(loggedUser);
-    if(loggedUser && loggedUser.username) {
-      // I do this to preserve data coherency, as API return user in data property
-      return { data : loggedUser };
-    } else {
-      return false;
+  public isLoggedIn(type): any {
+    if(type === 'SUPPLIER') {
+      console.log('isLoggedIn SUPPLIER')
+      return this.http
+        .get(Configuration.serverUrl + '/api/supplier/currentSupplier')
+        .pipe(map((response: any) => {
+          console.log('[AuthService] Response getCurrentSupplierInfo', response);
+          return response;
+        }))
+      ;
+    } else if(type === 'USER') {
+      return this.http
+        .get(Configuration.serverUrl + '/api/users/current')
+        .pipe(map((response: any) => {
+          console.log('[AuthService] Response getCurrentUserInfo', response);
+          return response;
+        }))
+      ;
     }
   }
   
+  public getUserType(): any {
+    return this.http
+      .get(Configuration.serverUrl + '/api/auth/currentUser')
+      .pipe(map((response: any) => {
+        console.log('[AuthService] Response getUserType', response);
+        if(response && response.type) {
+          this.loginType.next(response.type);
+        } else {
+          this.loginType.next(null);
+        }
+        return response;
+      })
+    );
+  }
 
+  public logOutUser() {
+    this.bsService.clearLocalStorage();
+    this.cookieService.delete('auth');
+    this.cookieService.delete('refresh');
+    this.router.navigate(['login']);
+    this.notifService.error('Veuillez vous authentifier.');
+}
 }

@@ -78,10 +78,11 @@ export default {
       ],
     },
     suppliers: {
-      uri : '/api/supplier',
+      uri : '/api/suppliers',
       actions: [
         { name: 'checkSupplier', uriPattern: '/available', method: 'get' },
         { name: 'getSuppliers', uriPattern: '', method: 'get' },
+        { name: 'getCurrentSupplier', uriPattern: '/currentSupplier', method: 'get' },
         { name: 'createSupplier', uriPattern: '/define_supplier', method: 'post' },
         { name: 'createSupplierUser', uriPattern: '/define_supplier_user', method: 'post' },
         { name: 'createRepresentative', uriPattern: '/define_representative', method: 'post' },
@@ -100,6 +101,12 @@ export default {
         { name: 'modifyRepresentative', uriPattern: '/modify_representative/:id', method: 'post' },
       ],
     },
+    supplier: {
+      uri : '/api/supplier',
+      actions: [
+        { name: 'getCurrentSupplier', uriPattern: '/currentSupplier', method: 'get' },
+      ],
+    },
     documents: {
       uri : '/api/documents',
       actions: [
@@ -113,6 +120,7 @@ export default {
         { name: 'login', uriPattern: '/login', method: 'post' },
         { name: 'refreshToken', uriPattern: '/refresh_token', method: 'post' },
         { name: 'supplierLogin', uriPattern: '/supplier-login', method: 'post' },
+        { name: 'logout', uriPattern: '/logout', method: 'post' },
       ]
     },
     settings: {

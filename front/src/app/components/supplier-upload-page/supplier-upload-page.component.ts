@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpService } from 'src/app/services/http.service';
 
 @Component({
   selector: 'app-supplier-upload-page',
@@ -9,7 +10,17 @@ export class SupplierUploadPageComponent implements OnInit {
 
 
 
-  constructor() { }
+  authorized: Boolean;
+
+  constructor(private httpService: HttpService) { 
+    this.httpService.get('/api/supplier/currentSupplier')
+      .subscribe(res => {
+        console.log('currentSupplier', res)
+      }, err => {
+
+      })
+    ;
+  }
 
   ngOnInit() {
   }

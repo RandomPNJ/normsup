@@ -65,7 +65,7 @@ export class GroupListComponent implements OnInit {
   ngOnInit() {
     if(this.items.length === 0) {
       this.httpService
-        .get('/api/supplier/groups')
+        .get('/api/suppliers/groups')
         .subscribe(res => {
           console.log('group list res', res);
           this.items = res.body['items'];
@@ -146,7 +146,7 @@ export class GroupListComponent implements OnInit {
 
   reloadList() {
     this.httpService
-      .get('/api/supplier/groups')
+      .get('/api/suppliers/groups')
       .subscribe(res => {
         this.items = res.body['items'];
         this.showCount = true;
