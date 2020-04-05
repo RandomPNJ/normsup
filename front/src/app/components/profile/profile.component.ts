@@ -90,9 +90,13 @@ export class ProfileComponent implements OnInit {
     this.id = JSON.parse(this.bsService.getLocalStorage('current_user')).id;
     this.apiService.get('/api/users/current')
       .subscribe(res => {
-        this.userInfo = cloneDeep(res.body['items'][0]);
-        this.user = cloneDeep(res.body['items'][0]);
-        this.loading = false;
+        console.log('userInfo res', res)
+        if(res.body['user']) {
+          this.userInfo = cloneDeep(res.body['user']);
+          this.user = cloneDeep(res.body['user']);
+          this.loading = false;
+        
+        }
       }, err => {
         if(err.code === -1) {
           this.notifService.error('Session expirée. Vous serez redirigé vers la page de connexion.');

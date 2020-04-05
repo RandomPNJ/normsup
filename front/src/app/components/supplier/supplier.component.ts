@@ -278,6 +278,8 @@ export class SupplierComponent implements OnInit {
 
   addCompany(data: any) {
     data.comp.denomination = data.comp.denomination.charAt(0).toUpperCase() + data.comp.denomination.toLowerCase().slice(1);
+    data.interloc.phonenumber = data.interloc.phonenumber.replace(/\s/g,'');
+
     this.apiService.postData('/api/suppliers/define_supplier', data)
       .subscribe(res => {
         // this.hideModal('');
