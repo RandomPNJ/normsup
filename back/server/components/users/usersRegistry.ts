@@ -152,6 +152,7 @@ export default class UserRegistry {
 
                         })
                         .catch(err => {
+                            loggerT.error('Error when getting user roles, err', err)
                             err.message = 'Error when getting user roles';
                             return Promise.reject(err);
                         })
