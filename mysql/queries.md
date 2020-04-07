@@ -258,3 +258,29 @@ ADD COLUMN `password` VARCHAR(255) NULL AFTER `validity_date`;
 
 True
 
+
+  ## Date
+
+
+07-04-2020
+
+## Comment
+
+
+
+## Query
+
+CREATE TABLE `normsup`.`group_reminders_history` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `createdAt` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
+  `supplier_id` INT NOT NULL,
+  `group_id` INT NOT NULL,
+  `client_id` INT NOT NULL,
+  `status` VARCHAR(45) NULL DEFAULT '',
+  PRIMARY KEY (`id`));
+
+
+## Applied
+
+True
+

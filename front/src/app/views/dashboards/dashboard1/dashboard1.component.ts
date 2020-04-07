@@ -31,6 +31,9 @@ export class Dashboard1Component implements OnInit, AfterViewInit {
 	public reminders: Array<any>;
 	public showConformityChart: Boolean = false;
 	public groupSColors : Array<string> = ['#4390EF', '#C7E0FF', '#4E5983'];
+	public nbSuppliers: any;
+	public conform: any;
+	public notConform: any;
 
 	// All chart types
 	public conformityChartType = 'line';
@@ -235,7 +238,7 @@ export class Dashboard1Component implements OnInit, AfterViewInit {
 
 	
 
-	constructor(private http: HttpService) {
+	constructor(private httpService: HttpService) {
 		// Custom tooltip
 		Chart.defaults.global.tooltips.custom = function(tooltip) {
 			// Tooltip Element
@@ -379,6 +382,27 @@ export class Dashboard1Component implements OnInit, AfterViewInit {
 				this.initChart();
 			})
 		;
+		this.httpService
+			.get('/api/suppliers/count')
+			.subscribe(res => {
+				console.log('count res', res);
+				if(res.body) {
+					if(res.body['count']) {
+						this.nbSuppliers = res.body['count'];
+					} else {
+						this.nbSuppliers = 0; 
+					}
+					if(res.body['conform']) {
+						this.conform = res.body['conform'];
+					} else {
+						this.conform = 0;
+					}
+					this.notConform = this.nbSuppliers >= this.conform ? this.nbSuppliers - this.conform : 0;
+				}
+			}, err => {
+				console.log('[StatsCardComponent] getSuppliers count', err);
+			})
+			;
 	}
 
 	ngAfterViewInit() {

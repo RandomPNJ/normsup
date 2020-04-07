@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { HttpService } from 'src/app/services/http.service';
 
 @Component({
@@ -8,22 +8,11 @@ import { HttpService } from 'src/app/services/http.service';
 })
 export class StatsCardComponent implements OnInit {
 
-  constructor(private httpService: HttpService) { }
-  nbSuppliers: any;
+  @Input() nbSuppliers: any;
+
+  constructor() { }
 
   ngOnInit() {
-    this.httpService
-      .get('/api/suppliers/count')
-      .subscribe(res => {
-        console.log('count res', res);
-        if(res.body && res.body['count']) {
-          this.nbSuppliers = res.body['count'];
-        } else {
-          this.nbSuppliers = 0; 
-        }
-      }, err => {
-        console.log('[StatsCardComponent] getSuppliers count', err);
-      })
     ;
   }
 

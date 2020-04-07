@@ -18,10 +18,10 @@ export function getSuppliers(req, res, SupplierRegistry) {
 
     return SupplierRegistry.countSuppliers(req.query, req.decoded)
         .then(res => {
-            let result = {
-                count: res
-            };
-            return result;
+            // let result = {
+            //     count: res
+            // };
+            return res;
         })
         .catch(err => {
             delete err.stackTrace;

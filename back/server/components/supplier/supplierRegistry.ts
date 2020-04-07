@@ -469,10 +469,19 @@ export default class SupplierRegistry {
             query['sql'] = Query.QUERY_COUNT_SUPPLIERS;
         }
         return this.mysql.query(query)
-            .then((res, fields) => {
-                loggerT.verbose('fields', fields)
-                // loggerT.verbose('QUERY RES ==== ', res);
-                return Promise.resolve(res[0][Object.keys(res[0])[0]]);
+            .then(res => {
+                loggerT.verbose('[countSuppliers] res', res)
+                let i = 0;
+                if(res.length > 0) {
+                    res.map(element => {
+                        if(element.kbis == 1 && element.urssaf == 1 && element.lnte == 1) {
+                            i++;
+                        }
+                    });
+                    return Promise.resolve({count: res[0].count, conform: i});
+                } else {
+                    return Promise.resolve({count: 0, conform: 0})
+                }
             })
             .catch(err => {
                 loggerT.error('ERROR ON QUERY getSuppliers.');
