@@ -49,6 +49,7 @@ services:
     restart: always
     container_name: database.normsup
     environment:
+      TZ: Europe/Sofia
       MYSQL_HOST: localhost
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: normsup

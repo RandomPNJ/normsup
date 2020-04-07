@@ -41,6 +41,8 @@ export const QUERY_GET_GROUPS_NAME = 'SELECT * FROM `groups` WHERE `client_id` =
 
 // export const QUERY_GET_GROUPS_SEARCH = 'SELECT * FROM `groups` AS g LEFT JOIN `client_supplier_relation` as c ON g.organisation = WHERE `org` = ?';
 
+export const GET_GROUPS_REMINDERS = 'SELECT g.id as id, g.name, g.description, gr.activated, gr.legal_docs, gr.comp_docs, gr.frequency, gr.last_reminder, gr.next_reminder FROM group_reminders as gr INNER JOIN `groups` as g ON gr.group_id = g.id WHERE g.client_id = ? ORDER BY gr.next_reminder ASC LIMIT ?';
+
 export const QUERY_COUNT_SUPPLIERS_CLIENT = 'SELECT COUNT(*) FROM `organisations` AS o LEFT JOIN `client_supplier_relation` as c ON o.id = c.supplier_id WHERE c.client_id = ?';
 export const QUERY_COUNT_SUPPLIERS_SEARCH = 'SELECT COUNT(*) FROM `organisations`  AS o LEFT JOIN `client_supplier_relation` as c ON o.id = c.supplier_id WHERE c.client_id = ? AND `denomination` LIKE ?';
 export const QUERY_COUNT_SUPPLIERS = 'SELECT COUNT(*) FROM `organisations`';
@@ -53,7 +55,7 @@ export const INSERT_GROUP = 'INSERT INTO `groups` SET ?';
 export const INSERT_GROUP_MEM = 'INSERT INTO `group_members` (group_id, member_id) VALUES ?';
 export const INSERT_REL = 'INSERT INTO `client_supplier_relation` SET ?';
 export const INSERT_REPRESENTATIVE = 'INSERT INTO `representatives` SET ?';
-export const INSERT_GROUP_REMINDERS = 'INSERT INTO `group_reminders` (group_id, activated, legal_docs, comp_docs, frequency) VALUES (?,?,?,?,?)'
+export const INSERT_GROUP_REMINDERS = 'INSERT INTO `group_reminders` (group_id, activated, legal_docs, comp_docs, frequency, last_reminder, next_reminder) VALUES (?,?,?,?,?,?,?)'
 export const MODIFY_GROUP_REMINDERS = 'INSERT INTO `group_reminders` (group_id, activated, legal_docs, comp_docs, frequency) VALUES (?,?,?,?,?)' + 
 'ON DUPLICATE KEY UPDATE group_id= ?, activated = ?, legal_docs = ?, comp_docs = ?, frequency = ?';
 export const INSERT_SUPPLIER_USER = 'INSERT INTO `suppliers` SET ?';

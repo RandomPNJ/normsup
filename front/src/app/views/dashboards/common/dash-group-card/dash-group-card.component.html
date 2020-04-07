@@ -11,7 +11,7 @@
       </thead>
       <tbody>
         <tr *ngFor="let item of reminders">
-          <td class="group-txt">{{item.groupName}}</td>
+          <td (click)="goToGroupDetails(item.id)" class="group-txt" style="cursor: pointer;">{{item.name}}</td>
           <td class="reminder-txt">{{item.daysUntil}} jours</td>
           <td style="text-align: center;"><button class="btn btn-normsup btn-modify">Modifier</button></td>
         </tr>

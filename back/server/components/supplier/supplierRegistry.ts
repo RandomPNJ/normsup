@@ -1,5 +1,6 @@
 import { Promise, any } from 'bluebird';
 import * as _ from 'lodash';
+import * as moment from 'moment';
 import * as HelperQueries from '../helpers/dbhelpers';
 import * as Query from './queries';
 import config from '../../config/environment/index';
@@ -298,6 +299,7 @@ export default class SupplierRegistry {
         //     })
         // ;
     }
+
     public getGroupDetails(org, data) {
         let query = {
             timeout: 40000
@@ -311,6 +313,26 @@ export default class SupplierRegistry {
             .then((res, fields) => {
                 loggerT.verbose('fields', fields)
                 // loggerT.verbose('QUERY RES ==== ', res);
+                return Promise.resolve(res);
+            })
+            .catch(err => {
+                loggerT.error('ERROR ON QUERY getGroups.');
+                return Promise.reject(err);
+            })
+        ;
+    }
+
+    public getGroupsReminders(org) {
+        let query = {
+            timeout: 40000
+        };
+        if(org) {
+            query['sql'] = Query.GET_GROUPS_REMINDERS;
+            query['values'] = [org, 3];
+        }
+
+        return this.mysql.query(query)
+            .then(res => {
                 return Promise.resolve(res);
             })
             .catch(err => {
@@ -789,7 +811,9 @@ export default class SupplierRegistry {
                 query2['sql']    = Query.INSERT_GROUP_REMINDERS;
                 let legal_docs = remindersData.legal_docs ? remindersData.legal_docs : '';
                 let comp_docs = remindersData.comp_docs ? remindersData.comp_docs : '';
-                query2['values'] = [insertId, 1, legal_docs, comp_docs, remindersData.frequency];
+                let last_reminder = moment().toDate();
+                let new_reminder = moment().add(remindersData.frequency.split('d')[0], 'd').toDate();
+                query2['values'] = [insertId, 1, legal_docs, comp_docs, remindersData.frequency, last_reminder, new_reminder];
                 promises.push(this.mysql.query(query2));
 
                 return Promise.all(promises);

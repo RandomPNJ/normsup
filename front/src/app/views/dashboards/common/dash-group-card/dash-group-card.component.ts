@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpService } from 'src/app/services/http.service';
 import { CookieService } from 'ngx-cookie-service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dash-group-card',
@@ -12,14 +13,15 @@ export class DashGroupCardComponent implements OnInit {
   public reminders: Array<any> = [];
   cookieValue: any;
 
-  constructor(private httpService: HttpService, private cookieService: CookieService) { }
+  constructor(private httpService: HttpService, private cookieService: CookieService,
+	private router: Router) { }
 
   ngOnInit() {
 	const allCookies: {} = this.cookieService.getAll();
-    this.httpService.get('/api/documents/details')
+    this.httpService.get('/api/suppliers/groups/reminders')
       .subscribe(res => {
-        if(res.body && res.body['data']) {
-          this.getReminderData(res.body['data']);
+        if(res.body && res.body['items']) {
+          this.getReminderData(res.body['items']);
         }
       }, err => {
         console.log('[DashGroupCardComponent] Error on get documents details');
@@ -44,7 +46,7 @@ export class DashGroupCardComponent implements OnInit {
 		// 	},
 		// ];
 		data.forEach(reminder => {
-			reminder.daysUntil = this.dayUntil(reminder.reminderAt);
+			reminder.daysUntil = this.dayUntil(this.toTimestamp(reminder.next_reminder));
 		});
     this.reminders = data;
   }
@@ -104,6 +106,11 @@ export class DashGroupCardComponent implements OnInit {
 	public toTimestamp(strDate){
 		var datum = Date.parse(strDate);
 		return datum/1000;
+	}
+
+	public goToGroupDetails(id) {
+		console.log('here', id)
+		this.router.navigate(['dashboard', 'groups', 'details', id]);
 	}
 
 }

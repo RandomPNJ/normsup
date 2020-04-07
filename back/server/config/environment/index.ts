@@ -92,6 +92,7 @@ export default {
         { name: 'getGroups', uriPattern: '/groups', method: 'get' },
         { name: 'getGroupDetails', uriPattern: '/group/:id', method: 'get' },
         { name: 'getGroupMembers', uriPattern: '/group/:id/members', method: 'get' },
+        { name: 'getGroupsReminders', uriPattern: '/groups/reminders', method: 'get' },
         { name: 'checkGroup', uriPattern: '/group/check_availability', method: 'get' },
         { name: 'createGroup', uriPattern: '/define_group', method: 'post' },
         { name: 'deleteGroup', uriPattern: '/group/:id/delete', method: 'post' },
@@ -111,7 +112,7 @@ export default {
       uri : '/api/documents',
       actions: [
         { name: 'getDocuments', uriPattern: '', method: 'get' },
-        { name: 'createDocument', uriPattern: '/upload', method: 'post' }
+        { name: 'createDocument', uriPattern: '/upload', method: 'post' },
       ],
     },
     auth: {
