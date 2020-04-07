@@ -31,20 +31,6 @@ export class DashGroupCardComponent implements OnInit {
 
 
   getReminderData(data) {
-		// let reminders: Array<any> = [
-		// 	{
-		// 		groupName: 'Groupe 1',
-		// 		reminderAt: this.toTimestamp(this.addDays(2).toDateString()),
-		// 	},
-		// 	{
-		// 		groupName: 'Groupe 2',
-		// 		reminderAt: this.addDays(3),
-		// 	},
-		// 	{
-		// 		groupName: 'Groupe 3',
-		// 		reminderAt: this.addDays(5),
-		// 	},
-		// ];
 		data.forEach(reminder => {
 			reminder.daysUntil = this.dayUntil(this.toTimestamp(reminder.next_reminder));
 		});

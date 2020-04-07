@@ -1,0 +1,107 @@
+.third-card-row {
+    min-height: 310px;
+}
+
+.box-title {
+    font-size: 15px;
+    font-family: 'Roboto Bold';
+    color: #4E5983;
+    text-align: center;
+    padding-top: 13px;
+}
+
+.table-head-style {
+    text-align: center;
+    
+
+    th {
+        padding-top: 5px !important;
+        padding-bottom: 5px !important;
+        background-color: #fff;
+        border-bottom: none !important;
+        font-family: 'Roboto Bold' !important;
+        font-size: 13px !important;
+        color: #4E5983;
+    }
+
+}
+
+.legend-cont {
+    display: inline-block;
+    font-family: 'Roboto Regular';
+    font-size: 14px;
+}
+
+.legend-txt {
+
+}
+
+.empty-message {
+    font-size: 14px;
+    font-family: 'Roboto Regular';
+    color: #4E5983;
+    text-align: center;
+    height: 100%;
+    padding-top: 5rem;
+}
+
+.color-circle {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+td {
+    vertical-align: middle !important;
+}
+
+.reminders-card {
+    padding: 23px 0px 0px 0px !important;
+    
+    td {
+        border-top: none !important;
+        border-bottom: 1px solid  #F3F7FC;
+    }
+}
+
+.group-txt {
+    text-align: left;
+    text-decoration: underline;
+    font-family: 'Roboto Regular';
+    font-size: 14px;
+    letter-spacing: 0;
+    color: #4390EF;
+
+    &:first-child {
+        border-top: none !important;
+        padding-left: 20px !important;
+    }
+}
+
+.reminder-txt {
+    text-align: left;
+    font-family: 'Roboto Regular';
+    font-size: 14px;
+    letter-spacing: 0;
+    color: #4E5983;
+
+    &:first-child {
+        border-top: none !important;
+    }
+}
+.card {
+    border-radius: 10px;
+}
+
+.btn-modify {
+    font-family: 'Roboto Medium';
+    font-size: 13px;
+    text-transform: capitalize;
+    color: #4390EF;
+    padding-top: 4.5px;
+    padding-bottom: 4.5px;
+    margin-bottom: 15px;
+    margin-top: 15px;
+    // &:first-child {
+    //     border-top: none !important;
+    // }
+}

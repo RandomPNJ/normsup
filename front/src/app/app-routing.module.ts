@@ -81,7 +81,7 @@ const routes: Routes = [
       routes,
       // { enableTracing: true }, // <-- debugging purposes only
       {
-        enableTracing: true,
+        enableTracing: false,
         onSameUrlNavigation: 'reload'
       },
     )

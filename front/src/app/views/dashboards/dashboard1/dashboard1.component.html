@@ -41,27 +41,6 @@
         </div>
       </div>
       <div class="col-lg-6 col-md-6 mb-4" style="padding-right: 0px !important;">
-        <!-- <div class="card second-card-row">
-          <div class="box-title">Prochaines relances</div>
-          <div class="card-body reminders-card">
-            <table class="table">
-              <thead class="table-head-style">
-                <tr>
-                  <th>Nom du groupe</th>
-                  <th>Jours avant relance</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let item of reminders">
-                  <td class="group-txt">{{item.groupName}}</td>
-                  <td class="reminder-txt">{{item.daysUntil}} jours</td>
-                  <td style="text-align: center;"><button class="btn btn-normsup btn-modify">Modifier</button></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div> -->
         <app-dash-group-card></app-dash-group-card>
       </div>
     </div>
@@ -69,26 +48,7 @@
     <div class="row wow fadeIn mb-5" style="margin-top: 2.5rem !important;">
   
       <div class="col-lg-5 col-md-4 mb-4"  style="padding-left: 0px !important;">
-  
-        <div class="card third-card-row">
-          <div class="box-title">Fournisseurs par groupe (en %)</div>
-          <div class="card-body" style="padding-bottom: 0px !important;">
-            <div class="groupSupplierDoughnut">
-                <canvas #groupSupplier id="groupSupplier" mdbChart [chartType]="groupSupplierType" height="162"></canvas>
-            </div>
-            <div style="padding-top: 30px;" class="container">
-              <div style="margin: auto;" class="row ">
-                <span *ngFor="let item of groupSupplierSet.datasets[0].data; let index = index" class="legend-cont col-4 nopadding pt-1">
-                  <div style="line-height: 17px;">
-                    <div [ngStyle]="{'background-color': groupSColors[index]}" id="circle" class="color-circle">&nbsp;</div>
-                    <span class="legend-txt">Groupe {{ index }}</span>
-                  </div>
-                </span>
-              </div>
-            </div>
-          </div>
-  
-        </div>
+        <app-supplier-per-group></app-supplier-per-group>
       </div>
   
       <div class="col-lg-7 col-md-8 mb-4"  style="padding-right: 0px !important;">

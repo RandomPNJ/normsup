@@ -130,8 +130,10 @@ export default class SupplierRegistry {
         }
 
         return this.mysql.query(query)
-            .then((res, fields) => {
-                loggerT.verbose('fields', fields)
+            .then(res => {
+
+                let sum = this.sum(res, 'members_count');
+                res.forEach(e => e.total = sum);
                 // loggerT.verbose('QUERY RES ==== ', res);
                 return Promise.resolve(res);
             })
@@ -869,5 +871,9 @@ export default class SupplierRegistry {
         return Promise.all(
           promises.map(p => p.catch(error => errs.push(error)))
         )
+    }
+
+    private sum(collection, key) {
+        return _.reduce(collection, (a, b) => a + (b[key] || 0), 0);
     }
 }

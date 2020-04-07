@@ -1,0 +1,22 @@
+<!-- <div  class="col-lg-5 col-md-4 mb-4"  style="padding-left: 0px !important;"> -->
+  <div class="card third-card-row">
+    <div class="box-title">Fournisseurs par groupe (en %)</div>
+    <div class="card-body" style="padding-bottom: 0px !important;" [hidden]="!showGraph">
+      <div class="groupSupplierDoughnut">
+          <canvas #groupSupplier id="groupSupplier" mdbChart [chartType]="groupSupplierType" height="162"></canvas>
+      </div>
+      <div style="padding-top: 30px;" class="container">
+        <div style="margin: auto;" class="row ">
+          <span *ngFor="let item of groupSupplierSet.datasets[0].data; let index = index" class="legend-cont col-4 nopadding pt-1">
+            <div style="line-height: 17px;">
+              <div [ngStyle]="{'background-color': groupSColors[index]}" id="circle" class="color-circle">&nbsp;</div>
+              <span class="legend-txt">Groupe {{ index }}</span>
+            </div>
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="empty-message" *ngIf="showEmptyMessage">
+      Aucun fournisseur n'a été ajouté à un groupe.
+    </div>
+  </div>

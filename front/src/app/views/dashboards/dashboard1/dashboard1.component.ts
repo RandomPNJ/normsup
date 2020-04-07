@@ -15,18 +15,15 @@ export class Dashboard1Component implements OnInit, AfterViewInit {
 
 	@ViewChild('conformityDoughnut') private conformityDoughnutRef: ElementRef;
 	@ViewChild('conformityChart') private conformityChartRef: ElementRef;
-	@ViewChild('groupSupplier') private groupSupplierRef: ElementRef;
 	@ViewChild('conformityPerGrp') private conformityPerGrpRef: ElementRef;
 	
 	public context: CanvasRenderingContext2D;
 	public lineContext: CanvasRenderingContext2D;
-	public groupSContext: CanvasRenderingContext2D;
 	public conformityPerGrpContext: CanvasRenderingContext2D;
 
 	// General data
 	public halfDoughnut: any;
 	public conformityChart: any;
-	public groupSDoughnut: any;
 	public confPerGrpBar: any;
 	public map: any = { lat: 51.678418, lng: 7.809007 };
 	private months = ['Janv', 'Fev', 'Mars', 'Avr', 'Mai', 'Juin', 'Juil', 'Aout', 'Sept', 'Oct', 'Nov', 'Dec'];
@@ -34,13 +31,11 @@ export class Dashboard1Component implements OnInit, AfterViewInit {
 	public reminders: Array<any>;
 	public showConformityChart: Boolean = false;
 	public groupSColors : Array<string> = ['#4390EF', '#C7E0FF', '#4E5983'];
-	public groupData: Array<any> = [];
 
 	// All chart types
 	public conformityChartType = 'line';
 	public conformityPerGrpType = 'bar';
 	public conformityType = 'doughnut';
-	public groupSupplierType = 'doughnut';
 
 	/** Conformity doughnut configuration **/
 	public conformityRateSet = {
@@ -150,84 +145,7 @@ export class Dashboard1Component implements OnInit, AfterViewInit {
 		label: 'Taux de conformité fournisseurs'
 	};
 
-	/** Group suppliers chart **/
-	public groupSupplierSet = {
-		labels: [
-			'Value'
-		],
-		datasets: [
-			{
-				data: [62, 25, 13],
-				backgroundColor: [
-					"#4390EF",
-					"#C7E0FF", 
-					'#4E5983'
-				],
-				hoverBackgroundColor: [
-					"#4390EF",
-					"#C7E0FF", 
-					'#4E5983'
-				]
-			}]
-	};
-
-	public groupSupplierOptions: any = {
-		aspectRatio: 1,
-		layout: {
-            padding: {
-                left: 0,
-                right: 0,
-                top: 0,
-                bottom: 0,
-            }
-        },
-		responsive: true,
-		cutoutPercentage: 65,
-		tooltips: {
-			enabled: false
-		},
-		animation: {
-			animationRotate: true,
-			duration: 2000
-		},
-		legend: {
-			display: false
-		},
-		elements: {
-			arc: {
-				borderWidth: 0
-			}
-		},
-		title: {
-			display: false,
-			text: 'Fournisseur par groupe (en %)',
-			position: 'top',
-			fontColor: '#4E5983', //Default black
-			fontFamily: 'Roboto Regular', //Default Arial,
-			fontSize: 14
-		},
-		plugins: {
-			labels: {
-				// mode 'label', 'value' or 'percentage', default is 'percentage'
-				render: 'value',
-			
-				// precision for percentage, default is 0
-				precision: 0,
-			
-				// font size, default is defaultFontSize
-				fontSize: 13,
-			
-				// font color, default is '#fff'
-				fontColor: '#fff',
-			
-				// font style, default is defaultFontStyle
-				fontStyle: 'bold',
-			
-				// font family, default is defaultFontFamily
-				fontFamily: "'Roboto Regular', 'Roboto'"
-			}
-		}
-	};
+	
 
 	/** Conformity per group chart **/
 	public confPerGrpSet = {
@@ -471,12 +389,7 @@ export class Dashboard1Component implements OnInit, AfterViewInit {
 			options: this.conformityDOptions
 		});
 
-		this.groupSContext = (<HTMLCanvasElement>this.groupSupplierRef.nativeElement).getContext('2d');
-		this.groupSDoughnut = new Chart(this.groupSContext, {
-			type: this.groupSupplierType,
-			data: this.groupSupplierSet,
-			options: this.groupSupplierOptions
-		});
+		
 
 		this.conformityPerGrpContext = (<HTMLCanvasElement>this.conformityPerGrpRef.nativeElement).getContext('2d');
 		this.confPerGrpBar = new Chart(this.conformityPerGrpContext, {
