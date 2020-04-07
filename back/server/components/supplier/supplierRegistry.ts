@@ -459,11 +459,11 @@ export default class SupplierRegistry {
         if(data.client && data.search) {
             loggerT.verbose('Recount == ', s);
             query['sql']    = Query.QUERY_COUNT_SUPPLIERS_SEARCH;
-            query['values'] = [data.client, s];
+            query['values'] = [data.client, s, data.client, s];
         } else if(data.client) {
             loggerT.verbose('Recount 2 == ', s);
             query['sql']    = Query.QUERY_COUNT_SUPPLIERS_CLIENT;
-            query['values'] = [data.client];
+            query['values'] = [data.client, data.client];
         } else {
             loggerT.verbose('Recount 3 == ', s);
             query['sql'] = Query.QUERY_COUNT_SUPPLIERS;
