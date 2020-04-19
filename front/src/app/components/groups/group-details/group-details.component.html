@@ -2,7 +2,7 @@
   <div class="row nopadding previous-lnk-row">
     <div [routerLink]="['/dashboard/groups']">
       <span class="glyphicon glyphicon-chevron-left previous-arrow" aria-hidden="true"></span>
-      <span class="previous-txt" style="padding-left: 9px">Retour aux groupes</span>
+      <span class="previous-txt" style="padding-left: 9px;">Retour aux groupes</span>
     </div>
   </div>
   <div class="row nopadding  col-lg-11 col-md-11 col-sm-7 col-8" style="padding-top: 45px !important; padding-bottom: 25px !important;">
@@ -28,14 +28,14 @@
       </div>
     </div>
   </div>
-  <div class="row nopadding col-lg-11 col-md-11 col-sm-7 col-8" style="height: 100%;">
+  <div class="row nopadding col-lg-11 col-md-11 col-sm-7 col-8" style="height: 100%;margin-bottom: 65px !important;">
     <div class="container nopadding" style="">
       <!-- Liste des fournisseurs -->
       <div class="normsup-card col-lg-6" style="padding-left: 0px !important;">
         <div class="normsup-card-header">
           <span>Liste des fournisseurs du groupe</span>
         </div>
-        <div class="normsup-card-body">
+        <div class="normsup-card-body invisible-scrollbar">
           <div *ngFor="let supplier of suppliers" class="supplier-row">
             <span class="supplier-txt">{{supplier.denomination}}</span>
           </div>
@@ -46,7 +46,7 @@
         <div class="normsup-card-header">
           <span>Paramétrage des relances</span>
         </div>
-        <div class="normsup-card-body">
+        <div class="normsup-card-body invisible-scrollbar">
           <div class="group-card-row">
             <div class="text-cont">
               <div class="basic-txt d-inline-block">Activer les relances</div>

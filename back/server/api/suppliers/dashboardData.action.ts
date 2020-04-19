@@ -8,20 +8,20 @@ export default {
     method: 'get',
     uriPattern: '/count',
     services: [''],
-    handler: (req, res, app) => getConformCount(req, res, app.get('SupplierRegistry')),
+    handler: (req, res, app) => getDashboardData(req, res, app.get('SupplierRegistry')),
 };
 
-export function getConformCount(req, res, SupplierRegistry) {
-    if(!req.decoded) {
+export function getDashboardData(req, res, SupplierRegistry) {
+    if (!req.decoded) {
         return Promise.reject(`Cannot get user informations, invalid request.`);
     }
 
-    return SupplierRegistry.getConformCount(req.query, req.decoded)
+    return SupplierRegistry.getDashboardData(req.query, req.decoded)
         .then(res => {
-            let result = {
-                count: res
-            };
-            return result;
+            // let result = {
+            //     count: res
+            // };
+            return res;
         })
         .catch(err => {
             delete err.stackTrace;

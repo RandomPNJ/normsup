@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-offline-card',
@@ -6,6 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./offline-card.component.scss']
 })
 export class OfflineCardComponent implements OnInit {
+
+  @Input() offline: any;
 
   constructor() { }
 

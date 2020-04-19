@@ -215,7 +215,16 @@ export class GroupDetailsComponent implements OnInit {
   }
 
   public spontReminder() {
-
+    let q = this.id ? this.id.toString() : '0';
+    console.log('this.id', this.id);
+    console.log('q', q);
+    this.httpService.post('/api/reminders/group/' + q)
+      .subscribe(res => {
+        console.log('[spontReminder] res ', res);
+      }, err => {
+        console.log('[spontReminder] err ', err);
+      })
+    ;
   }
 
   private deleteGroup() {

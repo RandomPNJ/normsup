@@ -333,3 +333,35 @@ hr {
   letter-spacing: 0;
   // color: #FFFFFF;
 }
+
+// .datepicker-supplier {
+//   color: #495057;
+//   width: 100%;
+//   height: calc(1.5em + 0.75rem + 2px);
+//   padding: 0.375rem 0.75rem;
+//   font-size: 1rem;
+//   font-weight: 400;
+//   line-height: 1.5;
+//   color: #495057;
+// }
+
+.datepicker-ph {
+
+  width: 100%;
+  text-align: left;
+  font-family: 'Roboto Regular';
+  padding: 0.375rem 0.75rem;
+  height: calc(1.5em + 0.75rem + 2px);
+  font-size: 1rem;
+  letter-spacing: 0;
+  color: #495057;
+  opacity: 1;
+
+  &::placeholder {
+      font-family: 'Roboto Regular';
+      font-size: 1rem;
+      letter-spacing: 0;
+      color: #495057;
+      opacity: 1;
+  }
+}

@@ -4,6 +4,7 @@ import * as path from 'path';
 import * as fs from 'fs';
 import * as AWSDK from 'aws-sdk';
 import * as moment from 'moment';
+import * as nodemailer from 'nodemailer';
 
 import ServiceManager from './config/serviceManager/index';
 import config from './config/environment/index';
@@ -19,6 +20,7 @@ import UserRegistry from './components/users/usersRegistry';
 import DocumentsRegistry from './components/documents/documentsRegistry';
 import SupplierRegistry from './components/supplier/supplierRegistry';
 import SettingsRegistry from './components/settings/settingsRegistry';
+import RemindersRegistry from './components/reminders/remindersRegistry';
 import AdminRegistry from './components/admin/adminRegistry';
 import AuthRegistry from './components/auth/authRegistry';
 
@@ -45,7 +47,6 @@ function start(app: any, config: any): any {
   });
 
   loggerT.info(`Démarrage du module ${config.appName}`);
-
   
   // init static config
   app.set('config', config, { private: true });
@@ -69,7 +70,10 @@ function start(app: any, config: any): any {
   // Initialisation de SqlDB
   const sqlDB = new SqlDB(config.mysqlParams, loggerT);
   app.set('db:sqlDB', sqlDB, { onLoad: true });
-
+  
+  // Initialisation du service de mail
+  const mailer = nodemailer.createTransport(config.mailconfig);
+  
   // Initialisation des repositories
   initRepositories(app, config.repositories);
 
@@ -100,6 +104,8 @@ function start(app: any, config: any): any {
   app.set('AdminRegistry', adminRegistry, {onLoad: true});
   const authRegistry = new AuthRegistry();
   app.set('AuthRegistry', authRegistry, {onLoad: true});
+  const remindersRegistry = new RemindersRegistry(sqlDB, mailer);
+  app.set('RemindersRegistry', remindersRegistry, {onLoad: true});
 
 
   return app.waitForUpAndRunning()

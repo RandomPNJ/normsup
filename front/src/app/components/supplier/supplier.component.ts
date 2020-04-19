@@ -10,6 +10,7 @@ import { ProductService } from 'src/app/services/product.service';
 import * as moment from 'moment';
 import { HttpService } from 'src/app/services/http.service';
 import { HttpParams } from '@angular/common/http';
+import { DaterangepickerConfig } from 'ng2-daterangepicker';
 
 declare var require: any;
 
@@ -25,6 +26,7 @@ export class SupplierComponent implements OnInit {
   @ViewChild('compDoc') public compModalRef: TemplateRef<any>;
   @ViewChild('legalDoc') public legalModalRef: TemplateRef<any>;
   @ViewChild('addInterloc') public addInterlocRef: TemplateRef<any>;
+  @ViewChild('daterangepicker') datePicker: ElementRef;
 
   showCount: Boolean = false;
   subscriptions: Subscription[] = [];
@@ -38,6 +40,7 @@ export class SupplierComponent implements OnInit {
   selectedCompany: any = null;
   isLoading: Boolean = false;
   filteredList: Array<any>;
+  showWrongDateOne: Boolean = false;
   
   // Modal Info
   supplierInfo: any;
@@ -49,7 +52,7 @@ export class SupplierComponent implements OnInit {
     three: false,
     four: false,
     five: false,
-    six: false,
+    six: true,
     seven: false,
   };
   interlocFocus: any = {
@@ -108,8 +111,16 @@ export class SupplierComponent implements OnInit {
   constructor(
     private modalService: BsModalService,
     private apiService: ProductService,
+    private dateRangeConf: DaterangepickerConfig,
     private changeDetection: ChangeDetectorRef,
     private httpService: HttpService) {
+      this.dateRangeConf.settings = {
+        locale: { format: 'DD/MM/YYYY', cancelLabel: 'Annuler' },
+        singleDatePicker: true,
+        alwaysShowCalendars: false,
+        opens: 'right',
+        drops: 'down'
+      };
     }
 
   ngOnInit() {
@@ -163,7 +174,6 @@ export class SupplierComponent implements OnInit {
   }
 
   hideModal(type?) {
-    console.log('type ===', type);
     if (!this.modalRef) {
       return;
     }
@@ -191,13 +201,13 @@ export class SupplierComponent implements OnInit {
     let p =  new HttpParams().append('siret', id);
     this.httpService.get('/api/suppliers/available', p)
       .subscribe(res => {
-        console.log('searchCompany res', res);
         let result = res.body;
         if(result && result.hasOwnProperty('exists')) {
           if(result['exists'] === true) {
             this.supplierErrExists = true;
           } else if(result['exists'] === false) {
             if(result['hasCompany'] && result['hasCompany'] !== {}) {
+              result['company'].dateCreation = result['company'].dateCreation ? moment(result['company'].dateCreation).format('DD/MM/YYYY') : null;
               this.companyToAdd = result['company'];
               delete this.companyToAdd.country;
               this.modalRef.setClass('modal-dialog-centered modal-lg');
@@ -276,17 +286,33 @@ export class SupplierComponent implements OnInit {
     }
   }
 
+  selectedDate(e) {
+    this.companyToAdd.dateCreation = moment(e.start).format('DD/MM/YYYY');
+    this.showWrongDateOne = false;
+  }
+
+  closeDatePicker(e) {
+    if(!this.companyToAdd.dateCreation) {
+      this.companyToAdd.dateCreation = moment(e.start).format('DD/MM/YYYY');
+    }
+  }
+  
+  clear() {
+
+  }
+
   addCompany(data: any) {
     data.comp.denomination = data.comp.denomination.charAt(0).toUpperCase() + data.comp.denomination.toLowerCase().slice(1);
     data.interloc.phonenumber = data.interloc.phonenumber.replace(/\s/g,'');
+    data.comp.dateCreation = moment(data.comp.dateCreation, 'DD/MM/YYYY').toDate();
 
-    this.apiService.postData('/api/suppliers/define_supplier', data)
+    return this.apiService.postData('/api/suppliers/define_supplier', data)
       .subscribe(res => {
         // this.hideModal('');
         this.nextState('supplierSuccess');
         this.child.reload();
       }, err => {
-        console.log('Error, ', err);
+        console.log('addCompany Error, ', err);
       })
     ;
   }
@@ -340,7 +366,6 @@ export class SupplierComponent implements OnInit {
 
   interlocInfo() {
     this.modalState = 'interlocInfo';
-    console.log('this.interloc', this.interloc);
   }
 
   docInfo() {

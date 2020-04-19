@@ -12,7 +12,7 @@
         <app-non-conform [notConform]="notConform"></app-non-conform>
       </div>
       <div class="col-lg-2-half col-md-3 infocard">
-        <app-offline-card></app-offline-card>
+        <app-offline-card [offline]="offline"></app-offline-card>
       </div>
   
       <div class="col-lg-2-half">
@@ -33,12 +33,7 @@
   
     <div class="row wow fadeIn mt-5">
       <div class="col-lg-6 col-md-6 mb-4" style="padding-left: 0px !important;">
-        <div class="card second-card-row">
-          <div class="box-title">Taux de conformité par mois en %</div>
-          <div class="card-body">
-              <canvas [hidden]="!showConformityChart" #conformityChart id="conformityChart" mdbChart [chartType]="conformityChartType" height="135"></canvas>
-          </div>
-        </div>
+        <app-monthly-conformity></app-monthly-conformity>
       </div>
       <div class="col-lg-6 col-md-6 mb-4" style="padding-right: 0px !important;">
         <app-dash-group-card></app-dash-group-card>

@@ -1,5 +1,6 @@
 import * as _ from 'lodash';
 import * as uuid from 'uuid/v4';
+import * as moment from 'moment';
 
 declare var loggerT: any;
 
@@ -26,14 +27,21 @@ export function login(body, res, SupplierRegistry, UsersRegistry) {
             loggerT.verbose('SupplierRegistry LOGIN RES', result);
             result.type = 'SUPPLIER';
             let tok = UsersRegistry.genToken(result);
+            return SupplierRegistry.supplierLoginHistory(result)
+                .then(res => {
+                    return res.cookie('auth', tok, {
+                        httpOnly: true,
+                        expire: moment().add(1, 'day').toDate()
+                    }).send({
+                        data: result,
+                        msg: 'Success'
+                    });
+                })
+                .catch(err => {
 
-            return res.cookie('auth', tok, {
-                expires: new Date(2147483647000),
-                httpOnly: true
-            }).send({
-                data: result,
-                msg: 'Success'
-            });
+                })
+            ;
+            
         })
         .catch(err => {
             loggerT.verbose('Final err', err);

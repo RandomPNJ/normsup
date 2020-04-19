@@ -14,6 +14,7 @@ services:
     container_name: server.normsup
     command: bash -c "(grunt build && npm run deploy;) && grunt"
     environment:
+      TZ: 'Europe/Paris' 
       PORT: 8080
     volumes:
       - ./back/server:/usr/src/app/server
@@ -21,22 +22,6 @@ services:
     ports:
       - 8080:8080 # API
       - 127.0.0.1:5858:5858 # Debug
-    networks:
-      - normsup
-
-  client.normsup:
-    extends:
-      file: compose-default.yml
-      service: client_build
-    # command: ng serve --host=0.0.0.0 --disable-host-check --watch --poll=1000
-    container_name: client.normsup
-    volumes:
-      - ./front/src:/usr/src/app/src
-      - ./front/angular.json:/usr/src/app/angular.json
-      - ./front/tslint.json:/usr/src/app/tslint.json
-      # - ./front/config/environment.local.ts:/usr/src/app/src/app/config/environment.ts
-    ports:
-      - 127.0.0.1:4200:80
     networks:
       - normsup
 
@@ -48,7 +33,7 @@ services:
     restart: always
     container_name: database.normsup
     environment:
-      TZ: Europe/Sofia
+      TZ: Europe/Paris
       MYSQL_HOST: localhost
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: normsup

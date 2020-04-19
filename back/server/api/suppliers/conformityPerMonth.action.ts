@@ -8,20 +8,21 @@ export default {
     method: 'get',
     uriPattern: '/count',
     services: [''],
-    handler: (req, res, app) => getConformCount(req, res, app.get('SupplierRegistry')),
+    handler: (req, res, app) => monthlyConformity(req, res, app.get('SupplierRegistry')),
 };
 
-export function getConformCount(req, res, SupplierRegistry) {
-    if(!req.decoded) {
+export function monthlyConformity(req, res, SupplierRegistry) {
+    if (!req.decoded) {
         return Promise.reject(`Cannot get user informations, invalid request.`);
     }
 
-    return SupplierRegistry.getConformCount(req.query, req.decoded)
+    return SupplierRegistry.monthlyConformity(req.query, req.decoded)
         .then(res => {
-            let result = {
-                count: res
-            };
-            return result;
+            // let result = {
+            //     total: res.totalConnected,
+            //     data: res.data
+            // };
+            return res;
         })
         .catch(err => {
             delete err.stackTrace;

@@ -500,6 +500,7 @@ export class SupplierTableComponent implements OnInit,AfterViewInit {
       return;
     }
   }
+
   updateInterlocData(data) {
     forEach(this.data, res => {
       if(res.id === data.supplierID) {
@@ -517,6 +518,16 @@ export class SupplierTableComponent implements OnInit,AfterViewInit {
         res['email'] = data.email;
       }
     });
+  }
+  private sendReminder(id) {
+    console.log('sendreminder id', id);
+    return this.httpService.post('/api/reminders/supplier/' + id)
+      .subscribe(res => {
+        console.log('[sendReminder] res', res);
+      }, err => {
+        console.log('[sendReminder] err', err);
+      })
+    ;
   }
 }
 

@@ -284,3 +284,155 @@ CREATE TABLE `normsup`.`group_reminders_history` (
 
 True
 
+
+  ## Date
+
+
+07-04-2020
+
+## Comment
+
+Add a `last_connexion` column to identify hors ligne suppliers
+
+
+## Query
+
+ALTER TABLE `normsup`.`suppliers` 
+ADD COLUMN `last_connexion` DATETIME NULL DEFAULT NULL AFTER `password`;
+
+
+## Applied
+
+True
+
+
+## Date
+
+
+08-04-2020
+
+## Comment
+
+Add a `start_date` and `end_date` column to `supplier_conformity` to identify the validity period
+
+
+## Query
+
+
+ALTER TABLE `normsup`.`supplier_conformity` 
+ADD COLUMN `start_date` DATETIME NOT NULL AFTER `client_id`,
+ADD COLUMN `end_date` DATETIME NOT NULL AFTER `start_date`;
+
+
+
+## Applied
+
+True
+
+## Date
+
+
+08-04-2020
+
+## Comment
+
+Create table `supplier_connexion_history`
+
+## Query
+
+
+DROP TABLE IF EXISTS `supplier_connexion_history`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `supplier_connexion_history` (
+  `supplier_id` int(11) NOT NULL,
+  `organisation_id` int(11) NOT NULL,
+  `client_id` varchar(45) NOT NULL,
+  `date_connexion` datetime NOT NULL,
+  PRIMARY KEY (`supplier_id`,`date_connexion`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+
+## Applied
+
+True
+
+
+## Date
+
+
+13-04-2020
+
+## Comment
+
+Added foreign key on  table `group_members`
+
+## Query
+
+ALTER TABLE `normsup`.`group_members` 
+ADD CONSTRAINT `group_id`
+  FOREIGN KEY (`group_id`)
+  REFERENCES `normsup`.`groups` (`id`)
+  ON DELETE CASCADE
+  ON UPDATE NO ACTION;
+
+
+
+## Applied
+
+True
+
+
+## Date
+
+
+18-04-2020
+
+## Comment
+
+Change the type of column `frequency` on table `group_reminders`
+
+## Query
+
+ALTER TABLE `normsup`.`group_reminders` 
+CHANGE COLUMN `frequency` `frequency` INT NULL DEFAULT 5;
+
+
+
+## Applied
+
+True
+
+## Date
+
+
+18-04-2020
+
+## Comment
+
+Create table `admins` as NormSup admin users
+
+## Query
+
+
+DROP TABLE IF EXISTS `admins`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `admins` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `name` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `lastname` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `last_connexion` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_UNIQUE` (`id`),
+  UNIQUE KEY `email_UNIQUE` (`email`)
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+## Applied
+
+True

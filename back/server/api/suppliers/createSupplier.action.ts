@@ -16,6 +16,8 @@ export function createSupplier(req, res, SupplierRegistry) {
     let comp = req.body.comp;
     let representative = req.body.interloc;
 
+    loggerT.verbose('Supplier comp ', comp);
+
     SupplierSchema.validate(comp, (err, val) => {
         if (err && err.details[0].message) {
             const error = new Error(`Invalid request, error message: ${err.details[0].message}.`);
@@ -26,7 +28,9 @@ export function createSupplier(req, res, SupplierRegistry) {
     });
 
     if(data.dateCreation) {
-        data.dateCreation = new Date(data.dateCreation);
+        // data.dateCreation = new Date(data.dateCreation);
+        data.dateCreation = moment(data.dateCreation).toDate();
+        // data.dateCreation = moment.unix(data.dateCreation);
     }
 
     return SupplierRegistry.createSupplier(data, req.decoded, representative)

@@ -98,7 +98,7 @@
             <!-- <span (click)="delete(item)" class="glyphicon glyphicon-trash fix-middle" aria-hidden="true"></span> -->
             <div class="badge-container content-cont container">
               <div class="row h-100 cent">
-                <button style="box-shadow: none;" (click)="openModal(template, 'Supplier')" type="button"
+                <button style="box-shadow: none;font-size: 13px !important;" (click)="sendReminder(item.id)" type="button"
                   class="btn btn-outline-normsup default-btn-table">Relancer</button>
               </div>
             </div>
@@ -111,7 +111,7 @@
             <div class="row nopadding header-infosup">
               <div class="col nopadding supp-info-header">Informations Entreprise</div>
               <div class="v-legend-cont nopadding infosup-date">
-                Ajouté le {{infoPopup.createdAt | date:'d MMM y, H:mm':'UTC +1'}}
+                Ajouté le {{infoPopup.createdAt | date:'d MMM y, H:mm'}}
               </div>
             </div>
             <div class="row nopadding value-cont">
@@ -332,7 +332,7 @@
             <!-- <span (click)="delete(item)" class="glyphicon glyphicon-trash fix-middle" aria-hidden="true"></span> -->
             <div class="badge-container content-cont container">
               <div class="row h-100 cent">
-                <button (click)="openModal(template, 'Supplier')" type="button"
+                <button style="box-shadow: none;font-size: 13px !important;" (click)="sendReminder(item.id)" type="button"
                   class="btn btn-outline-normsup default-btn-table">Relancer</button>
               </div>
             </div>

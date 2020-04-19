@@ -91,7 +91,11 @@
                   </div>
                   <div class="row ma vert-input-space">
                     <div class="form-group col s6 nopadding input-space">
-                      <input (focus)="focus.six=true" (blur)="focus.six=false" id="date-creation" name="date-creation" type="text" class="form-control custom-normsup-input-nb" [(ngModel)]="companyToAdd.dateCreation">
+                      <input id="date-creation" name="date-creation" type="text" class="form-control custom-normsup-input-nb datepicker-supplier" [(ngModel)]="companyToAdd.dateCreation" autocomplete="off" id="datestart" class="datepicker-ph custom-normsup-input-nb"
+                        (hideDaterangepicker)="closeDatePicker($event)"
+                        (selected)="selectedDate($event)" placeholder="JJ/MM/AAAA"
+                        #daterangepicker daterangepicker
+                        (cancelDaterangepicker)="clear()"/>
                       <label [ngClass]="{'lowered-opac': !companyToAdd.dateCreation && focus.six === false, 'custom-label-input-test-active': companyToAdd.dateCreation || focus.six === true}" class="custom-normsup-label-test" for="date-creation">Date de création</label>
                     </div>
                     <div class="form-group col s6 nopadding">

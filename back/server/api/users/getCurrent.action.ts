@@ -26,7 +26,7 @@ export function getCurrentUser(req, res, UsersRegistry, AuthRegistry) {
             decoded = res.token;
             loggerT.verbose('Getting current logged user with id:', res.token);
 
-            return UsersRegistry.getUser(decoded.id)
+            return UsersRegistry.getUser(decoded.id, decoded.email)
                 .then(result => {
                     loggerT.verbose('[getCurrentUser] Final result ', result);
                     if(result && result.id) {

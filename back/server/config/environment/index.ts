@@ -5,6 +5,7 @@ export default {
   appName: 'Normsup Server',
   env: process.env.NODE_ENV || 'local',
   port: process.env.PORT || 8080,
+  timezone: process.env.TZ || 'Europe/Paris',
   ip: process.env.IP || '0.0.0.0',
   momentLocale: 'fr',
 
@@ -18,6 +19,14 @@ export default {
     expirationTime: 14400
   },
   LOG_DIR: process.env.LOG_DIR || 'logs',
+
+  mailconfig: {
+    service: 'gmail',
+    auth: {
+      user: 'yassin.elfahim@gmail.com',
+      pass: 'Jesuislajesuislatkt1!'
+    }
+  },
 
   loggers: {
     loggerT: {
@@ -88,6 +97,7 @@ export default {
         { name: 'createRepresentative', uriPattern: '/define_representative', method: 'post' },
         { name: 'modifySupplier', uriPattern: '/modify_supplier/:id', method: 'put' },
         { name: 'countSuppliers', uriPattern: '/count', method: 'get' },
+        { name: 'dashboardData', uriPattern: '/dash', method: 'get' },
         { name: 'deleteSupplier', uriPattern: '/delete/:id', method: 'post' },
         { name: 'getGroups', uriPattern: '/groups', method: 'get' },
         { name: 'getGroupDetails', uriPattern: '/group/:id', method: 'get' },
@@ -100,12 +110,21 @@ export default {
         { name: 'modifyGroupReminders', uriPattern: '/group/:id/modify_reminders', method: 'post' },
         { name: 'modifyGroup', uriPattern: '/group/:id/modify_group', method: 'post' },
         { name: 'modifyRepresentative', uriPattern: '/modify_representative/:id', method: 'post' },
+        { name: 'conformityPerMonth', uriPattern: '/monthly_conformity', method: 'get' },
       ],
     },
     supplier: {
       uri : '/api/supplier',
       actions: [
         { name: 'getCurrentSupplier', uriPattern: '/currentSupplier', method: 'get' },
+      ],
+    },
+    reminders: {
+      uri : '/api/reminders',
+      actions: [
+        { name: 'sendReminder', uriPattern: '/supplier/:id', method: 'post' },
+        { name: 'sendGroupReminder', uriPattern: '/group/:id', method: 'post' },
+        { name: 'dailyReminders', uriPattern: '/daily', method: 'post' },
       ],
     },
     documents: {

@@ -9,5 +9,5 @@ export const SupplierSchema = Joi.object({
     legalUnit: Joi.string().optional(),
     country: Joi.string().optional(),
     city: Joi.string().optional(),
-    dateCreation: Joi.string().optional()
+    dateCreation: Joi.allow(Joi.string(), Joi.number()).optional()
 });

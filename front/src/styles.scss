@@ -238,14 +238,24 @@ body {
 //     font-family: sans-serif
 // }
 
-::-webkit-scrollbar {
-    background-color: #5d5d78;
-    width: 5px;
-}
+// ::-webkit-scrollbar {
+//     background-color: #5d5d78;
+//     width: 5px;
+// }
 
-::-moz-horizontal-scrollbar {
-    background-color: #5d5d78;
-    width: 5px;
+// ::-moz-horizontal-scrollbar {
+//     background-color: #5d5d78;
+//     width: 5px;
+// }
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+::-webkit-scrollbar {
+    display: none;
+  }
+  
+/* Hide scrollbar for IE and Edge */
+.invisible-scrollbar {
+    -ms-overflow-style: none;
 }
 
 .modal {
@@ -1098,6 +1108,7 @@ td {
 
     }
 }
+
 
 #circle {
     width: 15px;

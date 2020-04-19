@@ -20,6 +20,7 @@ import { NonConformComponent } from './dashboards/common/non-conform/non-conform
 import { OfflineCardComponent } from './dashboards/common/offline-card/offline-card.component';
 import { DashGroupCardComponent } from './dashboards/common/dash-group-card/dash-group-card.component';
 import { SupplierPerGroupComponent } from './dashboards/common/supplier-per-group/supplier-per-group.component';
+import { MonthlyConformityComponent } from './dashboards/common/monthly-conformity/monthly-conformity.component';
 
 
 @NgModule({
@@ -48,6 +49,7 @@ import { SupplierPerGroupComponent } from './dashboards/common/supplier-per-grou
     OfflineCardComponent,
     DashGroupCardComponent,
     SupplierPerGroupComponent,
+    MonthlyConformityComponent,
 
   ],
   exports: [

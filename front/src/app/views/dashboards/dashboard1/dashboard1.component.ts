@@ -14,11 +14,9 @@ import { HttpService } from 'src/app/services/http.service';
 export class Dashboard1Component implements OnInit, AfterViewInit {
 
 	@ViewChild('conformityDoughnut') private conformityDoughnutRef: ElementRef;
-	@ViewChild('conformityChart') private conformityChartRef: ElementRef;
 	@ViewChild('conformityPerGrp') private conformityPerGrpRef: ElementRef;
 	
 	public context: CanvasRenderingContext2D;
-	public lineContext: CanvasRenderingContext2D;
 	public conformityPerGrpContext: CanvasRenderingContext2D;
 
 	// General data
@@ -26,17 +24,16 @@ export class Dashboard1Component implements OnInit, AfterViewInit {
 	public conformityChart: any;
 	public confPerGrpBar: any;
 	public map: any = { lat: 51.678418, lng: 7.809007 };
-	private months = ['Janv', 'Fev', 'Mars', 'Avr', 'Mai', 'Juin', 'Juil', 'Aout', 'Sept', 'Oct', 'Nov', 'Dec'];
 	public nbFourni = 13;
 	public reminders: Array<any>;
-	public showConformityChart: Boolean = false;
+	
 	public groupSColors : Array<string> = ['#4390EF', '#C7E0FF', '#4E5983'];
 	public nbSuppliers: any;
 	public conform: any;
 	public notConform: any;
+	public offline: any;
 
 	// All chart types
-	public conformityChartType = 'line';
 	public conformityPerGrpType = 'bar';
 	public conformityType = 'doughnut';
 
@@ -99,54 +96,7 @@ export class Dashboard1Component implements OnInit, AfterViewInit {
 		}
 	};
 
-
-	/** Reminders table **/
-
-
-
-
-	/** Conformity chart **/
-	public chartDatasets: any = {
-		labels: [],
-		datasets : [{
-			label: "Taux de conformité",
-			data: [],
-			borderColor: "#4390EF",
-			// backgroundColor: "#eef5ff",
-			// borderColor: "#fff",
-			backgroundColor: "rgba(199,224,255, 0.3)",
-			fill: true,
-			pointRadius: 0,
-			radius: 5,
-		}]
-	};
-
-	public chartLabels: Array<any> = [];
-
-
-	public chartOptions: any = {
-		responsive: true,
-		legend: {
-			display: false
-		},
-		borderColor: "#4390EF",
-		scales: {
-			yAxes: [{
-				ticks: {
-					fontColor: '#5b5f62',
-					max: 100,
-					min: 0,
-					stepSize: 25
-				}
-			}],
-			xAxes: [{
-				ticks: {
-					fontColor: '#5b5f62',
-				}
-			}]
-		},
-		label: 'Taux de conformité fournisseurs'
-	};
+	
 
 	
 
@@ -372,20 +322,27 @@ export class Dashboard1Component implements OnInit, AfterViewInit {
 				});
 			},
 		});
+
+		let draw = Chart.controllers.line.prototype.draw;
+		Chart.controllers.line = Chart.controllers.line.extend({
+			draw: function() {
+				let ctx = this.chart.chart.ctx;
+				ctx.save();
+				ctx.shadowColor = '#4E5983';
+				ctx.shadowBlur = 12;
+				ctx.shadowOffsetX = 0;
+				ctx.shadowOffsetY = 5;
+				ctx.stroke();
+				draw.apply(this, arguments);
+				ctx.restore();
+			}
+		});
 	}
 
 	ngOnInit() {
-		// this.getReminderData();
-		this.getConformityRateData()
-			.then(() => {
-				this.showConformityChart = true;
-				this.initChart();
-			})
-		;
 		this.httpService
-			.get('/api/suppliers/count')
+			.get('/api/suppliers/dash')
 			.subscribe(res => {
-				console.log('count res', res);
 				if(res.body) {
 					if(res.body['count']) {
 						this.nbSuppliers = res.body['count'];
@@ -397,12 +354,21 @@ export class Dashboard1Component implements OnInit, AfterViewInit {
 					} else {
 						this.conform = 0;
 					}
+					if(res.body['offline']) {
+						this.offline = res.body['offline'];
+					} else {
+						this.offline = 0;
+					}
 					this.notConform = this.nbSuppliers >= this.conform ? this.nbSuppliers - this.conform : 0;
 				}
 			}, err => {
 				console.log('[StatsCardComponent] getSuppliers count', err);
+				this.nbSuppliers = 0;
+				this.conform = 0;
+				this.notConform = 0;
+				this.offline = 0;
 			})
-			;
+		;
 	}
 
 	ngAfterViewInit() {
@@ -413,68 +379,12 @@ export class Dashboard1Component implements OnInit, AfterViewInit {
 			options: this.conformityDOptions
 		});
 
-		
-
 		this.conformityPerGrpContext = (<HTMLCanvasElement>this.conformityPerGrpRef.nativeElement).getContext('2d');
 		this.confPerGrpBar = new Chart(this.conformityPerGrpContext, {
 			type: this.conformityPerGrpType,
 			data: this.confPerGrpSet,
 			options: this.confPerGrpOptions
 		});
-	}
-
-	initChart() {
-		this.lineContext = (<HTMLCanvasElement>this.conformityChartRef.nativeElement).getContext('2d');
-		this.halfDoughnut = new Chart(this.lineContext, {
-			type: 'line',
-			data: this.chartDatasets,
-			options: this.chartOptions,
-			//@ts-ignore
-			lineAtIndex: [this.chartDatasets.datasets[0].data.length - 1]
-		});
-	}
-
-	getConformityRateData() {
-		let data = [
-			{
-				rate: 25,
-				date: moment()
-			},
-			{
-				rate: 27,
-				date: moment().add(1, 'M')
-			},
-			{
-				rate: 35,
-				date: moment().add(2, 'M')
-			},
-			{
-				rate: 36,
-				date: moment().add(3, 'M')
-			},
-			{
-				rate: 40,
-				date: moment().add(4, 'M')
-			},
-			{
-				rate: 42,
-				date: moment().add(5, 'M')
-			},
-			{
-				rate: 50,
-				date: moment().add(6, 'M')
-			}
-		];
-		this.chartDatasets.labels.push(' ');
-		data.forEach((rate, index) => {
-			if(index === 0) {
-				this.chartDatasets.datasets[0].data.push(rate.rate)
-			}
-			this.chartDatasets.datasets[0].data.push(rate.rate)
-			this.chartDatasets.labels.push(this.months[rate.date.month()]);
-		});
-		this.chartDatasets.labels.push(' ');
-		return Promise.resolve(true);
 	}
 
 }

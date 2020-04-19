@@ -122,14 +122,23 @@ export default class UserRegistry {
     }
 
 
-    public getUser(id) {
+    public getUser(id, email?) {
         let query = {
             timeout: 40000
         };
 
+        loggerT.verbose('[getUser] id =',id, ' email=', email);
         if(id) {
-            query['sql']    = Query.QUERY_GET_USER;
-            query['values'] = [id];
+            if(email) {
+                loggerT.verbose('[getUser] if one');
+                query['sql']    = Query.GET_CURRENT_USER_EMAIL;
+                let s = email ? '%'+email+'%' : '%';
+                query['values'] = [id, email];
+            } else {
+                loggerT.verbose('[getUser] if two');
+                query['sql']    = Query.QUERY_GET_USER;
+                query['values'] = [id];
+            }
         }
         return this.mysql.query(query)
             .then(res => {

@@ -210,7 +210,7 @@ export default class SupplierRegistry {
             query2['sql']    = Query.UPSERT_SUPPLIER_CONF_LNTE;
         }
 
-        query2['values'] = [user.client, user.organisation, 1, 1];
+        query2['values'] = [user.client, user.organisation, 1, moment().startOf('month').toDate(), moment().endOf('month').toDate(), 1];
 
         if(data.validityDate) {
             query2['values'].push(data.validityDate);

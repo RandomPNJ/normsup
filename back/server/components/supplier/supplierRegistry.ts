@@ -71,22 +71,22 @@ export default class SupplierRegistry {
         loggerT.verbose('String final === ', v);
         loggerT.verbose('Query final === ', final);
 
-        if(v === 'C') {
-            values = [data.company, data.company, data.company];
-        } else if(v === 'CGSES') {
-            values = [data.group, data.company, data.company, data.company, data.group, data.search, data.search, data.search, data.limit, data.start];
-        } else if(v === 'CGSE') {
-            values = [data.company, data.company, data.company, data.limit, data.start];
-        } else if(v === 'CGS') {
-            values = [data.group, data.company, data.company, data.company, data.group, data.limit, data.start];
+        if(v === 'C') {//done
+            values = [data.company, data.company, data.company, data.company];
+        } else if(v === 'CGSES') {//done
+            values = [data.group, data.company, data.company, data.company, data.group, data.search, data.search, data.search, data.company, data.limit, data.start];
+        } else if(v === 'CGSE') {//done
+            values = [data.company, data.company, data.company, data.company, data.limit, data.start];
+        } else if(v === 'CGS') {//done
+            values = [data.group, data.company, data.company, data.company, data.group, data.company, data.limit, data.start];
         } else if(v === 'CG') {
             loggerT.verbose('QUERY QUERY_GET_GROUP_SUPPLIERS, QUERY NOT USED BEFORE');
-        } else if(v === 'CSES') {
-            values = [data.company, data.company, data.company, data.search, data.search, data.search, data.limit, data.start];
-        } else if(v === 'CS') {
-            values = [data.company, data.company, data.company, data.limit, data.start];
-        } else if(v === 'CSE') {
-            values = [data.company, data.company, data.company, data.search, data.search, data.search];
+        } else if(v === 'CSES') {//done
+            values = [data.company, data.company, data.company, data.search, data.search, data.search, data.company, data.limit, data.start];
+        } else if(v === 'CS') {//done
+            values = [data.company, data.company, data.company, data.company, data.limit, data.start];
+        } else if(v === 'CSE') {//done
+            values = [data.company, data.company, data.company, data.search, data.search, data.search, data.company];
         }
         return {
             type: final,
@@ -288,7 +288,7 @@ export default class SupplierRegistry {
         }
         
         if(promises.length > 0) {
-            return Promise.all(promises);
+            return this.allSkippingErrors(promises);
         }
         // return this.mysql.query(query)
         //     .then((res, fields) => {
@@ -463,7 +463,7 @@ export default class SupplierRegistry {
         } else if(data.client) {
             loggerT.verbose('Recount 2 == ', s);
             query['sql']    = Query.QUERY_COUNT_SUPPLIERS_CLIENT;
-            query['values'] = [data.client, data.client];
+            query['values'] = [data.client, data.client, data.client];
         } else {
             loggerT.verbose('Recount 3 == ', s);
             query['sql'] = Query.QUERY_COUNT_SUPPLIERS;
@@ -471,16 +471,20 @@ export default class SupplierRegistry {
         return this.mysql.query(query)
             .then(res => {
                 loggerT.verbose('[countSuppliers] res', res)
-                let i = 0;
+                let i=0;
+                let j=0;
                 if(res.length > 0) {
                     res.map(element => {
                         if(element.kbis == 1 && element.urssaf == 1 && element.lnte == 1) {
                             i++;
                         }
+                        if(element.last_connexion == null) {
+                            j++;
+                        }
                     });
-                    return Promise.resolve({count: res[0].count, conform: i});
+                    return Promise.resolve({count: res[0].count, conform: i, offline: j});
                 } else {
-                    return Promise.resolve({count: 0, conform: 0})
+                    return Promise.resolve({count: 0, conform: 0, offline: 0})
                 }
             })
             .catch(err => {
@@ -489,6 +493,41 @@ export default class SupplierRegistry {
             })
         ;
     }
+
+    public getDashboardData(data, user) {
+        let query = {
+            timeout: 40000
+        };
+        data.client = user.organisation;
+        if(data.client) {
+            loggerT.verbose('getDashboardData ', data);
+            query['sql']    = Query.GET_DASHBOARD_DATA;
+            query['values'] = [data.client, data.client, data.client, moment().startOf('month').toDate()];
+        } else {
+            // throw error;
+        }
+        return this.mysql.query(query)
+            .then(res => {
+                loggerT.verbose('[getDashboardData] res', res)
+                let i=0;
+                if(res.length > 0) {
+                    res.map(element => {
+                        if(element.kbis == 1 && element.urssaf == 1 && element.lnte == 1) {
+                            i++;
+                        }
+                    });
+                    return Promise.resolve({count: res[0].count, conform: i, offline: res[0].off});
+                } else {
+                    return Promise.resolve({count: -1, conform: -1, offline: -1})
+                }
+            })
+            .catch(err => {
+                loggerT.error('ERROR ON QUERY getSuppliers.');
+                return Promise.reject(err);
+            })
+        ;
+    }
+    
 
     public createSupplier(data, userID, representative) {
         return HelperQueries.getUserFromDB(userID)
@@ -506,7 +545,7 @@ export default class SupplierRegistry {
 
                 return this.mysql.query(query)
                     .then(res => {
-                        loggerT.verbose('FIRST QUERY RES ==== ', res);
+                        loggerT.verbose('[createSupplier] FIRST QUERY RES ==== ', res);
                         let newInsert = {};
         
                         newInsert['supplier_id'] = res.insertId;
@@ -524,7 +563,7 @@ export default class SupplierRegistry {
                         query2['values'] = [representative]
                         
                         query3['sql'] = Query.INSERT_SUPP_CONFORMITY;
-                        query3['values'] = [{supplier_id: res.insertId, client_id: user.organisation}];
+                        query3['values'] = [{supplier_id: res.insertId, client_id: user.organisation, start_date: moment().startOf('month').toDate(), end_date: moment().endOf('month').toDate()}];
                         let promises = [
                             this.mysql.query(query),
                             this.mysql.query(query3)
@@ -565,7 +604,7 @@ export default class SupplierRegistry {
                                         query2['values'] = [representative]
         
                                         query3['sql'] = Query.INSERT_SUPP_CONFORMITY;
-                                        query3['values'] = [{supplier_id: res.insertId, client_id: user.organisation}];
+                                        query3['values'] = [{supplier_id: res.insertId, client_id: user.organisation, start_date: moment().startOf('month').toDate(), end_date: moment().endOf('month').toDate()}];
         
                                         return this.allSkippingErrors([
                                             this.mysql.query(query),
@@ -628,6 +667,9 @@ export default class SupplierRegistry {
             timeout: 40000
         };
 
+        let query4 = {
+            timeout: 40000
+        };
         query3['sql'] = Query.DELETE_SUPPLIER;
         query3['values'] = [id, client];
     
@@ -636,20 +678,25 @@ export default class SupplierRegistry {
 
         query2['sql'] = Query.DELETE_SUPPLIER_REPRES;
         query2['values'] = [id, client];
+
+        query4['sql'] = Query.DELETE_SUPPLIER_FROM_GROUP;
+        query4['values'] = [id];
+    
         return this.mysql.query(query3)
             .then(() => {
                 return this.mysql.query(query)
                     .then((res, fields) => {
                         loggerT.verbose('QUERY RES deleteGroup ==== ', res);
-        
-                        return this.mysql.query(query2)
-                            .then(res => {
-                                return Promise.resolve(res);
-                            })
-                            .catch(err => {
-                                loggerT.error('ERROR ON QUERY DELETE_SUPPLIER_REPRES.');
-                                return Promise.reject(err);
-                            })
+                        
+                        return this.allSkippingErrors([this.mysql.query(query2),this.mysql.query(query4)])
+                        // return this.mysql.query(query2)
+                        //     .then(res => {
+                        //         return Promise.resolve(res);
+                        //     })
+                        //     .catch(err => {
+                        //         loggerT.error('ERROR ON QUERY DELETE_SUPPLIER_REPRES.');
+                        //         return Promise.reject(err);
+                        //     })
                     })
                     .catch(err => {
                         loggerT.error('ERROR ON QUERY DELETE_SUPPLIER_RELATION.');
@@ -718,7 +765,7 @@ export default class SupplierRegistry {
                 }
                 let user = res[0];
                 if(new Date() > new Date(user.validity_date)) {
-                    return Promise.reject({statusCode: 400, msg: 'Too late.'});
+                    return Promise.reject({statusCode: 400, msg: 'Your login credentials are expired, please request a new account.'});
                 }
                 return bcrypt.compare(password, user.password)
                     .then(res => {
@@ -791,6 +838,51 @@ export default class SupplierRegistry {
         ;
     }
 
+    // Need to have the monthly supplier connected data to know the rate
+    public monthlyConformity(data, userID) {
+        return HelperQueries.getUserFromDB(userID)
+            .then(res => {
+                let user = res[0];
+                let query = {
+                    timeout: 40000
+                };
+                if(data && data.startDate) {
+                    // let m = moment(data.startDate);
+                    // query['sql'] = Query.MONTHLY_CONFORMITY_ENDDATE;
+                    // query['values'] = [user.organisation, user.organisation, m.startOf('month'), moment().];
+                } else {
+                    query['sql'] = Query.MONTHLY_CONFORMITY;
+                    query['values'] = [user.organisation, user.organisation, moment().startOf('month').subtract(4, 'months').toDate()];
+                }
+
+                return this.mysql.query(query)
+                    .then(res => {
+                        let conformity = {};
+                        res.map(e => {
+                            if(!conformity[e.month_evaluated]) {
+                                conformity[e.month_evaluated] = {};
+                                conformity[e.month_evaluated].totalConnected = 0;
+                                conformity[e.month_evaluated].totalConform = 0;
+                            }
+                            conformity[e.month_evaluated].totalConnected = e.connected_suppliers ? e.connected_suppliers : 0;
+                            conformity[e.month_evaluated].totalConform += e.conformity ? e.conformity : 0;
+                        });
+                        loggerT.verbose('conformity', conformity);
+                        return Promise.resolve(conformity);
+                    })
+                    .catch(err => {
+                        loggerT.error('ERROR ON QUERY monthlyConformity :', err);
+                        return Promise.reject(err);
+                    })
+                ;
+            })
+            .catch(err => {
+                loggerT.error('ERROR ON QUERY getUserFromDB :', err);
+                Promise.reject('[SupplierRegistry] Could not get user from database, query aborted.');
+            })
+        ;
+    }
+
     public createGroup(data, suppliers, remindersData) {
         loggerT.verbose('Group data', data);
         let query = {
@@ -824,7 +916,7 @@ export default class SupplierRegistry {
                 let comp_docs = remindersData.comp_docs ? remindersData.comp_docs : '';
                 let last_reminder = moment().toDate();
                 let new_reminder = moment().add(remindersData.frequency.split('d')[0], 'd').toDate();
-                query2['values'] = [insertId, 1, legal_docs, comp_docs, remindersData.frequency, last_reminder, new_reminder];
+                query2['values'] = [insertId, 1, legal_docs, comp_docs, remindersData.frequency.split('d')[0], last_reminder, new_reminder];
                 promises.push(this.mysql.query(query2));
 
                 return Promise.all(promises);
@@ -836,16 +928,30 @@ export default class SupplierRegistry {
         ;
     }
 
+    public supplierLoginHistory(data) {
+        let query = {
+            timeout: 40000
+        };
+        loggerT.verbose('supplierLoginHistory data ', data);
+
+        query['sql']    = Query.SUPPLIER_LOGIN_HISTORY;
+        query['values'] = [data.id, data.organisation, data.client, new Date()];
+
+        return this.mysql.query(query)
+            .then(res => {
+                loggerT.verbose('QUERY supplierLoginHistory RES ==== ', res);
+
+                return Promise.resolve(res)
+                ;
+            })
+            .catch(err => {
+                loggerT.error('ERROR ON QUERY supplierLoginHistory : ', err);
+                throw new Error('Error when trying to update supplier login history.');
+            })
+        ;
+    }
+
     public updateRepresentative(repres, id, userID) {
-        // let user;
-        // HelperQueries.getUserFromDB(userID)
-        //     .then(res => {
-        //         user = res
-        //     })
-        //     .catch(err => {
-        //         Promise.reject('[SupplierRegistry] Could not get user from database, query aborted.');
-        //     })
-        // ;
         let query = {
             timeout: 40000
         };

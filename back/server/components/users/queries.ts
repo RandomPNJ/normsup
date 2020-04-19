@@ -12,7 +12,7 @@ export const INSERT_ROLE = 'INSERT INTO `user_roles` (userID, roleID) VALUES (?,
 
 export const FIND_USER_BY_NAME_EMAIL = 'SELECT id,create_time,createdBy,email,lastname,name,organisation,username,password,address,phonenumber,postalCode,city, picture_url FROM `user` WHERE `username` = ? OR `email` = ? LIMIT 1';
 export const FIND_USER_BY_ID = 'SELECT id,create_time,createdBy,email,lastname,name,organisation,username,password,address,phonenumber,postalCode,city, picture_url FROM `user` WHERE `id` = ? LIMIT 1';
-
+export const GET_CURRENT_USER_EMAIL = 'SELECT id,create_time,createdBy,email,lastname,name,organisation,username,password,address,phonenumber,postalCode,city, picture_url FROM `user` WHERE `id`= ? AND `email` = ? LIMIT 1'
 export const QUERY_MODIFY_USER = 'UPDATE `user` SET email = ?, lastname = ?, name = ?, address = ?, phonenumber = ?, postalCode = ?, city, picture_url = ? WHERE id = ?';
 export const QUERY_MODIFY_PASSWORD = 'UPDATE `user` SET password = ? WHERE id = ?';
 
