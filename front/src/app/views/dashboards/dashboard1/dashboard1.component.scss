@@ -1,7 +1,6 @@
 .dash-container {
-    padding-left: 8rem;
-    padding-top: 20px;
-    padding-right: 4rem;
+    // padding-left: 8rem;
+    // padding-right: 4rem;
 }
 
 .classic-admin-card .card-body {
@@ -64,10 +63,19 @@
     font-family: 'Roboto Bold';
     font-size: 24px;
     color: #4E5983;
+    display: block;
     -webkit-user-select: none; /* Safari */        
     -moz-user-select: none; /* Firefox */
     -ms-user-select: none; /* IE10+/Edge */
     user-select: none; /* Standard */
+}
+
+.tx-conform {
+    color: #4E5983 !important;
+    font-family: 'Avenir Medium';
+    font-size: 14px;
+    position: relative;
+    top: 3px;
 }
 
 .fourn-text {
@@ -125,6 +133,7 @@
 
 .card {
     border-radius: 10px;
+    box-shadow: 0px 0px 15px #4390EF3C !important;
 }
 
 .infocard {

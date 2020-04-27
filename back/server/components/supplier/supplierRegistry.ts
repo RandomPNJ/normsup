@@ -655,7 +655,7 @@ export default class SupplierRegistry {
             })
         ;
     }
-    public deleteSupplier(id, client) {
+    public deleteSupplier(id, orgID) {
         let query = {
             timeout: 40000
         };
@@ -670,25 +670,28 @@ export default class SupplierRegistry {
         let query4 = {
             timeout: 40000
         };
+        let query5 = {
+            timeout: 40000
+        };
         query3['sql'] = Query.DELETE_SUPPLIER;
-        query3['values'] = [id, client];
-    
+        query3['values'] = [id, orgID];
         query['sql'] = Query.DELETE_SUPPLIER_RELATION;
-        query['values'] = [id, client];
-
+        query['values'] = [id, orgID];
         query2['sql'] = Query.DELETE_SUPPLIER_REPRES;
-        query2['values'] = [id, client];
-
+        query2['values'] = [id, orgID];
         query4['sql'] = Query.DELETE_SUPPLIER_FROM_GROUP;
         query4['values'] = [id];
+        // query5['sql'] = Query.DELETE_SUPPLIER_CONFORMITY;
+        // query5['values'] = [id, orgID];
     
         return this.mysql.query(query3)
             .then(() => {
                 return this.mysql.query(query)
                     .then((res, fields) => {
                         loggerT.verbose('QUERY RES deleteGroup ==== ', res);
-                        
-                        return this.allSkippingErrors([this.mysql.query(query2),this.mysql.query(query4)])
+                        let q = [this.mysql.query(query2),this.mysql.query(query4)];
+                        // q.push(this.mysql.query(query5)) THIS IS QUERY TO DELETE SUPP CONFORMITY
+                        return this.allSkippingErrors(q)
                         // return this.mysql.query(query2)
                         //     .then(res => {
                         //         return Promise.resolve(res);
@@ -919,7 +922,12 @@ export default class SupplierRegistry {
                 query2['values'] = [insertId, 1, legal_docs, comp_docs, remindersData.frequency.split('d')[0], last_reminder, new_reminder];
                 promises.push(this.mysql.query(query2));
 
-                return Promise.all(promises);
+                return Promise.all(promises)
+                    .then(() => {
+                        data.insertId = insertId;
+                        data.groupSize = suppliers.length;
+                        return data
+                    });
             })
             .catch(err => {
                 loggerT.error('ERROR ON QUERY createGroup : ', err);

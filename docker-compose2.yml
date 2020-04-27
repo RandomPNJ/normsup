@@ -12,6 +12,7 @@ services:
       file: compose-default.yml
       service: client_build
     command: ng serve --host 0.0.0.0 --disable-host-check --watch --poll=1000
+    restart: always
     container_name: client.normsup
     volumes:
       - ./front/src:/usr/src/app/src

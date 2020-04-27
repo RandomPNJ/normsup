@@ -34,7 +34,16 @@ export default class AdminRegistry {
                 return that.mysql.query(query)
                     .then(res => {
                         loggerT.verbose('QUERY createRole RES ==== ', res);
-                        return Promise.resolve(res);
+                        query['sql'] = Query.INSERT_USER_PREFERENCES;
+                        query['values'] = [res.insertId];
+                        return that.mysql.query(query)
+                            .then(() => {
+                                return Promise.resolve(res);
+                            })
+                            .catch(err => {
+                                loggerT.error('QUERY INSERT_USER_PREFERENCES ERR ==== ', err);
+                                return Promise.reject({statusCode: 500, msg: 'Could not create user preferences for user with id :' + res.insertId})
+                            })
                     })
                     .catch(err => {
                         loggerT.error('QUERY createRole ERR ==== ', err);

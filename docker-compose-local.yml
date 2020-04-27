@@ -12,6 +12,7 @@ services:
       file: compose-default.yml
       service: server_build
     container_name: server.normsup
+    restart: always
     command: bash -c "(grunt build && npm run deploy;) && grunt"
     environment:
       TZ: 'Europe/Paris' 

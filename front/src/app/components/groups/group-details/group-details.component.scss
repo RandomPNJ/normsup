@@ -1,6 +1,12 @@
+.group-details-cont {
+    height: 100%;
+    
+}
 .previous-lnk-row {
     position: relative;
-    padding-top: 75px !important;
+    // padding-top: 75px !important;
+    margin-top: 75px !important;
+    margin-left: 2px;
     text-align: center;
     cursor: pointer;
 
@@ -24,12 +30,43 @@
         opacity: 0.5;
     }
 }
+
+.normsup-checkbox-cont {
+    [type="checkbox"]:not(:checked) + label,
+    [type="checkbox"]:checked + label {
+        padding-left: 1.8em !important; /* fait un peu d'espace pour notre case à venir */
+        line-height: 1.4 !important;
+    }
+}
+
+.data-row {
+    height: 100%;
+}
+
+.data-cont-one {
+    padding-right: 7px !important;
+}
+
+.data-cont-two {
+    padding-left: 7px !important;
+}
+
 .button-txt {
     font-family: 'Roboto Medium';
     font-size: 13px;
     letter-spacing: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    display: block;
+    text-overflow: ellipsis;
 }
 
+.fourn-list-style {
+    white-space: nowrap;
+    overflow: hidden;
+    display: block;
+    text-overflow: ellipsis;
+}
 .comp-btn {
     width: 100%;
     border: 1px solid #C7E0FF !important;
@@ -114,7 +151,7 @@
 .select-cont {
     float: right;
     padding-right: 45px;
-    width: 100%;
+    // width: 100%;
     max-width: 250px;
 }
 
@@ -171,5 +208,24 @@
 }
 
 .normsup-card {
-    height: 450px !important;
+    height: 100%;
+    max-width: 450px;
+    min-width: 331px;
+    max-height: 492px;
+    min-height: 492px;
+    box-shadow: 0px 0px 15px #0000001A;
+}
+
+@media (max-width: 576px) {
+
+    .data-cont-one {
+        padding-right: 0px !important;
+        padding-bottom: 10px;
+        margin: 0 auto 10px auto !important;
+    }
+    
+    .data-cont-two {
+        padding-left: 0px !important;
+        margin: 0 auto 10px auto !important;
+    }
 }

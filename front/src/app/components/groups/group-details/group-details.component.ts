@@ -112,6 +112,7 @@ export class GroupDetailsComponent implements OnInit {
   }
 
   changeModal(action) {
+    console.log('change Modal', action);
     if(action === 'hide') {
       this.hideModal();
     }
@@ -227,6 +228,11 @@ export class GroupDetailsComponent implements OnInit {
     ;
   }
 
+private changeGroupName(e) {
+  if(e) {
+    this.groupName = e;
+  }
+}
   private deleteGroup() {
     this.httpService.post('/api/suppliers/group/'+ this.id + '/delete')
       .subscribe(res => {

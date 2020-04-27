@@ -1,68 +1,74 @@
-<div class="dash-container container dashboard">
-  <div class="col-lg-12">
-    <div class="row wow fadeIn first-row">
-      <div class="col-lg-2-half col-md-3 infocard">
-        <app-stats-card [nbSuppliers]="nbSuppliers"></app-stats-card>
-      </div>
-  
-      <div class="col-lg-2-half col-md-3 infocard">
-        <app-stats-card2 [conform]="conform"></app-stats-card2>
-      </div>
-      <div class="col-lg-2-half col-md-3 infocard">
-        <app-non-conform [notConform]="notConform"></app-non-conform>
-      </div>
-      <div class="col-lg-2-half col-md-3 infocard">
-        <app-offline-card [offline]="offline"></app-offline-card>
-      </div>
-  
-      <div class="col-lg-2-half">
-        <div class="row">
-          <div class="col" style="display: inline-block;">
-            <div style="width: 100%; position: absolute; top: 55%;; left: 0; margin-top: -20px; text-align: center; z-index: 999">
-              <span class="number-fourn">{{conformityRateSet.datasets[0].data[0]}}%</span>
-              <br />
+<div class="dash-container container dashboard" style="">
+  <div class="row nopadding">
+    <div class="col-auto">
+      &nbsp;
+    </div>
+    <div class="col-xl-11 col-lg-11 col-md-12 col-sm-12 col-12" style="padding-top: 20px;">
+      <div class="row wow fadeIn first-row">
+        <div class="col-lg-2-half col-md-3 col-sm-6 infocard">
+          <app-stats-card [nbSuppliers]="nbSuppliers"></app-stats-card>
+        </div>
+    
+        <div class="col-lg-2-half col-md-3 col-sm-6 infocard">
+          <app-stats-card2 [conform]="conform"></app-stats-card2>
+        </div>
+        <div class="col-lg-2-half col-md-3 col-sm-6 infocard dash-style-sm">
+          <app-non-conform [notConform]="notConform"></app-non-conform>
+        </div>
+        <div class="col-lg-2-half col-md-3 col-sm-6 infocard dash-style-sm">
+          <app-offline-card [offline]="offline"></app-offline-card>
+        </div>
+    
+        <div class="md-horz-align tx-supp-md col-lg-2-half col-md-auto col-sm-8 sm-horz-align dash-style-sm">
+          <div class="row">
+            <div class="col" style="display: inline-block;">
+              <div style="width: 100%; position: absolute; top: 80%;; left: 0; margin-top: -20px; text-align: center; z-index: 999">
+                <span class="number-fourn">{{conformityRateSet.datasets[0].data[0]}}%</span>
+                <span class="tx-conform" style="color: '#4E5983';font-family: 'Avenir Medium';font-size: 14;">Taux de conformité</span>
+                <br />
+              </div>
+              <canvas style="margin: auto 0 !important;" #conformityDoughnut id="conformDoughnut" mdbChart [chartType]="conformityType" height="120"></canvas>
             </div>
-            <canvas #conformityDoughnut id="conformDoughnut" mdbChart [chartType]="conformityType" height="170"></canvas>
           </div>
         </div>
+        <!-- <div class="col-lg-1 col-md-0 mb-4">
+    
+        </div> -->
       </div>
-      <!-- <div class="col-lg-1 col-md-0 mb-4">
-  
-      </div> -->
-    </div>
-  
-    <div class="row wow fadeIn mt-5">
-      <div class="col-lg-6 col-md-6 mb-4" style="padding-left: 0px !important;">
-        <app-monthly-conformity></app-monthly-conformity>
+    
+      <div class="row wow fadeIn mt-4">
+        <div class="col-lg-6 col-md-8 dash-no-pad-md" style="padding-left: 0px !important;">
+          <app-monthly-conformity></app-monthly-conformity>
+        </div>
+        <div class="col-lg-6 col-md-8  dash-no-pad-md" style="padding-right: 0px !important;">
+          <app-dash-group-card></app-dash-group-card>
+        </div>
       </div>
-      <div class="col-lg-6 col-md-6 mb-4" style="padding-right: 0px !important;">
-        <app-dash-group-card></app-dash-group-card>
-      </div>
-    </div>
+    
+      <div class="row wow fadeIn mb-2" style="margin-top: 3rem !important;">
   
-    <div class="row wow fadeIn mb-5" style="margin-top: 2.5rem !important;">
-  
-      <div class="col-lg-5 col-md-4 mb-4"  style="padding-left: 0px !important;">
-        <app-supplier-per-group></app-supplier-per-group>
-      </div>
-  
-      <div class="col-lg-7 col-md-8 mb-4"  style="padding-right: 0px !important;">
-        <div class="card third-card-row">
-          <div class="box-title">Taux de conformité par groupe de fournisseurs (en %)</div>
-          <div class="card-body">
-            <div class="container">
-              <div class="row">
-                <div class="col-9">
-                  <canvas #conformityPerGrp id="conformityPerGrp" mdbChart [chartType]="conformityPerGrpType" height="194"></canvas>
-                </div>
-                <div class="col-3 v-list-scroll">
-                  <div class="v-list-outer-wrp">
-                    <div class="v-list">
-                      <div class="v-cont">
-                        <div *ngFor="let item of confPerGrpSet.datasets[0].data; let index = index" class="v-legend-cont nopadding">
-                          <div style="line-height: 17px;">
-                            <div [ngStyle]="{'background-color': groupSColors[index]}" id="circle" class="color-circle">&nbsp;</div>
-                            <span class="legend-txt">Groupe {{ index }}</span>
+        <div class="col-lg-5 col-md-4 mb-5 dash-no-pad-sm"  style="padding-left: 0px !important;">
+          <app-supplier-per-group></app-supplier-per-group>
+        </div>
+    
+        <div class="col-lg-7 col-md-8 mb-5 dash-no-pad-sm"  style="padding-right: 0px !important;">
+          <div class="card third-card-row">
+            <div class="box-title">Taux de conformité par groupe de fournisseurs (en %)</div>
+            <div class="card-body">
+              <div class="container">
+                <div class="row">
+                  <div class="col-9">
+                    <canvas #conformityPerGrp id="conformityPerGrp" mdbChart [chartType]="conformityPerGrpType" height="175"></canvas>
+                  </div>
+                  <div class="col-3 v-list-scroll">
+                    <div class="v-list-outer-wrp">
+                      <div class="v-list">
+                        <div class="v-cont">
+                          <div *ngFor="let item of confPerGrpSet.datasets[0].data; let index = index" class="v-legend-cont nopadding">
+                            <div style="line-height: 17px;">
+                              <div [ngStyle]="{'background-color': groupSColors[index]}" id="circle" class="color-circle">&nbsp;</div>
+                              <span class="legend-txt">Groupe {{ index }}</span>
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -71,11 +77,11 @@
                 </div>
               </div>
             </div>
+    
           </div>
-  
         </div>
+    
       </div>
-  
     </div>
   </div>
 </div>

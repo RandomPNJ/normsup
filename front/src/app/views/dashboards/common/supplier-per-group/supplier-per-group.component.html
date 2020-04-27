@@ -3,12 +3,12 @@
     <div class="box-title">Fournisseurs par groupe (en %)</div>
     <div class="card-body" style="padding-bottom: 0px !important;" [hidden]="!showGraph">
       <div class="groupSupplierDoughnut">
-          <canvas #groupSupplier id="groupSupplier" mdbChart [chartType]="groupSupplierType" height="162"></canvas>
+          <canvas #groupSupplier id="groupSupplier" mdbChart [chartType]="groupSupplierType" height="135"></canvas>
       </div>
       <div style="padding-top: 30px;" class="container">
         <div style="margin: auto;" class="row ">
           <span *ngFor="let item of groupSupplierSet.datasets[0].data; let index = index" class="legend-cont col-4 nopadding pt-1">
-            <div style="line-height: 17px;">
+            <div style="line-height: 17px;padding-bottom: 12px;">
               <div [ngStyle]="{'background-color': groupSColors[index]}" id="circle" class="color-circle">&nbsp;</div>
               <span class="legend-txt">Groupe {{ index }}</span>
             </div>

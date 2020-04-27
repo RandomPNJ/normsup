@@ -22,7 +22,7 @@ export function deleteSupplier(req, res, SupplierRegistry) {
         error['statusCode'] = 400;
         throw error;
     }
-
+    
     return SupplierRegistry.deleteSupplier(req.params.id, req.decoded.organisation)
         .then(res => {
             return res;

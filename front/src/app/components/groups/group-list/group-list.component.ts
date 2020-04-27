@@ -144,6 +144,17 @@ export class GroupListComponent implements OnInit {
     this.router.navigate(['dashboard', 'groups', 'details', i]);
   }
 
+  addGroup(e) {
+    if(e) {
+      let g;
+      try {
+        g = JSON.parse(e);
+      } catch(e) {
+        console.log('Error when parsing group', e);
+      }
+      this.items.push(g);
+    }
+  }
   reloadList() {
     this.httpService
       .get('/api/suppliers/groups')

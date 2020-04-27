@@ -290,7 +290,7 @@ body {
 .main-cont {
     margin-top: 50px;
     background-color: white;
-    box-shadow: 0 7px 15px 0 rgba(0, 51, 90, 0.04);
+    box-shadow: 0px 0px 55px #4390EF1A !important;
     border-radius: 6px;
 }
 
@@ -1109,6 +1109,15 @@ td {
     }
 }
 
+.normsup-card-border {
+
+    border: 1px solid white !important;
+    
+    &:hover {
+        border: 1px solid #4390EF !important;
+    }
+}
+
 
 #circle {
     width: 15px;
@@ -1569,7 +1578,6 @@ td {
 }
 
 .normsup-card-header {
-    height: 49px;
     background-color: #FAFCFE !important;
     border-radius: 10px 10px 0px 0px;
     vertical-align: middle;
@@ -1585,9 +1593,9 @@ td {
 
 .normsup-card-body {
 
-    overflow-y: auto;
+    // overflow-y: auto;
     background-color: white !important;
-    height: 100%;
+    height: 442px;
     border-radius: 0px 0px 10px 10px;
 
     .supplier-row {
@@ -1735,6 +1743,69 @@ td {
     }
 }
 
+@media (min-width: 992px) {
+
+    .col-lg-2-half {
+        float: left !important;
+        flex: 0 0 20% !important;
+        max-width: 20% !important;
+    }
+
+    .col-lg-10-half {
+        // float: left !important;
+        flex: 0 0 88% !important;
+        max-width: 88% !important;
+    }
+
+    
+
+}
+
+@media (min-width: 768px) {
+
+    .md-horz-align {
+        margin: 0 auto;
+    }
+
+    .tx-supp-md {
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+    .col-md-2-half {
+        float: left !important;
+        flex: 0 0 20% !important;
+        max-width: 20% !important;
+    }
+
+    
+}
+@media (max-width: 992px) { 
+    .dash-no-pad-md {
+        margin: 0 auto !important;
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+        padding-bottom: 10px !important;
+    }
+}
+
+@media (max-width: 768px) { 
+    .dash-no-pad-sm {
+        margin: 0 auto !important;
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+        padding-bottom: 10px !important;
+    }
+}
+@media (min-width: 576px) {
+    .sm-horz-align {
+        margin: 0 auto;
+    }
+
+    .dash-style-sm {
+        padding-top: 10px;
+    }
+}
+
 .supplier-table {
 
     thead tr {
@@ -1795,7 +1866,7 @@ td {
 
 
 .main-cont-umanag {
-
+    box-shadow: 0px 0px 55px #4390EF1A !important;
     .table-responsive {
         overflow-y: hidden;
     }
@@ -1894,5 +1965,11 @@ td {
   
     &:hover {
       box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
+    }
+}
+
+@media (min-width: 768px) { 
+    .group-details-cont.container {
+        max-width: unset !important;
     }
 }

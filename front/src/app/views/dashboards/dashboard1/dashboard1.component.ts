@@ -44,7 +44,7 @@ export class Dashboard1Component implements OnInit, AfterViewInit {
 		],
 		datasets: [
 			{
-				data: [80, 20],
+				data: [100, 0],
 				backgroundColor: [
 					"#4390EF",
 					"#C7E0FF"
@@ -68,9 +68,10 @@ export class Dashboard1Component implements OnInit, AfterViewInit {
 	];
 	public conformityDOptions: any = {
 		responsive: true,
-		cutoutPercentage: 70,
+		cutoutPercentage: 74,
 		rotation: 1 * Math.PI,
-		circumference: 0.95 * Math.PI,
+		// circumference: 0.95 * Math.PI,
+		circumference: 1 * Math.PI,
 		tooltips: {
 			enabled: false
 		},
@@ -79,7 +80,9 @@ export class Dashboard1Component implements OnInit, AfterViewInit {
 			duration: 2000
 		},
 		legend: {
-			display: false
+			enabled: false,
+			display: false,
+			position: 'bottom'
 		},
 		elements: {
 			arc: {
@@ -87,7 +90,7 @@ export class Dashboard1Component implements OnInit, AfterViewInit {
 			}
 		},
 		title: {
-			display: true,
+			display: false,
 			text: 'Taux de conformité',
 			position: 'bottom',
 			fontColor: '#4E5983', //Default black
@@ -294,7 +297,7 @@ export class Dashboard1Component implements OnInit, AfterViewInit {
 			}
 		};
 		Chart.plugins.register(verticalLinePlugin);
-
+		
 		// Make a rounded doughnut available
 		Chart.defaults.RoundedDoughnut = Chart.helpers.clone(Chart.defaults.doughnut);
 		Chart.controllers.RoundedDoughnut = Chart.controllers.doughnut.extend({
@@ -314,15 +317,19 @@ export class Dashboard1Component implements OnInit, AfterViewInit {
 					ctx.fillStyle = vm.backgroundColor;
 					ctx.translate(vm.x, vm.y);
 					ctx.beginPath();
-					ctx.arc(radius * Math.sin(angle), radius * Math.cos(angle), thickness, 0, 2 * Math.PI);
-					// ctx.arc(radius * Math.sin(Math.PI), radius * Math.cos(Math.PI), thickness, 0, 2 * Math.PI);
+					// ctx.arc(
+					// 	radius * Math.sin(angle), 
+					// 	radius * Math.cos(angle), 
+					// 	thickness, 
+					// 	0, 
+					// 	2 * Math.PI);
 					ctx.closePath();
 					ctx.fill();
 					ctx.restore();
 				});
 			},
 		});
-
+			
 		let draw = Chart.controllers.line.prototype.draw;
 		Chart.controllers.line = Chart.controllers.line.extend({
 			draw: function() {
@@ -375,6 +382,7 @@ export class Dashboard1Component implements OnInit, AfterViewInit {
 		this.context = (<HTMLCanvasElement>this.conformityDoughnutRef.nativeElement).getContext('2d');
 		this.halfDoughnut = new Chart(this.context, {
 			type: 'RoundedDoughnut',
+			// type: this.conformityType,
 			data: this.conformityRateSet,
 			options: this.conformityDOptions
 		});

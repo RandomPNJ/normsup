@@ -1,10 +1,20 @@
 .main-cont {
+  margin-top: 0px !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
+  border-radius: 0px !important;
+  font-family: Roboto !important;
+}
+
+.cont-wrapper {
   margin-top: 30px;
+  margin-bottom: 20px;
   background-color: white;
-  box-shadow: 0 7px 15px 0 rgba(0, 51, 90, 0.04);
+  box-shadow: 0px 0px 55px #4390EF1A !important;
   border-radius: 6px;
   font-family: Roboto !important;
 }
+
 .plus-icn {
   float: right;
   color: lightblue;

@@ -72,6 +72,7 @@ export const DELETE_SUPPLIER_RELATION = 'DELETE FROM `client_supplier_relation` 
 export const DELETE_SUPPLIER_REPRES = 'DELETE FROM `representatives` WHERE organisation_id = ? AND client_id = ?';
 export const DELETE_SUPPLIER = 'DELETE FROM `organisations` WHERE id = ? AND added_by_org = ?';
 export const DELETE_SUPPLIER_FROM_GROUP = 'DELETE FROM `group_members` WHERE member_id = ?';
+export const DELETE_SUPPLIER_CONFORMITY = 'DELETE FROM `supplier_conformity` WHERE supplier_id = ? AND client_id = ?';
 
 export const UPDATE_REPRES = 'UPDATE `representatives` SET name=?, lastname=?, phonenumber=?, email=? WHERE id = ? AND client_id = ?'
 export const DELETE_REPRES = 'DELETE FROM `representatives` WHERE id = ? AND client_id = ?';

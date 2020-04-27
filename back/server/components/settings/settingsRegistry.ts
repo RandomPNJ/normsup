@@ -38,13 +38,13 @@ export default class SupplierRegistry {
         let query = {
             timeout: 40000
         };
-        const id = data.clientID;
+        const id = data.client_id;
         delete data.clientID;
-        const sqlParams = [];
-        Object.keys(data).forEach(key => {
-            sqlParams.push(data[key]);
-        });
-        loggerT.verbose('params : ', [id].concat(sqlParams).concat(sqlParams));
+        const sqlParams = [data.alerts_state, data.alert_valid_sup, data.alert_invalid_sup, data.alert_invalid_mail, data.alert_frequency];
+        // Object.keys(data).forEach(key => {
+        //     sqlParams.push(data[key]);
+        // });
+        // loggerT.verbose('params : ', [id].concat(sqlParams).concat(sqlParams));
         query['sql']    = Query.INSERT_ALERT;
         query['values'] = [id].concat(sqlParams).concat(sqlParams);
 

@@ -21,6 +21,8 @@ export class AddCompGroupComponent implements OnInit {
   @Input() type;
   @Input() id;
   @Output() changeModal = new EventEmitter<string>();
+  @Output() changeName = new EventEmitter<string>();
+  @Output() addGroup = new EventEmitter<string>();
   @ViewChild('selectComponent') selectComponentRef: SelectListComponent;
 
   public input$ = new Subject<string>();
@@ -221,12 +223,23 @@ export class AddCompGroupComponent implements OnInit {
     }
 
     this.http.post(uri, data)
-      .subscribe(() => {
+      .subscribe((res) => {
         if(this.type !== 'MODIFICATION') {
           this.changeModal.emit('newGroup');
+          if(res && res.body) {
+            let r = res.body;
+            console.log('createGroup res', r);
+            let obj = {};
+            obj['name'] = r['name'] ? r['name'] : 'Nom invalide';
+            obj['members_count'] = r['groupSize'] ? r['groupSize'] : 0;
+            obj['id'] = r['insertId'] ? r['insertId'] : 0;
+            console.log('createGroup obj', obj);
+            this.addGroup.emit(JSON.stringify(obj));
+          }
           this.state = 'newGroup';
         } else {
           this.changeModal.emit('MODIFICATION');
+          this.changeName.emit(this.group.name);
           this.notif.success('Groupe modifié avec succès.');
         }
       },

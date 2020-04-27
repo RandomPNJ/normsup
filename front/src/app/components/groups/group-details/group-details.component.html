@@ -1,11 +1,11 @@
-<div class="container component-padding" style="height: 100%;">
+<div class="group-details-cont container component-padding" style="">
   <div class="row nopadding previous-lnk-row">
     <div [routerLink]="['/dashboard/groups']">
       <span class="glyphicon glyphicon-chevron-left previous-arrow" aria-hidden="true"></span>
       <span class="previous-txt" style="padding-left: 9px;">Retour aux groupes</span>
     </div>
   </div>
-  <div class="row nopadding  col-lg-11 col-md-11 col-sm-7 col-8" style="padding-top: 45px !important; padding-bottom: 25px !important;">
+  <div class="row nopadding col-lg-11 col-md-12 col-sm-7 col-8" style="padding-top: 45px !important; padding-bottom: 25px !important;">
     <div class="col-lg-7 col-md-12 col-sm-10 col-8 title nopadding">
       <span class="group-details-name" style="padding-right: 20px;">{{groupName}}</span>
       <span class="item-count">
@@ -22,99 +22,103 @@
         </div>
         <div class="col-6" style="padding-right: 0px !important;">
           <button style="height: 30px" type="button" class="btn btn-outline-normsup comp-btn" (click)="openModal('delete')">
-            <span class="button-txt">Supprimer ce groupe</span>
+            <span class="button-txt" style="padding-right: 17px !important;padding-left: 17px !important;">Supprimer ce groupe</span>
           </button>
         </div>
       </div>
     </div>
   </div>
-  <div class="row nopadding col-lg-11 col-md-11 col-sm-7 col-8" style="height: 100%;margin-bottom: 65px !important;">
+  <div class="row nopadding col-lg-11 col-md-12 col-sm-7 col-8 data-row mb-5">
     <div class="container nopadding" style="">
       <!-- Liste des fournisseurs -->
-      <div class="normsup-card col-lg-6" style="padding-left: 0px !important;">
-        <div class="normsup-card-header">
-          <span>Liste des fournisseurs du groupe</span>
-        </div>
-        <div class="normsup-card-body invisible-scrollbar">
-          <div *ngFor="let supplier of suppliers" class="supplier-row">
-            <span class="supplier-txt">{{supplier.denomination}}</span>
+      <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6 nopadding data-cont-one">
+        <div class="normsup-card">
+          <div class="normsup-card-header">
+            <span class="fourn-list-style">Liste des fournisseurs du groupe</span>
+          </div>
+          <div class="normsup-card-body invisible-scrollbar" style="overflow-y: auto;">
+            <div *ngFor="let supplier of suppliers" class="supplier-row">
+              <span class="supplier-txt">{{supplier.denomination}}</span>
+            </div>
           </div>
         </div>
       </div>
       <!-- Paramètre des relances -->
-      <div class="normsup-card col-lg-6" style="padding-right: 0px !important;">
-        <div class="normsup-card-header">
-          <span>Paramétrage des relances</span>
-        </div>
-        <div class="normsup-card-body invisible-scrollbar">
-          <div class="group-card-row">
-            <div class="text-cont">
-              <div class="basic-txt d-inline-block">Activer les relances</div>
-              <div class="custom-control custom-switch d-inline-block switch-cont">
-                <input type="checkbox" class="custom-control-input" id="reminderSwitch" [(ngModel)]="activateReminders">
-                <label class="custom-control-label" for="reminderSwitch">&nbsp;</label>
-              </div>
-            </div>
+      <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6 nopadding data-cont-one">
+        <div class="normsup-card">
+          <div class="normsup-card-header">
+            <span>Paramétrage des relances</span>
           </div>
-          <div class="group-card-row" [ngClass]="{'disabled-row': !activateReminders}">
-            <div class="text-cont">
-              <div class="basic-txt">Choix des documents</div>
-              <div class="params-input">
-                <div class="sub-txt d-inline-block">Légal</div>
-                <div class="doc-form-check d-inline-block">
-                  <div class="form-check form-check-inline normsup-checkbox-cont">
-                    <input [disabled]="!activateReminders" class="form-check-input normsup-checkbox" type="checkbox" id="inlineCheckbox1" value="option1"  [(ngModel)]="documentsSettings.legal.urssaf">
-                    <label class="form-check-label" for="inlineCheckbox1">URSSAF</label>
-                  </div>
-                  <div class="form-check form-check-inline normsup-checkbox-cont">
-                    <input [disabled]="!activateReminders" class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2"  [(ngModel)]="documentsSettings.legal.lnte">
-                    <label class="form-check-label" for="inlineCheckbox2">LNTE</label>
-                  </div>
-                  <div class="form-check form-check-inline normsup-checkbox-cont">
-                    <input [disabled]="!activateReminders" class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3"  [(ngModel)]="documentsSettings.legal.kbis">
-                    <label class="form-check-label" for="inlineCheckbox3">KBIS</label>
-                  </div>
-                </div>
-              </div>
-              <div class="params-input">
-                <div class="sub-txt d-inline-block">Complémentaire</div>
-                <div class="d-inline-block select-cont">
-                  <select [disabled]="!activateReminders" class="form-control" id="compDoc"  name="compDoc" [(ngModel)]="documentsSettings.comp">
-                    <option [ngValue]="undefined" disabled>Choisir document</option>
-                    <option *ngFor="let c of compDocs" [ngValue]="c.value" [disabled]="c.value === 1">{{c.name}}</option>
-                  </select>
-                </div>
-                <div class="add-doc-details">
-                  <img src="../../../assets/img/plus-add-icn.svg" style="height: 10px;padding-right: 8px;" /><span class="add-doc-link">Ajouter un document</span>
+          <div class="normsup-card-body invisible-scrollbar">
+            <div class="group-card-row">
+              <div class="text-cont">
+                <div class="basic-txt d-inline-block">Activer les relances</div>
+                <div class="custom-control custom-switch d-inline-block switch-cont" style="cursor: pointer !important;">
+                  <input type="checkbox" class="custom-control-input" id="reminderSwitch" [(ngModel)]="activateReminders">
+                  <label class="custom-control-label" for="reminderSwitch">&nbsp;</label>
                 </div>
               </div>
             </div>
-          </div>
-          <div class="group-card-row" [ngClass]="{'disabled-row': !activateReminders}">
-            <div class="text-cont">
-              <div class="basic-txt">Fréquence des relances</div>
-              <div class="params-input">
-                <div class="sub-txt d-inline-block">Faire une relance tous les</div>
-                <div class="d-inline-block select-cont2">
-                  <select [disabled]="!activateReminders" class="form-control" id="freq"  name="freq" [(ngModel)]="documentsSettings.frequency">
-                    <option *ngFor="let f of frequency" [ngValue]="f.value">{{f.name}}</option>
-                  </select>
+            <div class="group-card-row" [ngClass]="{'disabled-row': !activateReminders}">
+              <div class="text-cont">
+                <div class="basic-txt">Choix des documents</div>
+                <div class="params-input">
+                  <div class="sub-txt d-inline-block">Légal</div>
+                  <div class="doc-form-check d-inline-block">
+                    <div class="form-check form-check-inline normsup-checkbox-cont">
+                      <input [disabled]="!activateReminders" class="form-check-input normsup-checkbox" type="checkbox" id="inlineCheckbox1" value="option1"  [(ngModel)]="documentsSettings.legal.urssaf">
+                      <label class="form-check-label" for="inlineCheckbox1">URSSAF</label>
+                    </div>
+                    <div class="form-check form-check-inline normsup-checkbox-cont">
+                      <input [disabled]="!activateReminders" class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2"  [(ngModel)]="documentsSettings.legal.lnte">
+                      <label class="form-check-label" for="inlineCheckbox2">LNTE</label>
+                    </div>
+                    <div class="form-check form-check-inline normsup-checkbox-cont">
+                      <input [disabled]="!activateReminders" class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3"  [(ngModel)]="documentsSettings.legal.kbis">
+                      <label class="form-check-label" for="inlineCheckbox3">KBIS</label>
+                    </div>
+                  </div>
+                </div>
+                <div class="params-input">
+                  <div class="sub-txt d-inline-block">Complémentaire</div>
+                  <div class="d-inline-block select-cont">
+                    <select [disabled]="!activateReminders" class="form-control" id="compDoc"  name="compDoc" [(ngModel)]="documentsSettings.comp">
+                      <option [ngValue]="undefined" disabled>Choisir document</option>
+                      <option *ngFor="let c of compDocs" [ngValue]="c.value" [disabled]="c.value === 1">{{c.name}}</option>
+                    </select>
+                  </div>
+                  <div class="add-doc-details">
+                    <img src="../../../assets/img/plus-add-icn.svg" style="height: 10px;padding-right: 8px;" /><span class="add-doc-link">Ajouter un document</span>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div class="group-card-row" style="border-bottom: none;" [ngClass]="{'disabled-row': !activateReminders}">
-            <div class="container nopadding">
-              <div class="row nopadding">
-                <div class="col-7" style="padding-right: 0px !important;">
-                  <button [disabled]="!activateReminders" style="height: 36px" type="button" class="btn btn-outline-normsup spont-btn" (click)="spontReminder()">
-                    <span class="button-txt">Faire une relance spontanée</span>
-                  </button>
+            <div class="group-card-row" [ngClass]="{'disabled-row': !activateReminders}">
+              <div class="text-cont">
+                <div class="basic-txt">Fréquence des relances</div>
+                <div class="params-input">
+                  <div class="sub-txt d-inline-block">Faire une relance tous les</div>
+                  <div class="d-inline-block select-cont2">
+                    <select [disabled]="!activateReminders" class="form-control" id="freq"  name="freq" [(ngModel)]="documentsSettings.frequency">
+                      <option *ngFor="let f of frequency" [ngValue]="f.value">{{f.name}}</option>
+                    </select>
+                  </div>
                 </div>
-                <div class="col-5" style="padding-right: 0px !important;">
-                  <button [disabled]="!activateReminders || !documentsSettings.frequency" style="height: 36px; background-color: #4390EF !important;" type="button" class="btn btn-primary save-btn" (click)="save()">
-                    <span class="button-txt">Enregistrer</span>
-                  </button>
+              </div>
+            </div>
+            <div class="group-card-row" style="border-bottom: none;" [ngClass]="{'disabled-row': !activateReminders}">
+              <div class="container nopadding">
+                <div class="row nopadding">
+                  <div class="col-7" style="padding-right: 0px !important;">
+                    <button [disabled]="!activateReminders" style="height: 36px" type="button" class="btn btn-outline-normsup spont-btn" (click)="spontReminder()">
+                      <span class="button-txt">Faire une relance spontanée</span>
+                    </button>
+                  </div>
+                  <div class="col-5" style="padding-right: 0px !important;">
+                    <button [disabled]="!activateReminders || !documentsSettings.frequency" style="height: 36px; background-color: #4390EF !important;" type="button" class="btn btn-primary save-btn" (click)="save()">
+                      <span class="button-txt">Enregistrer</span>
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -155,6 +159,6 @@
   <div class="modal-header own-modal-header-supplier" style="border-bottom: none;">
   </div>
   <div class="modal-body">
-    <app-add-comp-group (changeModal)="changeModal($event)" [groupName]="groupName" [type]="typeModal" [id]="id"></app-add-comp-group>
+    <app-add-comp-group (changeName)="changeGroupName($event)" (changeModal)="changeModal($event)" [groupName]="groupName" [type]="typeModal" [id]="id"></app-add-comp-group>
   </div>
 </ng-template>
