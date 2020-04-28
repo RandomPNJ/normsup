@@ -36,7 +36,7 @@ export class SupplierTableComponent implements OnInit,AfterViewInit {
   supplier: any;
   data: Array<any> = [];
   groups: Array<any> = [ 
-    { id: '', name: 'Veuillez choisir un groupe' }
+    { id: -1, name: 'Veuillez choisir un groupe' }
   ];
   dtElement: DataTableDirective;
   dataTable: any;
@@ -49,7 +49,7 @@ export class SupplierTableComponent implements OnInit,AfterViewInit {
     group: '',
   };
   dtOptions: DataTables.Settings = {};
-  groupSelect: any = '';
+  groupSelect: String = '';
   myTable: Boolean = false;
 
   // Modal variables
@@ -267,7 +267,7 @@ export class SupplierTableComponent implements OnInit,AfterViewInit {
   }
 
   filterByGroup(): void {
-    if(this.groupSelect.toString() === '') {
+    if(this.groupSelect === -1) {
       if(this.tableParams.group !== '') {
         this.tableParams.group = '';
         this.reload();

@@ -558,6 +558,14 @@ td {
     display: inline-block;
 }
 
+.chose-grp-cont {
+    width: 200px;
+    right: 50px;
+    top: -5px;
+    position: absolute;
+    z-index: 10;
+}
+
 .select-grp {
     text-align-last: center;
 }
@@ -574,7 +582,6 @@ td {
 }
 
 /** NORMSUP DATATABLE STYLE END **/
-
 
 /* spinner style starts */
 
@@ -699,6 +706,8 @@ td {
 }
 
 .dataTables_length {
+    bottom: -4px !important;
+    position: absolute !important;
     label {
         color: $normsup-gray;
         font-family: Roboto;
@@ -712,6 +721,7 @@ td {
         color: #333;
     }
 }
+
 
 #tableComp_filter {
 
@@ -740,6 +750,9 @@ td {
     }
 }
 
+.dataTables_filter {
+    float: left !important;
+}
 
 .dataTables_info {
     color: #333 !important;
@@ -836,6 +849,10 @@ td {
 
 .vert-align {
     vertical-align: middle;
+}
+
+.table-cont {
+    position: relative;
 }
 
 .btn-upload {}

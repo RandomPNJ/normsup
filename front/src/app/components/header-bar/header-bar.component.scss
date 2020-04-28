@@ -108,14 +108,23 @@ nav .dropdown-trigger .arrowNavIcon {
 
 .logout {
     text-align: center;
-    width: 150px;
+    // width: 150px;
+    // width: 300px;
     z-index: 1000;
     right: 0;
     margin-right: 93px;
     position: fixed;
     display: inline-block;
 }
-
+.header-txt-cont {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+.header-txt {
+    width:100%;
+    padding: 0px 15px;
+}
 .logout:hover, .logout label:hover {
     cursor: pointer;
 
@@ -142,7 +151,7 @@ nav .dropdown-trigger .arrowNavIcon {
     border-radius: 10px;
     margin-top: 7px;
     position: fixed;
-    right: 90px;
+    right: 35px;
     top: 66px;
     border-width: 1px;
 
@@ -314,4 +323,10 @@ hr {
     font-family: 'Avenir Heavy';
     font-size: 15px;
     color: #4E5983;
+
+    & > span {
+        font-family: 'Avenir Heavy';
+    font-size: 15px;
+    color: #4E5983;
+    }
 }

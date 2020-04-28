@@ -46,7 +46,8 @@ export default class UserRegistry {
                                 organisation: user.organisation,
                                 client: user.client,
                                 role: user.role,
-                                createTime: new Date(user.create_time)
+                                createTime: new Date(user.create_time),
+                                companyName: user.companyName
                             };
                             return Promise.resolve(payload);
                         }
@@ -83,7 +84,8 @@ export default class UserRegistry {
                     organisation: user.organisation,
                     client: user.client,
                     role: user.role,
-                    createTime: new Date(user.create_time)
+                    createTime: new Date(user.create_time),
+                    companyName: user.companyName
                 };
                 return Promise.resolve(payload);
             })

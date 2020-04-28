@@ -1,11 +1,12 @@
-<div style="max-width: 200px;" class="form-group">
-  <select class="form-control select-grp custom-select" id="groupSelect" [(ngModel)]="groupSelect"
+<div class="chose-grp-cont">
+  <select class="form-control select-grp custom-select" id="groupSelection" [(ngModel)]="groupSelect"
     (change)="filterByGroup($event.target.value)">
-    <option style="text-transform: capitalize;" *ngFor="let c of groups" [ngValue]="c.id" [disabled]="c.id === ''">
-      {{c.name}}</option>
+    <option class="grp-select-opt" style="text-transform: capitalize;" *ngFor="let c of groups" [ngValue]="c.id">
+      {{c.name}}
+    </option>
   </select>
 </div>
-<div class="table-responsive" style="overflow-x: hidden;">
+<div class="table-responsive" style="overflow-y: hidden;">
   <table datatable [dtOptions]="dtOptions" id="tableComp" class="table display pageResize hover compact supplier-table" cellspacing="0"
     width="100%" style="height: 100%;" #suppliersTable>
     <!-- <thead>
@@ -87,15 +88,11 @@
                   <span style="text-decoration: underline;" class="fix-middle doc-type-txt">Complémentaire</span>
                 </span>
               </div>
-              <!-- <span [ngClass]="{'badge-red': !item.lnte}" class="badge badge-style fix-middle"><i class="fas fa-file-alt doc-icn"></i>Lnte</span> -->
             </div>
           </div>
         </td>
         <td *ngIf="indexInfo == -1 || i <= indexInfo">
           <div id="util-btns" class="badge-container content-cont">
-            <!-- <span (click)="edit(item)" class="glyphicon glyphicon-pencil edit-icn fix-middle" aria-hidden="true"></span> -->
-            <!-- <span style="padding: 0px 5px;" class="fix-middle"></span> -->
-            <!-- <span (click)="delete(item)" class="glyphicon glyphicon-trash fix-middle" aria-hidden="true"></span> -->
             <div class="badge-container content-cont container">
               <div class="row h-100 cent">
                 <button style="box-shadow: none;font-size: 13px !important;" (click)="sendReminder(item.id)" type="button"
@@ -144,13 +141,6 @@
                   </div>
                 </div>
                 <div style="padding-bottom: 21px;" class="form-row">
-                  <!-- <span *ngIf="!toggleModification" style="display: inline-block; min-width: 190px;" class="infosupplier">Capital social: 
-                    <span class="infosupplier-value">{{infoPopup.asset}}1000000000 €</span>
-                  </span>
-                  <div *ngIf="toggleModification" class="form-group col-6">
-                    <label class="infosupplier col-auto nopadding" style="padding-right: 10px !important;" for="supplierAsset">Capital social:</label>
-                    <input class="form-control col-6" [(ngModel)]="supplier.asset" id="supplierAsset" style="display: inline-block !important;" placeholder="Capital Social"/>
-                  </div> -->
                   <span *ngIf="!toggleModification"class="infosupplier">Secteur d'activité: 
                     <span class="infosupplier-value">{{infoPopup.legalUnit}}</span>
                   </span>
@@ -327,9 +317,6 @@
         </td>
         <td *ngIf="indexInfo != -1 && i > indexInfo">
           <div id="util-btns" class="badge-container content-cont">
-            <!-- <span (click)="edit(item)" class="glyphicon glyphicon-pencil edit-icn fix-middle" aria-hidden="true"></span> -->
-            <!-- <span style="padding: 0px 5px;" class="fix-middle"></span> -->
-            <!-- <span (click)="delete(item)" class="glyphicon glyphicon-trash fix-middle" aria-hidden="true"></span> -->
             <div class="badge-container content-cont container">
               <div class="row h-100 cent">
                 <button style="box-shadow: none;font-size: 13px !important;" (click)="sendReminder(item.id)" type="button"
