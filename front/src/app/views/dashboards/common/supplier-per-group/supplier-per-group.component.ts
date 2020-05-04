@@ -19,6 +19,7 @@ export class SupplierPerGroupComponent implements OnInit {
 	public groupSupplierType = 'doughnut';
 	public groupSColors: Array<string> = ['#4390EF', '#C7E0FF', '#4E5983'];
 	public groupData: Array<any> = [];
+	public groupNames: Array<any> = [];
 
 	public showEmptyMessage: Boolean = false;
 	private showGraph: Boolean = false;
@@ -112,8 +113,10 @@ export class SupplierPerGroupComponent implements OnInit {
 				if (res.body && res.body['items']) {
 					console.log("res.body['items']", res.body['items']);
 					res.body['items'].forEach(element => {
-						if (element.members_count > 0)
+						if(element.members_count > 0) {
 							this.groupSupplierSet.datasets[0].data.push(floor(element.members_count / element.total * 100, 1));
+							this.groupNames.push(element.name)
+						}
 					});
 					if (this.groupSupplierSet.datasets[0].data.length === 0) {
 						this.showEmptyMessage = true;
