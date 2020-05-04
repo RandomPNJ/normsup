@@ -367,12 +367,7 @@ export class Dashboard1Component implements OnInit, AfterViewInit {
 					}
 					this.notConform = this.nbSuppliers >= this.conform ? this.nbSuppliers - this.conform : 0;
 				}
-				if(this.nbSuppliers && this.conform) {
-					let v = Math.round(this.conform / this.nbSuppliers * 100);
-					this.conformityRateSet.datasets[0].data.push(v);
-					this.conformityRateSet.datasets[0].data.push(100-v);
-					this.showConformRateGraph = true;
-				}
+				this.showConformRateGraph = true;
 			}, err => {
 				console.log('[StatsCardComponent] getSuppliers count', err);
 				this.nbSuppliers = 0;

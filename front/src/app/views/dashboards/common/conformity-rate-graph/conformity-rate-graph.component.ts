@@ -96,6 +96,7 @@ export class ConformityRateGraphComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     this.intervalID = setInterval(() => {
       if(this.nbSuppliers === 0) {
+        console.log('setInterval one');
         this.conformityRateSet.datasets[0].data.push(0);
         this.conformityRateSet.datasets[0].data.push(100);
         this.context = (<HTMLCanvasElement>this.conformityDoughnutRef.nativeElement).getContext('2d');
@@ -106,6 +107,7 @@ export class ConformityRateGraphComponent implements OnInit, AfterViewInit {
         });
         this.stopInterval();
       } else if((this.nbSuppliers || this.nbSuppliers === 0) && (this.conform || this.conform === 0) && (this.conform <= this.nbSuppliers)) {
+        console.log('setInterval two');
         this.show = true;
         let v = Math.round(this.conform / this.nbSuppliers * 100);
         this.conformityRateSet.datasets[0].data.push(v);
