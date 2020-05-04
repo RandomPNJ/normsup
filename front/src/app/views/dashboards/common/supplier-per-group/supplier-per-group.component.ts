@@ -5,25 +5,25 @@ import 'chartjs-plugin-labels';
 import { floor } from 'lodash';
 
 @Component({
-  selector: 'app-supplier-per-group',
-  templateUrl: './supplier-per-group.component.html',
-  styleUrls: ['./supplier-per-group.component.scss']
+	selector: 'app-supplier-per-group',
+	templateUrl: './supplier-per-group.component.html',
+	styleUrls: ['./supplier-per-group.component.scss']
 })
 export class SupplierPerGroupComponent implements OnInit {
 
 	@ViewChild('groupSupplier') private groupSupplierRef: ElementRef;
 
-  // General variables
+	// General variables
 	public groupSContext: CanvasRenderingContext2D;
 	public groupSDoughnut: any;
 	public groupSupplierType = 'doughnut';
-  public groupSColors : Array<string> = ['#4390EF', '#C7E0FF', '#4E5983'];
-  public groupData: Array<any> = [];
+	public groupSColors: Array<string> = ['#4390EF', '#C7E0FF', '#4E5983'];
+	public groupData: Array<any> = [];
 
-  public showEmptyMessage: Boolean = false;
-  private showGraph: Boolean = false;
+	public showEmptyMessage: Boolean = false;
+	private showGraph: Boolean = false;
 
-  /** Group suppliers chart **/
+	/** Group suppliers chart **/
 	public groupSupplierSet = {
 		labels: [
 			'Value'
@@ -33,12 +33,12 @@ export class SupplierPerGroupComponent implements OnInit {
 				data: [],
 				backgroundColor: [
 					"#4390EF",
-					"#C7E0FF", 
+					"#C7E0FF",
 					'#4E5983'
 				],
 				hoverBackgroundColor: [
 					"#4390EF",
-					"#C7E0FF", 
+					"#C7E0FF",
 					'#4E5983'
 				]
 			}]
@@ -47,13 +47,13 @@ export class SupplierPerGroupComponent implements OnInit {
 	public groupSupplierOptions: any = {
 		aspectRatio: 1,
 		layout: {
-            padding: {
-                left: 0,
-                right: 0,
-                top: 0,
-                bottom: 0,
-            }
-        },
+			padding: {
+				left: 0,
+				right: 0,
+				top: 0,
+				bottom: 0,
+			}
+		},
 		responsive: true,
 		cutoutPercentage: 65,
 		tooltips: {
@@ -83,64 +83,66 @@ export class SupplierPerGroupComponent implements OnInit {
 			labels: {
 				// mode 'label', 'value' or 'percentage', default is 'percentage'
 				render: 'value',
-			
+
 				// precision for percentage, default is 0
 				precision: 0,
-			
+
 				// font size, default is defaultFontSize
 				fontSize: 13,
-			
+
 				// font color, default is '#fff'
 				fontColor: '#fff',
-			
+
 				// font style, default is defaultFontStyle
 				fontStyle: 'bold',
-			
+
 				// font family, default is defaultFontFamily
 				fontFamily: "'Roboto Regular', 'Roboto'"
 			}
 		}
-  };
+	};
 
-  constructor(private httpService: HttpService) { }
+	constructor(private httpService: HttpService) { }
 
-  ngOnInit() {
-    this.httpService
-      .get('/api/suppliers/groups')
-      .subscribe(res => {
-        console.log('count res', res);
-        if(res.body && res.body['items']) {
-          res.body['items'].forEach(element => {
-            if(element.members_count > 0)
-              this.groupSupplierSet.datasets[0].data.push(floor(element.members_count / element.total * 100, 1));
-          });
-          if(this.groupSupplierSet.datasets[0].data.length === 0) {
-            this.showEmptyMessage = true;
-          } else {
-            this.showGraph = true;
-            this.groupSContext = (<HTMLCanvasElement>this.groupSupplierRef.nativeElement).getContext('2d');
-            this.groupSDoughnut = new Chart(this.groupSContext, {
-              type: this.groupSupplierType,
-              data: this.groupSupplierSet,
-              options: this.groupSupplierOptions
-            });
-          }
-        }
-      }, err => {
-        console.log('[StatsCardComponent] getSuppliers items', err);
-      })
-    ;
-  }
+	ngOnInit() {
+		this.httpService
+			.get('/api/suppliers/groups')
+			.subscribe(res => {
+				console.log('count res', res);
+				if (res.body && res.body['items']) {
+					console.log("res.body['items']", res.body['items']);
+					res.body['items'].forEach(element => {
+						if (element.members_count > 0)
+							this.groupSupplierSet.datasets[0].data.push(floor(element.members_count / element.total * 100, 1));
+					});
+					if (this.groupSupplierSet.datasets[0].data.length === 0) {
+						this.showEmptyMessage = true;
+					} else {
+						this.showGraph = true;
+						this.groupSContext = (<HTMLCanvasElement>this.groupSupplierRef.nativeElement).getContext('2d');
+						this.groupSDoughnut = new Chart(this.groupSContext, {
+							type: this.groupSupplierType,
+							data: this.groupSupplierSet,
+							options: this.groupSupplierOptions
+						});
+					}
+					console.log('this.groupSupplierSet.datasets[0].data', this.groupSupplierSet.datasets[0].data);
+				}
+			}, err => {
+				console.log('[StatsCardComponent] getSuppliers items', err);
+			})
+			;
+	}
 
-  ngAfterViewInit(): void {
-    //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
-    //Add 'implements AfterViewInit' to the class.
-    this.groupSContext = (<HTMLCanvasElement>this.groupSupplierRef.nativeElement).getContext('2d');
+	ngAfterViewInit(): void {
+		//Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
+		//Add 'implements AfterViewInit' to the class.
+		this.groupSContext = (<HTMLCanvasElement>this.groupSupplierRef.nativeElement).getContext('2d');
 		this.groupSDoughnut = new Chart(this.groupSContext, {
 			type: this.groupSupplierType,
 			data: this.groupSupplierSet,
 			options: this.groupSupplierOptions
 		});
-  }
+	}
 
 }

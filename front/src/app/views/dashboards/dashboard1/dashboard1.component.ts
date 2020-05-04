@@ -23,11 +23,10 @@ export class Dashboard1Component implements OnInit, AfterViewInit {
 	public halfDoughnut: any;
 	public conformityChart: any;
 	public confPerGrpBar: any;
-	public map: any = { lat: 51.678418, lng: 7.809007 };
-	public nbFourni = 13;
 	public reminders: Array<any>;
-	
-	public groupSColors : Array<string> = ['#4390EF', '#C7E0FF', '#4E5983'];
+	public groupSColors: Array<string> = ['#4390EF', '#C7E0FF', '#4E5983'];
+	public showConformRateGraph: Boolean = false;
+
 	public nbSuppliers: any;
 	public conform: any;
 	public notConform: any;
@@ -44,7 +43,7 @@ export class Dashboard1Component implements OnInit, AfterViewInit {
 		],
 		datasets: [
 			{
-				data: [100, 0],
+				data: [],
 				backgroundColor: [
 					"#4390EF",
 					"#C7E0FF"
@@ -368,6 +367,12 @@ export class Dashboard1Component implements OnInit, AfterViewInit {
 					}
 					this.notConform = this.nbSuppliers >= this.conform ? this.nbSuppliers - this.conform : 0;
 				}
+				if(this.nbSuppliers && this.conform) {
+					let v = Math.round(this.conform / this.nbSuppliers * 100);
+					this.conformityRateSet.datasets[0].data.push(v);
+					this.conformityRateSet.datasets[0].data.push(100-v);
+					this.showConformRateGraph = true;
+				}
 			}, err => {
 				console.log('[StatsCardComponent] getSuppliers count', err);
 				this.nbSuppliers = 0;
@@ -379,13 +384,14 @@ export class Dashboard1Component implements OnInit, AfterViewInit {
 	}
 
 	ngAfterViewInit() {
-		this.context = (<HTMLCanvasElement>this.conformityDoughnutRef.nativeElement).getContext('2d');
-		this.halfDoughnut = new Chart(this.context, {
-			type: 'RoundedDoughnut',
-			// type: this.conformityType,
-			data: this.conformityRateSet,
-			options: this.conformityDOptions
-		});
+		// this.context = (<HTMLCanvasElement>this.conformityDoughnutRef.nativeElement).getContext('2d');
+		// this.halfDoughnut = new Chart(this.context, {
+		// 	type: 'RoundedDoughnut',
+		// 	// type: this.conformityType,
+		// 	data: this.conformityRateSet,
+		// 	options: this.conformityDOptions
+		// });
+		
 
 		this.conformityPerGrpContext = (<HTMLCanvasElement>this.conformityPerGrpRef.nativeElement).getContext('2d');
 		this.confPerGrpBar = new Chart(this.conformityPerGrpContext, {
@@ -393,6 +399,7 @@ export class Dashboard1Component implements OnInit, AfterViewInit {
 			data: this.confPerGrpSet,
 			options: this.confPerGrpOptions
 		});
+
 	}
 
 }

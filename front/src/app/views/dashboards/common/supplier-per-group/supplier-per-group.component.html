@@ -10,7 +10,7 @@
           <span *ngFor="let item of groupSupplierSet.datasets[0].data; let index = index" class="legend-cont col-4 nopadding pt-1">
             <div style="line-height: 17px;padding-bottom: 12px;">
               <div [ngStyle]="{'background-color': groupSColors[index]}" id="circle" class="color-circle">&nbsp;</div>
-              <span class="legend-txt">Groupe {{ index }}</span>
+              <span class="legend-txt">{{item.name}}</span>
             </div>
           </span>
         </div>

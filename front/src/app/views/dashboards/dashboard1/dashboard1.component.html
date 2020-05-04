@@ -22,18 +22,10 @@
         <div class="md-horz-align tx-supp-md col-lg-2-half col-md-auto col-sm-8 sm-horz-align dash-style-sm">
           <div class="row">
             <div class="col" style="display: inline-block;">
-              <div style="width: 100%; position: absolute; top: 80%;; left: 0; margin-top: -20px; text-align: center; z-index: 999">
-                <span class="number-fourn">{{conformityRateSet.datasets[0].data[0]}}%</span>
-                <span class="tx-conform" style="color: '#4E5983';font-family: 'Avenir Medium';font-size: 14;">Taux de conformité</span>
-                <br />
-              </div>
-              <canvas style="margin: auto 0 !important;" #conformityDoughnut id="conformDoughnut" mdbChart [chartType]="conformityType" height="120"></canvas>
+              <app-conformity-rate-graph *ngIf="showConformRateGraph === true" [nbSuppliers]="nbSuppliers" [conform]="conform"></app-conformity-rate-graph>
             </div>
           </div>
         </div>
-        <!-- <div class="col-lg-1 col-md-0 mb-4">
-    
-        </div> -->
       </div>
     
       <div class="row wow fadeIn mt-4">

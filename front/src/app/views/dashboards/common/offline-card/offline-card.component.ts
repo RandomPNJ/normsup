@@ -7,7 +7,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class OfflineCardComponent implements OnInit {
 
-  @Input() offline: any;
+  @Input() offline: any = 0;
 
   constructor() { }
 

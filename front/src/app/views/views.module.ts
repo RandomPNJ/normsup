@@ -21,6 +21,7 @@ import { OfflineCardComponent } from './dashboards/common/offline-card/offline-c
 import { DashGroupCardComponent } from './dashboards/common/dash-group-card/dash-group-card.component';
 import { SupplierPerGroupComponent } from './dashboards/common/supplier-per-group/supplier-per-group.component';
 import { MonthlyConformityComponent } from './dashboards/common/monthly-conformity/monthly-conformity.component';
+import { ConformityRateGraphComponent } from './dashboards/common/conformity-rate-graph/conformity-rate-graph.component';
 
 
 @NgModule({
@@ -50,6 +51,7 @@ import { MonthlyConformityComponent } from './dashboards/common/monthly-conformi
     DashGroupCardComponent,
     SupplierPerGroupComponent,
     MonthlyConformityComponent,
+    ConformityRateGraphComponent,
 
   ],
   exports: [
