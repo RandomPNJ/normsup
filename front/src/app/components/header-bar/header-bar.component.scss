@@ -106,16 +106,7 @@ nav .dropdown-trigger .arrowNavIcon {
     z-index: 1000;
 }
 
-.logout {
-    text-align: center;
-    // width: 150px;
-    // width: 300px;
-    z-index: 1000;
-    right: 0;
-    margin-right: 93px;
-    position: fixed;
-    display: inline-block;
-}
+
 .header-txt-cont {
     display: flex;
     align-items: center;
@@ -328,5 +319,27 @@ hr {
         font-family: 'Avenir Heavy';
     font-size: 15px;
     color: #4E5983;
+    }
+}
+
+.logout {
+    text-align: center;
+    z-index: 1000;
+    right: 0;
+    // margin-right: 93px;
+    margin-right: 13rem; 
+    position: fixed;
+    display: inline-block;
+}
+
+@media (max-width: 1440px) {
+    .logout {
+        margin-right: 11.5rem !important;
+    }
+}
+
+@media (max-width: 1170px) {
+    .logout {
+        margin-right: 15.5rem !important;
     }
 }

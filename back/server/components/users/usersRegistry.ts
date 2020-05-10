@@ -185,7 +185,7 @@ export default class UserRegistry {
         loggerT.verbose('userInfo', userInfo);
         loggerT.verbose('userInfo.email', userInfo.email);
         query['sql']    = Query.QUERY_MODIFY_USER;
-        query['values'] = [userInfo.email, userInfo.lastname, userInfo.name, userInfo.address, userInfo.phonenumber, userInfo.postalCode, userInfo.city, id];
+        query['values'] = [userInfo.email, userInfo.lastname, userInfo.name, userInfo.address, userInfo.phonenumber, userInfo.postalCode, userInfo.city, userInfo.picture_url, id];
 
         return this.mysql.query(query)
             .then(res => {
@@ -193,7 +193,7 @@ export default class UserRegistry {
                 return Promise.resolve(res);
             })
             .catch(err => {
-                loggerT.error('ERROR ON QUERY getUsers.');
+                loggerT.error('ERROR ON QUERY modifyUser :', err);
                 return Promise.reject(err);
             })
         ;

@@ -21,13 +21,11 @@
             </div>
             <div *ngIf="loading === false" class="profile-card-body">
               <div class="profile-circle-cont">
-                <!-- <div class="add-pic">
-                  <img src="../../../assets/img/add-pic.svg" />
-                </div> -->
-                <div class="input-group upload-file-cont">
+                <div class="input-group upload-file-cont" >
                   <img src="/src/assets/img/bin.svg" class="del-pic-icn" *ngIf="imgURL" (click)="deletePicture()">
-                  <input type="file" class="filepicker upload-doc-imgbis" [(ngModel)]="pictureFile" (change)="loadPicture($event)" [hidden]="imgURL">
+                  <!-- <img *ngIf="profilePic && !imgURL" [src]="profilePic" alt="..." height="200" class="img-preview" style="position: absolute;opacity:0.5"> -->
                   <img [src]="imgURL" height="200" *ngIf="imgURL" class="img-preview">
+                  <input type="file" class="filepicker upload-doc-imgbis" [(ngModel)]="pictureFile" (change)="loadPicture($event)" [hidden]="imgURL">
                 </div>
               </div>
               <div class="container nopadding">
@@ -43,36 +41,16 @@
                     </div>
                   </div>
                   <div style="margin: auto;padding-left: 53px;padding-right: 54px;padding-bottom: 40px;" class="row">
-                    <div style="margin-right: 30px !important;" class="input-field col s6 nopadding">
-                      <input (focus)="formFocus.three=true" (blur)="formFocus.three=false" id="userInfo-phone" name="userInfo-phone" type="text" class="form-control  custom-normsup-input-nb" [(ngModel)]="userInfo.phonenumber" OnlyNumber='true'>
-                      <label [ngClass]="{'lowered-opac': !userInfo.phonenumber && formFocus.three === false, 'custom-label-input-test-active': userInfo.phonenumber || formFocus.three === true}" class="custom-normsup-label-test" for="userInfo-phone">Téléphone</label>
-                    </div>
                     <div class="input-field col s6 nopadding">
                       <input (focus)="formFocus.four=true" (blur)="formFocus.four=false" id="userInfo-mail" name="userInfo-mail" type="text" class="form-control  custom-normsup-input-nb" [(ngModel)]="userInfo.email">
                       <label [ngClass]="{'lowered-opac': !userInfo.email && formFocus.four === false, 'custom-label-input-test-active': userInfo.email || formFocus.four === true}" class="custom-normsup-label-test" for="userInfo-mail">Email</label>
                     </div>
                   </div>
-                  <div style="margin: auto;padding-left: 53px;padding-right: 54px;padding-bottom: 40px;" class="row">
-                    <div style="margin-right: 30px !important;" class="input-field col s6 nopadding">
-                      <input (focus)="formFocus.five=true" (blur)="formFocus.five=false" id="userInfo-address" name="userInfo-address" type="text" class="form-control  custom-normsup-input-nb" [(ngModel)]="userInfo.address">
-                      <label [ngClass]="{'lowered-opac': !userInfo.address && formFocus.five === false, 'custom-label-input-test-active': userInfo.address || formFocus.five === true}" class="custom-normsup-label-test" for="userInfo-phone">Adresse</label>
-                    </div>
-                  </div>
-                  <div style="margin: auto;padding-left: 53px;padding-right: 54px;padding-bottom: 35px;" class="row">
-                      <div style="margin-right: 30px !important;" class="input-field col s6 nopadding">
-                        <input (focus)="formFocus.six=true" (blur)="formFocus.six=false" id="userInfo-postalCode" name="userInfo-postalCode" type="text" class="form-control  custom-normsup-input-nb" [(ngModel)]="userInfo.postalCode" OnlyNumber='true'>
-                        <label [ngClass]="{'lowered-opac': !userInfo.postalCode && formFocus.six === false, 'custom-label-input-test-active': userInfo.postalCode || formFocus.six === true}" class="custom-normsup-label-test" for="userInfo-postalCode">Code Postal</label>
-                      </div>
-                      <div class="input-field col s6 nopadding">
-                        <input (focus)="formFocus.seven=true" (blur)="formFocus.seven=false" id="userInfo-city" name="userInfo-city" type="text" class="form-control  custom-normsup-input-nb" [(ngModel)]="userInfo.city">
-                        <label [ngClass]="{'lowered-opac': !userInfo.city && formFocus.seven === false, 'custom-label-input-test-active': userInfo.city || formFocus.seven === true}" class="custom-normsup-label-test" for="userInfo-city">Ville</label>
-                      </div>
-                    </div>
                 </div>
                 <div style="" class="save-btn-cont">
                   <div class="row nopadding">
                     <div class="center-btn">
-                      <button style="border-radius: 5px;" type="button" class="btn btn-primary text-capitalize next-btn-supplier" (click)="sendModifications()" [disabled]="(userInfo.name === user.name && userInfo.lastname === user.lastname && userInfo.phonenumber === user.phonenumber && userInfo.email === user.email && userInfo.address === user.address && userInfo.postalCode === user.postalCode && userInfo.city === user.city && selectedPicture === false)">
+                      <button style="border-radius: 5px;" type="button" class="btn btn-primary text-capitalize next-btn-supplier" (click)="sendModifications()" [disabled]="(userInfo.name === user.name && userInfo.lastname === user.lastname && userInfo.email === user.email && selectedPicture === false)">
                         <span class="button-txt">Enregistrer</span>
                       </button>
                     </div>

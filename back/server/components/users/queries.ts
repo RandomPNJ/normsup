@@ -13,7 +13,7 @@ export const INSERT_ROLE = 'INSERT INTO `user_roles` (userID, roleID) VALUES (?,
 export const FIND_USER_BY_NAME_EMAIL = 'SELECT user.id,user.create_time,createdBy,email,lastname,name,organisation,username,password,user.address,user.phonenumber,user.postalCode,user.city, picture_url, c.org_name as companyName FROM `user` LEFT JOIN client AS c ON user.organisation = c.id WHERE `username` = ? OR `email` = ? LIMIT 1';
 export const FIND_USER_BY_ID = 'SELECT user.id,user.create_time,createdBy,email,lastname,name,organisation,username,password,user.address,user.phonenumber,user.postalCode,user.city, picture_url, c.org_name as companyName FROM `user`  LEFT JOIN client AS c ON user.organisation = c.id WHERE user.id = ? LIMIT 1';
 export const GET_CURRENT_USER_EMAIL = 'SELECT user.id,user.create_time,createdBy,email,lastname,name,organisation,username,password,user.address,user.phonenumber,user.postalCode,user.city, picture_url, c.org_name as companyName FROM `user` LEFT JOIN client AS c ON user.organisation = c.id WHERE user.id= ? AND `email` = ? LIMIT 1'
-export const QUERY_MODIFY_USER = 'UPDATE `user` SET email = ?, lastname = ?, name = ?, user.address = ?, user.phonenumber = ?, user.postalCode = ?, user.city, picture_url = ? WHERE id = ?';
+export const QUERY_MODIFY_USER = 'UPDATE `user` SET email = ?, lastname = ?, name = ?, address = ?, phonenumber = ?, postalCode = ?, city = ?, picture_url = ? WHERE id = ?';
 export const QUERY_MODIFY_PASSWORD = 'UPDATE `user` SET password = ? WHERE id = ?';
 
 export const UPDATE_PROFILE_PIC = 'UPDATE `user` SET picture_url = ? WHERE id = ?';

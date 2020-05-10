@@ -25,6 +25,10 @@ export class ProfileComponent implements OnInit {
     animated: true,
     class: 'modal-dialog-centered modal-sm'
   };
+  profilePic: any = false;
+  defaultBG: any = '/src/assets/img/add-pic.svg';
+  urlToImage: any;
+  showImg: Boolean = true;
 
   loading: Boolean = true;
   id: Number;
@@ -108,6 +112,18 @@ export class ProfileComponent implements OnInit {
         }
       })
     ;
+    // Decomment to get the profile picture
+    // this.apiService.getPicture('/api/users/picture')
+    //   .subscribe(res => {
+    //     this.showImg = true;
+    //     this.urlToImage = '/src/assets/img/add-pic-two.svg';
+    //     return this.createImageFromBlob(<Blob>res.body);
+    //   }, err => {
+    //     this.showImg = true;
+    //     this.urlToImage = this.defaultBG;
+    //     return err;
+    //   })
+    // ;
   }
 
 
@@ -117,20 +133,18 @@ export class ProfileComponent implements OnInit {
     if(this.selectedPicture === true && this.pictureObj) {
       console.log('this.pictureFile', this.pictureObj);
       main_form.append('file', this.pictureObj);
-      // forkJoin(
-      //   this.apiService.put('/api/users/modify/' + this.id, this.userInfo),
-      //   this.apiService.post('/api/users/upload', main_form)
-      // )
-      //   .subscribe(res => {
-      //     console.log('forkjoin res', res);
-      //   })
-      // ;
-      return this.apiService.uploadDocument('/api/users/upload', main_form)
+      forkJoin(
+        this.apiService.put('/api/users/modify/' + this.id, this.userInfo),
+        this.apiService.uploadDocument('/api/users/upload', main_form)
+      )
         .subscribe(res => {
+          console.log('forkjoin res', res);
           this.notifService.success('Utilisateur modifié avec succès.');
           let user = JSON.stringify(this.userInfo);
           this.bsService.setLocalStorage('current_user', user);
           this.settingsService.profileModif.next(this.userInfo);
+        }, err => {
+          this.notifService.error('Une erreur s\'est produite, veuillez réessayer.');
         })
       ;
     } else {
@@ -143,15 +157,6 @@ export class ProfileComponent implements OnInit {
         })
       ;
     }
-
-    // return this.apiService.put('/api/users/modify/' + this.id, this.userInfo)
-    //   .subscribe(res => {
-    //     this.notifService.success('Utilisateur modifié avec succès.');
-    //     let user = JSON.stringify(this.userInfo);
-    //     this.bsService.setLocalStorage('current_user', user);
-    //     this.settingsService.profileModif.next(this.userInfo);
-    //   })
-    // ;
   }
 
   loadPicture(e) {
@@ -271,4 +276,14 @@ export class ProfileComponent implements OnInit {
     this.modifyPwdErr = '';
     this.modalRef = null;
   }
+  createImageFromBlob(image: Blob) {
+    let reader = new FileReader(); //you need file reader for read blob data to base64 image data.
+    reader.addEventListener("load", () => {
+       this.profilePic = reader.result; // here is the result you got from reader
+    }, false);
+ 
+    if (image) {
+       reader.readAsDataURL(image);
+    }
+ }
 }

@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { DaterangepickerConfig } from 'ng2-daterangepicker';
+import { Component, OnInit, ViewChild, ElementRef, ViewChildren } from '@angular/core';
+import { DaterangepickerConfig, DaterangePickerComponent } from 'ng2-daterangepicker';
 import { HttpService } from 'src/app/services/http.service';
 import { find, filter, remove } from 'lodash';
 import { debounceTime, distinctUntilChanged, map, tap, switchMap, catchError } from 'rxjs/operators';
@@ -15,8 +15,9 @@ import * as moment from 'moment';
 
 export class ExportComponent implements OnInit {
 
-  @ViewChild('daterangepicker1') startDatePicker: ElementRef;
-  @ViewChild('daterangepicker2') endDatePicker: ElementRef;
+  @ViewChildren('daterangepicker1') startDatePicker: DaterangePickerComponent;
+  @ViewChildren('daterangepicker2') endDatePicker: DaterangePickerComponent;
+  
 
   exportType: any = {
     group: false,
@@ -30,6 +31,26 @@ export class ExportComponent implements OnInit {
 
   showWrongDateOne: Boolean = false;
   showWrongDateTwo: Boolean = false;
+
+  settingsDP1 = {
+    locale: { format: 'DD-MM-YYYY', cancelLabel: 'Annuler' },
+    singleDatePicker: true,
+    alwaysShowCalendars: false,
+    opens: 'right',
+    drops: 'down',
+    autoUpdateInput: false,
+    autoApply: true
+  };
+
+  settingsDP2 = {
+    locale: { format: 'DD-MM-YYYY', cancelLabel: 'Annuler' },
+    singleDatePicker: true,
+    alwaysShowCalendars: false,
+    opens: 'right',
+    drops: 'down',
+    autoUpdateInput: false,
+    autoApply: true
+  };
 
   supplierSelected: any;
   searching: Boolean = false;
@@ -72,14 +93,7 @@ export class ExportComponent implements OnInit {
   constructor(
     private dateRangeConf: DaterangepickerConfig,
     private httpService: HttpService
-  ) { 
-    this.dateRangeConf.settings = {
-      locale: { format: 'DD/MM/YYYY', cancelLabel: 'Annuler' },
-      singleDatePicker: true,
-      alwaysShowCalendars: false,
-      opens: 'right',
-      drops: 'down'
-    };
+  ) {
   }
 
   ngOnInit() {
@@ -88,7 +102,6 @@ export class ExportComponent implements OnInit {
   }
 
   addDocumentType() {
-    console.log('this', this.documentChosen);
     if(this.documentChosen !== undefined && this.documentChosen.value !== undefined) {
       console.log('this.documentChosen = ', this.documentChosen);
       this.documentsToRequest.push(this.documentChosen.value);
@@ -98,7 +111,7 @@ export class ExportComponent implements OnInit {
           // break;
         }
       });
-      this.documentChosen = this.documents[0];
+      this.documentChosen = '';
     }
   }
 
@@ -149,28 +162,42 @@ export class ExportComponent implements OnInit {
   }
 
   selectedDate(e, type) {
+    // console.log('[selectedDate] event', e);
+    // console.log('[selectedDate] type', type);
+    console.log('endDatePicker', this.endDatePicker.datePicker);
     if(type === 'start') {
       if(!this.dateRange.endDate) {
+        console.log('[selectedDate] here one');
         this.dateRange.startDate = moment(e.start).format('DD-MM-YYYY');
         this.showWrongDateOne = false;
-      } else if(this.dateRange.endDate && moment(e.start).isBefore(moment(this.dateRange.endDate, 'DD-MM-YYYY'))) {
+      } else if(this.dateRange.endDate && moment(e.start).isSameOrBefore(moment(this.dateRange.endDate, 'DD-MM-YYYY'))) {
+        console.log('[selectedDate] here two');
         this.dateRange.startDate = moment(e.start).format('DD-MM-YYYY');
         this.showWrongDateOne = false;
       } else {
+        console.log('[selectedDate] here three');
+        let v = moment(this.dateRange.endDate, 'DD-MM-YYYY').format('DD-MM-YYYY');
+        this.dateRange.startDate = v;
+        this.settingsDP1['startDate'] = v;
         this.showWrongDateOne = true;
       }
     }
     if(type === 'end') {
       if(!this.dateRange.startDate) {
+        console.log('[selectedDate] here four');
         this.dateRange.endDate = moment(e.start).format('DD-MM-YYYY');
         this.showWrongDateTwo = false;
-      } else if(this.dateRange.startDate && moment(e.start).isAfter(moment(this.dateRange.startDate, 'DD-MM-YYYY'))) {
+      } else if(this.dateRange.startDate && moment(e.start).isSameOrAfter(moment(this.dateRange.startDate, 'DD-MM-YYYY'))) {
+        console.log('[selectedDate] here five');
         this.dateRange.endDate = moment(e.start).format('DD-MM-YYYY');
         this.showWrongDateTwo = false;
       } else {
+        console.log('[selectedDate] here six');
+        let v = moment(this.dateRange.startDate, 'DD-MM-YYYY').format('DD-MM-YYYY');
+        this.dateRange.endDate = v;
+        this.settingsDP1['startDate'] = v;
         this.showWrongDateTwo = true;
       }
-      this.dateRange.endDate = moment(e.start).format('DD-MM-YYYY');
     }
 
     console.log('Daterange', this.dateRange);
@@ -178,11 +205,16 @@ export class ExportComponent implements OnInit {
 
   closeDatePicker(e, type) {
     if(type === 'start' && !this.dateRange.startDate) {
+      console.log('close one');
       this.dateRange.startDate = moment(e.start).format('DD-MM-YYYY');
     }
     if(type === 'end' && !this.dateRange.endDate) {
       this.dateRange.endDate = moment(e.start).format('DD-MM-YYYY');
     }
+  }
+
+  calendarApplied(e) {
+    console.log('calendarApplied', e);
   }
 
   removeGroup(group) {
@@ -193,8 +225,21 @@ export class ExportComponent implements OnInit {
     remove(this.suppliersChosen, supplier);
   }
 
-  clear() {
+  removeDoc(doc) {
+    remove(this.documentsToRequest, (v) => {
+      console.log('v', v);
+      return v === doc;
+    });
+    this.documents.forEach(d => {
+      if(d.value === doc) {
+        console.log('if ', d);
+        d.available = true;
+      }
+    })
+  }
 
+  clear() {
+    console.log('dateRange', this.dateRange);
   }
 
   export() {

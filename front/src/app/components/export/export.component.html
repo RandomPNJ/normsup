@@ -32,7 +32,7 @@
           <div *ngIf="groupsChosen.length > 0">
             <div *ngFor="let group of groupsChosen"> 
               <span  class="doc-list">{{group.name}}</span>
-              <span class="trash-icn" (click)="removeGroup(group)"><i class="far fa-trash-alt"></i></span>
+              <span class="trash-icn n-w-100" (click)="removeGroup(group)"><i class="far fa-trash-alt"></i></span>
             </div>
           </div>
         </div>
@@ -59,7 +59,7 @@
           <div *ngIf="suppliersChosen.length > 0">
             <div *ngFor="let supplier of suppliersChosen">
               <span class="doc-list">{{supplier.denomination}}</span>
-              <span class="trash-icn" (click)="removeSupplier(supplier)"><i class="far fa-trash-alt"></i></span>
+              <span class="trash-icn n-w-100" (click)="removeSupplier(supplier)"><i class="far fa-trash-alt"></i></span>
             </div>
           </div>
         </div>
@@ -80,11 +80,17 @@
           </div>
           <div style="padding-top: 10px;">
             <span style="cursor: pointer;" (click)="addDocumentType()">
-              <img src="../../../assets/img/plus-add-icn.svg" style="height: 10px;padding-right: 8px;" /><span class="add-doc-link">Ajouter un document</span>
+              <span>
+                <img src="../../../assets/img/plus-add-icn.svg" style="height: 10px;padding-right: 8px;margin-bottom: 4px;" />
+              </span>
+              <span class="add-doc-link">Ajouter un document</span>
             </span>
           </div>
           <div class="" *ngIf="documentsToRequest.length > 0">
-            <span *ngFor="let doc of documentsToRequest" class="doc-list">{{ doc | uppercase }}</span>
+            <span *ngFor="let doc of documentsToRequest" class="doc-list">
+              {{ doc | uppercase }} 
+              <span class="trash-icn" (click)="removeDoc(doc)"><i class="far fa-trash-alt"></i></span>
+            </span>
           </div>
         </div>
         <div class="col-lg-2 col-md-2 col-2 col-xs-2">
@@ -102,15 +108,15 @@
             <span class="pick-date-txt">Du</span>
             <input autocomplete="off" id="datestart" class="datepicker-ph custom-normsup-input-nb"
               (hideDaterangepicker)="closeDatePicker($event, 'start')" [(ngModel)]="dateRange.startDate"
-              (selected)="selectedDate($event, 'start')" type="text" name="Date" placeholder="JJ/MM/AAAA"
-              #daterangepicker1 daterangepicker
+              (selected)="selectedDate($event, 'start')" type="text" name="Date" placeholder="JJ-MM-AAAA"
+              #daterangepicker1 daterangepicker [options]="settingsDP1"
               (cancelDaterangepicker)="clear()"/></div>
             <div style="display: inline-block;">
             <span class="pick-date-txt" style="padding-left: 12px;">au</span>
             <input autocomplete="off" id="dateend"  class="datepicker-ph custom-normsup-input-nb"
               (hideDaterangepicker)="closeDatePicker($event, 'end')" [(ngModel)]="dateRange.endDate"
-              (selected)="selectedDate($event, 'end')" type="text" name="Date" placeholder="JJ/MM/AAAA"
-              #daterangepicker2 daterangepicker
+              (selected)="selectedDate($event, 'end')" type="text" name="Date" placeholder="JJ-MM-AAAA"
+              #daterangepicker2 daterangepicker [options]="settingsDP2"
               (cancelDaterangepicker)="clear()"/></div>
           </div>
         </div>
@@ -120,7 +126,8 @@
       </div>
       <div class="row export-row nopadding" style="padding-bottom: 40px !important;">
         <div style="margin: 0 auto;">
-          <button [disabled]="(suppliersChosen.length === 0 && groupsChosen.length === 0) || documentsToRequest.length === 0 || !dateRange.startDate || !dateRange.endDate" (click)="export()" type="button" class="btn btn-primary export-btn">Faire un export</button>
+          <!-- <button [disabled]="(suppliersChosen.length === 0 && groupsChosen.length === 0) || documentsToRequest.length === 0 || !dateRange.startDate || !dateRange.endDate" (click)="export()" type="button" class="btn btn-primary export-btn">Faire un export</button> -->
+          <button (click)="clear()" type="button" class="btn btn-primary export-btn">Faire un export</button>
         </div>
       </div>
     </div>
