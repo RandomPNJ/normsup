@@ -58,7 +58,6 @@ export default class RemindersRegistry {
                 loggerT.verbose('[sendGroupReminder] RES ==== ', res);
                 if(res && res.length > 0) {
                     return this.sendMails(res);
-
                 } else {
                     return Promise.reject({msg: 'No result'})
                 }
@@ -76,47 +75,106 @@ export default class RemindersRegistry {
         };
 
 
-        query['sql']    = Query.GROUPS_TO_REMIND;
-        query['values'] = [moment().date()];
+        query['sql']    = Query.DAILY_REMINDERS;
+        query['values'] = [new Date()];
     
         return this.mysql.query(query)
             .then(res => {
-                loggerT.verbose('[sendGroupReminder] RES ==== ', res);
-                return Promise.resolve(res);
+                loggerT.verbose('[sendDailyReminders] RES ==== ', res);
+                if(res && res.length > 0) {
+                    return this.sendMails2(res)
+                        .then(() => {
+                            loggerT.verbose('sendMails2 promise res', res);
+                            let q = Query.UPDATE_REMINDERS;
+                            let updateReminders = {
+                                timeout: 40000,
+                                sql: q,
+                                values: [new Date()]
+                            };
+                            let historicQuery = {
+                                timeout: 40000,
+                                sql: Query.UPDATE_REMIND_HISTORY,
+                                values: []
+                            };
+                            let varray = [];
+                            res.forEach((supp, i) => {
+                                if(i===0) {
+                                    updateReminders.sql += ' gr.group_id = ?';
+                                } else {
+                                    updateReminders.sql += ' OR gr.group_id = ?';
+                                }
+                                loggerT.verbose('supp', supp);
+                                supp.status = 'OK';
+                                // To update the reminders table
+                                updateReminders.values.push(supp.group_id);
+                                // To create reminders history == client_id, group_id, status, supplier_id ==
+                                varray.push([supp.client_id, supp.group_id, supp.status, supp.id])
+                            });
+                            historicQuery.values.push(varray)
+                            return this.allSkippingErrors([this.mysql.query(updateReminders), this.mysql.query(historicQuery)], 'sendDailyReminders')
+                                .then(() => {
+                                    return Promise.resolve({items: res});
+                                })
+                            ;
+                        })
+                        .catch(err => {
+                            loggerT.verbose('sendMails2 promise err', err);
+                        })
+                    ;
+                } else {
+                    return Promise.reject({msg: '[sendDailyReminders] No groups to remind.'})
+                }
             })
             .catch(err => {
-                loggerT.error('ERROR ON QUERY getSuppliers.');
+                loggerT.error('ERROR ON QUERY sendDailyReminders.');
                 return Promise.reject(err);
             })
         ;
     }
-
-    private sendMails(suppliers) {
-        let normsupAdmins = [
-            {
-                email: 'yassin.elfahim@gmail.com',
-                denomination: 'AXA'
-            },
-            {
-                email: 'william.tadjou@normsup.com',
-                denomination: 'NormSup'
-            },
-            {
-                email: 'jeremy.daure@normsup.com',
-                denomination: 'NormSup'
-            },
-        ]
-        let all = normsupAdmins.concat(suppliers);
+    // Promise version of sendMails, maybe not useful ?
+    private sendMails2(suppliers) {
         let mailOptions = {
-            from: 'normsup@gmail.com', // sender address
+            from: 'NormSup <mail.normsup@gmail.com>', // sender address
             to: '', // list of receivers
-            subject: '[NORMSUP] Relance du ' + moment().format('DD-MM-YYYY'), // Subject line
+            subject: 'Relance du ' + moment().format('DD-MM-YYYY'), // Subject line
             html: 'Empty message. Failed.'
         };
-        let failed = [];
+        /*
+        let sesMailOptions = {
+            from: 'yassin.elfahim@gmail.com', // sender address
+            to: '', // list of receivers
+            subject: '[NORMSUP] Relance du ' + moment().format('DD-MM-YYYY'), // Subject line
+            // html: 'Empty message. Failed.'
+            text: 'Empty message. Failed.'
+        };
+        */
+        let mails = [];
+        suppliers.forEach(s => {
+            if(s.denomination && s.email) {
+                // mailOptions.dsn.id = s.denomination;
+                mailOptions.html = '<h4>Test de relance pour la journée du ' + moment().format('DD-MM-YYYY') + '.<h4> \n\n\n <p>Pour le fournisseur : ' + s.denomination ? s.denomination : 'nameError' + '.</p>';
+                mailOptions.to = s.email;
+                mails.push(this.transporter.sendMail(mailOptions));
+            } else {
+
+            }
+        });
+        loggerT.verbose('sendMails2 here ');
+        return Promise.all(mails);
+    }
+
+    private sendMails(suppliers) {
+        let mailOptions = {
+            from: 'NormSup <mail.normsup@gmail.com>', // sender address
+            to: '', // list of receivers
+            subject: 'Relance du ' + moment().format('DD-MM-YYYY'), // Subject line
+            html: 'Empty message. Failed.'
+        };
+        let result = [];
         suppliers.forEach(s => {
             if(!s.email) {
-                return failed.push(s);
+                s.status = -1;
+                return result.push(s);
             } else {
                 mailOptions.html = '<h4>Test de relance pour la journée du ' + moment().format('DD-MM-YYYY') + '.<h4> \n\n\n <p>Pour le fournisseur : ' + s.denomination ? s.denomination : 'nameError' + '.</p>';
                 mailOptions.to = s.email;
@@ -124,18 +182,33 @@ export default class RemindersRegistry {
                     (err, info) => {
                         if(err) {
                             loggerT.error(`[sendMails] Error happened when trying to reach supplier ${s.denomination} with error : ${err}`);
+                            s.status = -1;
+                            result.push(s);
                         } else {
                             loggerT.verbose(`[sendMails] Mail successfully sent to supplier ${s.denomination} with info : ${info}`);
+                            s.status = 0;
+                            result.push(s);
                         }
                     })
                 ;
             }
         });
+        return result;
     }
 
     // TODO
     public manageReminders() {
 
+    }
+
+    private allSkippingErrors(promises, fnc) {
+        let errs = [];
+        return Promise.all(
+          promises.map(p => p.catch(error => {
+              loggerT.error('[allSkippingErrors] ERROR on function ', fnc, 'with error :', error);
+              errs.push(error)
+            }))
+        )
     }
 
     private throwError(message?: string): void {

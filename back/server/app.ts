@@ -5,7 +5,7 @@ import * as fs from 'fs';
 import * as AWSDK from 'aws-sdk';
 import * as moment from 'moment';
 import * as nodemailer from 'nodemailer';
-
+ 
 import ServiceManager from './config/serviceManager/index';
 import config from './config/environment/index';
 import * as loggers from './config/loggers/index';
@@ -71,8 +71,7 @@ function start(app: any, config: any): any {
   const sqlDB = new SqlDB(config.mysqlParams, loggerT);
   app.set('db:sqlDB', sqlDB, { onLoad: true });
   
-  // Initialisation du service de mail
-  const mailer = nodemailer.createTransport(config.mailconfig);
+  
   
   // Initialisation des repositories
   initRepositories(app, config.repositories);
@@ -87,9 +86,19 @@ function start(app: any, config: any): any {
   app.set('swagger', swagger, { private: true });
 
   // Init s3 object
-  AWSDK.config.update(config.s3Params.s3Options);
+  // TODO Init also mailing with AWS SES
+  AWSDK.config.update(config.awsconfig);
+
   const s3Client = new AWSDK.S3();
   app.set('s3', s3Client, {onLoad: true});
+
+  // Initialisation du service de mail
+  // const mailer = nodemailer.createTransport({
+  //   SES: new AWSDK.SES({
+  //       apiVersion: '2010-12-01'
+  //   })
+  // });
+  const mailer = nodemailer.createTransport(config.mailconfig); 
 
   // Registries to interface with products/requirements
   const supplierRegistry = new SupplierRegistry(sqlDB);

@@ -339,6 +339,7 @@ export class SupplierTableComponent implements OnInit,AfterViewInit {
   }
 
   confirmInterlocModification() {
+    console.log('this.interloc', this.interloc);
     let data = {
       name: this.interloc.name,
       email: this.interloc.email,

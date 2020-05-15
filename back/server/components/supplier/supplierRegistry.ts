@@ -166,12 +166,9 @@ export default class SupplierRegistry {
     }
 
     public deleteGroup(id, org) {
-        let query = {
-            timeout: 40000
-        };
-        let query2 = {
-            timeout: 40000
-        };
+        let query  = { timeout: 40000 };
+        let query2 = { timeout: 40000 };
+        let query3 = { timeout: 40000 };
 
         query['sql'] = Query.DELETE_GROUP;
         query['values'] = [id, org];
@@ -179,18 +176,18 @@ export default class SupplierRegistry {
         query2['sql'] = Query.DELETE_ALL_GRP_MEM;
         query2['values'] = [id];
 
+        query3['sql'] = Query.DELETE_GRP_REMINDERS;
+        query3['values'] = [id];
+
         return this.mysql.query(query)
             .then((res, fields) => {
                 loggerT.verbose('QUERY RES deleteGroup ==== ', res);
-
-                return this.mysql.query(query2)
-                    .then(res => {
-                        return Promise.resolve(res);
+                return this.allSkippingErrors([this.mysql(query2), this.mysql(query3)])
+                    .then(() => {
+                        loggerT.verbose('Group deleted');
+                        return Promise.resolve({msg: 'Group deleted successfully'})
                     })
-                    .catch(err => {
-                        loggerT.error('ERROR ON QUERY deleteGroupMembers.');
-                        return Promise.reject(err);
-                    })
+                ;
             })
             .catch(err => {
                 loggerT.error('ERROR ON QUERY deleteGroup.');

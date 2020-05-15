@@ -2,6 +2,7 @@ import { Promise, any } from 'bluebird';
 import * as _ from 'lodash';
 import * as Query from './queries';
 import config from '../../config/environment/index';
+import * as bcrypt from 'bcrypt';
 
 declare var loggerT: any;
 
@@ -13,6 +14,42 @@ export default class AdminRegistry {
         this.mysql = mysql;
     }
 
+    public login(login: string, password: string) {
+        let query = {
+            timeout: 40000
+        };
+
+        query['sql']    = Query.FIND_ADMIN_BY_NAME_EMAIL;
+        query['values'] = [login, login];
+
+        return this.mysql.query(query)
+            .then(res => {
+                if(res.length === 0) {
+                    return Promise.reject({statusCode: 404, msg: 'NormSup admin user not found.'});
+                }
+                let user = res[0];
+                return bcrypt.compare(password, user.password)
+                .then(res => {
+                        if(res === true) {
+                            const payload = {
+                                id: user.id,
+                                username: user.username,
+                                email: user.email,
+                                name: user.name,
+                                lastname: user.lastname,
+                                createTime: new Date(user.create_time),
+                            };
+                            return Promise.resolve(payload);
+                        }
+                        return Promise.reject({statusCode: 400, msg: 'Wrong credentials.'});
+                    }
+                );
+            })
+            .catch(err => {
+                return Promise.reject({statusCode: 404, msg: err.msg});
+            })
+        ;
+    }
 
     public createUser(data, user) {
         let query = {
@@ -59,6 +96,29 @@ export default class AdminRegistry {
         ;
     }
 
+    public createAdmin(data) {
+        let query = {
+            timeout: 40000
+        };
+    
+        query['sql']    = Query.INSERT_ADMIN;
+        query['values'] = [data.name, data.lastname, data.email, data.password, data.username];
+
+        return this.mysql.query(query)
+            .then(res => {
+                loggerT.verbose('[ADMIN] QUERY createAdmin RES ==== ', res);
+                
+
+                return Promise.resolve(res);
+
+            })
+            .catch(err => {
+                loggerT.error('[ADMIN] ERROR ON QUERY createAdmin : ', err);
+                return Promise.reject(err);
+            })
+        ;
+    }
+    
     public getUsers(data) {
         let query = {
             timeout: 40000

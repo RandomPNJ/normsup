@@ -21,10 +21,12 @@ export default {
   LOG_DIR: process.env.LOG_DIR || 'logs',
 
   mailconfig: {
+    secureConnection: true, // use SSL
+    port: 465, // port for secure SMTP
     service: 'gmail',
     auth: {
-      user: 'yassin.elfahim@gmail.com',
-      pass: 'Jesuislajesuislatkt1!'
+      user: 'mail.normsup@gmail.com',
+      pass: 'Panda78!'
     }
   },
 
@@ -52,16 +54,17 @@ export default {
     charset: "utf8mb4",
   },
 
+  awsconfig: {
+    region: 'eu-west-1',
+    accessKeyId: 'AKIASFDGPSTATLP53JNR',
+    secretAccessKey: '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',
+  },
   s3Params: {
     maxAsyncS3: 20,     // this is the default
     s3RetryCount: 3,    // this is the default
     s3RetryDelay: 1000, // this is the default
     multipartUploadThreshold: 20971520, // this is the default (20 MB)
     multipartUploadSize: 15728640, // this is the default (15 MB)
-    s3Options: {
-      accessKeyId: 'AKIASFDGPSTATLP53JNR',
-      secretAccessKey: '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',
-    },
   },
 
   s3: {
@@ -160,7 +163,9 @@ export default {
         { name: 'getSuppliers', uriPattern: '/suppliers', method: 'get' },
         { name: 'getSuppliersUsers', uriPattern: '/suppliers/users', method: 'get' },
         { name: 'registerUser', uriPattern: '/users/register', method: 'post' },
+        { name: 'registerAdmin', uriPattern: '/register', method: 'post' },
         { name: 'createSupplierUser', uriPattern: '/suppliers/register', method: 'post' },
+        { name: 'dailyReminders', uriPattern: '/daily_reminders', method: 'post' },
       ]
     }
   },
