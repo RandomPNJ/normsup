@@ -5,15 +5,18 @@ import * as HelperQueries from '../helpers/dbhelpers';
 import * as Query from './queries';
 import config from '../../config/environment/index';
 import * as bcrypt from 'bcrypt';
+import {email as emailTemplate} from './email';
 
 declare var loggerT: any;
 
 export default class SupplierRegistry {
 
     private mysql: any;
+    private transporter: any;
 
-    public constructor(mysql) {
+    public constructor(mysql, mailer) {
         this.mysql = mysql;
+        this.transporter = mailer;
     }
 
     private fromDBtoClient(data) {
@@ -321,13 +324,21 @@ export default class SupplierRegistry {
         ;
     }
 
-    public getGroupsReminders(org) {
+    public getGroupsReminders(org, type) {
         let query = {
             timeout: 40000
         };
+
         if(org) {
-            query['sql'] = Query.GET_GROUPS_REMINDERS;
-            query['values'] = [org, 3];
+            if(type === 'NOTEMPTY') {
+                query['sql'] = Query.GET_GROUPS_REMINDERS_NOTEMPTY;
+                query['values'] = [org, 3];
+            } else {
+                query['sql'] = Query.GET_GROUPS_REMINDERS;
+                query['values'] = [org, 3];
+            }
+        } else {
+            return Promise.reject(new Error('Could not get the organisation\'s id.'));
         }
 
         return this.mysql.query(query)
@@ -556,6 +567,8 @@ export default class SupplierRegistry {
                         representative['added_by'] = user.id;
                         representative['client_id'] = user.organisation;
                         
+                        loggerT.verbose('[createSupplier] representative ==== ', representative);
+
                         query2['sql'] = Query.INSERT_REPRESENTATIVE;
                         query2['values'] = [representative]
                         
@@ -569,7 +582,38 @@ export default class SupplierRegistry {
                             promises.push(this.mysql.query(query2));
                         }
         
-                        return this.allSkippingErrors(promises);
+                        return this.allSkippingErrors(promises)
+                            .then(() => {
+                                    if(representative && representative.email) {
+                                        let genericTemplate = _.template(emailTemplate);
+                                        let mailOptions = {
+                                            from: 'NormSup <mail.normsup@gmail.com>', // sender address
+                                            to: '', // list of receivers
+                                            subject: 'Dépôt de document sur NormSup', // Subject line
+                                            html: 'Empty message. Failed.'
+                                        };
+                                        let denom = '';
+                                        let rTitle = 'Monsieur/Madame';
+                                        denom = data.denomination ? ' ' + data.denomination.toUpperCase() : '';
+                                        if(representative.gender && representative.gender === 'M') {
+                                            rTitle = 'Monsieur';
+                                        } else if(representative.gender && representative.gender === 'F') {
+                                            rTitle = 'Madame';
+                                        }
+                                        mailOptions.html = genericTemplate({ 'rTitle': rTitle, 'respresName': _.capitalize(representative.lastname), 'client_name': user.companyName,'denomination': denom });
+                                        mailOptions.to = representative.email;
+                                        return this.transporter.sendMail(mailOptions)
+                                            .then(() => {
+                                                return Promise.resolve(res);
+                                            })
+                                            .catch(err => {
+                                                return Promise.reject({msg: 'Couldn\'t send mail to supplier\'s representative.'})
+                                            })
+                                        ;
+                                    } else {
+                                        return Promise.resolve({msg: 'Supplier created, and mail delivered to supplier\'s representative.'})
+                                    }
+                            });
                     })
                     .catch(err => {
                         loggerT.error('ERROR ON FIRST QUERY createSuppliers : ', err);
@@ -767,6 +811,7 @@ export default class SupplierRegistry {
                 if(new Date() > new Date(user.validity_date)) {
                     return Promise.reject({statusCode: 400, msg: 'Your login credentials are expired, please request a new account.'});
                 }
+
                 return bcrypt.compare(password, user.password)
                     .then(res => {
                         if(res === true) {

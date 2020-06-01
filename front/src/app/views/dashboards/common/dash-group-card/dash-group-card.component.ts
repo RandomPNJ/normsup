@@ -18,7 +18,7 @@ export class DashGroupCardComponent implements OnInit {
 
   ngOnInit() {
 	const allCookies: {} = this.cookieService.getAll();
-    this.httpService.get('/api/suppliers/groups/reminders')
+    this.httpService.get('/api/suppliers/groups/reminders?type=NOTEMPTY')
       .subscribe(res => {
         if(res.body && res.body['items']) {
           this.getReminderData(res.body['items']);

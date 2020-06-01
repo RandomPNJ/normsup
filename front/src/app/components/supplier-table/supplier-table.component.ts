@@ -36,7 +36,7 @@ export class SupplierTableComponent implements OnInit,AfterViewInit {
   supplier: any;
   data: Array<any> = [];
   groups: Array<any> = [ 
-    { id: '', name: 'Veuillez choisir un groupe' }
+    { id: '', name: 'Choisir un groupe' }
   ];
   dtElement: DataTableDirective;
   dataTable: any;

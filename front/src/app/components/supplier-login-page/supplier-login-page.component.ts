@@ -74,8 +74,11 @@ export class SupplierLoginPageComponent implements OnInit, OnDestroy {
             this.router.navigate(['supplier', 'upload']);
           }
         }, error => {
+          console.log('error', error);
           if(error.error.msg === 'Wrong credentials.' || error.error.msg === 'User not found.') {
             this.errMsg = 'Email ou mot de passe erroné.';
+          } else if(error.error.msg === 'Your login credentials are expired, please request a new account.') {
+            this.errMsg = 'Identifiants expirés, veuillez en demander de nouveaux.';
           }
           this.isLoader = false;
           this.type = 'error';

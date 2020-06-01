@@ -18,6 +18,9 @@ export function getGroupsReminders(req, res, SupplierRegistry) {
     }
 
     loggerT.verbose('Getting the supplier\'s groups\' reminders.');
+    loggerT.verbose('Group reminders query', req.query);
+
+    let type = '';
 
     if(!req.decoded.organisation) {
         const error = new Error(`Invalid request, organisation must be specified.`);
@@ -25,7 +28,11 @@ export function getGroupsReminders(req, res, SupplierRegistry) {
         throw error;
     }
     
-    return SupplierRegistry.getGroupsReminders(req.decoded.organisation)
+    if(req.query && req.query.type) {
+        type = req.query.type
+    }
+
+    return SupplierRegistry.getGroupsReminders(req.decoded.organisation, type)
         .then(result => {
             let finalResult = {
                 items: result

@@ -343,6 +343,24 @@ export class Dashboard1Component implements OnInit, AfterViewInit {
 				ctx.restore();
 			}
 		});
+
+		let d = Chart.controllers.doughnut.prototype.draw;
+		Chart.controllers.doughnut = Chart.controllers.doughnut.extend({
+			draw: function() {
+				d.apply(this, arguments);
+				let ctx = this.chart.chart.ctx;
+				let _fill = ctx.fill;
+				ctx.fill = function() {
+					ctx.save();
+					ctx.shadowColor = '#00000029';
+					ctx.shadowBlur = 15;
+					ctx.shadowOffsetX = 0;
+					ctx.shadowOffsetY = 0;
+					_fill.apply(this, arguments)
+					ctx.restore();
+				}
+			}
+		});
 	}
 
 	ngOnInit() {

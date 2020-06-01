@@ -50,6 +50,7 @@ export const QUERY_COUNT_SUPPLIERS_CLIENT = 'SELECT r.count as count, sc.kbis, s
 export const QUERY_COUNT_SUPPLIERS_SEARCH = 'SELECT r.count as count, sc.kbis, sc.lnte, sc.urssaf FROM `organisations` as o INNER JOIN `client_supplier_relation` as csr ON o.id = csr.supplier_id LEFT JOIN `supplier_conformity` as sc ON o.id = sc.supplier_id, (SELECT COUNT(*) as count FROM `organisations` as org INNER JOIN `client_supplier_relation` as c ON org.id = c.supplier_id WHERE c.client_id = ? AND `denomination` LIKE ?) as r WHERE csr.client_id = ? AND `denomination` LIKE ?';
 export const QUERY_COUNT_SUPPLIERS = 'SELECT COUNT(*) FROM `organisations`';
 
+export const GET_GROUPS_REMINDERS_NOTEMPTY = 'SELECT g.id as id, g.name, g.description, gr.activated, gr.legal_docs, gr.comp_docs, gr.frequency, gr.last_reminder, gr.next_reminder, r.name as repres_name, r.lastname as repres_lastname, r.email FROM group_reminders as gr INNER JOIN `groups` as g ON gr.group_id = g.id INNER JOIN `representatives` as r ON r.client_id = g.client_id INNER JOIN group_members as gm ON gm.group_id = g.id INNER JOIN organisations as o ON o.id = gm.member_id AND o.id = r.organisation_id WHERE g.client_id = ? ORDER BY gr.next_reminder ASC LIMIT ?';
 
 export const QUERY_CHECK_SUPPLIER_AVAIL = 'SELECT o.id, o.siret, o.address, o.siren, o.denomination, o.country, o.city, o.dateCreation, o.legalUnit, o.postalCode, csr.client_id FROM `organisations` as o LEFT JOIN `client_supplier_relation` as csr ON o.id = csr.supplier_id WHERE siret = ? OR siren = ?';
 

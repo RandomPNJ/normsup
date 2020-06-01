@@ -29,11 +29,12 @@ export function createSupplierUser(req, SuppliersRegistry) {
     data.validity_date = moment().add(data.validity, 'days').toDate();
     delete data.validity;
 
-    // this removes white spaces I think
+    // this removes white spaces
     // data.username = data.name.replace(/\s+/g, '') + "_" + data.lastname.replace(/\s+/g, '');
     // data.username = data.username.substring(0, 16);
 
-    data.password = Math.random().toString(36).slice(-8);
+    // data.password = Math.random().toString(36).slice(-8);
+    data.password = 'supplierpassword';
     loggerT.verbose('User', data);
 
     return bcrypt.hash(data.password, 14, function(err, hash) {

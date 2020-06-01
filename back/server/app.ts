@@ -101,7 +101,7 @@ function start(app: any, config: any): any {
   const mailer = nodemailer.createTransport(config.mailconfig); 
 
   // Registries to interface with products/requirements
-  const supplierRegistry = new SupplierRegistry(sqlDB);
+  const supplierRegistry = new SupplierRegistry(sqlDB, mailer);
   app.set('SupplierRegistry', supplierRegistry, {onLoad: true});
   const docRegistry = new DocumentsRegistry(sqlDB, s3Client);
   app.set('DocumentsRegistry', docRegistry, {onLoad: true});

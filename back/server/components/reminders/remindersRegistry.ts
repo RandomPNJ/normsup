@@ -3,6 +3,7 @@ import * as _ from 'lodash';
 import * as moment from 'moment';
 import * as Query from './queries';
 import config from '../../config/environment/index';
+import {email2 as emailTemplate} from './email';
 
 declare var loggerT: any;
 
@@ -89,7 +90,7 @@ export default class RemindersRegistry {
                             let updateReminders = {
                                 timeout: 40000,
                                 sql: q,
-                                values: [new Date()]
+                                values: [new Date(), new Date()]
                             };
                             let historicQuery = {
                                 timeout: 40000,
@@ -133,10 +134,11 @@ export default class RemindersRegistry {
     }
     // Promise version of sendMails, maybe not useful ?
     private sendMails2(suppliers) {
+        let genericTemplate = _.template(emailTemplate);
         let mailOptions = {
             from: 'NormSup <mail.normsup@gmail.com>', // sender address
             to: '', // list of receivers
-            subject: 'Relance du ' + moment().format('DD-MM-YYYY'), // Subject line
+            subject: 'Relance : Dépôt de document sur NormSup', // Subject line
             html: 'Empty message. Failed.'
         };
         /*
@@ -149,10 +151,20 @@ export default class RemindersRegistry {
         };
         */
         let mails = [];
+        let name = '';
+        let denom = '';
         suppliers.forEach(s => {
+            let rTitle = 'Monsieur/Madame';
             if(s.denomination && s.email) {
                 // mailOptions.dsn.id = s.denomination;
-                mailOptions.html = '<h4>Test de relance pour la journée du ' + moment().format('DD-MM-YYYY') + '.<h4> \n\n\n <p>Pour le fournisseur : ' + s.denomination ? s.denomination : 'nameError' + '.</p>';
+                // mailOptions.html = `<h4>Test de relance pour la journée du ${moment().format('DD-MM-YYYY')}.<h4> \n\n\n <p>Pour le fournisseur : ${s.denomination ? s.denomination : 'nameError'}.</p>`;
+                denom = s.denomination ? ' ' + s.denomination.toUpperCase() : '';
+                if(s.gender === 'M') {
+                    rTitle = 'Monsieur';
+                } else if(s.gender === 'F') {
+                    rTitle = 'Madame';
+                }
+                mailOptions.html = genericTemplate({ 'rTitle': rTitle, 'respresName': _.capitalize(s.represLastname), 'denomination': denom });
                 mailOptions.to = s.email;
                 mails.push(this.transporter.sendMail(mailOptions));
             } else {

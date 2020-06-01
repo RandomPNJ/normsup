@@ -23,16 +23,16 @@ export function sendDailyReminders(req, res, AdminRegistry, RemindersRegistry) {
     }
 
     return AdminRegistry.login(user.username, user.password)
-        .then(res => {
-            loggerT.verbose('res for admin loggin', res);
-            if(res) {
+        .then(result => {
+            loggerT.verbose('result for admin loggin', result);
+            if(result) {
                 return RemindersRegistry.sendDailyReminders()
-                    .then(res => {
-                        return res;
+                    .then(secondRes => {
+                        return secondRes;
                     })
                     .catch(err => {
                         loggerT.verbose('Err  = ', err);
-                        res.status(500).json({status: err.message})
+                        res.status(500).json({status: err.msg})
                         return err;
                     })
                 ;
@@ -43,7 +43,7 @@ export function sendDailyReminders(req, res, AdminRegistry, RemindersRegistry) {
             }
         })
         .catch(err => {
-
+            loggerT.verbose('sendDailyReminders err', err);
         })
     ;
 

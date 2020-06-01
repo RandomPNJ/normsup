@@ -79,10 +79,10 @@
                     </div>
                   </div>
                 </div>
-                <div class="params-input">
-                  <div class="sub-txt d-inline-block">Complémentaire</div>
-                  <div class="d-inline-block select-cont">
-                    <select [disabled]="!activateReminders" class="form-control" id="compDoc"  name="compDoc" [(ngModel)]="documentsSettings.comp">
+                <div class="container nopadding params-input">
+                  <div class="col-auto sub-txt d-inline-block nopadding">Complémentaire</div>
+                  <div class="col d-inline-block select-cont">
+                    <select [disabled]="!activateReminders" class="form-control custom-select group-select-doc" id="compDoc"  name="compDoc" [(ngModel)]="documentsSettings.comp">
                       <option [ngValue]="undefined" disabled>Choisir document</option>
                       <option *ngFor="let c of compDocs" [ngValue]="c.value" [disabled]="c.value === 1">{{c.name}}</option>
                     </select>
