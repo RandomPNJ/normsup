@@ -1,5 +1,5 @@
-<div class="container main-cont mb-2" style="max-width: 933px;">
-  <div class="cont-wrapper">
+<div class="container main-cont mb-2" style="max-width: 940px; padding-right: 0px !important; padding-left: 0px;">
+  <div class="cont-wrapper" style="margin-left: 7px;">
 
     <div class="sub-cont">
       <div class="container nopadding" style="padding-bottom: 45px !important; padding-top: 20px !important;">
@@ -238,7 +238,8 @@
     </ng-template>
     <ng-template #legalDoc>
       <div class="modal-body">
-        <app-legal-doc-modal (hideModal)="hideModal($event)" (addDocModal)="openInfoModal($event)"></app-legal-doc-modal>
+        <app-legal-doc-modal [hidden]="infoModalType !== 'LEGAL'" (hideModal)="hideModal($event)" (addDocModal)="openInfoModal($event)"></app-legal-doc-modal>
+        <app-comp-doc-modal [hidden]="infoModalType !== 'COMP'" (hideModal)="hideModal($event)" (addDocModal)="openInfoModal($event)"></app-comp-doc-modal>
       </div>
       <div class="modal-footer" style="padding: 4px;border-style: none !important;">
       </div>

@@ -199,5 +199,11 @@ select:-webkit-autofill:focus {
 
 .custom-label-input-test-active {
     text-align: center;
+    left: 16px !important;
     width: 100%;
+}
+
+.login-btn {
+    padding-right: 47px;
+    padding-left: 47px;
 }

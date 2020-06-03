@@ -80,8 +80,8 @@ export class ConformityRateGraphComponent implements OnInit, AfterViewInit {
       display: false,
       text: 'Taux de conformité',
       position: 'bottom',
-      fontColor: '#4E5983', //Default black
-      fontFamily: 'Avenir Medium', //Default Arial,
+      fontColor: '#333', //Default black
+      fontFamily: 'Roboto Medium', //Default Arial,
       fontSize: 14
     }
   };

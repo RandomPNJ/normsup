@@ -41,6 +41,7 @@ export class SupplierComponent implements OnInit {
   isLoading: Boolean = false;
   filteredList: Array<any>;
   showWrongDateOne: Boolean = false;
+  infoModalType: String = '';
   
   // Modal Info
   supplierInfo: any;
@@ -100,7 +101,7 @@ export class SupplierComponent implements OnInit {
 
   modalConfig = {
     animated: true,
-    class: 'modal-dialog-centered modal-medium'
+    class: 'modal-dialog-centered'
   };
   valueWidth: Boolean = false;
   itemsDisplay: Array<any> = [];
@@ -128,6 +129,7 @@ export class SupplierComponent implements OnInit {
   }
 
   openModal(template: TemplateRef<any>, modalType: String) {
+    console.log('openModal', modalType);
     const _combine = combineLatest(
       this.modalService.onShow,
       this.modalService.onShown,
@@ -148,17 +150,19 @@ export class SupplierComponent implements OnInit {
     );
     
     const config = cloneDeep(this.modalConfig);
+    console.log('config 1,', config)
     this.subscriptions.push(_combine);
     if(modalType !== 'Supplier' && modalType !== 'AddDoc') {
       config.class += ' modal-lg';
     }
     if(modalType == 'Supplier' && this.modalState === 'enterSiret') {
       config.class += ' modal-medium';
-    } else if (modalType == 'Supplier' && (this.modalState === 'compInfo' || this.modalState === 'interlocInfo')) {
+    } else if(modalType == 'Supplier' && (this.modalState === 'compInfo' || this.modalState === 'interlocInfo')) {
       config.class += ' modal-lg';
     } else if ((modalType == 'Supplier' && this.modalState === 'docInfo') || modalType == 'AddInterloc'){
       config.class += ' modal-medium';
     }
+    console.log('config,', config)
     if(modalType === 'AddDoc') {
       this.subModalRef = this.modalService.show(template, config);
     } else {

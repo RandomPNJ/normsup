@@ -287,7 +287,7 @@ body {
 
 
 .table.dataTable.no-footer {
-    border-bottom: 0px solid black !important;
+    border-bottom: 0px solid #333 !important;
     border-style: none !important;
 }
 
@@ -303,8 +303,8 @@ body {
 th {
     color: #333;
     font-weight: 500 !important;
-    border-bottom: 0px solid black !important;
-    border-top: 0px solid black !important;
+    border-bottom: 0px solid #333 !important;
+    border-top: 0px solid #333 !important;
     background-color: #FAFCFE;
     // background-color: #bdbdbd;
     border-radius: 0px;
@@ -323,12 +323,12 @@ th {
 
 tr {
 
-    border-bottom: 0px solid black;
+    border-bottom: 0px solid #333;
 
     &:first-child {
 
         td {
-            border-top: 0px solid black;
+            border-top: 0px solid #333;
         }
     }
 }
@@ -351,7 +351,7 @@ td {
 
 
 .table {
-    border-bottom: 0px solid black;
+    border-bottom: 0px solid #333;
 }
 
 .table-header {
@@ -731,8 +731,8 @@ td {
 
     input {
         width: 240px;
-        color: black;
-        border: 0px solid black;
+        color: #333;
+        border: 0px solid #333;
         border-bottom: 1px solid lightgray;
         font-weight: 400;
 
@@ -765,7 +765,7 @@ td {
 }
 
 .paginate_button {
-    border: 0px solid black !important;
+    border: 0px solid #333 !important;
     border-radius: 20px !important;
     background: white !important;
 }

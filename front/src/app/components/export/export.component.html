@@ -1,8 +1,8 @@
 <div class="container export-container">
-  <div class="col-lg-1">
+  <div class="col-lg-2">
     &nbsp;
   </div>
-  <div class="col-lg-10">
+  <div class="col-lg-8 export-col">
   <div class="export-body">
     <div class="container nopadding">
       <div class="row export-title nopadding">
@@ -36,7 +36,7 @@
             </div>
           </div>
         </div>
-        <div class="col-lg-1 col-md-2 col-2 col-xs-2">
+        <div class="col-lg-1 col-md-2 col-2 col-xs-2" style="border-bottom: 1px solid #F3F7FC;">
           <span class="r-robo-14 middle-txt-style">OU</span>
         </div>
         <div class="col-lg-4 col-md-4 col-4 col-xs-4 center-row exp-border-bottom">
@@ -66,11 +66,11 @@
         <div class="col">&nbsp;</div>
 
       </div>
-      <div class="row export-row nopadding">
+      <div class="row nopadding" style="">
         <div class="col-lg-2 col-md-2 col-2 col-xs-2">
 
         </div>
-        <div class="col-lg-8 col-md-8 col-8 col-xs-8 center-row exp-border-bottom">
+        <div class="col-lg-8 col-md-8 col-8 col-xs-8 center-row exp-border-bottom" style="padding-bottom: 20px;">
           <div class="d-block select-cont row-input-style">
             <div class="major-txt-style" style="padding-bottom: 10.5px;">Documents</div>
             <select class="form-control custom-select export-normsup-select" id="documentsChoice"  name="documentsChoice" [(ngModel)]="documentChosen">
@@ -97,7 +97,7 @@
 
         </div>
       </div>
-      <div class="row export-row nopadding" style="padding-bottom: 40px !important;">
+      <div class="row export-row nopadding" style="padding-bottom: 30px !important;">
         <div class="col-lg-2 col-md-2 col-2 col-xs-2">
 
         </div>
@@ -124,7 +124,7 @@
 
         </div>
       </div>
-      <div class="row export-row nopadding" style="padding-bottom: 40px !important;">
+      <div class="row nopadding" style="padding-bottom: 40px !important;">
         <div style="margin: 0 auto;">
           <!-- <button [disabled]="(suppliersChosen.length === 0 && groupsChosen.length === 0) || documentsToRequest.length === 0 || !dateRange.startDate || !dateRange.endDate" (click)="export()" type="button" class="btn btn-primary export-btn">Faire un export</button> -->
           <button (click)="clear()" type="button" class="btn btn-primary export-btn">Faire un export</button>
@@ -133,7 +133,7 @@
     </div>
   </div>
   </div>
-  <div class="col-lg-1">
+  <div class="col-lg-2">
     &nbsp;
   </div>
 </div>
