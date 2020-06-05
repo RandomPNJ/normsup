@@ -207,3 +207,12 @@ select:-webkit-autofill:focus {
     padding-right: 47px;
     padding-left: 47px;
 }
+
+.login-spinner {
+    position: absolute;
+    right: 48.5%;
+    top: 40%;
+    height: 70px;
+    width: 70px;
+    color: #4390EF !important;
+}
