@@ -32,6 +32,7 @@ export class AlertsComponent implements OnInit {
     alert_valid_sup: false,
     alert_invalid_sup: true,
     alert_invalid_mail: true,
+    alert_offline_sup: true,
     alert_frequency: 'EVERYOTHERDAY'
   };
   loading: Boolean = true;

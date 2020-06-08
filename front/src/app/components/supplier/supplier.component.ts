@@ -42,7 +42,8 @@ export class SupplierComponent implements OnInit {
   filteredList: Array<any>;
   showWrongDateOne: Boolean = false;
   infoModalType: String = '';
-  
+  docModalID: any;
+
   // Modal Info
   supplierInfo: any;
   legalDocInfo: any;
@@ -199,6 +200,11 @@ export class SupplierComponent implements OnInit {
     }
   }
 
+  changeType(type) {
+    console.log('changeType', type);
+    this.infoModalType = type;
+  }
+
   searchCompany(id: any) {
     this.searchCompany404 = false;
     const params = '&rows=1&q=' + id;
@@ -265,10 +271,14 @@ export class SupplierComponent implements OnInit {
             break;
         case 'Legaldoc':
             this.legalDocInfo = event.data;
+            this.docModalID = event.data.id;
+            this.infoModalType = 'LEGAL';
             this.openModal(this.legalModalRef, 'Legaldoc');
             break;
         case 'Compdoc':
             this.compDocInfo = event.data;
+            this.docModalID = event.data.id;
+            this.infoModalType = 'COMP';
             this.openModal(this.compModalRef, 'Compdoc');
             break;
         case 'AddDoc':

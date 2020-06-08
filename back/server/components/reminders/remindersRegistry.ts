@@ -98,6 +98,7 @@ export default class RemindersRegistry {
                                 values: []
                             };
                             let varray = [];
+                            let failures = [];
                             res.forEach((supp, i) => {
                                 if(i===0) {
                                     updateReminders.sql += ' gr.group_id = ?';
@@ -109,7 +110,11 @@ export default class RemindersRegistry {
                                 // To update the reminders table
                                 updateReminders.values.push(supp.group_id);
                                 // To create reminders history == client_id, group_id, status, supplier_id ==
-                                varray.push([supp.client_id, supp.group_id, supp.status, supp.id])
+                                if(supp.client_id) {
+                                    varray.push([supp.client_id, supp.group_id, supp.status, supp.id]);
+                                } else {
+                                    failures.push([supp.client_id, supp.group_id, supp.status, supp.id]);
+                                }
                             });
                             historicQuery.values.push(varray)
                             return this.allSkippingErrors([this.mysql.query(updateReminders), this.mysql.query(historicQuery)], 'sendDailyReminders')

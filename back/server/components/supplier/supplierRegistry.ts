@@ -352,6 +352,30 @@ export default class SupplierRegistry {
         ;
     }
     
+    public getDocuments(params, user) {
+        let query = {
+            timeout: 40000,
+        };
+
+        if(params.type === 'LEGAL') {
+            query['sql'] = Query.SUPP_LEGAL_DOCS;
+            query['values'] = [user.id, params.id];
+        } else if(params.type === 'COMP'){
+            query['sql'] = Query.SUPP_COMP_DOCS;
+            query['values'] = [user.id, params.id];
+        }
+
+        return this.mysql.query(query)
+            .then(res => {
+                return Promise.resolve(res);
+            })
+            .catch(err => {
+                loggerT.error('ERROR ON QUERY getGroups.');
+                return Promise.reject(err);
+            })
+        ;
+    }
+
     public checkGroup(org, data) {
         let query = {
             timeout: 40000

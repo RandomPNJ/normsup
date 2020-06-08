@@ -200,6 +200,7 @@ export class SupplierUploadInterfaceComponent implements OnInit {
 
   navigateSuccessPage() {
     this.router.navigate(['supplier', 'upload', 'success']);
+    this.hideModal();
   }
 
 
@@ -213,5 +214,6 @@ export class SupplierUploadInterfaceComponent implements OnInit {
     this.documentStatus.lnte = false;
     this.documentStatus.urssaf = false;
     this.documentStatus.kbis = false;
+    this.hideModal();
   }
 }

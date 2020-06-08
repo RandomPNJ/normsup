@@ -27,11 +27,12 @@ export function login(body, res, SupplierRegistry, UsersRegistry) {
             loggerT.verbose('SupplierRegistry LOGIN RES', result);
             result.type = 'SUPPLIER';
             let tok = UsersRegistry.genToken(result);
+            loggerT.verbose('SupplierRegistry LOGIN TOK', tok);
             return SupplierRegistry.supplierLoginHistory(result)
-                .then(res => {
-                    return res.cookie('auth', tok, {
+                .then(() => {
+                    return res.cookie('supplier', tok, {
                         httpOnly: true,
-                        expire: moment().add(1, 'day').toDate()
+                        expires: moment().add(1, 'day').toDate()
                     }).send({
                         data: result,
                         msg: 'Success'

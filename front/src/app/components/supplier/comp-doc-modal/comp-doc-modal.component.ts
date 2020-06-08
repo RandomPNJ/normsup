@@ -1,9 +1,10 @@
-import { Component, OnInit, ViewChild, Output, EventEmitter, TemplateRef, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, Output, EventEmitter, TemplateRef, ElementRef, Input } from '@angular/core';
 import { DataTableDirective } from 'angular-datatables';
 import 'datatables.net';
 import { FileUploader } from 'ng2-file-upload';
 import { HttpService } from 'src/app/services/http.service';
 import { FormGroup, FormControl } from '@angular/forms';
+import { HttpParams } from '@angular/common/http';
 
 @Component({
   selector: 'app-comp-doc-modal',
@@ -13,10 +14,14 @@ import { FormGroup, FormControl } from '@angular/forms';
 export class CompDocModalComponent implements OnInit {
 
   @Output() addDocModal = new EventEmitter<string>();
+  @Output() changeType = new EventEmitter<string>();
   @Output() hideModal = new EventEmitter<string>();
   @ViewChild(DataTableDirective) datatableElement: DataTableDirective;
   @ViewChild('addDocModal') addModalRef: TemplateRef<any>;
   @ViewChild('labelImport') labelImport: ElementRef;
+  @Input() docModalID;
+
+
   formImport: FormGroup;
   public uploader: FileUploader = new FileUploader(
     { url: 'http://localhost:8080/api/document/upload', removeAfterUpload: true, autoUpload: false });
@@ -34,7 +39,7 @@ export class CompDocModalComponent implements OnInit {
   };
   dtOptions: DataTables.Settings = {};
   myTable: Boolean = false;
-  addCompDoc: Boolean = true;
+  addCompDoc: Boolean = false;
   itemPluralMappingNum = {
     'documents': {
       '=0': 'Aucun Document',
@@ -85,8 +90,9 @@ export class CompDocModalComponent implements OnInit {
       ajax: (dataTablesParameters: any, callback: any) => {
         console.log('tableParams', dataTablesParameters);
         dataTablesParameters.company = 'Fakeclient';
+        let params = new HttpParams().append('id', this.docModalID).append('type', 'COMP');
           that.httpService
-            .get('/api/documents', dataTablesParameters)
+            .get('/api/supplier/documents', params)
             .subscribe(resp => {
               console.log(resp);
               that.data = that.data.concat(resp.body['items']);
@@ -130,6 +136,11 @@ export class CompDocModalComponent implements OnInit {
 
   public fileOverBase(e: any): void {
     this.hasBaseDropZoneOver = e;
+  }
+
+  changeModalType() {
+    console.log('comp doc changemodaltype')
+    this.changeType.emit();
   }
 
   handleFileInput(event: any) {

@@ -34,7 +34,7 @@
                   </div>
                 </div>
               </div>
-              <div *ngIf="preferences.alerts_state" class="form-group row nopadding" style="padding-bottom: 20px !important;">
+              <div *ngIf="preferences.alerts_state" class="form-group pb-3 row nopadding">
                 <div class="col r-robo-14 nopadding">Adresse email invalides</div>
                 <div class="col-md-1 col-sm-1 alert-checkbox">
                   <div class="form-check form-check-inline normsup-checkbox-cont export-checkbox">
@@ -44,15 +44,25 @@
                   </div>
                 </div>
               </div>
+              <div *ngIf="preferences.alerts_state" class="form-group row nopadding" style="padding-bottom: 20px !important;">
+                <div class="col r-robo-14 nopadding">Fournisseur hors ligne</div>
+                <div class="col-md-1 col-sm-1 alert-checkbox">
+                  <div class="form-check form-check-inline normsup-checkbox-cont export-checkbox">
+                    <input class="form-check-input normsup-checkbox" type="checkbox"
+                      id="alertOfflineSupp" [(ngModel)]="preferences.alert_offline_sup">
+                    <label class="form-check-label" for="alertOfflineSupp"></label>
+                  </div>
+                </div>
+              </div>
             </div>
             <div>
               <div class="rm-robo-15 alert-type-txt" style="">
                 Fréquence des alertes
               </div>
-              <div class="form-group row nopadding">
-                <div class="r-robo-14 nopadding">Alertes</div>
-                <div class="" style="min-width: 140px; padding-left: 7px;">
-                  <select class="form-control" id="alertFrequency" name="alertFrequency"
+              <div class="form-group row nopadding" style="display: table;">
+                <div class="r-robo-14 nopadding" style="display: table-cell;">Alertes</div>
+                <div class="" style="min-width: 155px; padding-left: 7px;display: table-cell;">
+                  <select class="form-control custom-select export-normsup-select" id="alertFrequency" name="alertFrequency"
                     [(ngModel)]="preferences.alert_frequency">
                     <option *ngFor="let c of frequency" [ngValue]="c.value" [disabled]="c.name === ' '">{{c.name}}
                     </option>

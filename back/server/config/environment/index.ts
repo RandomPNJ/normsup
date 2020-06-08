@@ -120,6 +120,7 @@ export default {
       uri : '/api/supplier',
       actions: [
         { name: 'getCurrentSupplier', uriPattern: '/currentSupplier', method: 'get' },
+        { name: 'getDocuments', uriPattern: '/documents', method: 'get' },
       ],
     },
     reminders: {

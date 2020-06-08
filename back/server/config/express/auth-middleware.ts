@@ -10,7 +10,9 @@ export class AuthenticatorMiddleware implements ExpressMiddlewareInterface {
         let token;
         if(request.cookies.auth) {
             token = request.cookies.auth;
-        } else {
+        } else if(request.cookies.supplier) {
+            token = request.cookies.supplier;
+        }else {
             return response.status(400).json({
                 success: false,
                 message: "Unexpected error : User is not authentified.",

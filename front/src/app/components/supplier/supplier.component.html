@@ -169,7 +169,7 @@
             <div style="padding-left: 0px !important; padding-right: 0px !important;" class="container">
               <div class="row" style="margin: auto;text-align: center;padding-top: 29px;">
                 <div class="interloc-title">4. Documents</div>
-                <div class="optional-txt">Choisissez les documents à demander.</div>
+                <div class="optional-txt">Documents demandés auprès du fournisseurs.</div>
               </div>
               <div style="padding-bottom: 30px;padding-top: 30px;margin: auto;padding-left: 53px;padding-right: 54px;" class="row">
                 <div style="text-align: center;width: 100%; text-transform: capitalize;" class="interloc-title">
@@ -177,15 +177,18 @@
                 </div>
                 <div class="doc-form-check">
                   <div class="form-check form-check-inline normsup-checkbox-cont">
-                    <input class="form-check-input normsup-checkbox" type="checkbox" id="inlineCheckbox3" value="option3" disabled [(ngModel)]="documentsSettings.legal.kbis">
+                    <!-- <input class="form-check-input normsup-checkbox" type="checkbox" id="inlineCheckbox3" value="option3" disabled [(ngModel)]="documentsSettings.legal.kbis"> -->
+                    <i class="fas fa-check doc-choice-check"></i>
                     <label class="form-check-label" for="inlineCheckbox3" style="color: #4E5983;">KBIS</label>
                   </div>
                   <div class="form-check form-check-inline normsup-checkbox-cont">
-                    <input class="form-check-input normsup-checkbox" type="checkbox" id="inlineCheckbox1" value="option1" disabled [(ngModel)]="documentsSettings.legal.urssaf">
+                    <!-- <input class="form-check-input normsup-checkbox" type="checkbox" id="inlineCheckbox1" value="option1" disabled [(ngModel)]="documentsSettings.legal.urssaf"> -->
+                    <i class="fas fa-check doc-choice-check"></i>
                     <label class="form-check-label" for="inlineCheckbox1" style="color: #4E5983;">URSSAF</label>
                   </div>
                   <div class="form-check form-check-inline normsup-checkbox-cont">
-                    <input class="form-check-input normsup-checkbox" type="checkbox" id="inlineCheckbox2" value="option2" disabled [(ngModel)]="documentsSettings.legal.lnte">
+                    <!-- <input class="form-check-input normsup-checkbox" type="checkbox" id="inlineCheckbox2" value="option2" disabled [(ngModel)]="documentsSettings.legal.lnte"> -->
+                    <i class="fas fa-check doc-choice-check"></i>  
                     <label class="form-check-label" for="inlineCheckbox2" style="color: #4E5983;">LNTE</label>
                   </div>
                   
@@ -238,8 +241,8 @@
     </ng-template>
     <ng-template #legalDoc>
       <div class="modal-body">
-        <app-legal-doc-modal [hidden]="infoModalType !== 'LEGAL'" (hideModal)="hideModal($event)" (addDocModal)="openInfoModal($event)"></app-legal-doc-modal>
-        <app-comp-doc-modal [hidden]="infoModalType !== 'COMP'" (hideModal)="hideModal($event)" (addDocModal)="openInfoModal($event)"></app-comp-doc-modal>
+        <app-legal-doc-modal [docModalID]="docModalID" [hidden]="infoModalType === 'COMP'" (hideModal)="hideModal($event)" (changeType)="changeType('COMP')"  (addDocModal)="openInfoModal($event)"></app-legal-doc-modal>
+        <app-comp-doc-modal  [docModalID]="docModalID" [hidden]="infoModalType === 'LEGAL'" (hideModal)="hideModal($event)" (changeType)="changeType('LEGAL')" (addDocModal)="openInfoModal($event)"></app-comp-doc-modal>
       </div>
       <div class="modal-footer" style="padding: 4px;border-style: none !important;">
       </div>

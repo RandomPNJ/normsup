@@ -3,7 +3,7 @@
     <div class="mod-header-title">
       <span class="top-txt">Statut des documents</span>
       <div class="pull-right doc-modal-type" style="cursor: default;">
-        <div class="doc-type-overlay disabled-type">
+        <div (click)="changeModalType()" class="doc-type-overlay disabled-type">
           <img style="height: 25px; padding-right: 7px; vertical-align: middle;"
             src="../../../../assets/img/gray-legal-icn.svg" /><span class="type-txt">Légal</span></div>
         <div class="doc-type-overlay active-type"><img style="height: 25px; padding-right: 7px;"

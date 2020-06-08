@@ -1,10 +1,11 @@
-import { Component, OnInit, ViewChild, Output, EventEmitter, TemplateRef } from '@angular/core';
+import { Component, OnInit, ViewChild, Output, EventEmitter, TemplateRef, Input } from '@angular/core';
 import { DataTableDirective } from 'angular-datatables';
 import 'datatables.net';
 import { FileUploader } from 'ng2-file-upload';
 import { HttpService } from 'src/app/services/http.service';
 import { BrowserStorageService } from 'src/app/services/storageService';
 import {Configuration} from '../../../config/environment';
+import { HttpParams } from '@angular/common/http';
 
 @Component({
   selector: 'app-legal-doc-modal',
@@ -14,10 +15,11 @@ import {Configuration} from '../../../config/environment';
 export class LegalDocModalComponent implements OnInit {
 
   @Output() addDocModal = new EventEmitter<string>();
+  @Output() changeType = new EventEmitter<string>();
   @Output() hideModal = new EventEmitter<string>();
   @ViewChild(DataTableDirective) datatableElement: DataTableDirective;
   @ViewChild('addDocModal') addModalRef: TemplateRef<any>;
-
+  @Input() docModalID;
 
   // USELESS ???
   public uploader: FileUploader = new FileUploader({ 
@@ -109,10 +111,11 @@ export class LegalDocModalComponent implements OnInit {
       },
       ajax: (dataTablesParameters: any, callback: any) => {
         console.log('tableParams', dataTablesParameters);
-        dataTablesParameters.company = 'Fakeclient';
+        // dataTablesParameters.company = 'Fakeclient';
         // if(action === 'query') {
+          let params = new HttpParams().append('id', this.docModalID).append('type', 'LEGAL');
           that.httpService
-            .get('/api/documents', dataTablesParameters)
+            .get('/api/supplier/documents', params)
             .subscribe(resp => {
               console.log(resp);
               that.data = that.data.concat(resp.body['items']);
@@ -155,6 +158,10 @@ export class LegalDocModalComponent implements OnInit {
     // const data: any = {data: this.addModalRef, type: 'AddDoc'};
     // this.addDocModal.emit(data);
     this.addDocState = true;
+  }
+
+  changeModalType() {
+    this.changeType.emit();
   }
 
   uploadFile() {
