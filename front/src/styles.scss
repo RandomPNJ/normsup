@@ -995,7 +995,29 @@ td {
     }
 }
 
-.new-btn-normsup {
+.new-btn-normsup1 {
+    border: 1px solid $normsup-blue !important;
+    background-color: transparent !important;
+    color: $normsup-blue !important;
+    border-radius: 5px !important;
+
+    &:focus,
+    &:active {
+        border: 2px solid #0b70dc !important;
+        background-color: #0b70dc !important;
+        color: white !important;
+    }
+
+    &:hover {
+        border: 2px solid #0b70dc !important;
+        background-color: #0b70dc !important;
+        color: white !important;
+        box-shadow: none !important;
+        outline: 0;
+    }
+}
+
+.new-btn-normsup2 {
     border: 1px solid $normsup-blue !important;
     background-color: transparent !important;
     color: $normsup-blue !important;

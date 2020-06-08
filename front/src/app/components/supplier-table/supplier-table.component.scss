@@ -130,3 +130,14 @@ hr {
 .custom-select select {
   display: none; /*hide original SELECT element: */
 }
+
+.new-btn-normsup1 {
+
+  &:hover {
+      border: 2px solid #0b70dc !important;
+      background-color: #0b70dc !important;
+      color: white !important;
+      box-shadow: none !important;
+      outline: 0;
+  }
+}

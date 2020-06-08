@@ -7,7 +7,7 @@
   </select>
 </div>
 <div class="table-responsive" style="overflow-y: hidden;">
-  <table datatable [dtOptions]="dtOptions" id="tableComp" class="table display pageResize hover compact supplier-table" cellspacing="0"
+  <table datatable [dtOptions]="dtOptions" id="tableComp" class="table order-column row-border pageResize compact supplier-table" cellspacing="0"
     width="100%" style="height: 100%;" #suppliersTable>
     <!-- <thead>
     <tr>
@@ -96,7 +96,7 @@
             <div class="badge-container content-cont container">
               <div class="row h-100 cent">
                 <button style="box-shadow: none;font-size: 13px !important;" (click)="sendReminder(item.id)" type="button"
-                  class="btn new-btn-normsup default-btn-table">Relancer</button>
+                  class="btn new-btn-normsup1 default-btn-table">Relancer</button>
               </div>
             </div>
           </div>
@@ -320,7 +320,7 @@
             <div class="badge-container content-cont container">
               <div class="row h-100 cent">
                 <button style="box-shadow: none;font-size: 13px !important;" (click)="sendReminder(item.id)" type="button"
-                  class="btn default-btn-table new-btn-normsup">Relancer</button>
+                  class="btn default-btn-table new-btn-normsup2">Relancer</button>
               </div>
             </div>
           </div>
