@@ -108,12 +108,12 @@
                 <div class="container">
                   <div class="row">
                     <div class="col">
-                        <button style="float: right" type="button" class="btn btn-outline-normsup prec-btn-supplier text-capitalize" (click)="previous('enterSiret')">
+                        <button style="float: right" type="button" class="btn new-btn-normsup prec-btn-supplier text-capitalize" (click)="previous('enterSiret')">
                             <span class="button-txt">Précédent</span>
                           </button>
                     </div>
                     <div class="col">
-                      <button  style="border-radius: 5px;float: left;" type="button" class="btn btn-primary text-capitalize next-btn-supplier" (click)="interlocInfo()" [disabled]="(!companyToAdd.denomination || !companyToAdd.address || !companyToAdd.siren || !companyToAdd.dateCreation)">
+                      <button  style="border-radius: 5px;float: left;font-size: 15px !important;" type="button" class="btn btn-primary text-capitalize next-btn-supplier" (click)="interlocInfo()" [disabled]="(!companyToAdd.denomination || !companyToAdd.address || !companyToAdd.siren || !companyToAdd.dateCreation)">
                         <span class="button-txt">Suivant</span>
                       </button>
                     </div>
@@ -153,12 +153,12 @@
           <div style="padding-top: 30.5px;" class="select-comp-but">
             <div class="row">
               <div class="col">
-                <button style="float: right" type="button" class="btn btn-outline-normsup prec-btn-supplier text-capitalize" (click)="previous('compInfo')">
+                <button style="float: right" type="button" class="btn new-btn-normsup prec-btn-supplier text-capitalize" (click)="previous('compInfo')">
                   <span class="button-txt">Précédent</span>
                 </button>
               </div>
               <div class="col">
-                <button style="border-radius: 5px;float: left;" type="button" class="btn btn-primary text-capitalize next-btn-supplier" (click)="docInfo()" [disabled]="(interloc.name !== '' || interloc.lastname !== '' || interloc.phonenumber !== '' || interloc.email !== '') && (interloc.name === '' || interloc.lastname === '' || interloc.phonenumber === '' || interloc.email === '')">
+                <button style="border-radius: 5px;float: left;font-size: 15px !important;" type="button" class="btn btn-primary text-capitalize next-btn-supplier" (click)="docInfo()" [disabled]="(interloc.name !== '' || interloc.lastname !== '' || interloc.phonenumber !== '' || interloc.email !== '') && (interloc.name === '' || interloc.lastname === '' || interloc.phonenumber === '' || interloc.email === '')">
                   <span class="button-txt">Suivant</span>
                 </button>
               </div>
@@ -198,12 +198,12 @@
             <div style="" class="select-comp-but">
               <div class="row">
                 <div class="col">
-                  <button style="float: right" type="button" class="btn btn-outline-normsup prec-btn-supplier text-capitalize" (click)="previous('interlocInfo')">
+                  <button style="float: right" type="button" class="btn new-btn-normsup prec-btn-supplier text-capitalize" (click)="previous('interlocInfo')">
                     <span class="button-txt">Précédent</span>
                   </button>
                 </div>
                 <div class="col">
-                  <button style="border-radius: 5px;float: left;" type="button" class="btn btn-primary text-capitalize next-btn-supplier" (click)="addCompany({comp: companyToAdd, interloc: interloc})" [disabled]="addInterloc === true && (interloc.name === '' || interloc.lastname === '' || interloc.phonenumber === '' || interloc.email === '')">
+                  <button style="border-radius: 5px;float: left;font-size: 15px !important;" type="button" class="btn btn-primary text-capitalize next-btn-supplier" (click)="addCompany({comp: companyToAdd, interloc: interloc})" [disabled]="addInterloc === true && (interloc.name === '' || interloc.lastname === '' || interloc.phonenumber === '' || interloc.email === '')">
                     <span class="button-txt">Suivant</span>
                   </button>
                 </div>
@@ -219,7 +219,7 @@
             <div style="padding-top: 30px;" class="select-comp-but">
               <div class="row nopadding">
                 <div class="col nopadding" style="text-align: center;">
-                  <button style="text-transform: none;" type="button" class="btn btn-outline-normsup new-group-btn"
+                  <button style="text-transform: none;" type="button" class="btn new-btn-normsup new-group-btn"
                     (click)="nextState('enterSiret')">
                     <span class="button-txt">Nouveau fournisseur</span>
                   </button>

@@ -96,7 +96,7 @@
             <div class="badge-container content-cont container">
               <div class="row h-100 cent">
                 <button style="box-shadow: none;font-size: 13px !important;" (click)="sendReminder(item.id)" type="button"
-                  class="btn new-btn-normsup1 default-btn-table">Relancer</button>
+                  class="btn new-btn-normsup default-btn-table">Relancer</button>
               </div>
             </div>
           </div>
@@ -157,10 +157,10 @@
                       <div class="v-legend-cont nopadding">
                         <div style="line-height: 17px;">
                           <span class="legend-txt">
-                            <button *ngIf="!toggleModification" style="box-shadow: none;" (click)="modifySupplier()" type="button" class="btn btn-outline-normsup default-btn-table infosup-btn">
+                            <button *ngIf="!toggleModification" style="box-shadow: none;" (click)="modifySupplier()" type="button" class="btn new-btn-normsup default-btn-table infosup-btn">
                               Modifier
                             </button>
-                            <button *ngIf="toggleModification" style="box-shadow: none;" (click)="confirmSupplierModification()" type="button" class="btn btn-outline-normsup default-btn-table infosup-btn">
+                            <button *ngIf="toggleModification" style="box-shadow: none;" (click)="confirmSupplierModification()" type="button" class="btn new-btn-normsup default-btn-table infosup-btn">
                               Confirmer
                             </button>
                           </span>
@@ -169,10 +169,10 @@
                       <div class="v-legend-cont nopadding">
                         <div style="line-height: 17px;">
                           <span class="legend-txt">
-                            <button *ngIf="!toggleModification" style="box-shadow: none;" (click)="deleteSupplier(infoPopup)" type="button" class="btn btn-outline-normsup default-btn-table infosup-btn">
+                            <button *ngIf="!toggleModification" style="box-shadow: none;" (click)="deleteSupplier(infoPopup)" type="button" class="btn new-btn-normsup default-btn-table infosup-btn">
                               Supprimer
                             </button>
-                            <button *ngIf="toggleModification" style="box-shadow: none;" (click)="modifySupplier()" type="button" class="btn btn-outline-normsup default-btn-table infosup-btn">
+                            <button *ngIf="toggleModification" style="box-shadow: none;" (click)="modifySupplier()" type="button" class="btn new-btn-normsup default-btn-table infosup-btn">
                               Annuler
                             </button>
                           </span>
@@ -225,20 +225,20 @@
                 <div style="text-align: right;" class="col-3 nopadding">
                   <div>
                     <span style="display: inline-block;">
-                      <button *ngIf="!toggleModification" style="box-shadow: none;" (click)="modifyInterloc()" type="button" class="btn btn-outline-normsup default-btn-table infosup-btn">
+                      <button *ngIf="!toggleModification" style="box-shadow: none;" (click)="modifyInterloc()" type="button" class="btn new-btn-normsup default-btn-table infosup-btn">
                         Modifier
                       </button>
-                      <button [disabled]="interloc.name === infoPopup.name && interloc.lastname === infoPopup.lastname && interloc.email === infoPopup.email && interloc.email === infoPopup.email" *ngIf="toggleModification" style="box-shadow: none;" (click)="confirmInterlocModification()" type="button" class="btn btn-outline-normsup default-btn-table infosup-btn">
+                      <button [disabled]="interloc.name === infoPopup.name && interloc.lastname === infoPopup.lastname && interloc.email === infoPopup.email && interloc.email === infoPopup.email" *ngIf="toggleModification" style="box-shadow: none;" (click)="confirmInterlocModification()" type="button" class="btn new-btn-normsup default-btn-table infosup-btn">
                         Confirmer
                       </button>
                     </span>
                     <span style="display: inline-block;">
                       <button *ngIf="!toggleModification" style="box-shadow: none;"
                         (click)="deleteInterloc(indexInfo, infoPopup.id)" type="button"
-                        class="btn btn-outline-normsup default-btn-table infosup-btn">Supprimer</button>
+                        class="btn new-btn-normsup default-btn-table infosup-btn">Supprimer</button>
                       <button *ngIf="toggleModification" style="box-shadow: none;"
                         (click)="modifyInterloc()" type="button"
-                        class="btn btn-outline-normsup default-btn-table infosup-btn">Annuler</button>
+                        class="btn new-btn-normsup default-btn-table infosup-btn">Annuler</button>
                     </span>
                   </div>
                 </div>
@@ -320,7 +320,7 @@
             <div class="badge-container content-cont container">
               <div class="row h-100 cent">
                 <button style="box-shadow: none;font-size: 13px !important;" (click)="sendReminder(item.id)" type="button"
-                  class="btn default-btn-table new-btn-normsup2">Relancer</button>
+                  class="btn default-btn-table new-btn-normsup">Relancer</button>
               </div>
             </div>
           </div>
@@ -335,9 +335,9 @@
       </div>
       <div class="modal-footer" style="margin: 0 auto;">
           <button style="box-shadow: none;" (click)="openModal(template, 'Supplier')" type="button"
-          class="btn btn-outline-normsup default-btn-table">Confirmer</button>
+          class="btn new-btn-normsup default-btn-table">Confirmer</button>
           <button style="box-shadow: none;margin-bottom: 3.75px;" (click)="openModal(template, 'Supplier')" type="button"
-          class="btn btn-outline-normsup default-btn-table">Annuler</button>
+          class="btn new-btn-normsup default-btn-table">Annuler</button>
       </div>
   </ng-template>
 </div>

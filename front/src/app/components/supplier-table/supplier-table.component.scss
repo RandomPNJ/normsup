@@ -131,13 +131,8 @@ hr {
   display: none; /*hide original SELECT element: */
 }
 
-.new-btn-normsup1 {
-
+.new-btn-normsup {
   &:hover {
-      border: 2px solid #0b70dc !important;
-      background-color: #0b70dc !important;
-      color: white !important;
       box-shadow: none !important;
-      outline: 0;
   }
 }
