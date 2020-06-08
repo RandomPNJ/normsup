@@ -167,6 +167,7 @@ export default {
         { name: 'registerAdmin', uriPattern: '/register', method: 'post' },
         { name: 'createSupplierUser', uriPattern: '/suppliers/register', method: 'post' },
         { name: 'dailyReminders', uriPattern: '/daily_reminders', method: 'post' },
+        { name: 'monthlyConformity', uriPattern: '/monthly_conformity', method: 'post' },
       ]
     }
   },
