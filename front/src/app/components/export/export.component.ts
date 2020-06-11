@@ -37,7 +37,7 @@ export class ExportComponent implements OnInit {
     singleDatePicker: true,
     alwaysShowCalendars: false,
     opens: 'right',
-    drops: 'down',
+    drops: 'up',
     autoUpdateInput: false,
     autoApply: true
   };
@@ -47,7 +47,7 @@ export class ExportComponent implements OnInit {
     singleDatePicker: true,
     alwaysShowCalendars: false,
     opens: 'right',
-    drops: 'down',
+    drops: 'up',
     autoUpdateInput: false,
     autoApply: true
   };

@@ -126,7 +126,6 @@ select:-webkit-autofill:focus {
     font-family: 'Roboto Regular';
     font-size: 13px;
     letter-spacing: 0;
-    color: #4390EF;
     line-height: 22px;
     font-size: 12px;
     text-transform: capitalize;
@@ -179,6 +178,11 @@ select:-webkit-autofill:focus {
     padding-top: 26.250px;
 }
 
+.login-btn {
+    padding-right: 47px;
+    padding-left: 47px;
+}
+
 .forgot-password-lnk {
     padding-top: 25px;
     cursor: pointer;
@@ -211,4 +215,13 @@ select:-webkit-autofill:focus {
     color: #4390EF;
     padding: 15px 0px 5px 0px;
     cursor: default;
+}
+
+.login-spinner {
+    position: absolute;
+    right: 48.5%;
+    top: 40%;
+    height: 70px;
+    width: 70px;
+    color: #4390EF !important;
 }

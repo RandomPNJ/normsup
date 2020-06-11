@@ -185,6 +185,35 @@ export default class SupplierRegistry {
         ;
     }
 
+
+    private downloadDocument(user, id) {
+        let query = {
+            timeout: 40000
+        };
+
+        query['sql'] = Query.GET_DOCUMENT;
+        query['values'] = [id, user.organisation]
+
+        return this.mysql.query(query)
+            .then(res => {
+                loggerT.verbose('QUERY RES ==== ', res);
+                if(res && res.length > 0) {
+                    return this.s3.getObject({
+                        Bucket: 'normsup',
+                        Key: config.env === 'local' ? 'DEV/' + res[0].path : res[0].path
+                    }).promise()
+                    ;
+                } else {
+                    return Promise.reject(new Error('Viewing this document is not possible for the logged in user.'));
+                }
+            })
+            .catch(err => {
+                loggerT.error('ERROR ON QUERY getSuppliers.', err);
+                return Promise.reject(err);
+            })
+        ;
+    }
+
     private allSkippingErrors(promises) {
         return Promise.all(
           promises.map(p => p.catch(error => null))

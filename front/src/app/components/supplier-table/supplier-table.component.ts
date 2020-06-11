@@ -1,4 +1,4 @@
-import { AfterViewInit, EventEmitter, Component, OnInit, ViewChild, Input, Output, ChangeDetectorRef, TemplateRef } from '@angular/core';
+import { AfterViewInit, EventEmitter, Component, OnInit, ViewChild, Input, Output, ChangeDetectorRef, TemplateRef, OnDestroy } from '@angular/core';
 import { DataTableDirective } from 'angular-datatables';
 import { HttpService } from 'src/app/services/http.service';
 // import {Configuration} from '../../../../config/environment.local';
@@ -17,7 +17,7 @@ import { AuthService } from 'src/app/services/auth.service';
   templateUrl: './supplier-table.component.html',
   styleUrls: ['./supplier-table.component.scss']
 })
-export class SupplierTableComponent implements OnInit,AfterViewInit {
+export class SupplierTableComponent implements OnInit, OnDestroy {
 
   @ViewChild(DataTableDirective) datatableElement: DataTableDirective;
   @ViewChild('confirmationModal') confirmationModal: TemplateRef<any>;
@@ -117,7 +117,7 @@ export class SupplierTableComponent implements OnInit,AfterViewInit {
       searching: true,
       responsive: true,
       serverSide: true,
-      stateSave: true,
+      stateSave: false,
       // processing: true,
       language: {
           lengthMenu: 'Afficher par _MENU_',
@@ -195,8 +195,10 @@ export class SupplierTableComponent implements OnInit,AfterViewInit {
     };
   }
 
-  ngAfterViewInit(): void {
-   
+  ngOnDestroy(): void {
+    // this.datatableElement.dtInstance.then((dtInstance: DataTables.Api) => {
+    //   dtInstance.destroy();
+    // });
   }
 
   compareParams(datatableParams) {

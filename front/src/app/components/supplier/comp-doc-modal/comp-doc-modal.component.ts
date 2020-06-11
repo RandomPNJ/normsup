@@ -43,12 +43,13 @@ export class CompDocModalComponent implements OnInit {
   itemPluralMappingNum = {
     'documents': {
       '=0': 'Aucun Document',
-      '=1': 'Un',
+      '=1': '1',
       'other': '#'
     }
   };
   itemPluralMapping = {
     'documents': {
+      '=0': '',
       '=1': 'Document',
       'other': 'Documents'
     }
@@ -151,5 +152,15 @@ export class CompDocModalComponent implements OnInit {
       .join(', ')
     ;
     this.fileToUpload1 = event.item(0);
+  }
+
+  downloadDocument(item) {
+    return this.httpService.get('/api/documents/download/'+item.id)
+      .subscribe(res => {
+        console.log('downloadDocument res', res)
+      }, err => {
+
+      })
+    ;
   }
 }

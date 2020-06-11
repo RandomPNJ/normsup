@@ -46,15 +46,15 @@ export class HttpConfigInterceptor implements HttpInterceptor {
                 return event;
             }),
             catchError((error: HttpErrorResponse) => {
-                // console.log('error', error);
+                console.log('intercept error error', error);
                 if(error.error && error.error.message && error.error.message.indexOf('User is not authentified') !== -1) {
                     // this.logOutUser();
                 }
-                let data = {};
-                data = {
-                    reason: error && error.error && error.error.reason ? error.error.reason : '',
-                    status: error.status
-                };
+                // let data = {};
+                // data = {
+                //     reason: error && error.error && error.error.reason ? error.error.reason : '',
+                //     status: error.status
+                // };
                 // this.errorDialogService.openDialog(data);
                 return throwError(error);
             }));
@@ -64,6 +64,7 @@ export class HttpConfigInterceptor implements HttpInterceptor {
     logOutUser() {
         this.bsService.clearLocalStorage();
         this.cookieService.delete('auth');
+        this.cookieService.delete('supplier');
         this.cookieService.delete('refresh');
         this.router.navigate(['login']);
         this.notifService.error('Veuillez vous authentifier.');

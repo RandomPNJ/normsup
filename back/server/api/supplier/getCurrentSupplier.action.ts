@@ -21,7 +21,7 @@ export function getCurrentLogged(req, res, SupplierRegistry, AuthRegistry) {
     //     };
     // }
 
-    return AuthRegistry.validateToken(req.cookies.auth).then((res) => {
+    return AuthRegistry.validateToken(req.cookies.supplier).then((res) => {
         if (res.code === 200) {
             decoded = res.token;
             loggerT.verbose('Getting current logged supplier with id:', res.token);

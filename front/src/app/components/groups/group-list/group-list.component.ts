@@ -18,6 +18,13 @@ export class GroupListComponent implements OnInit {
 
   @Output() groupData: EventEmitter<String> = new EventEmitter<String>();
   @ViewChild('addCompGroup') public addGroupModal: TemplateRef<any>;
+
+  blueLogo: String = '../../../assets/img/param-icn.svg';
+  whiteLogo: String = '../../../assets/img/white-param-icn.svg';
+  icnUrl: String = 'white-param-icn.svg'
+  whiteBtn: Boolean = false;
+  test = true;
+
   subscriptions: Subscription[] = [];
   modalRef: BsModalRef;
   modalConfig = {
@@ -31,7 +38,7 @@ export class GroupListComponent implements OnInit {
   group: {
     name: '',
     
-  }
+  };
   itemPluralCount = {
     'group': {
       '=0': '',
@@ -54,6 +61,8 @@ export class GroupListComponent implements OnInit {
       'other': 'Fournisseurs'
     }
   };
+  iconSelector = -1;
+
   constructor(private modalService: BsModalService, private changeDetection: ChangeDetectorRef,
     private httpService: HttpService, private router: Router, private groupsService: GroupsService) {
       this.groupsService.groups$.subscribe(n => {
@@ -164,5 +173,14 @@ export class GroupListComponent implements OnInit {
         this.groupsService.addGroups(res.body['items']);
       })
     ;
+  }
+
+  changeIcn(i, j) {
+    console.log('changeIcn after', i);
+    if(j===0)
+      this.iconSelector = i;
+    else
+      this.iconSelector = -1;
+    console.log('changeIcn before', i);
   }
 }

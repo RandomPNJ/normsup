@@ -61,24 +61,30 @@ export class SupplierLoginPageComponent implements OnInit, OnDestroy {
         .subscribe((res) => {
           this.isLoader = false;
           if (res['msg'] === 'Wrong password.') {
+            console.log('supplier login one', res);
             this.type = 'error';
             this.message = res['msg'];
             this.title = 'Error';
             this.showModal();
           } else if(res['data'] === {}) {
+            console.log('supplier login one', res);
             this.type = 'error';
             this.message = res['msg'];
             this.title = 'Error';
             this.showModal();
           } else {
+            console.log('supplier login one', res);
             this.router.navigate(['supplier', 'upload']);
           }
         }, error => {
           console.log('error', error);
-          if(error.error.msg === 'Wrong credentials.' || error.error.msg === 'User not found.') {
-            this.errMsg = 'Email ou mot de passe erroné.';
-          } else if(error.error.msg === 'Your login credentials are expired, please request a new account.') {
+          // if(error.error.msg === 'Wrong credentials.' || error.error.msg === 'User not found.') {
+          //   this.errMsg = 'Email ou mot de passe erroné.';
+          // } else 
+          if(error.error.msg === 'Your login credentials are expired, please request a new account.') {
             this.errMsg = 'Identifiants expirés, veuillez en demander de nouveaux.';
+          } else {
+            this.errMsg = 'Email ou mot de passe erroné.';
           }
           this.isLoader = false;
           this.type = 'error';
@@ -89,7 +95,7 @@ export class SupplierLoginPageComponent implements OnInit, OnDestroy {
             this.message = 'Une erreur s\'est produite, merci de réessayer de vous connecter';
           }
           this.title = 'Error';
-          this.showModal();
+          // this.showModal();
         });
     }
   }

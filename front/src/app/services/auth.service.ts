@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders} from '@angular/common/http';
 import { Configuration } from '../config/environment';
 import { BrowserStorageService } from 'src/app/services/storageService';
 import { Observable, BehaviorSubject } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, catchError } from 'rxjs/operators';
 import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
 import { NotifService } from './notif.service';

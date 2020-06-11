@@ -22,9 +22,11 @@
                 <div class="group-card-header"><img src="../../../assets/img/group-icn.svg" style="width: 20px;height: 12px;"/><span class="group-name-style text-ov" style="padding-left:5px">{{group.name}}</span></div>
                 <div class="card-sup-count"><span class="count-style">{{group.members_count | i18nPlural: itemPluralCount['members']}}</span> {{group.members_count | i18nPlural: itemPluralMapping['members']}}</div>
                 <div class="params-btn">
-                  <button style="height: 30px;width: 123px;" (click)="openGroupParams(group.id)" type="button" class="btn new-btn-normsup">
+                  <button (mouseover)="changeIcn(i, 0)" (mouseout)="changeIcn(i, 1)" (focus)="changeIcn(i, 0)" (blur)="changeIcn(i, 1)" style="height: 30px;width: 123px;" (click)="openGroupParams(group.id)" type="button" class="btn new-btn-normsup">
                     <span class="params-btn-txt">
-                      <img style="width:15px;" src="../../../assets/img/param-icn.svg"/>
+                      <!-- <span style="width:15px;" class="button-logo">&nbsp;</span> -->
+                      <img *ngIf="iconSelector!==i" width="15" height="15" class="button-logo" src="../../../assets/img/param-icn.svg"/>
+                      <img *ngIf="iconSelector===i" width="15" height="15" class="button-logo" src="../../../assets/img/white-param-icn.svg"/>
                       <span style="margin-left:5px;">Paramètres</span>
                     </span>
                   </button>

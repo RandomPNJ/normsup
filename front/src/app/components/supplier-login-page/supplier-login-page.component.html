@@ -36,10 +36,10 @@
                       <label class="form-check-label r-robo-14 stayConnected" for="stayConnected">Restez connecté</label>
                   </div>
                   <div class="login-btn-cont">
-                      <button class="btn new-btn-normsup" style="position: relative;padding-bottom: 0.3rem !important;padding-top: 0.3rem !important;" type="submit" name="submit" (click)='validate()'>
-                              <span class="searchText">Suivant</span>
-                      </button>
-                  </div>
+                    <button class="btn new-btn-normsup login-btn" style="position: relative;padding-bottom: 0.3rem !important;padding-top: 0.3rem !important;" type="submit" name="submit" (click)='validate()'>
+                            <span class="searchText">Connexion</span>
+                    </button>
+                </div>
               </div>
           <span class="forgot-password-lnk">Vous avez oublié votre mot de passe</span>
       </div>
@@ -47,16 +47,11 @@
   </div>
 </div>
 
+
 <div class="spinner-container" [ngClass]="{'show':isLoader}">
-  <div class="cs-loader">
-      <div class="cs-loader-inner">
-          <label>	●</label>
-          <label>	●</label>
-          <label>	●</label>
-          <label>	●</label>
-          <label>	●</label>
-          <label>	●</label>
-      </div>
-      <h3 class="spinner-text">Please wait</h3>
-  </div>
+    <div class="cs-loader">
+        <div class="login-spinner spinner-border text-primary" role="status">
+            <span class="sr-only">Chargement...</span>
+        </div>
+    </div>
 </div>

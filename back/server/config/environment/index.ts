@@ -135,6 +135,7 @@ export default {
       uri : '/api/documents',
       actions: [
         { name: 'getDocuments', uriPattern: '', method: 'get' },
+        { name: 'downloadDocument', uriPattern: '/download/:id', method: 'get' },
         { name: 'createDocument', uriPattern: '/upload', method: 'post' },
       ],
     },

@@ -46,16 +46,18 @@ export class LegalDocModalComponent implements OnInit {
   };
   dtOptions: DataTables.Settings = {};
   myTable: Boolean = false;
+  doc: any;
 
   itemPluralMappingNum = {
     'documents': {
       '=0': 'Aucun Document',
-      '=1': 'Un',
+      '=1': '1',
       'other': '#'
     }
   };
   itemPluralMapping = {
     'documents': {
+      '=0': '',
       '=1': 'Document',
       'other': 'Documents'
     }
@@ -181,5 +183,25 @@ export class LegalDocModalComponent implements OnInit {
   private goToDocView() {
     this.cleanVariables();
     this.addDocState = false;
+  }
+
+  downloadDocument(item) {
+    return this.httpService.getFile('/api/documents/download/'+item.id)
+      .subscribe(res => {
+        console.log('downloadDocument res', res);
+        return this.readFileFromBlob(<Blob>res.body);
+      }, err => {
+        console.log('[downloadDocument] err', err)
+      })
+    ;
+  }
+
+  readFileFromBlob(blob) {
+    if(blob) {
+      // reader.readAsDataURL(blob);
+      const fileURL = URL.createObjectURL(blob);
+      console.log('fileURL', fileURL)
+      window.open(fileURL, '_blank');
+    }
   }
 }

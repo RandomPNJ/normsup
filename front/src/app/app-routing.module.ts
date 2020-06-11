@@ -28,10 +28,10 @@ import { BackofficeSuppliersComponent } from './components/backoffice-suppliers/
 import { GuestGuard } from './auth/guest.guard';
 
 const routes: Routes = [
-  { path: 'supplier', canActivate: [GuestGuard],
+  { path: 'supplier',
     children: [
       { path: 'login', component: SupplierLoginPageComponent },
-      { path: 'upload', component: SupplierUploadPageComponent, 
+      { path: 'upload', component: SupplierUploadPageComponent, canActivate: [GuestGuard],
         children: [
           { path: '', component: SupplierUploadInterfaceComponent },
           { path: 'success', component: SupplierUploadSuccessComponent },
@@ -79,7 +79,6 @@ const routes: Routes = [
   imports: [
     RouterModule.forRoot(
       routes,
-      // { enableTracing: true }, // <-- debugging purposes only
       {
         enableTracing: false,
         onSameUrlNavigation: 'reload'

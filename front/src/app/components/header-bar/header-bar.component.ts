@@ -110,7 +110,7 @@ export class HeaderBarComponent implements OnInit {
   }
 
   createImageFromBlob(image: Blob) {
-    let reader = new FileReader(); //you need file reader for read blob data to base64 image data.
+    let reader = new FileReader();
     reader.addEventListener("load", () => {
        this.profilePic = reader.result; // here is the result you got from reader
     }, false);

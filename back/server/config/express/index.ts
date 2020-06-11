@@ -99,10 +99,14 @@ export default (expressApp) => {
   const AuthMiddleware = new AuthenticatorMiddleware();
   expressApp.use('/api', (req, res, next) => {
     if(req.url === '/auth/login' || req.url === '/auth/refresh_token' || req.url === '/auth/supplier-login'
-      || req.url === '/supplier/currentSupplier' || req.url === '/users/current' || req.url.indexOf('admin') !== -1 ) {
+     || req.url === '/users/current' || req.url.indexOf('admin') !== -1 ) {
       return next();
     }
-    AuthMiddleware.use(req, res, next);
+    if(req.url === '/supplier/currentSupplier' || req.url === '/documents/upload') {
+      AuthMiddleware.useSupplier(req, res, next);
+    } else {
+      AuthMiddleware.use(req, res, next);
+    }
   });
 
   // Multer to upload files
