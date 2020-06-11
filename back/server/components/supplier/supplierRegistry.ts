@@ -357,6 +357,7 @@ export default class SupplierRegistry {
             timeout: 40000,
         };
         loggerT.verbose('getDocuments params', params);
+        loggerT.verbose('getDocuments user', user);
         if(params.type === 'LEGAL') {
             query['sql'] = Query.SUPP_LEGAL_DOCS;
             query['values'] = [user.id, params.id];

@@ -42,14 +42,14 @@ export class CompDocModalComponent implements OnInit {
   addCompDoc: Boolean = false;
   itemPluralMappingNum = {
     'documents': {
-      '=0': 'Aucun Document',
+      '=0': '',
       '=1': '1',
       'other': '#'
     }
   };
   itemPluralMapping = {
     'documents': {
-      '=0': '',
+      '=0': 'Aucun Document',
       '=1': 'Document',
       'other': 'Documents'
     }
