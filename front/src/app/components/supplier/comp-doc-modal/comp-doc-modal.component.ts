@@ -96,8 +96,7 @@ export class CompDocModalComponent implements OnInit {
             .get('/api/supplier/documents', params)
             .subscribe(resp => {
               console.log(resp);
-              that.data = that.data.concat(resp.body['items']);
-              that.itemsToDisplay = that.data.slice(that.tableParams.start, that.tableParams.start + that.tableParams.length);
+              that.itemsToDisplay = resp.body['items']
               that.myTable = true;
               callback({
                 recordsTotal: that.data.length,

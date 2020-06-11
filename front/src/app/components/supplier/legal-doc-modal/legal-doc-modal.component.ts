@@ -68,23 +68,25 @@ export class LegalDocModalComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.uploader.onAfterAddingFile = (file) => { 
-      file.withCredentials = false;
-      //@ts-ignore
-      this.fileextension = file.some.name.match(/(\.)(?!.*\.)(.)*/)[0];
-      //@ts-ignore
-      this.filename = file.some.name.match(/(.*)(\.)(?!.*\.)/)[0].substring(0, file.some.name.match(/(.*)(\.)(?!.*\.)/)[0].length - 1);
-    };
-    this.uploader.onBuildItemForm = (fileItem: any, form: any) => {
-      form.append('category' , this.category);
-      form.append('filename' , this.filename + this.fileextension);
-    };
-    this.uploader.uploadAll();
-    this.uploader.onSuccessItem = (item: any, response: string, status: number, headers: any): any => {
-      if(response){
-        console.log("response"+JSON.stringify(response));
-      }
-    }
+    console.log('this.itemsToDisplay',this.itemsToDisplay);
+    
+    // this.uploader.onAfterAddingFile = (file) => { 
+    //   file.withCredentials = false;
+    //   //@ts-ignore
+    //   this.fileextension = file.some.name.match(/(\.)(?!.*\.)(.)*/)[0];
+    //   //@ts-ignore
+    //   this.filename = file.some.name.match(/(.*)(\.)(?!.*\.)/)[0].substring(0, file.some.name.match(/(.*)(\.)(?!.*\.)/)[0].length - 1);
+    // };
+    // this.uploader.onBuildItemForm = (fileItem: any, form: any) => {
+    //   form.append('category' , this.category);
+    //   form.append('filename' , this.filename + this.fileextension);
+    // };
+    // this.uploader.uploadAll();
+    // this.uploader.onSuccessItem = (item: any, response: string, status: number, headers: any): any => {
+    //   if(response){
+    //     console.log("response"+JSON.stringify(response));
+    //   }
+    // }
     const that = this;
     this.dtOptions = {
       searchDelay: 4500,
@@ -119,11 +121,10 @@ export class LegalDocModalComponent implements OnInit {
           that.httpService
             .get('/api/supplier/documents', params)
             .subscribe(resp => {
-              console.log(resp);
-              that.data = that.data.concat(resp.body['items']);
-              that.itemsToDisplay = that.data.slice(that.tableParams.start, that.tableParams.start + that.tableParams.length);
-  
+              that.itemsToDisplay = resp.body['items']
+
               that.myTable = true;
+              console.log('this.itemsToDisplay two',this.itemsToDisplay);
               callback({
                 recordsTotal: that.data.length,
                 recordsFiltered: that.data.length,
