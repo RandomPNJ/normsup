@@ -360,10 +360,10 @@ export default class SupplierRegistry {
         loggerT.verbose('getDocuments user', user);
         if(params.type === 'LEGAL') {
             query['sql'] = Query.SUPP_LEGAL_DOCS;
-            query['values'] = [user.id, params.id];
+            query['values'] = [user.organisation, params.id];
         } else if(params.type === 'COMP'){
             query['sql'] = Query.SUPP_COMP_DOCS;
-            query['values'] = [user.id, params.id];
+            query['values'] = [user.organisation, params.id];
         }
 
         return this.mysql.query(query)
