@@ -7,13 +7,14 @@
 */
 
 .vertical-nav {
+    background-color: transparent;
     min-width: 307px;
     width: 307px;
     height: 100vh;
     position: fixed;
     top: 0;
     left: 0;
-    box-shadow: 0px 0px 55px #00000012;
+    // box-shadow: 0px 0px 55px #00000012;
     transition: all 0.4s;
     // border-top-right-radius: 20px !important;
     // border-bottom-right-radius: 20px;
@@ -141,4 +142,8 @@ li:first-child .icn-style {
 
 .active-lnk-icn {
   padding-left: 45px;
+}
+
+a.active, a:hover {
+  background-color: transparent !important;
 }

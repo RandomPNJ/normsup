@@ -239,11 +239,13 @@ hr {
     height: 65px;
 
     nav{
-        background-color: #FFF;
+        // background-color: #FFF;
+        background-color: #002651 !important;
     }
 
     .logout .dropContent {
-        color: #333;
+        // color: #333;
+        color: #FFF;
         background: #FFF;
         margin-top: 0px;
         border-color: rgba(241, 241, 241, 0.884);
@@ -308,17 +310,20 @@ hr {
 
 .menu-dwn {
     width: 100%;
+    color: #FFF;
 }
 
 .show-username {
     font-family: 'Avenir Heavy';
     font-size: 15px;
-    color: #4E5983;
+    // color: #4E5983;
+    color: #FFF;
 
     & > span {
         font-family: 'Avenir Heavy';
-    font-size: 15px;
-    color: #4E5983;
+        font-size: 15px;
+        // color: #4E5983;
+        color: #FFF;
     }
 }
 

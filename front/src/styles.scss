@@ -116,6 +116,8 @@ body {
     word-break: break-all;
 }
 
+// START
+
 // .daterangepicker.ltr .calendar.left .calendar-table,
 // .daterangepicker.ltr .left .daterangepicker_input {
 //     padding-bottom: 40px;
@@ -248,6 +250,10 @@ body {
 //     width: 5px;
 // }
 
+
+
+// END OOO
+
 .n-w-100 {
     width: 100% !important;
 }
@@ -285,6 +291,12 @@ body {
 
 /** NORMSUP DATABLE STYLE BEGINNING **/
 
+.supplier-page {
+
+    .dataTables_length select {
+        margin-left: 10px;
+    }
+}
 
 .table.dataTable.no-footer {
     border-bottom: 0px solid #333 !important;

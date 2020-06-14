@@ -1,7 +1,8 @@
 <div *ngIf="currentUser" [ngClass]="getHeaderStyle()" class="navbar-fixed normsup-navbar" style="z-index: 100000000;">
     <nav role="navigation" style="padding-bottom: 0px;padding-top: 0px;" class="navbar navbar-expand-sm navbar-dark">
          <a routerLink="/dashboard/main" class="navbar-brand brand-logo" style="padding-left: 60px !important;">
-            <img class="logo-img" src="../../../assets/img/normsup-logo.png" alt="Logo">
+            <img class="logo-img" src="../../../assets/img/white_basic_logo.png" alt="Logo">
+            <!-- <img class="logo-img" src="../../../assets/img/normsup-logo.png" alt="Logo"> -->
         </a>
         <div style="margin-top: 0px;" class=" logout flyover-subcont media d-flex align-items-center">
             <img *ngIf="profilePic" [src]="profilePic" alt="..." width="31" class="rounded-circle shadow-sm">
