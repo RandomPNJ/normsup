@@ -63,3 +63,13 @@
         box-shadow: none !important;
     }
   }
+
+.btn-user-tbl {
+    box-shadow: none;
+    color: #4E5983 !important;
+    border: 1px solid #C7E0FF !important;
+    font-size: 13px !important;
+    &:hover {
+        color: white !important;
+    }
+}

@@ -76,6 +76,10 @@
     
     .button-txt {
         color: #4E5983;
+
+        &:hover {
+            color: white;
+        }
     }
 }
 

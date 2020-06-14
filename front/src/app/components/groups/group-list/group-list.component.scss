@@ -131,9 +131,11 @@ h2 {
 .assign-link {
     padding-bottom: 10px;
     display: inline-block;
-    text-decoration: underline;
     cursor: pointer;
     text-align: center;
+    &:hover {
+        text-decoration: underline;
+    }
 }
 
 .params-btn-txt {

@@ -39,7 +39,7 @@ const routes: Routes = [
       },
     ]
   },
-  { path: 'login', component: LoginPageComponent, canActivate: [LoggedinGuard] },
+  { path: 'login', component: LoginPageComponent, canActivate: [] },
   { path: 'logout', component: LogoutPageComponent },
   { path: 'dashboard', component: DashboardComponent, canActivate: [LoggedinGuard],  data: { roles: Configuration.basicRoutesRoles },
     children: [

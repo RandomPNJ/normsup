@@ -533,22 +533,28 @@ td {
 
 .assign-link {
     display: inline-block;
-    text-decoration: underline;
     cursor: pointer;
     text-align: center;
     color: #4390EF;
     font-size: 15px;
     font-family: 'Roboto Regular', sans-serif;
+
+    &:hover {
+        text-decoration: underline;
+    }
 }
 
 .name-txt {
     display: inline-block;
-    text-decoration: underline;
     cursor: pointer;
     text-align: center;
     font-size: 15px;
     color: #4E5983;
     font-family: 'Roboto Regular', sans-serif;
+
+    &:hover {
+        text-decoration: underline;
+    }
 }
 
 .arw-dwn {
@@ -583,6 +589,10 @@ td {
     font-size: 12px;
     // padding-left: 10px;
     padding-top: 6px;
+
+    &:hover {
+        text-decoration: underline;
+    }
 }
 
 /** NORMSUP DATATABLE STYLE END **/

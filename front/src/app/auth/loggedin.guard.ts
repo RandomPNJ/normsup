@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { throwError, Observable } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 import { AuthService } from '../services/auth.service';
 
 @Injectable({
@@ -12,7 +12,8 @@ export class LoggedinGuard implements CanActivate {
   constructor(private authService: AuthService, private router: Router) {}
 
   canActivate(route: ActivatedRouteSnapshot): Observable<any> | Promise<any> | any {
-    return this.authService.isLoggedIn('USER').pipe(
+    return this.authService.isLoggedIn('USER')
+    .pipe(
       map(res => {
 
         if(res['authentified'] === false && route.routeConfig.path === 'login') {
@@ -54,6 +55,10 @@ export class LoggedinGuard implements CanActivate {
         } else {
           return false;
         }
+      }),
+      catchError(err => {
+        this.router.navigate(['login']);
+        return throwError(err);
       })
     )
   }
