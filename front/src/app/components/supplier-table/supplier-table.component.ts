@@ -111,7 +111,7 @@ export class SupplierTableComponent implements OnInit, OnDestroy {
     });
     this.dtOptions = {
       lengthMenu: [[10, 25, 50], [10, 25, 50]],
-      searchDelay: 4500,
+      searchDelay: 2500,
       ordering: false,
       info: false,
       searching: true,

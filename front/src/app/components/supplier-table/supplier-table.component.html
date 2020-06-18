@@ -71,9 +71,9 @@
                 data-toggle="modal" data-target="#exampleModalCenter">
                 <span class="doc-icn-cont">
                   <img style="height: 25px; display: block;" src="../../../assets/img/legal-icn@2x.png" />
-                  <img class="valid-state-icn valid-icn-shadow" *ngIf="false"
+                  <img class="valid-state-icn valid-icn-shadow" *ngIf="item.valid"
                     src="../../../assets/img/valid-icn.svg" />
-                  <img class="invalid-state-icn valid-icn-shadow" *ngIf="true"
+                  <img class="invalid-state-icn valid-icn-shadow" *ngIf="!item.valid"
                     src="../../../assets/img/invalid-doc-icn.svg" />
                   <span class="fix-middle align-txt doc-type-txt">Légal</span>
                 </span>
@@ -223,7 +223,7 @@
                   </div>
                 </div>
                 <div style="text-align: right;" class="col-3 nopadding">
-                  <div>
+                  <div style="padding-right: 24px;">
                     <span style="display: inline-block;">
                       <button *ngIf="!toggleModification" style="box-shadow: none;" (click)="modifyInterloc()" type="button" class="btn new-btn-normsup default-btn-table infosup-btn">
                         Modifier
@@ -294,9 +294,9 @@
                 data-toggle="modal" data-target="#exampleModalCenter">
                 <span class="doc-icn-cont">
                   <img style="height: 25px; display: block;" src="../../../assets/img/legal-icn@2x.png" />
-                  <img class="valid-state-icn valid-icn-shadow" *ngIf="false"
+                  <img class="valid-state-icn valid-icn-shadow" *ngIf="item.valid"
                     src="../../../assets/img/valid-icn.svg" />
-                  <img class="invalid-state-icn valid-icn-shadow" *ngIf="true"
+                  <img class="invalid-state-icn valid-icn-shadow" *ngIf="!item.valid"
                     src="../../../assets/img/invalid-doc-icn.svg" />
                   <span class="fix-middle align-txt doc-type-txt">Légal</span>
                 </span>

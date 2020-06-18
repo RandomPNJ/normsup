@@ -25,8 +25,31 @@ export default class SupplierRegistry {
         if(Array.isArray(data)) {
             loggerT.verbose('isArray');
             data.map(item => {
+                // Get the count of complementary documents for the suppliers
                 if(item['comp_docs_count'])
                     item['comp_docs_count'] = parseInt(item['comp_docs_count'], 10);
+                
+                // Know if a supplier if valid or not, meaning they have valid legal documents on the platform
+                if(item['kbis'] === 1 && item['lnte'] === 1 && item['urssaf'] === 1) {
+                    item['valid'] = true;
+                    delete item['kbis'];
+                    delete item['lnte'];
+                    delete item['urssaf'];
+                }
+                else {
+                    item['valid'] = false;
+                    delete item['kbis'];
+                    delete item['lnte'];
+                    delete item['urssaf'];
+                }
+                
+                if(item['last_connexion']) {
+                    item['offline'] = false;
+                    delete item['last_connexion'];
+                } else {
+                    item['offline'] = true;
+                    delete item['last_connexion'];
+                }
             });
         }
         // loggerT.verbose('[fromDBtoClient] RESULT', data);
@@ -75,21 +98,21 @@ export default class SupplierRegistry {
         loggerT.verbose('Query final === ', final);
 
         if(v === 'C') {//done
-            values = [data.company, data.company, data.company, data.company];
+            values = [data.company, data.company, moment().startOf('month').toDate(), data.company, data.company];
         } else if(v === 'CGSES') {//done
-            values = [data.group, data.company, data.company, data.company, data.group, data.search, data.search, data.search, data.company, data.limit, data.start];
+            values = [data.group, data.company, data.company, moment().startOf('month').toDate(), data.company, data.search, data.search, data.search, data.company, data.limit, data.start];
         } else if(v === 'CGSE') {//done
-            values = [data.company, data.company, data.company, data.company, data.limit, data.start];
+            values = [data.company, data.company, moment().startOf('month').toDate(), data.company, data.group, data.company, data.limit, data.start];
         } else if(v === 'CGS') {//done
-            values = [data.group, data.company, data.company, data.company, data.group, data.company, data.limit, data.start];
-        } else if(v === 'CG') {
+            values = [data.group, data.company, data.company, moment().startOf('month').toDate(), data.company, data.company, data.limit, data.start];
+        } else if(v === 'CG') {//
             loggerT.verbose('QUERY QUERY_GET_GROUP_SUPPLIERS, QUERY NOT USED BEFORE');
         } else if(v === 'CSES') {//done
-            values = [data.company, data.company, data.company, data.search, data.search, data.search, data.company, data.limit, data.start];
+            values = [data.company, data.company, moment().startOf('month').toDate(), data.company, data.search, data.search, data.search, data.company, data.limit, data.start];
         } else if(v === 'CS') {//done
-            values = [data.company, data.company, data.company, data.company, data.limit, data.start];
-        } else if(v === 'CSE') {//done
-            values = [data.company, data.company, data.company, data.search, data.search, data.search, data.company];
+            values = [data.company, data.company, moment().startOf('month').toDate(), data.company, data.company, data.limit, data.start];
+        } else if(v === 'CSE') {//DONE
+            values = [data.company, data.company, moment().startOf('month').toDate(), data.company, data.search, data.search, data.search, data.company];
         }
         return {
             type: final,
@@ -539,6 +562,7 @@ export default class SupplierRegistry {
         } else {
             // throw error;
         }
+
         return this.mysql.query(query)
             .then(res => {
                 loggerT.verbose('[getDashboardData] res', res)
