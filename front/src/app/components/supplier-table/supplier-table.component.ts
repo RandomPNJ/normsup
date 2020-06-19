@@ -38,6 +38,13 @@ export class SupplierTableComponent implements OnInit, OnDestroy {
   groups: Array<any> = [ 
     { id: '', name: 'Choisir un groupe' }
   ];
+  supplierStates: Array<any> = [ 
+    { id: '', name: 'Type de fournisseur' },
+    { id: 'UPTODATE', name: 'Fournisseur à jour' },
+    { id: 'NOTUPTODATE', name: 'Fournisseur non à jour' },
+    { id: 'OFFLINE', name: 'Fournisseurs hors ligne' },
+  ];
+  supplierStateValue: any = '';
   dtElement: DataTableDirective;
   dataTable: any;
   nbOfRows: any;
@@ -47,6 +54,7 @@ export class SupplierTableComponent implements OnInit, OnDestroy {
     length: 10,
     search: '',
     group: '',
+    state: ''
   };
   dtOptions: DataTables.Settings = {};
   groupSelect: any = '';
@@ -276,6 +284,18 @@ export class SupplierTableComponent implements OnInit, OnDestroy {
       }
     } else if(this.groupSelect.toString() !== this.tableParams.group) {
       this.tableParams.group = this.groupSelect.toString();
+      this.reload();
+    }
+  }
+
+  filterBySupplierState(): void {
+    if(this.supplierStateValue.toString() === '') {
+      if(this.tableParams.state !== '') {
+        this.tableParams.state = '';
+        this.reload();
+      }
+    } else if(this.supplierStateValue.toString() !== this.tableParams.state) {
+      this.tableParams.state = this.supplierStateValue.toString();
       this.reload();
     }
   }

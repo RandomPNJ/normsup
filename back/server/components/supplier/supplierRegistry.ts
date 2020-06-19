@@ -66,6 +66,7 @@ export default class SupplierRegistry {
         */
         let v = '';
         let values = [];
+        let stateType;
         values.push(data.company);
 
         if(data.company) { 
@@ -92,28 +93,49 @@ export default class SupplierRegistry {
             values.push(data.start);
             // loggerT.verbose('Values one === ', values);
         }
+        if(data.state) {
+            v += 'ST';
+            values.push(data.state);
+        }
 
         const final = config.queries[v];
         loggerT.verbose('String final === ', v);
         loggerT.verbose('Query final === ', final);
 
-        if(v === 'C') {//done
+        if(v === 'C') {//
             values = [data.company, data.company, moment().startOf('month').toDate(), data.company, data.company];
-        } else if(v === 'CGSES') {//done
+        } else if(v === 'CGSES') {//
             values = [data.group, data.company, data.company, moment().startOf('month').toDate(), data.company, data.search, data.search, data.search, data.company, data.limit, data.start];
-        } else if(v === 'CGSE') {//done
+        } else if(v === 'CGSE') {//
             values = [data.company, data.company, moment().startOf('month').toDate(), data.company, data.group, data.company, data.limit, data.start];
-        } else if(v === 'CGS') {//done
+        } else if(v === 'CGS') {//
             values = [data.group, data.company, data.company, moment().startOf('month').toDate(), data.company, data.company, data.limit, data.start];
         } else if(v === 'CG') {//
             loggerT.verbose('QUERY QUERY_GET_GROUP_SUPPLIERS, QUERY NOT USED BEFORE');
-        } else if(v === 'CSES') {//done
+        } else if(v === 'CSES') {//
             values = [data.company, data.company, moment().startOf('month').toDate(), data.company, data.search, data.search, data.search, data.company, data.limit, data.start];
-        } else if(v === 'CS') {//done
+        } else if(v === 'CS') {//
             values = [data.company, data.company, moment().startOf('month').toDate(), data.company, data.company, data.limit, data.start];
-        } else if(v === 'CSE') {//DONE
+        } else if(v === 'CSE') {//
             values = [data.company, data.company, moment().startOf('month').toDate(), data.company, data.search, data.search, data.search, data.company];
+        } else if(v === 'CST') {//
+            values = [data.company, data.company, moment().startOf('month').toDate(), data.company, data.company];
+        } else if(v === 'CGST') {//
+
+        } else if(v === 'CSEST') {//
+
+        } else if(v === 'CSST') {//
+
+        } else if(v === 'CGSEST') {//
+
+        } else if(v === 'CGSESST') {//
+
+        } else if(v === 'CGSST') {//
+
+        } else if(v === 'CSESST') {//
+
         }
+
         return {
             type: final,
             values: values

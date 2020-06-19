@@ -33,7 +33,8 @@ export function getSuppliers(req, res, SupplierRegistry) {
         company: req.decoded.organisation,
         limit: params.length,
         search: params.search,
-        group: params.group
+        group: params.group,
+        state: params.state
     };
     if(params.start || params.start == 0) {
         data['start'] = parseInt(params.start, 10);

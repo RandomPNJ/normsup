@@ -583,7 +583,14 @@ td {
 .chose-grp-cont {
     width: 200px;
     right: 50px;
-    top: -5px;
+    top: -7px;
+    position: absolute;
+    z-index: 10;
+}
+.chose-state-cont {
+    width: 200px;
+    right: 260px;
+    top: -7px;
     position: absolute;
     z-index: 10;
 }

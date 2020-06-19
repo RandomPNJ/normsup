@@ -174,7 +174,15 @@ export default {
   },
 
   queries: {
-    // Start SEarch Company Group
+    // Start SEarch Company Group STate
+    CST: 'GET_SUPPLIER_STATE',// new
+    CGST: '',// new
+    CSEST: '',// new
+    CSST: '',// new
+    CGSEST: '',// new
+    CGSESST: '',// new
+    CGSST: 'GET_SUPPLIER_OFFLIM_STATE',// new
+    CSESST: '',// new
     CGSES: 'QUERY_SUPPLIER_OFFLIM_SE_GROUP',  // done
     CSES: 'QUERY_GET_SUPPLIER_OFFLIM_SEARCH', // done
     CGS: 'QUERY_GET_SUPPLIER_GROUP', // done
