@@ -41,7 +41,6 @@ td {
 
 .group-txt {
     text-align: left;
-    text-decoration: underline;
     font-family: 'Roboto Regular';
     font-size: 14px;
     letter-spacing: 0;
@@ -50,6 +49,10 @@ td {
     &:first-child {
         border-top: none !important;
         padding-left: 20px !important;
+    }
+
+    &:hover {
+        text-decoration: underline;
     }
 }
 

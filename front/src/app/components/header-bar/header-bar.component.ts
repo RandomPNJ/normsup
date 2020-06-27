@@ -6,6 +6,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { SettingsService } from 'src/app/services/settings.service';
 import { HttpService } from 'src/app/services/http.service';
 import { CookieService } from 'ngx-cookie-service';
+import { indexOf } from 'lodash';
 
 @Component({
   selector: 'app-header-bar',
@@ -32,6 +33,7 @@ export class HeaderBarComponent implements OnInit {
   profilePic: any;
   isLoggedIn: Subscription;
   profileSub: Subscription;
+  isAdmin: Boolean = false;
 
   constructor(private router: Router,
     private route: ActivatedRoute,
@@ -57,6 +59,12 @@ export class HeaderBarComponent implements OnInit {
         this.currentUser = res;
       }
     });
+    console.log('this.currentUser.roles', this.currentUser.role);
+    console.log('find(this.currentUser.role, "admin")', indexOf(this.currentUser.role, 'admin'))
+    if(indexOf(this.currentUser.role, 'admin') !== -1) {
+      console.log('admin found');
+      this.isAdmin = true;
+    }
   }
 
 

@@ -103,8 +103,12 @@
           <div id="util-btns" class="badge-container content-cont">
             <div class="badge-container content-cont container">
               <div class="row h-100 cent">
-                <button style="box-shadow: none;font-size: 13px !important;" (click)="sendReminder(item.id)" type="button"
-                  class="btn new-btn-normsup default-btn-table">Relancer</button>
+                <button [disabled]="!item.repres_id || (item.spont_reminder && item.spont_reminder > now) || item.spont_success" style="box-shadow: none;font-size: 13px !important;" (click)="sendReminder(item.id)" type="button"
+                  class="btn new-btn-normsup default-btn-table">
+                  <span  *ngIf="(!item.spont_reminder || now > item.spont_reminder)">{{item.spont_txt ? item.spont_txt : 'Relancer'}}</span>
+                  <!-- <span  *ngIf="(!item.spont_reminder || now > item.spont_reminder) && item.spont_success">{{item.spont_txt}}</span> -->
+                  <countdown *ngIf="item.spont_reminder && item.spont_reminder > now" #cd [config]="countDowns[item.id]" (event)="countDownEvent($event, item)"></countdown>
+                </button>
               </div>
             </div>
           </div>
@@ -177,7 +181,7 @@
                       <div class="v-legend-cont nopadding">
                         <div style="line-height: 17px;">
                           <span class="legend-txt">
-                            <button *ngIf="!toggleModification" style="box-shadow: none;" (click)="deleteSupplier(infoPopup)" type="button" class="btn new-btn-normsup default-btn-table infosup-btn">
+                            <button *ngIf="!toggleModification" style="box-shadow: none;" (click)="openModal(confirmationModal, 'SUPPLIER')" type="button" class="btn new-btn-normsup default-btn-table infosup-btn">
                               Supprimer
                             </button>
                             <button *ngIf="toggleModification" style="box-shadow: none;" (click)="modifySupplier()" type="button" class="btn new-btn-normsup default-btn-table infosup-btn">
@@ -242,7 +246,7 @@
                     </span>
                     <span style="display: inline-block;">
                       <button *ngIf="!toggleModification" style="box-shadow: none;"
-                        (click)="deleteInterloc(indexInfo, infoPopup.id)" type="button"
+                        (click)="openModal(confirmationModal, 'INTERLOC', indexInfo)" type="button"
                         class="btn new-btn-normsup default-btn-table infosup-btn">Supprimer</button>
                       <button *ngIf="toggleModification" style="box-shadow: none;"
                         (click)="modifyInterloc()" type="button"
@@ -327,8 +331,11 @@
           <div id="util-btns" class="badge-container content-cont">
             <div class="badge-container content-cont container">
               <div class="row h-100 cent">
-                <button style="box-shadow: none;font-size: 13px !important;" (click)="sendReminder(item.id)" type="button"
-                  class="btn default-btn-table new-btn-normsup">Relancer</button>
+                <button [disabled]="item.spont_reminder && item.spont_reminder > now" style="box-shadow: none;font-size: 13px !important;" (click)="sendReminder(item.id)" type="button"
+                  class="btn default-btn-table new-btn-normsup">
+                  <span *ngIf="!item.spont_reminder || now > item.spont_reminder">Relancer</span>
+                  <countdown *ngIf="item.spont_reminder && item.spont_reminder > now" #cd [config]="countdownConf" (event)="countDownEvent($event, item)"></countdown>
+                </button>
               </div>
             </div>
           </div>
@@ -338,14 +345,20 @@
   </table>
 
   <ng-template #confirmationModal>
-      <div class="modal-body confirmation-txt">
-        Confirmez-vous vouloir la suppression de {{confirmationModalTxt}} ?
+      <div class="modal-body confirmation-txt" style="color: #4390EF;">
+        Confirmez-vous vouloir la suppression {{confirmationModalTxt === 'fournisseur' ? 'du ' + confirmationModalTxt : 'de ' + confirmationModalTxt}} ?
       </div>
-      <div class="modal-footer" style="margin: 0 auto;">
-          <button style="box-shadow: none;" (click)="openModal(template, 'Supplier')" type="button"
+      <div class="modal-footer" style="margin: 0 auto;" *ngIf="confirmationModalTxt === 'fournisseur'">
+          <button style="box-shadow: none; font-size: 13px !important;" (click)="deleteSupplier()" type="button"
           class="btn new-btn-normsup default-btn-table">Confirmer</button>
-          <button style="box-shadow: none;margin-bottom: 3.75px;" (click)="openModal(template, 'Supplier')" type="button"
+          <button style="box-shadow: none;margin-bottom: 3.75px; font-size: 13px !important;" (click)="hideModal('')" type="button"
           class="btn new-btn-normsup default-btn-table">Annuler</button>
       </div>
+      <div class="modal-footer" style="margin: 0 auto;" *ngIf="confirmationModalTxt !== 'fournisseur'">
+        <button style="box-shadow: none; font-size: 13px !important;" (click)="deleteInterloc()" type="button"
+        class="btn new-btn-normsup default-btn-table">Confirmer</button>
+        <button style="box-shadow: none;margin-bottom: 3.75px; font-size: 13px !important;" (click)="hideModal('')" type="button"
+        class="btn new-btn-normsup default-btn-table">Annuler</button>
+    </div>
   </ng-template>
 </div>

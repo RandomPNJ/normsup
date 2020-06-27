@@ -12,14 +12,14 @@
                 </div>
                 <div class="inline-b">
                     <span class="glyphicon glyphicon-menu-down menu-dwn grow-left"> </span>
-                    <div [hidden]='!isLogout' class="dropContent" style="z-index: 1000 !important;">
+                    <div [hidden]='!isLogout' class="dropContent" [style.height]="isAdmin ? '257px' : '193px'" style="z-index: 1000 !important;">
                         <div class='selectData' id="profile" routerLink="/dashboard/profile">
                             <div class="selectDataChild">
                                 <img class="header-drop-icn" src="../../../assets/img/profile-icn.svg" style="height: 13px;"alt="">
                                 <p>Mon compte</p>
                             </div>
                         </div>
-                        <div class='selectData' id="users" routerLink="/dashboard/users">
+                        <div class='selectData' id="users" routerLink="/dashboard/users" *ngIf="isAdmin">
                             <div class="selectDataChild">
                                 <img class="header-drop-icn" src="../../../assets/img/users-icn.svg" style="height: 17px;padding-right: 18px;"alt="">
                                 <p>Gestion des utilisateurs</p>

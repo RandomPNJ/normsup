@@ -27,15 +27,52 @@ export default class RemindersRegistry {
         let query = {
             timeout: 40000
         };
+        let genericTemplate = _.template(emailTemplate);
+        let mailOptions = {
+            from: 'NormSup <mail.normsup@gmail.com>', // sender address
+            to: '', // list of receivers
+            subject: 'Relance : Dépôt de document sur NormSup', // Subject line
+            html: 'Empty message. Failed.'
+        };
+        let rTitle = 'Monsieur/Madame';
 
         query['sql']    = Query.GET_SUPPLIER_INFO;
         query['values'] = [user.id, supplierID];
     
         return this.mysql.query(query)
-            .then((res, fields) => {
-                loggerT.verbose('fields', fields)
-                loggerT.verbose('QUERY RES ==== ', res);
-                return Promise.resolve(res);
+            .then((res) => {
+                loggerT.verbose('[sendReminder] QUERY RES ==== ', res);
+                if(res && res[0] && res[0].email) {
+                    mailOptions.to = res[0].email;
+                    res[0].denomination = res[0].denomination ? ' ' + res[0].denomination.toUpperCase() : '';
+                    if(res[0].gender === 'M') {
+                        rTitle = 'Monsieur';
+                    } else if(res[0].gender === 'F') {
+                        rTitle = 'Madame';
+                    }
+
+                    mailOptions.html = genericTemplate({ 'rTitle': rTitle, 'respresName': _.capitalize(res[0].lastname), 'denomination': res[0].denomination });
+                    return this.transporter.sendMail(mailOptions)
+                        .then(res => {
+                            loggerT.verbose('[sendReminder] Send mail res :', res);
+                            query['sql'] = Query.UPDATE_SPONT_REMIND;
+                            query['values'] = [moment().add(3, 'day').toDate(), supplierID];
+                            return this.mysql.query(query)
+                                .then(res => {
+                                    return Promise.resolve(res);
+                                })
+                                .catch(err => {
+                                    loggerT.error('[sendReminder] Error when updating organisation table with new spont reminder date.');
+                                    return Promise.reject(err);
+                                })
+                            ;
+                        })
+                        .catch(err => {
+                            loggerT.error('[sendReminder] ERROR ON QUERY sendMail.');
+                            return Promise.reject(err);
+                        })
+                    ;
+                }
             })
             .catch(err => {
                 loggerT.error('ERROR ON QUERY getSuppliers.');
@@ -161,8 +198,6 @@ export default class RemindersRegistry {
         suppliers.forEach(s => {
             let rTitle = 'Monsieur/Madame';
             if(s.denomination && s.email) {
-                // mailOptions.dsn.id = s.denomination;
-                // mailOptions.html = `<h4>Test de relance pour la journée du ${moment().format('DD-MM-YYYY')}.<h4> \n\n\n <p>Pour le fournisseur : ${s.denomination ? s.denomination : 'nameError'}.</p>`;
                 denom = s.denomination ? ' ' + s.denomination.toUpperCase() : '';
                 if(s.gender === 'M') {
                     rTitle = 'Monsieur';

@@ -6,6 +6,7 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import 'datatables.net';
 import { cloneDeep, remove, forEach } from 'lodash';
 import { combineLatest, Subscription } from 'rxjs';
+import * as moment from 'moment';
 import { HttpParams } from '@angular/common/http';
 import { NotifService } from 'src/app/services/notif.service';
 import { Router } from '@angular/router';
@@ -29,6 +30,7 @@ export class SupplierTableComponent implements OnInit, OnDestroy {
 
   itemsToDisplay: Array<any> = [];
   indexInfo: Number = -1;
+  indexInterloc: any;
   infoType: String = 'NONE';
   infoPopup: any;
   toggleModification: Boolean = false;
@@ -59,7 +61,14 @@ export class SupplierTableComponent implements OnInit, OnDestroy {
   dtOptions: DataTables.Settings = {};
   groupSelect: any = '';
   myTable: Boolean = false;
+  now: any = new Date();
 
+  countdownConf: any = {
+    leftTime: 60,
+    notify: 0,
+    template: '$!h!:$!m!:$!s!'
+  };
+  countDowns: any = {};
   // Modal variables
   modalRef: BsModalRef;
   modalConfig = {
@@ -144,13 +153,19 @@ export class SupplierTableComponent implements OnInit, OnDestroy {
       },
       ajax: (dataTablesParameters: any, callback: any) => {
         const action = this.compareParams(dataTablesParameters);
-        console.log('tableParams', this.tableParams);
-        this.tableParams.company = 'Fakeclient';
         if(action === 'query') {
           that.httpService
             .get('/api/suppliers', this.tableParams)
             .subscribe(resp => {
               // console.log(resp);
+              resp.body['items'].forEach(a => {
+                if(a.spont_reminder) {
+                  a.spont_reminder = new Date(a.spont_reminder);
+                  this.countDowns[a.id] = cloneDeep(this.countdownConf);
+                  this.countDowns[a.id].leftTime = moment(a.spont_reminder, 'YYYY-MM-DD').diff(moment(), 'seconds');
+                }
+              });
+              console.log('this.countDowns', this.countDowns);
               that.data = that.data.concat(resp.body['items']);
               that.itemsToDisplay = that.data.slice(that.tableParams.start, that.tableParams.start + that.tableParams.length);
               // console.log('length =', that.data);
@@ -397,14 +412,18 @@ export class SupplierTableComponent implements OnInit, OnDestroy {
     this.interloc = {};
   }
 
-  deleteInterloc(i) {
+  deleteInterloc() {
+    let i = this.indexInterloc;
     return this.httpService.delete('/api/suppliers/representatives/' + this.infoPopup.id + '/delete')
       .subscribe(res => {
         console.log('deleteInterloc res', res);
         this.deleteLocalInterlocInfo(i);
+        this.indexInfo = null;
+        this.hideModal('');
         this.notif.success('Interlocuteur supprimé.');
       }, err => {
         console.log('deleteInterloc err', err);
+        this.indexInfo = null;
         this.notif.error('Erreur lors de la suppression de l\'interlocuteur, veuillez réessayer plus tard.');
       })
     ;
@@ -433,7 +452,9 @@ export class SupplierTableComponent implements OnInit, OnDestroy {
     this.infoPopup = {};
     this.infoType = 'NONE';
   }
-  deleteSupplier(supplier) {
+
+  deleteSupplier() {
+    let supplier = this.infoPopup;
     this.httpService
       .post('/api/suppliers/delete/' + supplier.id)
       .subscribe(res => {
@@ -446,12 +467,13 @@ export class SupplierTableComponent implements OnInit, OnDestroy {
         this.indexInfo = -1;
         this.infoPopup = {};
         this.infoType = 'NONE';
+        this.hideModal('');
         this.suppliersData.emit(this.data.length);
       })
     ;
   }
 
-  openModal(template: TemplateRef<any>, modalType: String) {
+  openModal(template: TemplateRef<any>, modalType: String, index?) {
     const _combine = combineLatest(
       this.modalService.onShow,
       this.modalService.onShown,
@@ -471,18 +493,20 @@ export class SupplierTableComponent implements OnInit, OnDestroy {
     if(modalType === 'INTERLOC') {
       this.confirmationModalTxt = 'l\'interlocuteur';
     } else if(modalType === 'SUPPLIER') {
-      this.confirmationModalTxt = 'le fournisseur';
+      this.confirmationModalTxt = 'fournisseur';
+      this.indexInterloc = index;
     }
     this.modalRef = this.modalService.show(template, config);
   }
 
   hideModal(type) {
-    if (!this.modalRef) {
+    if(!this.modalRef) {
       return;
     }
     this.confirmationModalTxt = '';
     this.modalService.hide(1);
     this.modalRef = null;
+    this.indexInterloc = null;
   }
 
   unsubscribe() {
@@ -543,10 +567,38 @@ export class SupplierTableComponent implements OnInit, OnDestroy {
     return this.httpService.post('/api/reminders/supplier/' + id)
       .subscribe(res => {
         console.log('[sendReminder] res', res);
+        this.data.map(d => {
+          if(d.id === id) {
+            d.spont_success = true;
+            d.spont_txt = 'Succès';
+          }
+        });
+        this.itemsToDisplay.map(d => {
+          if(d.id === id) {
+            d.spont_success = true;
+            d.spont_txt = 'Succès'
+          }
+        });
       }, err => {
         console.log('[sendReminder] err', err);
+        this.data.map(d => {
+          if(d.id === id) {
+            d.spont_success = true;
+            d.spont_txt = 'Erreur';
+          }
+        });
+        this.itemsToDisplay.map(d => {
+          if(d.id === id) {
+            d.spont_success = true;
+            d.spont_txt = 'Erreur'
+          }
+        });
       })
     ;
+  }
+
+  private countDownEvent(e, item) {
+    console.log('countDownEvent', item);
   }
 }
 

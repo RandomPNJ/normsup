@@ -406,12 +406,12 @@ export class Dashboard1Component implements OnInit, AfterViewInit {
 		// });
 		
 
-		this.conformityPerGrpContext = (<HTMLCanvasElement>this.conformityPerGrpRef.nativeElement).getContext('2d');
-		this.confPerGrpBar = new Chart(this.conformityPerGrpContext, {
-			type: this.conformityPerGrpType,
-			data: this.confPerGrpSet,
-			options: this.confPerGrpOptions
-		});
+		// this.conformityPerGrpContext = (<HTMLCanvasElement>this.conformityPerGrpRef.nativeElement).getContext('2d');
+		// this.confPerGrpBar = new Chart(this.conformityPerGrpContext, {
+		// 	type: this.conformityPerGrpType,
+		// 	data: this.confPerGrpSet,
+		// 	options: this.confPerGrpOptions
+		// });
 
 	}
 

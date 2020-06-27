@@ -93,7 +93,7 @@ export class GroupDetailsComponent implements OnInit {
               }
             });
           }
-          this.documentsSettings.frequency = res.body['items'][0]['frequency'];
+          this.documentsSettings.frequency = res.body['items'][0]['frequency'] + 'd';
         }
       }, err => {
         console.log('err', err);
@@ -204,7 +204,7 @@ export class GroupDetailsComponent implements OnInit {
     // TODO: change this
     data['comp_docs'] = '';
     if(this.documentsSettings.frequency) {
-      data['frequency'] = this.documentsSettings.frequency;
+      data['frequency'] = this.documentsSettings.frequency.substring(0, 2);
     }
     this.httpService.post('/api/suppliers/group/'+ this.id + '/modify_reminders', data)
       .subscribe(res => {

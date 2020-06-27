@@ -87,6 +87,7 @@ export default {
         { name: 'getUsers', uriPattern: '', method: 'get' },
         { name: 'getUser', uriPattern: '/getOne/:id', method: 'get' },
         { name: 'getCurrent', uriPattern: '/current', method: 'get' },
+        { name: 'getUsersManagement', uriPattern: '/management', method: 'get' },
       ],
     },
     suppliers: {

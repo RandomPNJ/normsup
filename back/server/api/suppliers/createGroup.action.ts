@@ -21,7 +21,7 @@ export function createGroup(req, res, SupplierRegistry) {
         activated: 1,
         legal_docs: '',
         comp_docs: '',
-        frequency: '5d'
+        frequency: '15d'
     };
     group['name'] = req.body.name;
     group['client_id'] = req.decoded.organisation;

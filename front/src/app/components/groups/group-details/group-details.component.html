@@ -21,7 +21,7 @@
           </button>
         </div>
         <div class="col-6" style="padding-right: 0px !important;">
-          <button style="height: 30px" type="button" class="btn new-btn-normsup comp-btn" (click)="openModal('delete')">
+          <button style="height: 30px;margin-left: 0px !important;" type="button" class="btn new-btn-normsup comp-btn" (click)="openModal('delete')">
             <span class="button-txt" style="padding-right: 17px !important;padding-left: 17px !important;">Supprimer ce groupe</span>
           </button>
         </div>
@@ -44,7 +44,7 @@
         </div>
       </div>
       <!-- Paramètre des relances -->
-      <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6 nopadding data-cont-one">
+      <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6 nopadding data-cont-one" style="padding-right: 0px !important;">
         <div class="normsup-card">
           <div class="normsup-card-header">
             <span>Paramétrage des relances</span>
@@ -99,7 +99,7 @@
                 <div class="params-input">
                   <div class="sub-txt d-inline-block">Faire une relance tous les</div>
                   <div class="d-inline-block select-cont2">
-                    <select [disabled]="!activateReminders" class="form-control" id="freq"  name="freq" [(ngModel)]="documentsSettings.frequency">
+                    <select style="padding: 0px 16px 0px 10px;" [disabled]="!activateReminders" class="form-control custom-select group-select-doc" id="freq"  name="freq" [(ngModel)]="documentsSettings.frequency">
                       <option *ngFor="let f of frequency" [ngValue]="f.value">{{f.name}}</option>
                     </select>
                   </div>
@@ -142,12 +142,12 @@
           <div class="col nopadding" style="padding-left: 40px !important;">
             <button style="float: right;width: 100%;" type="button" class="btn new-btn-normsup prec-btn-group text-capitalize"
               (click)="hideModal()">
-              <span class="button-txt">Annuler</span>
+              <span class="button-txt" style="line-height: 13px;">Annuler</span>
             </button>
           </div>
           <div class="col nopadding" style="padding-right: 40px !important;">
             <button type="button" class="btn btn-primary text-capitalize next-btn-group del-grp-btn" (click)="deleteGroup()">
-              <span class="button-txt">Accepter</span>
+              <span class="button-txt" style="padding: 1.4px 0px;line-height: 13px;">Accepter</span>
             </button>
           </div>
         </div>

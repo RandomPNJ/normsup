@@ -22,7 +22,7 @@ export class DashboardComponent implements OnInit {
     private router: Router, private notifService: NotifService) { 
     this.httpService.get('/api/users/current')
       .subscribe(res => {
-        console.log('currentUser res', res);
+        console.log('[DashboardComponent] currentUser res', res);
         if(res && res.body && res.body['authentified'] && res.body['user']) {
           this.authorized = true;
           this.user = res.body['user'];

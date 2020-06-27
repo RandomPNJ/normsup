@@ -34,6 +34,8 @@ export default class UserRegistry {
                     return Promise.reject({statusCode: 404, msg: 'User not found.'});
                 }
                 let user = res[0];
+                loggerT.verbose('[login] User data :', user);
+
                 return bcrypt.compare(password, user.password)
                     .then(res => {
                         if(res === true) {
@@ -45,7 +47,7 @@ export default class UserRegistry {
                                 lastname: user.lastname,
                                 organisation: user.organisation,
                                 client: user.client,
-                                role: user.role,
+                                role: [user.rolename],
                                 createTime: new Date(user.create_time),
                                 companyName: user.companyName
                             };
@@ -56,6 +58,7 @@ export default class UserRegistry {
                 );
             })
             .catch(err => {
+                loggerT.error('[login] ERROR ON QUERY login :', err);
                 return Promise.reject({statusCode: 404, msg: err.msg});
             })
         ;
@@ -147,7 +150,7 @@ export default class UserRegistry {
                 loggerT.verbose('[getUser] QUERY RES ==== ', res);
                 if(res && res[0] && res[0].id) {
                     query['sql'] = Query.GET_USER_ROLES;
-                    query['values'] = [id];
+                    query['values'] = [res[0].id];
                     let user = res[0];
                     return this.mysql.query(query)
                         .then(res => {
@@ -340,6 +343,30 @@ export default class UserRegistry {
         }
     }
 
+
+    public getUsersManagement(data, user) {
+        let query = {
+            timeout: 40000
+        };
+
+        if(data.start) {
+            query['sql']    = Query.QUERY_GET_USERS_NOTADMIN_OFFLIM;
+            query['values'] = [data.company, user.id, data.limit, data.start];
+        } else {
+            query['sql'] = Query.QUERY_GET_USERS_NOTADMIN;
+            query['values'] = [data.org, user.id];
+        }
+        return this.mysql.query(query)
+            .then(res => {
+                loggerT.verbose('QUERY RES ==== ', res);
+                return Promise.resolve(res);
+            })
+            .catch(err => {
+                loggerT.error('ERROR ON QUERY getUsers.');
+                return Promise.reject(err);
+            })
+        ;
+    }
 
     public getPicture(id) {
         return this.runQuery('FIND_USER_BY_ID', [id])

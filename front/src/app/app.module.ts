@@ -5,6 +5,7 @@ import { FileUploadModule } from 'ng2-file-upload';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { CountdownModule } from 'ngx-countdown';
 
 import {HttpModule} from '@angular/http';
 import { Daterangepicker } from 'ng2-daterangepicker';
@@ -136,7 +137,8 @@ import { AddRepresentativeComponent } from './components/supplier/add-representa
     ModalModule.forRoot(),
     AccordionModule.forRoot(),
     ModalModule.forRoot(),
-    DataTablesModule
+    DataTablesModule,
+    CountdownModule,
   ],
   exports: [
     AddSupplierModalComponent,

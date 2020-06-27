@@ -796,6 +796,7 @@ td {
 .paginate_button {
     border: 0px solid #333 !important;
     border-radius: 20px !important;
+    color: #4390EF !important;
     background: white !important;
 }
 
@@ -816,31 +817,38 @@ td {
 .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
     // background-color: lightskyblue !important;
     background-color: white !important;
-    // color: white !important;
-    color: #333 !important;
-    font-size: 12px !important;
+    color: #4390EF !important;
+    font-family: 'Roboto Bold' !important;
+    font-size: 13px !important;
 }
 
 .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
-    // background-color: lightskyblue !important;
     background-color: white !important;
-    // color: white !important;
-    color: #333 !important;
-    font-size: 12px !important;
+    font-family: 'Roboto Bold' !important;
+    color: #4390EF !important;
+    font-size: 13px !important;
 }
 
 .dataTables_wrapper .dataTables_paginate .paginate_button.current {
-    // background-color: lightskyblue !important;
-    background-color: white !important;
-    // color: white !important;
-    color: #333 !important;
-    font-size: 12px !important;
+    color: #4390EF !important;
+    font-family: 'Roboto Bold' !important;
+    font-size: 13px !important;
 }
 
 .dataTables_paginate .paginate_button.disabled:hover {
     background-color: white !important;
     color: #333 !important;
     font-size: 12px !important;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.current, .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover  {
+    font-family: 'Roboto Bold' !important;
+    color: #4390EF !important;
+    font-size: 13px !important;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+    
 }
 
 /** Datatable Pagination Custom CSS END **/
@@ -1043,6 +1051,10 @@ td {
         // box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15);
         box-shadow: none !important;
         outline: 0;
+
+        & > span {
+            color: white !important;
+        }
     }
 }
 

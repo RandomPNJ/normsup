@@ -176,11 +176,9 @@ export class GroupListComponent implements OnInit {
   }
 
   changeIcn(i, j) {
-    console.log('changeIcn after', i);
     if(j===0)
       this.iconSelector = i;
     else
       this.iconSelector = -1;
-    console.log('changeIcn before', i);
   }
 }

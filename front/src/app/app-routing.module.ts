@@ -41,7 +41,7 @@ const routes: Routes = [
   },
   { path: 'login', component: LoginPageComponent, canActivate: [] },
   { path: 'logout', component: LogoutPageComponent },
-  { path: 'dashboard', component: DashboardComponent, canActivate: [LoggedinGuard],  data: { roles: Configuration.basicRoutesRoles },
+  { path: 'dashboard', component: DashboardComponent, canActivate: [LoggedinGuard],  
     children: [
       { path: 'main', component: Dashboard1Component },
       { path: 'supplier', component: SupplierComponent },
@@ -54,7 +54,7 @@ const routes: Routes = [
       { path: 'reminder', component: ReminderComponent },
       { path: 'profile', component: ProfileComponent },
       { path: 'export', component: ExportComponent },
-      { path: 'users', component: UsersManagementComponent },
+      { path: 'users', component: UsersManagementComponent, data: { roles: Configuration.basicRoutesRoles } },
       { path: '', pathMatch: 'full', redirectTo: 'main'},
     ]
   },

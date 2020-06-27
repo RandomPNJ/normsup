@@ -85,7 +85,7 @@ export class UsersTableComponent implements OnInit {
         const action = this.compareParams(dataTablesParameters);
         if (that.reloadVar === true) {
           setTimeout(() => {that.httpService
-            .get('/api/users', dataTablesParameters)
+            .get('/api/users/management', dataTablesParameters)
             .subscribe(resp => {
               that.items = resp.body['items'];
               that.itemsToDisplay = that.items.slice(that.tableParams.start, that.tableParams.start + that.tableParams.length);
@@ -102,7 +102,7 @@ export class UsersTableComponent implements OnInit {
             })}, 2500);
         } else {
           that.httpService
-            .get('/api/users', dataTablesParameters)
+            .get('/api/users/management', dataTablesParameters)
             .subscribe(resp => {
               that.items = that.items.concat(resp.body['items']);
               that.itemsToDisplay = that.items.slice(that.tableParams.start, that.tableParams.start + that.tableParams.length);
