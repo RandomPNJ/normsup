@@ -66,7 +66,7 @@ export class SupplierTableComponent implements OnInit, OnDestroy {
   countdownConf: any = {
     leftTime: 60,
     notify: 0,
-    template: '$!h!:$!m!:$!s!'
+    template: '$!d!j $!h!:$!m!:$!s!'
   };
   countDowns: any = {};
   // Modal variables

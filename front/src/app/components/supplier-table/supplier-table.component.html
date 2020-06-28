@@ -101,7 +101,7 @@
         </td>
         <td *ngIf="indexInfo == -1 || i <= indexInfo">
           <div id="util-btns" class="badge-container content-cont">
-            <div class="badge-container content-cont container">
+            <div class="badge-container content-cont container nopadding">
               <div class="row h-100 cent">
                 <button [disabled]="!item.repres_id || (item.spont_reminder && item.spont_reminder > now) || item.spont_success" style="box-shadow: none;font-size: 13px !important;" (click)="sendReminder(item.id)" type="button"
                   class="btn new-btn-normsup default-btn-table">
@@ -329,7 +329,7 @@
         </td>
         <td *ngIf="indexInfo != -1 && i > indexInfo">
           <div id="util-btns" class="badge-container content-cont">
-            <div class="badge-container content-cont container">
+            <div class="badge-container content-cont container nopadding">
               <div class="row h-100 cent">
                 <button [disabled]="item.spont_reminder && item.spont_reminder > now" style="box-shadow: none;font-size: 13px !important;" (click)="sendReminder(item.id)" type="button"
                   class="btn default-btn-table new-btn-normsup">
