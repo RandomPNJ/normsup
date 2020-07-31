@@ -17,16 +17,7 @@
 <div class="table-responsive" style="overflow-y: hidden;">
   <table datatable [dtOptions]="dtOptions" id="tableComp" class="table order-column row-border pageResize compact supplier-table" cellspacing="0"
     width="100%" style="height: 100%;" #suppliersTable>
-    <!-- <thead>
-    <tr>
-      <th class="th-sm">Nom du fournisseur</th>
-      <th class="th-sm">Interlocuteur</th>
-      <th class="th-sm">Localisation</th>
-      <th class="th-sm">Status des documents</th>
-      <th class="th-sm">Actions</th>
-    </tr>
-  </thead> -->
-    <tbody *ngIf="myTable">
+    <tbody >
       <tr *ngFor="let item of itemsToDisplay; let i = index">
         <td *ngIf="indexInfo == -1 || i <= indexInfo" style="cursor: pointer;"
           (click)="openSupplierInfo(item, i)">
@@ -342,6 +333,18 @@
         </td>
       </tr>
     </tbody>
+    <!-- <tbody >
+      <tr>
+        <td>
+          <div style="padding-top: 15px; text-align: center;display: table-row-group;">
+            <div class="loading-spinner spinner-border text-primary" role="status">
+              <span class="sr-only">Chargement...</span>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </tbody> -->
+    
   </table>
 
   <ng-template #confirmationModal>

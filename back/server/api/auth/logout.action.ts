@@ -14,9 +14,18 @@ export function logout(req, res, UserRegistry) {
 
     loggerT.info(`Logging out user.`);
 
-    UserRegistry.deleteRefreshToken(req.cookies.refresh);
-    res.clearCookie('refresh');
-    res.clearCookie('auth');
+    if(req.cookies && req.cookies.refresh) {
+        if(req.cookies.refresh) {
+            UserRegistry.deleteRefreshToken(req.cookies.refresh);
+            res.clearCookie('refresh');
+        }
+        if(req.cookies.auth) {
+            res.clearCookie('auth');
+        }
+        if(req.cookies.admin) {
+            res.clearCookie('admin');
+        }
+    }
 
     return res.status(200).json({
         msg: 'User has been logged out.'

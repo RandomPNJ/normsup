@@ -118,6 +118,29 @@ export default class AdminRegistry {
             })
         ;
     }
+
+    public createClient(data) {
+        let query = {
+            timeout: 40000
+        };
+        // org_name, address, postalCode, city, country
+        query['sql']    = Query.INSERT_CLIENT;
+        query['values'] = [data.org_name, data.address, data.postalCode, data.city, data.country];
+
+        return this.mysql.query(query)
+            .then(res => {
+                loggerT.verbose('[ADMIN] QUERY createAdmin RES ==== ', res);
+                
+
+                return Promise.resolve(res);
+
+            })
+            .catch(err => {
+                loggerT.error('[ADMIN] ERROR ON QUERY createAdmin : ', err);
+                return Promise.reject(err);
+            })
+        ;
+    }
     
     public getUsers(data) {
         let query = {
@@ -150,18 +173,21 @@ export default class AdminRegistry {
 
         if(data.start) {
             query['sql']    = Query.QUERY_GET_SUPPLIERS_USERS_OFFLIM;
-            query['values'] = [data.company, data.limit, data.start];
+            query['values'] = [parseInt(data.length, 10), parseInt(data.start, 10)];
         } else {
             query['sql'] = Query.QUERY_GET_SUPPLIERS_USERS;
             query['values'] = [];
         }
+
+        loggerT.verbose('sql = ', query['sql']);
+        loggerT.verbose('values = ', query['values']);
         return this.mysql.query(query)
             .then(res => {
                 loggerT.verbose('QUERY RES ==== ', res);
                 return Promise.resolve(res);
             })
             .catch(err => {
-                loggerT.error('ERROR ON QUERY getSuppliers.');
+                loggerT.error('[ADMIN] ERROR ON QUERY getSuppliersUsers : ', err);
                 return Promise.reject(err);
             })
         ;
@@ -171,16 +197,18 @@ export default class AdminRegistry {
         let query = {
             timeout: 40000
         };
-
-        if(data) {
+        Object.keys(data).forEach(k => loggerT.verbose('[getClients] data : ', data[k]))
+        // loggerT.verbose('[getClients] data', data);
+        if(data !== '') {
+            query['sql'] = Query.QUERY_GET_CLIENTS;
             data += '%'
-        } else {
-            data = '%'
+            query['values'] = [data];
+        } else if(data === ''){
+            query['sql'] = Query.QUERY_GET_ALL_CLIENTS;
+            query['values'] = [];
         }
 
-
-        query['sql'] = Query.QUERY_GET_CLIENTS;
-        query['values'] = [data];
+        loggerT.verbose('[getClients] query', query['sql']);
 
         return this.mysql.query(query)
             .then(res => {
@@ -228,6 +256,31 @@ export default class AdminRegistry {
         ;
     }
 
+    public getAdmin(id, email) {
+        let query = {
+            timeout: 40000
+        };
+
+        query['sql'] = Query.QUERY_GET_ADMIN;
+        query['values'] = [id, email];
+        
+        return this.mysql.query(query)
+            .then(res => {
+                loggerT.verbose('QUERY RES ==== ', res);
+                if(res && res[0]) {
+                    let admin = res[0];
+                    if(admin.password) delete admin.password;
+                    return Promise.resolve(res[0]);
+                } else {
+                    return Promise.reject(new Error('No admin found.'));
+                }
+            })
+            .catch(err => {
+                loggerT.error('ERROR ON QUERY getUsers.');
+                return Promise.reject(err);
+            })
+        ;
+    }
     private getRoleID(role) {
         if(role === 'admin') {
             return 1;

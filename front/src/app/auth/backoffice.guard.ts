@@ -8,6 +8,7 @@ import { Observable } from 'rxjs';
 export class BackofficeGuard implements CanActivate {
   
   canActivate(): Observable<boolean> | Promise<boolean> | boolean {
+    console.log('here');
     return true;
   }
 

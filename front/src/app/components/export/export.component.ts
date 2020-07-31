@@ -148,14 +148,15 @@ export class ExportComponent implements OnInit {
   }
 
   choseSupplier(rt) {
+    console.log('choseSupplier one ', this.supplierSelected);
     if(typeof this.supplierSelected === 'string') {
       return;
     }
     if(this.groupsChosen.length > 0) {
       this.groupsChosen = [];
     }
-
-    if(find(this.suppliersChosen, o => { return o.name === this.supplierSelected.name; }) === undefined) {
+    console.log('choseSupplier two', find(this.suppliersChosen, o => { return o.id === this.supplierSelected.id; }));
+    if(find(this.suppliersChosen, o => { return o.id === this.supplierSelected.id; }) === undefined) {
       this.suppliersChosen.push(this.supplierSelected);
     }
     this.supplierSelected = {};
@@ -243,6 +244,7 @@ export class ExportComponent implements OnInit {
   }
 
   export() {
+    console.log('export');
     let length;
     const endRes = {
       startDate: this.dateRange.startDate,
@@ -254,9 +256,11 @@ export class ExportComponent implements OnInit {
 
     if(this.documentsToRequest.length > 0) {
       endRes.docs = this.documentsToRequest.join(',');
+      // endRes.docs = this.documentsToRequest;
     }
 
     if(this.exportType.group === true) {
+      console.log('export if 1');
       endRes.type = 'GROUP';
       length = this.groupsChosen.length;
       this.groupsChosen.forEach((res, i) => {
@@ -265,8 +269,10 @@ export class ExportComponent implements OnInit {
         } else {
           endRes.values += res.id
         }
+        // endRes.values.push(res.id);
       });
     } else if(this.exportType.supplier === true) {
+      console.log('export if 2');
       endRes.type = 'SUPPLIER';
       length = this.suppliersChosen.length;
       this.suppliersChosen.forEach((res, i) => {
@@ -275,14 +281,33 @@ export class ExportComponent implements OnInit {
         } else {
           endRes.values += res.id
         }
+        // endRes.values.push(res.id);
       });
     } else {
+      console.log('export if 3');
       // Todo: Gérer ce cas de figure
       return 'ERROR'
     }
 
     console.log('endRes', endRes)
-    // this.httpService.get('/api/documents/export', endRes)
+    let p = new HttpParams()
+      .append('startDate', endRes.startDate)
+      .append('endDate', endRes.endDate)
+      .append('values', endRes.values)
+      .append('docs', endRes.docs)
+      .append('type', endRes.type)
+    return this.httpService.getExport('/api/documents/export', p)
+      .subscribe(res => {
+        console.log('[export] res', res);
+        let buffer = <ArrayBuffer>res.body;
+        const blob = new Blob([buffer], {
+          type: 'application/zip'
+        });
+        const url = window.URL.createObjectURL(blob);
+        window.location.href = url;
+      }, err => {
+        console.error('[export] err', err);
+      })
 
   }
 

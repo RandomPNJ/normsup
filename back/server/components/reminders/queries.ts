@@ -4,9 +4,10 @@ export const DAILY_REMINDERS = 'SELECT o.denomination, r.client_id, r.name as re
 
 export const UPDATE_REMINDERS = 'UPDATE normsup.group_reminders as gr SET gr.last_reminder = ?, gr.next_reminder = DATE_ADD(?, INTERVAL gr.frequency DAY) WHERE ';
 
-export const UPDATE_REMIND_HISTORY = 'INSERT INTO `group_reminders_history` (client_id, group_id, status, supplier_id) VALUES ?';
+export const INSERT_REMIND_HISTORY = 'INSERT INTO `group_reminders_history` (client_id, group_id, status, supplier_id) VALUES ?';
 
-export const GROUP_TO_REMIND = 'SELECT * FROM `groups` as g INNER JOIN group_reminders as gr ON g.id = gr.group_id INNER JOIN group_members as gm ON gm.group_id = gr.group_id INNER JOIN organisations as o ON o.id = gm.member_id AND o.added_by_org = ?'+
-'LEFT JOIN representatives as r ON o.id = r.organisation_id WHERE g.id = ? AND g.client_id = ? AND r.client_id = ?';
+export const GROUP_TO_REMIND = 'SELECT o.added_by_org as client_id, o.denomination, r.client_id, r.name as represName, r.lastname as represLastname, r.gender, r.email, gr.last_reminder, gr.frequency, gm.group_id, o.id FROM group_reminders as gr INNER JOIN group_members as gm ON gm.group_id = gr.group_id INNER JOIN organisations as o ON o.id = gm.member_id LEFT JOIN representatives as r ON o.id = r.organisation_id WHERE gr.group_id = ? AND o.added_by_org = ?';
 
 export const UPDATE_SPONT_REMIND = 'UPDATE organisations SET spont_reminder = ? WHERE id = ?'
+
+export const UPDATE_GRP_SPONT_REMINDER = 'UPDATE group_reminders as gr SET gr.spont_reminder = ? WHERE '

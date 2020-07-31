@@ -12,6 +12,7 @@ import { NotifService } from 'src/app/services/notif.service';
 import { Router } from '@angular/router';
 import { BrowserStorageService } from 'src/app/services/storageService';
 import { AuthService } from 'src/app/services/auth.service';
+import { p } from '@angular/core/src/render3';
 
 @Component({
   selector: 'app-supplier-table',
@@ -89,6 +90,7 @@ export class SupplierTableComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     // First query to get the number of rows
+    
     this.httpService
       .get('/api/suppliers/count')
       .subscribe(res => {
@@ -103,6 +105,7 @@ export class SupplierTableComponent implements OnInit, OnDestroy {
           i.name = i.name[0].toUpperCase() + i.name.slice(1); 
           this.groups.push(i);
         });
+        
       }, err => {
         if(err.message === 'Unexpected error : Failed to authenticate token. (jwt expired)') {
           this.notif.error('Session expirée. Vous serez redirigé vers la page de connexion.');
@@ -112,6 +115,7 @@ export class SupplierTableComponent implements OnInit, OnDestroy {
             this.bs.clearLocalStorage();
           }, 2500);
         }
+        
       })
     ;
     const that = this;
@@ -135,12 +139,14 @@ export class SupplierTableComponent implements OnInit, OnDestroy {
       responsive: true,
       serverSide: true,
       stateSave: false,
-      // processing: true,
+      processing: true,
       language: {
           lengthMenu: 'Afficher par _MENU_',
           zeroRecords: 'Aucun résultat trouvé',
           info: 'Page _PAGE_ sur _PAGES_',
+          emptyTable: "No data available in table",
           infoEmpty: 'Aucun résultat disponible',
+          processing: '<i class="fa fa-spinner fa-spin fa-3x fa-fw" style="color: #4390EF !important;"></i><span class="sr-only">Loading...</span> ',
           search: '',
           searchPlaceholder: "Rechercher un fournisseur",
           // infoFiltered: '(filtré sur un total de _MAX_ résultats)',
@@ -154,28 +160,40 @@ export class SupplierTableComponent implements OnInit, OnDestroy {
       ajax: (dataTablesParameters: any, callback: any) => {
         const action = this.compareParams(dataTablesParameters);
         if(action === 'query') {
+          
           that.httpService
             .get('/api/suppliers', this.tableParams)
             .subscribe(resp => {
-              // console.log(resp);
-              resp.body['items'].forEach(a => {
-                if(a.spont_reminder) {
-                  a.spont_reminder = new Date(a.spont_reminder);
-                  this.countDowns[a.id] = cloneDeep(this.countdownConf);
-                  this.countDowns[a.id].leftTime = moment(a.spont_reminder, 'YYYY-MM-DD').diff(moment(), 'seconds');
-                }
-              });
-              console.log('this.countDowns', this.countDowns);
-              that.data = that.data.concat(resp.body['items']);
-              that.itemsToDisplay = that.data.slice(that.tableParams.start, that.tableParams.start + that.tableParams.length);
-              // console.log('length =', that.data);
-              that.myTable = true;
-              // this.suppliersData.emit(that.data.length);
-              callback({
-                recordsTotal: that.nbOfRows, // grand total avant filtre
-                recordsFiltered: that.nbOfRows, // Nb d'onglet pagination
-                data: []
-              });
+              console.log('resp');
+              if(resp.body['items'] && resp.body['items'].length > 0) {
+                console.log('not empty res');
+                resp.body['items'].forEach(a => {
+                  if(a.spont_reminder) {
+                    a.spont_reminder = new Date(a.spont_reminder);
+                    this.countDowns[a.id] = cloneDeep(this.countdownConf);
+                    this.countDowns[a.id].leftTime = moment(a.spont_reminder, 'YYYY-MM-DD').diff(moment(), 'seconds');
+                  }
+                });
+                that.data = that.data.concat(resp.body['items']);
+                that.itemsToDisplay = that.data.slice(that.tableParams.start, that.tableParams.start + that.tableParams.length);
+                that.myTable = true;
+                callback({
+                  recordsTotal: that.nbOfRows, // grand total avant filtre
+                  recordsFiltered: that.nbOfRows, // Nb d'onglet pagination
+                  data: []
+                });
+                // this.suppliersData.emit(that.data.length);
+              } else {
+                that.data = [];
+                that.itemsToDisplay = [];
+                that.nbOfRows = 0;
+                that.myTable = true;
+                callback({
+                  recordsTotal: 0, // grand total avant filtre
+                  recordsFiltered: 0, // Nb d'onglet pagination
+                  data: []
+                });
+              } 
             });
         } else if(action === 'redraw') {
           that.itemsToDisplay = that.data.slice(that.tableParams.start, that.tableParams.start + that.tableParams.length);
@@ -191,28 +209,28 @@ export class SupplierTableComponent implements OnInit, OnDestroy {
       columns: [
         {
           title: 'Fournisseur',
-          // data: 'denomination',
-          searchable: true
+          searchable: true,
+          defaultContent: "lol"
         },
         {
           title: 'Interlocuteur',
-          // data: 'denomination',
-          searchable: true
+          searchable: true,
+          defaultContent: "lol"
         },
         {
           title: 'Localisation',
-          // data: 'denomination',
-          searchable: true
+          searchable: true,
+          defaultContent: "lol"
         },
         {
           title: 'Statut des documents',
-          // data: 'denomination',
-          searchable: true
+          searchable: true,
+          defaultContent: "lol"
         },
         {
           title: 'Actions',
-          // data: 'denomination',
-          searchable: true
+          searchable: true,
+          defaultContent: "lol"
         }
       ]
     };
@@ -271,22 +289,37 @@ export class SupplierTableComponent implements OnInit, OnDestroy {
   }
 
   reload() {
+    
     this.datatableElement.dtInstance.then((dtInstance: DataTables.Api) => {
       this.httpService
         .get('/api/suppliers', this.tableParams)
         .subscribe(resp => {
           console.log(resp);
-          this.data = resp.body['items'];
-          this.itemsToDisplay = this.data.slice(this.tableParams.start, this.tableParams.start + this.tableParams.length);
-          // this.myTable = true;
+          if(resp.body && resp.body['items'] && resp.body['items'].length > 0) {
+            resp.body['items'].forEach(a => {
+              if(a.spont_reminder) {
+                a.spont_reminder = new Date(a.spont_reminder);
+                this.countDowns[a.id] = cloneDeep(this.countdownConf);
+                this.countDowns[a.id].leftTime = moment(a.spont_reminder, 'YYYY-MM-DD').diff(moment(), 'seconds');
+              }
+            });
+            this.data = resp.body['items'];
+            this.itemsToDisplay = this.data.slice(this.tableParams.start, this.tableParams.start + this.tableParams.length);
+          } else {
+            this.data = [];
+            this.itemsToDisplay = [];
+            this.nbOfRows = 0;
+          }
+          
         });
-        this.httpService
-          .get('/api/suppliers/count')
-          .subscribe(res => {
-            this.nbOfRows = res.body['count'];
-            this.suppliersData.emit(res.body['count']);
-          })
-        ;
+      this.httpService
+        .get('/api/suppliers/count')
+        .subscribe(res => {
+          this.nbOfRows = res.body['count'];
+          this.suppliersData.emit(res.body['count']);
+        })
+      ;
+      dtInstance.page('last');
       dtInstance.ajax.reload();
     });
   }

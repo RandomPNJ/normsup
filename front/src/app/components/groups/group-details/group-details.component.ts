@@ -6,6 +6,7 @@ import { cloneDeep } from 'lodash';
 import { HttpService } from 'src/app/services/http.service';
 import { NotifService } from 'src/app/services/notif.service';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-group-details',
@@ -16,6 +17,8 @@ export class GroupDetailsComponent implements OnInit {
 
   @ViewChild('deleteGroupModal') public deleteGroupModalRef: TemplateRef<any>;
   @ViewChild('modifyGroupModal') public modifyGroupModalRef: TemplateRef<any>;
+  
+  private originalGroup: any;
   group$: Observable<any>;
   suppliers: any[] = [];
   subscriptions: Subscription[] = [];
@@ -38,6 +41,11 @@ export class GroupDetailsComponent implements OnInit {
     },
     frequency: ''
   };
+  countdownConf: any = {
+    leftTime: 60,
+    notify: 0,
+    template: '$!d!j $!h!:$!m!:$!s!'
+  };
   compDocs: Array<any> = [
     { name: 'Complémentaire un', value: 'compone'},
     { name: 'Complémentaire deux', value: 'comptwo'},
@@ -55,6 +63,7 @@ export class GroupDetailsComponent implements OnInit {
       'other': '#'
     }
   };
+  newSpontTime;
   itemPluralMapping = {
     'suppliers': {
       '=0': 'Vous n\'avez aucun fournisseur dans ce groupe.',
@@ -77,6 +86,16 @@ export class GroupDetailsComponent implements OnInit {
     this.httpService.get('/api/suppliers/group/'+ this.id)
       .subscribe(res => {
         if(res.body && res.body['items']) {
+          this.originalGroup = cloneDeep(res.body['items'][0]);
+          if(res.body['items'][0].spont_reminder) {
+            this.newSpontTime = moment(res.body['items'][0].spont_reminder).add(7, 'days').diff(moment(), 'seconds');
+            this.countdownConf.leftTime = this.newSpontTime;
+          } else {
+            this.newSpontTime = null;
+          }
+          if(this.newSpontTime && this.newSpontTime > 0) {
+            this.countdownConf.leftTime = this.newSpontTime;
+          }
           this.groupName = res.body['items'][0]['name'];
           this.activateReminders = !!res.body['items'][0];
           if(res.body['items'][0]['legal_docs'] !== "" && res.body['items'][0]['legal_docs'] !== null && res.body['items'][0]['legal_docs'] !== "null") {
@@ -186,10 +205,20 @@ export class GroupDetailsComponent implements OnInit {
       frequency: '',
       activated: 0,
       legal_docs: '',
-      comp_docs: ''
+      comp_docs: '',
     };
     data['group_id'] = this.id;
     data['activated'] = this.activateReminders ? 1 :  0;
+    let lastReminder = moment(this.originalGroup.last_reminder);
+    // let now = moment();
+    let diff = moment().diff(lastReminder, 'days');
+    let frequency = parseInt(this.documentsSettings.frequency.substring(0, 2), 10)
+    if(!diff || diff >= frequency) {
+      data['next_reminder'] = moment().add(frequency, 'days').toDate();
+    } else {
+      data['next_reminder'] = moment().add(frequency - diff, 'days').toDate();
+    }
+
     let i = 0;
     Object.keys(this.documentsSettings.legal).map((key, ind) => {
       if(this.documentsSettings.legal[key]) {
@@ -206,7 +235,7 @@ export class GroupDetailsComponent implements OnInit {
     if(this.documentsSettings.frequency) {
       data['frequency'] = this.documentsSettings.frequency.substring(0, 2);
     }
-    this.httpService.post('/api/suppliers/group/'+ this.id + '/modify_reminders', data)
+    this.httpService.post('/api/suppliers/group/'+ this.id + '/modify_reminders', {new: data, old: this.originalGroup})
       .subscribe(res => {
         this.notif.success('Paramètres modifiés avec succès.');
       }, err => {
@@ -247,4 +276,7 @@ private changeGroupName(e) {
     ;
   }
 
+  private countDownEvent(e, item) {
+    console.log('countDownEvent', item);
+  }
 }

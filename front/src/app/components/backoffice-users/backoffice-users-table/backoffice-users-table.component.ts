@@ -39,22 +39,12 @@ export class BackofficeUsersTableComponent implements OnInit {
       { name: 'Invité', value: 'guest'},
     ];
     dataSize: any = 0;
+    firstDraw: Boolean = true;
   
     constructor(private httpService: HttpService) { }
   
     ngOnInit() {
       const that = this;
-      // $.fn['dataTable'].ext.search.push((settings, itemsToDisplay, dataIndex) => {
-      //   const groupName = itemsToDisplay[1] || ''; // use data for the id column
-      //   if(!this.groupSelect) {
-      //     this.groupSelect = '';
-      //   }
-      //   if (this.groupSelect === groupName || this.groupSelect === '') {
-      //     // console.log('data === ' + itemsToDisplay[0] + ' group ==== ' + itemsToDisplay[1]);
-      //     return true;
-      //   }
-      //   return false;
-      // });
       this.dtOptions = {
         lengthMenu: [10, 25, 50, -1],
         searchDelay: 4500,
@@ -83,6 +73,7 @@ export class BackofficeUsersTableComponent implements OnInit {
         ajax: (dataTablesParameters: any, callback: any) => {
           const action = this.compareParams(dataTablesParameters);
           console.log('tableParams', dataTablesParameters);
+          if(action === 'query') {
             that.httpService
               .get('/api/admin/users', dataTablesParameters)
               .subscribe(resp => {
@@ -99,6 +90,14 @@ export class BackofficeUsersTableComponent implements OnInit {
               }, err => {
                 console.log('/api/users err', err);
               });
+          } else if(action === 'redraw') {
+            that.itemsToDisplay = that.items.slice(that.tableParams.start, that.tableParams.start + that.tableParams.length);
+            callback({
+              recordsTotal: that.items.length, // grand total avant filtre
+              recordsFiltered: that.items.length, // Nb d'onglet pagination
+              data: []
+            });
+          }
         },
         preDrawCallback: function(settings) {
           that.tableParams.start = settings._iDisplayStart;
@@ -126,28 +125,36 @@ export class BackofficeUsersTableComponent implements OnInit {
   
     compareParams(datatableParams) {
       // TODO : Ordering with multiple columns
-      if(!this.tableParams.start) {
-        this.tableParams = cloneDeep(datatableParams);
-        return 'query';
-      }
-      if(this.tableParams.start !== datatableParams.start && this.items.length <= datatableParams.start) {
-        this.tableParams = cloneDeep(datatableParams);
-        return 'query';
-      } else if(this.tableParams.search !== datatableParams.search.value) {
-        this.tableParams = cloneDeep(datatableParams);
-        return 'query';
-      } else if(this.tableParams.length !== datatableParams.length) {
-        this.tableParams = cloneDeep(datatableParams);
+      let action = 'none';
   
-        return 'query';
+      if(this.firstDraw) {
+        action = 'query';
+        this.firstDraw = false;
+        return action;
       }
-      this.tableParams = cloneDeep(datatableParams);
-      return 'redraw';
-      // if(this.tableParams.order.col != datatableParams.order.col) {
-  
-      // }
+      if(this.tableParams.start !== datatableParams.start) {
+        this.tableParams.start = datatableParams.start;
+        if(this.items.length <= datatableParams.start) {
+          action = 'query';
+        } else {
+          action = 'redraw';
+        }
+      }
+
+      if(this.tableParams.search !== datatableParams.search.value) {
+        // this.data.length = 0;
+        this.tableParams.search = datatableParams.search.value;
+        // this.recount(this.tableParams.search);
+        action = 'query';
+      }
+      if(this.tableParams.length !== datatableParams.length) {
+        this.tableParams.length = datatableParams.length;
+        action = 'redraw';
+      }
+      return action;
   
     }
+  
     delete(item) {
   
     }

@@ -80,6 +80,7 @@ export default {
       actions: [
         { name: 'createUser', uriPattern: '/register', method: 'post' },
         { name: 'modifyUser', uriPattern: '/modify/:id', method: 'put' },
+        { name: 'modifyUserRole', uriPattern: '/modify/:id/role', method: 'put' },
         { name: 'modifyPassword', uriPattern: '/modify/:id/modify_password', method: 'post' },
         { name: 'uploadPicture', uriPattern: '/upload', method: 'post' },
         { name: 'getPicture', uriPattern: '/picture', method: 'get' },
@@ -138,6 +139,7 @@ export default {
         { name: 'getDocuments', uriPattern: '', method: 'get' },
         { name: 'downloadDocument', uriPattern: '/download/:id', method: 'get' },
         { name: 'createDocument', uriPattern: '/upload', method: 'post' },
+        { name: 'exportDocuments', uriPattern: '/export', method: 'get' },
       ],
     },
     auth: {
@@ -147,6 +149,8 @@ export default {
         { name: 'refreshToken', uriPattern: '/refresh_token', method: 'post' },
         { name: 'supplierLogin', uriPattern: '/supplier-login', method: 'post' },
         { name: 'logout', uriPattern: '/logout', method: 'post' },
+        { name: 'adminLogin', uriPattern: '/admin/login', method: 'post' },
+        { name: 'adminLogout', uriPattern: '/admin/logout', method: 'post' },
       ]
     },
     settings: {
@@ -166,10 +170,12 @@ export default {
         { name: 'getSuppliers', uriPattern: '/suppliers', method: 'get' },
         { name: 'getSuppliersUsers', uriPattern: '/suppliers/users', method: 'get' },
         { name: 'registerUser', uriPattern: '/users/register', method: 'post' },
+        { name: 'registerClient', uriPattern: '/clients/register', method: 'post' },
         { name: 'registerAdmin', uriPattern: '/register', method: 'post' },
         { name: 'createSupplierUser', uriPattern: '/suppliers/register', method: 'post' },
         { name: 'dailyReminders', uriPattern: '/daily_reminders', method: 'post' },
         { name: 'monthlyConformity', uriPattern: '/monthly_conformity', method: 'post' },
+        { name: 'getCurrent', uriPattern: '/current', method: 'get' },
       ]
     }
   },
@@ -184,13 +190,12 @@ export default {
     CGSESST: '',// new
     CGSST: 'GET_SUPPLIER_OFFLIM_STATE',// new
     CSESST: '',// new
-    CGSES: 'QUERY_SUPPLIER_OFFLIM_SE_GROUP',  // done
+    CGSES: 'QUERY_SUPPLIER_OFFLIM_SE_GROUP',  // nomore
     CSES: 'QUERY_GET_SUPPLIER_OFFLIM_SEARCH', // done
-    CGS: 'QUERY_GET_SUPPLIER_GROUP', // done
+    CG: 'QUERY_GET_SUPPLIER_GROUP', // done
     CS: 'QUERY_GET_SUPPLIER_OFFLIM', // done
     CGSE: 'QUERY_GET_SUPPLIER_SEARCH_GRP', // done
-    CSE: 'QUERY_GET_SUPPLIER_SEARCH', 
-    CG: 'QUERY_GET_GROUP_SUPPLIERS', // done
+    CSE: 'QUERY_GET_SUPPLIER_OFFLIM_SEARCH',
     C: 'QUERY_GET_SUPPLIER', // done
   },
 

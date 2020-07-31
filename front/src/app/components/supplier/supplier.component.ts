@@ -43,6 +43,7 @@ export class SupplierComponent implements OnInit {
   showWrongDateOne: Boolean = false;
   infoModalType: String = '';
   docModalID: any;
+  loadingSiret: Boolean = false;
 
   // Modal Info
   supplierInfo: any;
@@ -198,6 +199,7 @@ export class SupplierComponent implements OnInit {
       this.supplierInfo = {};
       this.modalRef = null;
     }
+    this.loadingSiret = false;
   }
 
   changeType(type) {
@@ -209,6 +211,7 @@ export class SupplierComponent implements OnInit {
     this.searchCompany404 = false;
     const params = '&rows=1&q=' + id;
     let p =  new HttpParams().append('siret', id);
+    this.loadingSiret = true;
     this.httpService.get('/api/suppliers/available', p)
       .subscribe(res => {
         let result = res.body;
@@ -238,13 +241,16 @@ export class SupplierComponent implements OnInit {
                 }, err => {
                   console.log('Error, ', err);
                   this.searchCompany404 = true;
+                  this.loadingSiret = false;
                 })
               ;
             }
           }
         }
+        this.loadingSiret = false;
       }, err => {
         console.log('searchCompany err', err);
+        this.loadingSiret = false;
       })
     ;
     

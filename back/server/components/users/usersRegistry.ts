@@ -5,6 +5,7 @@ import config from '../../config/environment/index';
 import * as bcrypt from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
 import * as uuid from 'uuid/v4';
+import {email as emailTemplate} from './email';
 
 // const fakeData = require('./fakeData.json');
 declare var loggerT: any;
@@ -14,10 +15,13 @@ export default class UserRegistry {
     private mysql: any;
     private refreshTokens: any;
     private s3: any;
-    public constructor(mysql, s3Client) {
+    private transporter: any;
+
+    public constructor(mysql, s3Client, mailer) {
         this.mysql = mysql;
         this.s3 = s3Client;
         this.refreshTokens = {};
+        this.transporter = mailer;
     }
 
     public login(login: string, password: string) {
@@ -264,7 +268,7 @@ export default class UserRegistry {
 
         return this.mysql.query(query)
             .then(res => {
-                loggerT.verbose('QUERY createUser RES ==== ', res);
+                loggerT.verbose('[createUser] QUERY createUser RES ==== ', res);
                 const roleID = that.getRoleID(data.role);
 
                 query['sql']    = Query.INSERT_ROLE;
@@ -273,11 +277,36 @@ export default class UserRegistry {
 
                 return that.mysql.query(query)
                     .then(res => {
-                        loggerT.verbose('QUERY createRole RES ==== ', res);
-                        return Promise.resolve(res);
+                        loggerT.verbose('[createUser] QUERY createRole RES ==== ', res);
+                        let genericTemplate = _.template(emailTemplate);
+                        let mailOptions = {
+                            from: 'NormSup <mail.normsup@gmail.com>', // sender address
+                            to: data.email, // list of receivers
+                            subject: 'Identifiants plateforme NormSup', // Subject line
+                            html: ''
+                        };
+                        let rTitle = 'Monsieur/Madame';
+
+                        if(data.gender === 'M') {
+                            rTitle = 'Monsieur';
+                        } else if(data.gender === 'F') {
+                            rTitle = 'Madame';
+                        }
+
+                        mailOptions.html = genericTemplate({ 'rTitle': rTitle, 'respresName': _.capitalize(data.lastname), 'password': data.originalpwd, 'login': data.email});
+
+                        return this.transporter.sendMail(mailOptions)
+                            .then(res => {
+                                return Promise.resolve(res);
+                            })
+                            .catch(err => {
+                                loggerT.error('[createUser] ERROR ON QUERY sendMail.');
+                                return Promise.reject(err);
+                            })
+                        ;
                     })
                     .catch(err => {
-                        loggerT.error('QUERY createRole ERR ==== ', err);
+                        loggerT.error('[createUser] QUERY createRole ERR ==== ', err);
                         return Promise.reject({statusCode: 500, msg: 'Could not create user role for user with id :' + res.insertId})
                     })
                 ;
@@ -343,7 +372,28 @@ export default class UserRegistry {
         }
     }
 
+    public modifyUserRole(id, body) {
+        loggerT.verbose('modifyUserRole id : ', id);
+        loggerT.verbose('modifyUserRole body : ', body);
 
+        let roleID = this.getRoleID(body.rolename);
+
+        let query = {
+            timeout: 40000,
+            sql: Query.UPSERT_USER_ROLE,
+            values: [id, roleID, roleID]
+        };
+
+        return this.mysql.query(query)
+            .then(res => {
+                return Promise.resolve(res);
+            })
+            .catch(err => {
+                return Promise.reject(err);
+            })
+        ;
+
+    }
     public getUsersManagement(data, user) {
         let query = {
             timeout: 40000
@@ -351,7 +401,7 @@ export default class UserRegistry {
 
         if(data.start) {
             query['sql']    = Query.QUERY_GET_USERS_NOTADMIN_OFFLIM;
-            query['values'] = [data.company, user.id, data.limit, data.start];
+            query['values'] = [data.company, user.id, data.limit || 10, data.start];
         } else {
             query['sql'] = Query.QUERY_GET_USERS_NOTADMIN;
             query['values'] = [data.org, user.id];

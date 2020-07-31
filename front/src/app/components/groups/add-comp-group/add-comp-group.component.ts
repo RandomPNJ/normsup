@@ -183,7 +183,7 @@ export class AddCompGroupComponent implements OnInit {
   public createGroup() {
     const docSettings = {
       comp_docs: '',
-      frequency: '5d'
+      frequency: '15d'
     };
     let i = 0;
     let data;

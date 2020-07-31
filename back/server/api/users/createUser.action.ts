@@ -45,6 +45,7 @@ export function createUser(req, UsersRegistry) {
             throw error;
         }
         // Store hash in your password DB.
+        data.originalpwd = data.password;
         data.password = hash;
         return UsersRegistry.createUser(data, req.decoded)
             .then(res => {

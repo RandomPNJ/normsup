@@ -17,8 +17,6 @@ export function createDocument(req, res, DocumentsRegistry) {
         return Promise.reject(`Cannot get user informations or user is not a supplier.`);
     }
 
-    loggerT.verbose('Creating document.');
-
     loggerT.verbose('Creating document USER :', req.decoded);
 
     let docs = req.files;

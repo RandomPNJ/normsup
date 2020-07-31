@@ -104,6 +104,24 @@
     font-size: 15px;
     color: #4E5983;
     padding-left: 10px;
+    text-align: center;
+}
+
+.grp-list {
+    display: inline-block;
+    font-family: 'Roboto Medium';
+    font-size: 15px;
+    color: #4E5983;
+    padding-left: 10px;
+    text-align: left;
+}
+
+.spl-list {
+    display: inline-block;
+    font-family: 'Roboto Medium';
+    font-size: 15px;
+    color: #4E5983;
+    padding-left: 10px;
     text-align: left;
 }
 
@@ -130,7 +148,7 @@
 }
 
 .grp-cont-pos {
-    float: right;
+    // float: right;
     min-width: 180px;
 }
 

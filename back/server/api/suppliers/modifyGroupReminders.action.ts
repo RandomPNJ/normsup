@@ -12,7 +12,7 @@ export default {
 
 export function modifyGroupReminders(req, res, SupplierRegistry) {
     let data;
-
+    
     loggerT.verbose('Modifying group reminders.');
 
     if(!req.params || !req.params.id) {
@@ -20,14 +20,27 @@ export function modifyGroupReminders(req, res, SupplierRegistry) {
         error['statusCode'] = 400;
         throw error;
     }
+    if(!req.body || !req.body.new || !req.body.old) {
+        const error = new Error(`Invalid request, error message: body is invalid, old and new settings needed.`);
+        error['statusCode'] = 400;
+        throw error;
+    }
 
-    GroupRemindersSchema.validate(req.body, (err, val) => {
+
+    GroupRemindersSchema.validate(req.body.new, (err, val) => {
         if (err && err.details[0].message) {
             const error = new Error(`Invalid request, error message: ${err.details[0].message}.`);
             error['statusCode'] = 400;
             throw error;
         }
         data = val;
+    });
+    GroupRemindersSchema.validate(req.body.old, (err, val) => {
+        if (err && err.details[0].message) {
+            const error = new Error(`Invalid request, error message: ${err.details[0].message}.`);
+            error['statusCode'] = 400;
+            throw error;
+        }
     });
 
     const id = req.params.id;

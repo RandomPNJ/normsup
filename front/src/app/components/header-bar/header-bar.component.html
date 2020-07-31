@@ -12,29 +12,29 @@
                 </div>
                 <div class="inline-b">
                     <span class="glyphicon glyphicon-menu-down menu-dwn grow-left"> </span>
-                    <div [hidden]='!isLogout' class="dropContent" [style.height]="isAdmin ? '257px' : '193px'" style="z-index: 1000 !important;">
-                        <div class='selectData' id="profile" routerLink="/dashboard/profile">
+                    <div [hidden]='!isLogout' class="dropContent" style="z-index: 1000 !important;">
+                        <div *ngIf="!backoffice" class='selectData' id="profile" routerLink="/dashboard/profile">
                             <div class="selectDataChild">
                                 <img class="header-drop-icn" src="../../../assets/img/profile-icn.svg" style="height: 13px;"alt="">
-                                <p>Mon compte</p>
+                                <p style="padding-right: 31px;">Mon compte</p>
                             </div>
                         </div>
-                        <div class='selectData' id="users" routerLink="/dashboard/users" *ngIf="isAdmin">
+                        <div class='selectData' id="users" routerLink="/dashboard/users" *ngIf="isAdmin && !backoffice">
                             <div class="selectDataChild">
                                 <img class="header-drop-icn" src="../../../assets/img/users-icn.svg" style="height: 17px;padding-right: 18px;"alt="">
-                                <p>Gestion des utilisateurs</p>
+                                <p style="padding-right: 31px;">Gestion des utilisateurs</p>
                             </div>
                         </div>
-                        <div class='selectData' id="contact" routerLink="/dashboard/alerts">
+                        <div *ngIf="!backoffice" class='selectData' id="contact" routerLink="/dashboard/alerts">
                             <div class="selectDataChild">
                                 <img class="header-drop-icn" src="../../../assets/img/alert-icn.svg" style="height: 13px;"alt="">
-                                <p>Alerte</p>
+                                <p style="padding-right: 31px;">Alerte</p>
                             </div>
                         </div>
                         <div class='selectData' id="contact" (click)="logOut()" style="padding-bottom: 1px;">
                             <div class="selectDataChild" style="padding-bottom: 21.5px !important;">
                                 <img class="header-drop-icn" src="../../../assets/img/logout-icn.svg" style="height: 12px;" alt="" style="padding-right: 20px !important;">
-                                <p>Déconnexion</p>
+                                <p style="padding-right: 31px;">Déconnexion</p>
                             </div>
                         </div>
                     </div>

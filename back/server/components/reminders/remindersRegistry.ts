@@ -95,13 +95,54 @@ export default class RemindersRegistry {
             .then(res => {
                 loggerT.verbose('[sendGroupReminder] RES ==== ', res);
                 if(res && res.length > 0) {
-                    return this.sendMails(res);
+                    return this.sendMails2(res)
+                        .then(() => {
+                            loggerT.verbose('[sendGroupReminder] sendMails2 promise res', res);
+                            let q = Query.UPDATE_GRP_SPONT_REMINDER;
+                            let updateGroupSpontReminder = {
+                                timeout: 40000,
+                                sql: q,
+                                values: [new Date()]
+                            };
+                            let historicQuery = {
+                                timeout: 40000,
+                                sql: Query.INSERT_REMIND_HISTORY,
+                                values: []
+                            };
+                            let varray = [];
+                            let failures = [];
+                            res.forEach((supp, i) => {
+                                if(i===0) {
+                                    updateGroupSpontReminder.sql += ' gr.group_id = ?';
+                                } else {
+                                    updateGroupSpontReminder.sql += ' OR gr.group_id = ?';
+                                }
+                                supp.status = 'OK';
+                                updateGroupSpontReminder.values.push(supp.group_id);
+                                // To create reminders history 
+                                if(supp.client_id) {
+                                    varray.push([supp.client_id, supp.group_id, supp.status, supp.id]);
+                                } else {
+                                    failures.push({id: supp.id, group_id: supp.group_id});
+                                }
+                            });
+                            historicQuery.values.push(varray)
+                            return this.allSkippingErrors([this.mysql.query(updateGroupSpontReminder), this.mysql.query(historicQuery)], 'sendDailyReminders')
+                                .then(() => {
+                                    return Promise.resolve({items: res, failures: failures});
+                                })
+                            ;
+                        })
+                        .catch(err => {
+                            loggerT.verbose('sendMails2 promise err', err);
+                        })
+                    ;
                 } else {
                     return Promise.reject({msg: 'No result'})
                 }
             })
             .catch(err => {
-                loggerT.error('ERROR ON QUERY getSuppliers.');
+                loggerT.error('[sendGroupReminder] ERROR ON QUERY GROUP_TO_REMIND.');
                 return Promise.reject(err);
             })
         ;
@@ -131,7 +172,7 @@ export default class RemindersRegistry {
                             };
                             let historicQuery = {
                                 timeout: 40000,
-                                sql: Query.UPDATE_REMIND_HISTORY,
+                                sql: Query.INSERT_REMIND_HISTORY,
                                 values: []
                             };
                             let varray = [];
@@ -150,13 +191,13 @@ export default class RemindersRegistry {
                                 if(supp.client_id) {
                                     varray.push([supp.client_id, supp.group_id, supp.status, supp.id]);
                                 } else {
-                                    failures.push([supp.client_id, supp.group_id, supp.status, supp.id]);
+                                    failures.push({id: supp.id, group_id: supp.group_id});
                                 }
                             });
                             historicQuery.values.push(varray)
                             return this.allSkippingErrors([this.mysql.query(updateReminders), this.mysql.query(historicQuery)], 'sendDailyReminders')
                                 .then(() => {
-                                    return Promise.resolve({items: res});
+                                    return Promise.resolve({items: res, failures: failures});
                                 })
                             ;
                         })

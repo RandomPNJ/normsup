@@ -26,6 +26,8 @@ import { BackofficeUsersComponent } from './components/backoffice-users/backoffi
 import { SupplierLoginPageComponent } from './components/supplier-login-page/supplier-login-page.component';
 import { BackofficeSuppliersComponent } from './components/backoffice-suppliers/backoffice-suppliers.component';
 import { GuestGuard } from './auth/guest.guard';
+import { BackofficeClientComponent } from './components/backoffice-client/backoffice-client.component';
+import { AdminLoginPageComponent } from './components/admin-login-page/admin-login-page.component';
 
 const routes: Routes = [
   { path: 'supplier',
@@ -40,6 +42,7 @@ const routes: Routes = [
     ]
   },
   { path: 'login', component: LoginPageComponent, canActivate: [] },
+  { path: 'admin/login', component: AdminLoginPageComponent, canActivate: [] },
   { path: 'logout', component: LogoutPageComponent },
   { path: 'dashboard', component: DashboardComponent, canActivate: [LoggedinGuard],  
     children: [
@@ -63,6 +66,8 @@ const routes: Routes = [
     children: [
       { path: 'users', component: BackofficeUsersComponent },
       { path: 'suppliers', component: BackofficeSuppliersComponent },
+      { path: 'client', component: BackofficeClientComponent },
+      { path: '', pathMatch: 'full', redirectTo: 'client'},
     ]
   },
   { path: '',

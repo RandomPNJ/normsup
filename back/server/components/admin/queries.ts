@@ -1,5 +1,5 @@
 export const INSERT_USER = 'INSERT INTO `user` (name, lastname, email, password, username, organisation ,create_time,createdBy) values (?,?,?,?,?,?,?,?)';
-export const INSERT_CLIENT = 'INSERT INTO `client` (org_name, address, postalCode, create_time, city, country) values (?, ?, ?, ?, ?, ?)';
+export const INSERT_CLIENT = 'INSERT INTO `client` (org_name, address, postalCode, city, country) values (?, ?, ?, ?, ?)';
 export const INSERT_ROLE = 'INSERT INTO `user_roles` (userID, roleID) VALUES (?, ?)';
 export const INSERT_USER_PREFERENCES = 'INSERT INTO `client_preferences` (client_id,) VALUES (?)';
 export const INSERT_ADMIN = 'INSERT INTO `admins` (name, lastname, email, password, username) values (?,?,?,?,?)';
@@ -7,11 +7,14 @@ export const QUERY_GET_USERS = 'SELECT u.id,u.create_time,u.createdBy,u.email,u.
 export const QUERY_GET_USERS_OFFLIM = "";
 
 export const QUERY_GET_CLIENTS = 'SELECT id, org_name FROM client WHERE org_name LIKE ?';
+export const QUERY_GET_ALL_CLIENTS = 'SELECT * FROM client';
 export const GET_SUPPLIERS_CLIENTID = 'SELECT o.id, o.denomination FROM organisations as o LEFT JOIN client_supplier_relation as c ON c.supplier_id = o.id WHERE c.client_id = ? AND (denomination LIKE ? OR siret = ?)'
 export const GET_SUPPLIERS = 'SELECT o.id, o.denomination FROM organisations as o LEFT JOIN client_supplier_relation as c ON c.supplier_id = o.id WHERE c.client_id = ? AND (denomination LIKE ? OR siret = ?)'
+export const QUERY_GET_ADMIN = 'SELECT * from admins WHERE id = ? AND email = ? LIMIT 1';
+
 
 export const QUERY_GET_SUPPLIERS_USERS = 'SELECT s.name, s.lastname, s.created_at, s.client_id, s.org_id, s.email, s.validity_date, c.org_name, o.denomination FROM `suppliers` AS s LEFT JOIN `client` as c ON c.id = s.client_id LEFT JOIN `organisations` as o ON o.id = s.org_id;';
-export const QUERY_GET_SUPPLIERS_USERS_OFFLIM = "";
+export const QUERY_GET_SUPPLIERS_USERS_OFFLIM = "SELECT s.name, s.lastname, s.created_at, s.client_id, s.org_id, s.email, s.validity_date, c.org_name, o.denomination FROM `suppliers` AS s LEFT JOIN `client` as c ON c.id = s.client_id LEFT JOIN `organisations` as o ON o.id = s.org_id LIMIT ? OFFSET ?";
 
 export const INSERT_ALERT = 'INSERT INTO `client_preferences` (client_id, alerts_state, alert_valid_sup, alert_invalid_sup, alert_invalid_mail, alert_frequency) VALUES (?,?,?,?,?,?) ON DUPLICATE KEY UPDATE alerts_state = ?, alert_valid_sup = ?, alert_invalid_sup = ?, alert_invalid_mail = ?, alert_frequency = ?';
 

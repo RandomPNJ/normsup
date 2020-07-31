@@ -12,14 +12,13 @@ export default {
 };
 
 export function getSuppliers(req, AdminRegistry) {
-    let data;
-    const query = req.query;
 
-    if(query && query.search) {
-        data = query.search;
-    }
+    loggerT.info('[ADMIN] Getting supplier users.');
 
-    return AdminRegistry.getSuppliersUsers(data)
+    const query = req.query || {};
+    loggerT.verbose('query = ', query);
+
+    return AdminRegistry.getSuppliersUsers(query)
         .then(res => {
             let result = {
                 items: res

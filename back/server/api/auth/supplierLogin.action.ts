@@ -39,7 +39,14 @@ export function login(body, res, SupplierRegistry, UsersRegistry) {
                     });
                 })
                 .catch(err => {
-
+                    loggerT.error('[SUPPLIER LOGIN] SupplierRegistry.supplierLoginHistory error :', err)
+                    return res.cookie('supplier', tok, {
+                        httpOnly: true,
+                        expires: moment().add(1, 'day').toDate()
+                    }).send({
+                        data: result,
+                        msg: 'Success'
+                    });
                 })
             ;
             

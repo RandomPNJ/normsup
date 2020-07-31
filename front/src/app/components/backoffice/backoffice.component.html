@@ -1,1 +1,9 @@
-<router-outlet></router-outlet>
+<div *ngIf="authorized" class="">
+    <app-header-bar *ngIf="user" [currentUser]="user" [backoffice]="true"></app-header-bar>
+    <div [ngClass]="{'sidebar-padding': sidebarVisible}" class="dash-bg invisible-scrollbar">
+      <div class="dash-container">
+        <router-outlet></router-outlet>
+        <div style="padding-top: 50px; width: 100%;"></div>
+      </div>
+    </div>
+  </div>

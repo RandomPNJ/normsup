@@ -45,17 +45,6 @@ export class UsersTableComponent implements OnInit {
 
   ngOnInit() {
     const that = this;
-    // $.fn['dataTable'].ext.search.push((settings, itemsToDisplay, dataIndex) => {
-    //   const groupName = itemsToDisplay[1] || ''; // use data for the id column
-    //   if(!this.groupSelect) {
-    //     this.groupSelect = '';
-    //   }
-    //   if (this.groupSelect === groupName || this.groupSelect === '') {
-    //     // console.log('data === ' + itemsToDisplay[0] + ' group ==== ' + itemsToDisplay[1]);
-    //     return true;
-    //   }
-    //   return false;
-    // });
     this.dtOptions = {
       lengthMenu: [10, 25, 50, -1],
       searchDelay: 4500,
@@ -183,5 +172,17 @@ export class UsersTableComponent implements OnInit {
   }
   assign(item) {
     console.log('Item = ', item);
+  }
+
+  changeRole(val, item) {
+    console.log('changeRole item', item);
+    console.log('changeRole val', val);
+    this.httpService.put('/api/users/modify/'+item.id+'/role', {rolename: val})
+      .subscribe(res => {
+        console.log('res', res);
+      }, err => {
+        console.log('Err', err);
+      })
+    ;
   }
 }

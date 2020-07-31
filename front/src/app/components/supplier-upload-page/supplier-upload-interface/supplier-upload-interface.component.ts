@@ -25,6 +25,7 @@ export class SupplierUploadInterfaceComponent implements OnInit {
     class: 'modal-dialog-centered modal-medium'
   };
 
+  uploadRes;
   documentStatus: any = {
     urssaf: false,
     lnte: false,
@@ -112,7 +113,15 @@ export class SupplierUploadInterfaceComponent implements OnInit {
       return this.httpService
         .uploadDocument('/api/documents/upload', main_form)
         .subscribe(res => {
-          return this.openModal(this.uploadConfirmationModal);
+          if(res && res.body) {
+            if(Array.isArray(res.body)) {
+              this.uploadRes = res.body[0];
+            } else {
+              this.uploadRes = res.body;
+            }
+          }
+          this.removeDocuments();
+          return this.openModal(this.uploadConfirmationModal, res);
         })
       ;
     } else if(type === 'COMP') {
@@ -124,7 +133,8 @@ export class SupplierUploadInterfaceComponent implements OnInit {
       return this.httpService
         .uploadDocument('/api/documents/upload', main_form)
         .subscribe(res => {
-          return this.openModal(this.uploadConfirmationModal);
+          this.uploadRes = res.body;
+          return this.openModal(this.uploadConfirmationModal, res);
         }, err => {
           return;
         })
@@ -135,7 +145,7 @@ export class SupplierUploadInterfaceComponent implements OnInit {
     // this.router.navigate(['upload', 'success']);
   }
 
-  openModal(template: TemplateRef<any>) {
+  openModal(template: TemplateRef<any>, info) {
     const _combine = combineLatest(
       this.modalService.onShow,
       this.modalService.onShown,
@@ -162,11 +172,22 @@ export class SupplierUploadInterfaceComponent implements OnInit {
   }
 
   hideModal() {
-    if (!this.modalRef) {
+    console.log('hideModal');
+    if(!this.modalRef) {
       return;
     }
       this.modalService.hide(1);
       this.modalRef = null;
+  }
+
+  removeDocuments() {
+    this.compDocs = [];
+    this.kbisDocument = '';
+    this.documentStatus.kbis = false;
+    this.urssafDocument = '';
+    this.documentStatus.urssaf = false;
+    this.lnteDocument = '';
+    this.documentStatus.lnte = false;
   }
 
   deleteCompDoc(item) {

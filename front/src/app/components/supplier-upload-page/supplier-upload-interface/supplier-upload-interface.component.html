@@ -138,7 +138,10 @@
     <div style="padding-top: 30.5px;padding-bottom: 40px;" class="select-comp-but">
       <div class="container">
         <div class="row">
-          <div class="delete-modal-txt">Document enregistrés avec succès.</div>
+          <div *ngIf="!uploadRes" class="delete-modal-txt">Document enregistrés avec succès.</div>
+          <div *ngIf="uploadRes" class="delete-modal-txt">
+            <span *ngFor="let item of uploadRes | keyvalue">Document {{item.key}} : {{item.value.msg}}.<br/></span> 
+          </div>
         </div>
         <div class="row">
           <div class="col nopadding" style="padding-left: 40px !important;">

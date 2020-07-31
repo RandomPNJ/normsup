@@ -108,7 +108,7 @@
     justify-content: center;
     border-radius: 50%;
     background: #C7E0FF 0% 0% no-repeat padding-box;
-    opacity: 0.61;
+    // opacity: 0.61;
 
     .filepicker {
         -webkit-appearance: none;
@@ -120,7 +120,21 @@
         overflow: hidden;
         cursor: pointer;
         outline: none;
+        z-index: 1000;
     }
+    .filepicker-two {
+        -webkit-appearance: none;
+        width: 53px;
+        height: 42px;
+        text-indent: 100em;
+        background: url('/src/assets/img/appareil-photo.svg');
+        background-size: cover;
+        overflow: hidden;
+        cursor: pointer;
+        outline: none;
+        z-index: 1000;
+    }
+    
 }
 
 .upload-doc-imgbis {
@@ -132,6 +146,8 @@
     height: 133px;
     width: 133px;
     border-radius: 25%;
+    position: absolute;
+    opacity: 0.61;
 }
 
 .del-pic-icn {

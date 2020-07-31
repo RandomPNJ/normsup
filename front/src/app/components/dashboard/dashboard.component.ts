@@ -45,5 +45,5 @@ export class DashboardComponent implements OnInit {
     this.cookieService.delete('refresh');
     this.router.navigate(['login']);
     this.notifService.error('Veuillez vous authentifier.');
-}
+  }
 }

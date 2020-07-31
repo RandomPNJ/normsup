@@ -16,6 +16,7 @@ import { indexOf } from 'lodash';
 
 export class HeaderBarComponent implements OnInit {
   @Input() currentUser: any;
+  @Input() backoffice: any = false;
   
   logoImg;
   title;
@@ -45,7 +46,7 @@ export class HeaderBarComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log('this.currentUser', this.currentUser);
+    console.log('headerbar this.currentUser', this.currentUser);
     this.httpService.getPicture('/api/users/picture')
       .subscribe(res => {
         return this.createImageFromBlob(<Blob>res.body);
@@ -55,7 +56,7 @@ export class HeaderBarComponent implements OnInit {
       })
     ;
     this.profileSub = this.settingsService.profileModif.subscribe(res => {
-      if(res && res.name) {
+      if(res && res.name && !this.backoffice) {
         this.currentUser = res;
       }
     });
@@ -97,20 +98,37 @@ export class HeaderBarComponent implements OnInit {
   }
 
   logOut() {
-    return this.httpService
-      .post('/api/auth/logout')
-      .subscribe(() => {
-        this.cookieService.deleteAll('/', 'localhost');
-        this.bsService.clearLocalStorage();
-        this.router.navigate(['logout']);
-        // this.cookieService.delete('auth', '/', 'localhost');
-      }, err => {
-        console.log('Could not disconnect err :', err);
-        this.cookieService.deleteAll('/');
-        this.bsService.clearLocalStorage();
-        // this.router.navigate(['logout']);
-      })
-    ;
+    if(this.backoffice) {
+      return this.httpService
+        .post('/api/auth/admin/logout')
+        .subscribe(() => {
+          this.cookieService.deleteAll('/', 'localhost');
+          this.bsService.clearLocalStorage();
+          this.router.navigate(['logout']);
+          // this.cookieService.delete('auth', '/', 'localhost');
+        }, err => {
+          console.log('Could not disconnect err :', err);
+          this.cookieService.deleteAll('/');
+          this.bsService.clearLocalStorage();
+          // this.router.navigate(['logout']);
+        })
+      ;
+    } else {
+      return this.httpService
+        .post('/api/auth/logout')
+        .subscribe(() => {
+          this.cookieService.deleteAll('/', 'localhost');
+          this.bsService.clearLocalStorage();
+          this.router.navigate(['logout']);
+          // this.cookieService.delete('auth', '/', 'localhost');
+        }, err => {
+          console.log('Could not disconnect err :', err);
+          this.cookieService.deleteAll('/');
+          this.bsService.clearLocalStorage();
+          // this.router.navigate(['logout']);
+        })
+      ;
+    }
   }
 
   getHeaderStyle() {

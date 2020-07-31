@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute, ActivationEnd, ActivationStart, NavigationStart, ResolveStart } from '@angular/router';
+import { Router, ActivatedRoute, ActivationEnd, ActivationStart, NavigationStart, ResolveStart, RouterEvent, NavigationEnd } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-sidebar',
@@ -13,12 +14,25 @@ export class SidebarComponent implements OnInit {
   user;
   showHeader;
   isLoggedIn: Subscription;
+  isBackoffice: Boolean = false;
 
   constructor(private router: Router,
     private route: ActivatedRoute,
+    private activatedRoute: ActivatedRoute,
     private authService: AuthService) { }
 
   ngOnInit() {
+    if(this.router.url.indexOf('/backoffice') !== -1) {
+      this.isBackoffice = true;
+    }
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)).subscribe(() => {
+        if(this.activatedRoute.snapshot['_routerState'].url.indexOf('/backoffice') !== -1) {
+          this.isBackoffice = true;
+        } else {
+          this.isBackoffice = false;
+        }
+      });
     this.isLoggedIn = this.authService.isLogged.subscribe(res => {
       if(res !== false && res.data) {
         this.user = res.data;

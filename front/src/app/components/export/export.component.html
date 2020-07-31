@@ -14,7 +14,10 @@
         <div class="col">&nbsp;</div>
 
         <div class="col-lg-4 col-md-4 col-4 col-xs-4 center-row exp-border-bottom">
-          <div class="grp-cont-pos">
+          <div style="display: inline-block;">
+            &nbsp;
+          </div>
+          <div class="grp-cont-pos" style="display: inline-block;">
             <div class="doc-form-check d-inline-block">
               <div class="form-check form-check-inline normsup-checkbox-cont export-checkbox">
                 <input class="form-check-input normsup-checkbox" type="checkbox"
@@ -31,8 +34,8 @@
           </div>
           <div *ngIf="groupsChosen.length > 0">
             <div *ngFor="let group of groupsChosen"> 
-              <span  class="doc-list">{{group.name}}</span>
-              <span class="trash-icn n-w-100" (click)="removeGroup(group)"><i class="far fa-trash-alt"></i></span>
+              <span  class="grp-list">{{group.name}}</span>
+              <span class="trash-icn" (click)="removeGroup(group)"><i class="far fa-trash-alt"></i></span>
             </div>
           </div>
         </div>
@@ -58,8 +61,8 @@
           </div>
           <div *ngIf="suppliersChosen.length > 0">
             <div *ngFor="let supplier of suppliersChosen">
-              <span class="doc-list">{{supplier.denomination}}</span>
-              <span class="trash-icn n-w-100" (click)="removeSupplier(supplier)"><i class="far fa-trash-alt"></i></span>
+              <span class="spl-list">{{supplier.denomination}}</span>
+              <span class="trash-icn" (click)="removeSupplier(supplier)"><i class="far fa-trash-alt"></i></span>
             </div>
           </div>
         </div>
@@ -126,8 +129,8 @@
       </div>
       <div class="row nopadding" style="padding-bottom: 40px !important;">
         <div style="margin: 0 auto;">
-          <!-- <button [disabled]="(suppliersChosen.length === 0 && groupsChosen.length === 0) || documentsToRequest.length === 0 || !dateRange.startDate || !dateRange.endDate" (click)="export()" type="button" class="btn btn-primary export-btn">Faire un export</button> -->
-          <button (click)="clear()" type="button" class="btn btn-primary export-btn">Faire un export</button>
+          <button [disabled]="(suppliersChosen.length === 0 && exportType.supplier) || (groupsChosen.length === 0 && exportType.group) || documentsToRequest.length === 0 || !dateRange.startDate || !dateRange.endDate" (click)="export()" type="button" class="btn btn-primary export-btn">Faire un export</button>
+          <!-- <button (click)="export()" type="button" class="btn btn-primary export-btn">Faire un export</button> -->
         </div>
       </div>
     </div>

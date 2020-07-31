@@ -65,6 +65,20 @@ export class HttpService implements OnDestroy {
       );
   }
 
+  public getExport<t>(actionUrl: string, params?: HttpParams): Observable<HttpResponse<t>> {
+    return this._http.get<t>(Configuration.serverUrl + actionUrl, {
+      params: params,
+      responseType: 'arraybuffer' as 'json',
+      observe: 'response',
+      headers: {
+        'Content-Type': 'application/zip'
+      }
+    })
+      .pipe(
+        catchError(this.handleError.bind(this))
+      );
+  }
+
   public uploadDocument<t>(actionUrl: string, body?: any): Observable<HttpResponse<t>> {
     return this._http.post<t>(Configuration.serverUrl + actionUrl, body, {
       headers: {

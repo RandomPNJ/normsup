@@ -110,8 +110,9 @@
               <div class="container nopadding">
                 <div class="row nopadding">
                   <div class="col-7" style="padding-right: 0px !important;">
-                    <button [disabled]="!activateReminders" style="height: 36px" type="button" class="btn new-btn-normsup spont-btn" (click)="spontReminder()">
-                      <span class="button-txt">Faire une relance spontanée</span>
+                    <button [disabled]="!activateReminders || (this.newSpontTime && this.newSpontTime > 0)" style="height: 36px" type="button" class="btn new-btn-normsup spont-btn" (click)="spontReminder()">
+                      <span *ngIf="!this.newSpontTime || 0 >= this.newSpontTime" class="button-txt">Faire une relance spontanée</span>
+                      <countdown *ngIf="this.newSpontTime && this.newSpontTime > 0" #cd class="button-txt" [config]="countdownConf" (event)="countDownEvent($event, item)"></countdown>
                     </button>
                   </div>
                   <div class="col-5" style="padding-right: 0px !important;">

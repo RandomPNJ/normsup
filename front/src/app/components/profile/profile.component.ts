@@ -113,17 +113,17 @@ export class ProfileComponent implements OnInit {
       })
     ;
     // Decomment to get the profile picture
-    // this.apiService.getPicture('/api/users/picture')
-    //   .subscribe(res => {
-    //     this.showImg = true;
-    //     this.urlToImage = '/src/assets/img/add-pic-two.svg';
-    //     return this.createImageFromBlob(<Blob>res.body);
-    //   }, err => {
-    //     this.showImg = true;
-    //     this.urlToImage = this.defaultBG;
-    //     return err;
-    //   })
-    // ;
+    this.apiService.getPicture('/api/users/picture')
+      .subscribe(res => {
+        // this.showImg = true;
+        // this.urlToImage = '/src/assets/img/add-pic-two.svg';
+        return this.createImageFromBlob(<Blob>res.body);
+      }, err => {
+        // this.showImg = true;
+        // this.urlToImage = this.defaultBG;
+        return err;
+      })
+    ;
   }
 
 
@@ -276,10 +276,11 @@ export class ProfileComponent implements OnInit {
     this.modifyPwdErr = '';
     this.modalRef = null;
   }
+
   createImageFromBlob(image: Blob) {
-    let reader = new FileReader(); //you need file reader for read blob data to base64 image data.
+    let reader = new FileReader(); 
     reader.addEventListener("load", () => {
-       this.profilePic = reader.result; // here is the result you got from reader
+       this.profilePic = reader.result; 
     }, false);
  
     if (image) {

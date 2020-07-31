@@ -29,7 +29,7 @@ export function deleteGroup(req, res, SupplierRegistry) {
         })
         .catch(err => {
             loggerT.verbose('Err  = ', err);
-            res.status(500).json({status: 'Veuillez choisir un autre nom de groupe.'})
+            res.status(500).json({status: 'Une erreur s\'est produite lors de la suppression, merci de réessayer ultérieurement.'})
             return err;
         })
     ;

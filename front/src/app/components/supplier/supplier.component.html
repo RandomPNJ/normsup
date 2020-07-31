@@ -40,19 +40,26 @@
           <div class="supplier-modal-title">Nouveau fournisseur</div>
         </div>
         <div *ngIf="modalState === 'enterSiret'">
-          <div class="row search-company" [ngClass]="{'fade-in': modalState === 'enterSiret', 'fade-away': modalState !== 'enterSiret'}">
-            <!-- <span class="title-add-sup">Information sur l'entreprise recherchée</span> -->
-            <div style="text-align: center; padding: 0px 107px;" class="input-field col s12">
-              <span class="comp-txt">1. Société</span>
-              <label class="addSupp-label" for="company-input">Siret ou Siren</label>
-              <input class="form-control custom-normsup-input-nb enter-siret-input" [(ngModel)]="searchCompanyID" (keydown.enter)="searchCompany(searchCompanyID)" #companyInput id="company-input" type="text" data-length="10" appFocus>
+          <div>
+            <div class="row search-company" [ngClass]="{'fade-in': modalState === 'enterSiret', 'fade-away': modalState !== 'enterSiret'}">
+              <!-- <span class="title-add-sup">Information sur l'entreprise recherchée</span> -->
+              <div style="text-align: center; padding: 0px 107px;" class="input-field col s12">
+                <span class="comp-txt">1. Société</span>
+                <label class="addSupp-label" for="company-input">Siret ou Siren</label>
+                <input *ngIf="!loadingSiret" class="form-control custom-normsup-input-nb enter-siret-input" [(ngModel)]="searchCompanyID" (keydown.enter)="searchCompany(searchCompanyID)" #companyInput id="company-input" type="text" data-length="10" appFocus>
+              </div>
+            </div>
+            <div *ngIf="!loadingSiret" class="f-button-addsup">
+              <button (click)="searchCompany(searchCompanyID)" [disabled]="!searchCompanyID" class="btn btn-primary custom-normsup-button nxt-btn-addsup" type="submit" name="action">
+                <span class="searchText">Suivant</span>
+              </button>
+              <span class="red-err-txt" *ngIf="searchCompany404">Aucun résultat trouvé. Veuillez entrer un siret/siren valide.</span>
             </div>
           </div>
-          <div class="f-button-addsup">
-            <button (click)="searchCompany(searchCompanyID)" [disabled]="!searchCompanyID" class="btn btn-primary custom-normsup-button nxt-btn-addsup" type="submit" name="action">
-              <span class="searchText">Suivant</span>
-            </button>
-            <span class="red-err-txt" *ngIf="searchCompany404">Aucun résultat trouvé. Veuillez entrer un siret/siren valide.</span>
+          <div *ngIf="loadingSiret" style="padding-top: 15px; text-align: center;">
+            <div class="loading-spinner spinner-border text-primary" role="status">
+                <span class="sr-only">Chargement...</span>
+            </div>
           </div>
         </div>
         <div class="container nopadding" *ngIf="modalState === 'compInfo'">

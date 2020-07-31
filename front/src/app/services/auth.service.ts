@@ -60,6 +60,23 @@ export class AuthService implements OnInit {
     );
   }
 
+  public adminLogin(username: String, password: String, stayConnected: Boolean): Observable<any> {
+    const body = {};
+    body['username'] = username;
+    body['password'] = password;
+    body['stayConnected'] = stayConnected;
+    const headers = new HttpHeaders({'Content-Type': 'application/json'});
+
+    return this.http
+      .post(Configuration.serverUrl + '/api/auth/admin/login', body, {headers: headers})
+      .pipe(map((response: any) => {
+        this.isLogged.next(response);
+        console.log('[AuthService] Response login', response);
+        return response;
+      })
+    );
+  }
+
   public isLoggedIn(type): any {
     if(type === 'SUPPLIER') {
       console.log('isLoggedIn SUPPLIER')
@@ -102,5 +119,15 @@ export class AuthService implements OnInit {
     this.cookieService.delete('refresh');
     this.router.navigate(['login']);
     this.notifService.error('Veuillez vous authentifier.');
-}
+  }
+
+  public adminLogOut() {
+    const headers = new HttpHeaders({'Content-Type': 'application/json'});
+    return this.http
+      .post(Configuration.serverUrl + '/api/auth/admin/logout', {headers: headers})
+      .pipe(map((response: any) => {
+        this.router.navigate(['admin', 'login']);
+      })
+    );
+  }
 }

@@ -35,8 +35,7 @@ export default class SupplierRegistry {
                     delete item['kbis'];
                     delete item['lnte'];
                     delete item['urssaf'];
-                }
-                else {
+                } else {
                     item['valid'] = false;
                     delete item['kbis'];
                     delete item['lnte'];
@@ -67,72 +66,71 @@ export default class SupplierRegistry {
         let v = '';
         let values = [];
         let stateType;
-        values.push(data.company);
 
         if(data.company) { 
             v += 'C'; 
-            values.push(data.company);
-            // loggerT.verbose('Values three === ', values);
         }
         if(data.group) { 
             v += 'G'; 
-            values.push(data.group);
-            // loggerT.verbose('Values four === ', values);
         }
         if(data.search) { 
             v += 'SE';
             data.search = '%' + data.search + '%';
-            values.push(data.search);
-            values.push(data.search);
-            values.push(data.search);
-            // loggerT.verbose('Values two === ', values);
-        }
-        if(data.start || data.start === 0) { 
-            v += 'S';
-            values.push(data.limit);
-            values.push(data.start);
-            // loggerT.verbose('Values one === ', values);
         }
         if(data.state) {
             v += 'ST';
-            values.push(data.state);
         }
 
-        const final = config.queries[v];
+        let final = config.queries[v];
         loggerT.verbose('String final === ', v);
-        loggerT.verbose('Query final === ', final);
+        // loggerT.verbose('Query final === ', final);
 
-        if(v === 'C') {//
-            values = [data.company, data.company, moment().startOf('month').toDate(), data.company, data.company];
-        } else if(v === 'CGSES') {//
-            values = [data.group, data.company, data.company, moment().startOf('month').toDate(), data.company, data.search, data.search, data.search, data.company, data.limit, data.start];
-        } else if(v === 'CGSE') {//
-            values = [data.company, data.company, moment().startOf('month').toDate(), data.company, data.group, data.company, data.limit, data.start];
-        } else if(v === 'CGS') {//
-            values = [data.group, data.company, data.company, moment().startOf('month').toDate(), data.company, data.company, data.limit, data.start];
-        } else if(v === 'CG') {//
-            loggerT.verbose('QUERY QUERY_GET_GROUP_SUPPLIERS, QUERY NOT USED BEFORE');
-        } else if(v === 'CSES') {//
-            values = [data.company, data.company, moment().startOf('month').toDate(), data.company, data.search, data.search, data.search, data.company, data.limit, data.start];
-        } else if(v === 'CS') {//
+        if(v === 'C') {// done
             values = [data.company, data.company, moment().startOf('month').toDate(), data.company, data.company, data.limit, data.start];
-        } else if(v === 'CSE') {//
-            values = [data.company, data.company, moment().startOf('month').toDate(), data.company, data.search, data.search, data.search, data.company];
-        } else if(v === 'CST') {//
+            final = Query[final];
+        } else if(v === 'CGSE') {// done
+            values = [data.company, data.company, moment().startOf('month').toDate(), data.company, data.group, data.company, data.search, data.limit, data.start];
+            final = Query[final];
+        } else if(v === 'CG') {// done
+            values = [data.group, data.company, data.company, moment().startOf('month').toDate(), data.company, data.company, data.limit, data.start];
+            final = Query[final];
+        } else if(v === 'CSE') {// done
+            values = [data.company, data.company, moment().startOf('month').toDate(), data.company, data.search, data.search, data.search, data.company, data.limit, data.start];
+            final = Query[final];
+        }else if(v === 'CST') {// done
+            let templateQuery = _.template(Query['GET_SUPPLIER_STATE']);
+            if(data.state === 'UPTODATE') {
+                final = templateQuery({'state': ' AND (sc.kbis = 1 AND sc.lnte = 1 AND sc.urssaf = 1)  '});
+            } else if(data.state === 'NOTUPTODATE') {
+                final = templateQuery({state: ' AND (sc.kbis = 0 OR sc.lnte = 0 OR sc.urssaf = 0 OR sc.kbis is null OR sc.lnte is null OR sc.urssaf is null) '});
+            } else if(data.state === 'OFFLINE') {
+                final = templateQuery({state: ' AND d.last_date IS NULL '});
+            }
+            loggerT.verbose('Query computed = ', final);
             values = [data.company, data.company, moment().startOf('month').toDate(), data.company, data.company];
-        } else if(v === 'CGST') {//
-
-        } else if(v === 'CSEST') {//
-
-        } else if(v === 'CSST') {//
-
+        } else if(v === 'CGST') {// done
+            let templateQuery = _.template(Query['GET_SUPP_GRP_STATE']);
+            if(data.state === 'UPTODATE') {
+                final = templateQuery({'state': ' AND (sc.kbis = 1 AND sc.lnte = 1 AND sc.urssaf = 1) '});
+            } else if(data.state === 'NOTUPTODATE') {
+                final = templateQuery({state: ' AND (sc.kbis = 0 OR sc.lnte = 0 OR sc.urssaf = 0 OR sc.kbis is null OR sc.lnte is null OR sc.urssaf is null) '});
+            } else if(data.state === 'OFFLINE') {
+                final = templateQuery({state: ' AND d.last_date IS NULL '});
+            }
+            loggerT.verbose('Query computed = ', final);
+            values = [data.company, data.company, moment().startOf('month').toDate(), data.group, data.company, data.company];
+        } else if(v === 'CSEST') {// testing
+            let templateQuery = _.template(Query['GET_SEARCH_STATE']);
+            if(data.state === 'UPTODATE') {
+                final = templateQuery({'state': ' AND (sc.kbis = 1 AND sc.lnte = 1 AND sc.urssaf = 1) '});
+            } else if(data.state === 'NOTUPTODATE') {
+                final = templateQuery({state: ' AND (sc.kbis = 0 OR sc.lnte = 0 OR sc.urssaf = 0 OR sc.kbis is null OR sc.lnte is null OR sc.urssaf is null) '});
+            } else if(data.state === 'OFFLINE') {
+                final = templateQuery({state: ' AND d.last_date IS NULL '});
+            }
+            loggerT.verbose('Query computed = ', final);
+            values = [data.company, data.company, moment().startOf('month').toDate(), data.company, data.company, data.search, data.search, data.search];
         } else if(v === 'CGSEST') {//
-
-        } else if(v === 'CGSESST') {//
-
-        } else if(v === 'CGSST') {//
-
-        } else if(v === 'CSESST') {//
 
         }
 
@@ -146,10 +144,15 @@ export default class SupplierRegistry {
         let query = {
             timeout: 40000
         };
+
+        if(!data.start) {
+            data.start = 0;
+        }
+
         // const s = data.search ? data.search = '%' + data.search + '%' : '';
         const queryTypeValues = this.getQueryType(data);
         loggerT.verbose('getSuppliers', queryTypeValues);
-        query['sql']    = Query[queryTypeValues['type']];
+        query['sql']    = queryTypeValues['type'];
         query['values']    = queryTypeValues['values'];
         return this.mysql.query(query)
             .then((res, fields) => {
@@ -230,7 +233,10 @@ export default class SupplierRegistry {
         return this.mysql.query(query)
             .then((res, fields) => {
                 loggerT.verbose('QUERY RES deleteGroup ==== ', res);
-                return this.allSkippingErrors([this.mysql(query2), this.mysql(query3)])
+                let a = [];
+                a.push(this.mysql.query(query2));
+                a.push(this.mysql.query(query3));
+                return this.allSkippingErrors(a)
                     .then(() => {
                         loggerT.verbose('Group deleted');
                         return Promise.resolve({msg: 'Group deleted successfully'})
@@ -534,7 +540,9 @@ export default class SupplierRegistry {
         data.client = user.organisation;
         const s = data.search ? data.search = '%' + data.search + '%' : '';
         loggerT.verbose('Count data : ', data);
-        if(data.client && data.search) {
+        if(data.group && data.client && data.search) {
+
+        } else if(data.client && data.search) {
             loggerT.verbose('Recount == ', s);
             query['sql']    = Query.QUERY_COUNT_SUPPLIERS_SEARCH;
             query['values'] = [data.client, s, data.client, s];
@@ -644,7 +652,7 @@ export default class SupplierRegistry {
                         query2['values'] = [representative]
                         
                         query3['sql'] = Query.INSERT_SUPP_CONFORMITY;
-                        query3['values'] = [{supplier_id: res.insertId, client_id: user.organisation, start_date: moment().startOf('month').toDate(), end_date: moment().endOf('month').toDate()}];
+                        query3['values'] = [{supplier_id: res.insertId, client_id: user.organisation, start_date: moment().startOf('month').toDate()}];
                         let promises = [
                             this.mysql.query(query),
                             this.mysql.query(query3)
@@ -785,6 +793,9 @@ export default class SupplierRegistry {
         let query5 = {
             timeout: 40000
         };
+        let query6 = {
+            timeout: 40000
+        };
         query3['sql'] = Query.DELETE_SUPPLIER;
         query3['values'] = [id, orgID];
         query['sql'] = Query.DELETE_SUPPLIER_RELATION;
@@ -793,15 +804,17 @@ export default class SupplierRegistry {
         query2['values'] = [id, orgID];
         query4['sql'] = Query.DELETE_SUPPLIER_FROM_GROUP;
         query4['values'] = [id];
-        // query5['sql'] = Query.DELETE_SUPPLIER_CONFORMITY;
-        // query5['values'] = [id, orgID];
+        query5['sql'] = Query.DELETE_SUPPLIER_USERS;
+        query5['values'] = [id];
+        query6['sql'] = Query.DELETE_SUPPLIER_CONFORMITY;
+        query6['values'] = [id, orgID];
     
         return this.mysql.query(query3)
             .then(() => {
                 return this.mysql.query(query)
                     .then((res, fields) => {
                         loggerT.verbose('QUERY RES deleteGroup ==== ', res);
-                        let q = [this.mysql.query(query2),this.mysql.query(query4)];
+                        let q = [this.mysql.query(query2),this.mysql.query(query4),this.mysql.query(query5),this.mysql.query(query6)];
                         // q.push(this.mysql.query(query5)) THIS IS QUERY TO DELETE SUPP CONFORMITY
                         return this.allSkippingErrors(q)
                         // return this.mysql.query(query2)
@@ -830,7 +843,7 @@ export default class SupplierRegistry {
         };
         loggerT.verbose('data = ', data);
         query['sql'] = Query.MODIFY_GROUP_REMINDERS;
-        query['values'] = [id, data.activated, data.legal_docs, data.comp_docs, data.frequency, id, data.activated, data.legal_docs, data.comp_docs, data.frequency];
+        query['values'] = [id, data.activated, data.legal_docs, data.comp_docs, data.frequency, data.next_reminder, id, data.activated, data.legal_docs, data.comp_docs, data.frequency, data.next_reminder];
 
         return this.mysql.query(query)
             .then(res => {

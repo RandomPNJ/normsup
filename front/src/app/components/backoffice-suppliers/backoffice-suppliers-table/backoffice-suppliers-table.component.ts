@@ -3,6 +3,7 @@ import { HttpService } from 'src/app/services/http.service';
 import { HttpParams } from '@angular/common/http';
 import { DataTableDirective } from 'angular-datatables';
 import { cloneDeep } from 'lodash';
+
 @Component({
   selector: 'app-backoffice-suppliers-table',
   templateUrl: './backoffice-suppliers-table.component.html',
@@ -28,6 +29,7 @@ export class BackofficeSuppliersTableComponent implements OnInit {
       { name: 'Invité', value: 'guest'},
     ];
     dataSize: any = 0;
+    firstDraw: Boolean = true;
   
     constructor(private httpService: HttpService) { }
   
@@ -78,6 +80,13 @@ export class BackofficeSuppliersTableComponent implements OnInit {
               }, err => {
                 console.log('[BackofficeSuppliersTableComponent] /api/suppliers err', err);
               });
+          } else if(action === 'redraw') {
+            that.itemsToDisplay = that.items.slice(that.tableParams.start, that.tableParams.start + that.tableParams.length);
+            callback({
+              recordsTotal: that.items.length, // grand total avant filtre
+              recordsFiltered: that.items.length, // Nb d'onglet pagination
+              data: []
+            });
           }
         },
         preDrawCallback: function(settings) {
@@ -106,26 +115,33 @@ export class BackofficeSuppliersTableComponent implements OnInit {
   
     compareParams(datatableParams) {
       // TODO : Ordering with multiple columns
-      if(!this.tableParams.start) {
-        this.tableParams = cloneDeep(datatableParams);
-        return 'query';
-      }
-      if(this.tableParams.start !== datatableParams.start && this.items.length <= datatableParams.start) {
-        this.tableParams = cloneDeep(datatableParams);
-        return 'query';
-      } else if(this.tableParams.search !== datatableParams.search.value) {
-        this.tableParams = cloneDeep(datatableParams);
-        return 'query';
-      } else if(this.tableParams.length !== datatableParams.length) {
-        this.tableParams = cloneDeep(datatableParams);
+      let action = 'none';
   
-        return 'query';
+      if(this.firstDraw) {
+        action = 'query';
+        this.firstDraw = false;
+        return action;
       }
-      this.tableParams = cloneDeep(datatableParams);
-      return 'redraw';
-      // if(this.tableParams.order.col != datatableParams.order.col) {
-  
-      // }
+      if(this.tableParams.start !== datatableParams.start) {
+        this.tableParams.start = datatableParams.start;
+        if(this.items.length <= datatableParams.start) {
+          action = 'query';
+        } else {
+          action = 'redraw';
+        }
+      }
+
+      if(this.tableParams.search !== datatableParams.search.value) {
+        // this.data.length = 0;
+        this.tableParams.search = datatableParams.search.value;
+        // this.recount(this.tableParams.search);
+        action = 'query';
+      }
+      if(this.tableParams.length !== datatableParams.length) {
+        this.tableParams.length = datatableParams.length;
+        action = 'redraw';
+      }
+      return action;
   
     }
     delete(item) {

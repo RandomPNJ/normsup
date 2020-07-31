@@ -368,17 +368,17 @@ export class Dashboard1Component implements OnInit, AfterViewInit {
 			.get('/api/suppliers/dash')
 			.subscribe(res => {
 				if(res.body) {
-					if(res.body['count']) {
+					if(res.body['count'] && res.body['count'] !== -1) {
 						this.nbSuppliers = res.body['count'];
 					} else {
 						this.nbSuppliers = 0; 
 					}
-					if(res.body['conform']) {
+					if(res.body['conform'] && res.body['conform'] !== -1) {
 						this.conform = res.body['conform'];
 					} else {
 						this.conform = 0;
 					}
-					if(res.body['offline']) {
+					if(res.body['offline'] && res.body['offline'] !== -1) {
 						this.offline = res.body['offline'];
 					} else {
 						this.offline = 0;
