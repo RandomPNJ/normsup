@@ -3,6 +3,7 @@ import * as _ from 'lodash';
 import * as Query from './queries';
 import config from '../../config/environment/index';
 import * as bcrypt from 'bcrypt';
+import * as moment from 'moment';
 
 declare var loggerT: any;
 
@@ -137,6 +138,96 @@ export default class AdminRegistry {
             })
             .catch(err => {
                 loggerT.error('[ADMIN] ERROR ON QUERY createAdmin : ', err);
+                return Promise.reject(err);
+            })
+        ;
+    }
+
+    public conformityCheckup() {
+        let query = {
+            timeout: 40000
+        };
+        let date = moment().startOf('month').toDate();
+        let now = moment();
+        query['sql']    = Query.GET_MONTHLY_CONFORMITY;
+        query['values'] = [date];
+        let toModify = [];
+        let toPush = false;
+        let confArray = []
+        let subQuery = {
+            timeout: 40000,
+            values: [],
+            sql: Query.UPDATE_SUPPLIER_CONFORMITY
+        };
+        return this.mysql.query(query)
+            .then(res => {
+                loggerT.verbose('[ADMIN] QUERY conformityCheckup RES ==== ', res);
+                if(res && res.length > 0) {
+                    res.forEach(e => {
+                        toPush = false;
+                        if(e.kbis === 1) {
+                            if(e.kbis_expiration && now.isAfter(moment(e.kbis_expiration))) {
+                                toPush = true;
+                                e.kbis = 0;
+                                e.kbis_expiration = null;
+                            } else if(!e.kbis_expiration) {
+                                toPush = true;
+                                e.kbis = 0;
+                            }
+                        }
+                        if(e.lnte === 1) {
+                            if(e.lnte_expiration && now.isAfter(moment(e.lnte_expiration))) {
+                                toPush = true;
+                                e.lnte = 0;
+                                e.lnte_expiration = null;
+                            } else if(!e.lnte_expiration) {
+                                toPush = true;
+                                e.lnte = 0;
+                            }
+                        }
+                        if(e.urssaf === 1) {
+                            if(e.urssaf_expiration && now.isAfter(moment(e.urssaf_expiration))) {
+                                toPush = true;
+                                e.urssaf = 0;
+                                e.urssaf_expiration = null;
+                            } else if(!e.urssaf_expiration) {
+                                toPush = true;
+                                e.urssaf = 0;
+                            }
+                        }
+                        if(toPush) {
+                            let z = _.cloneDeep(subQuery);
+                            z.values = [e.kbis,e.lnte,e.urssaf,e.kbis_expiration,e.urssaf_expiration,e.lnte_expiration,e.supplier_id,e.client_id,date];
+                            toModify.push(this.mysql.query(z));
+                        }
+                    });
+
+                    const promises = toModify.map(p => p.catch(e => e)); 
+                      
+                    return Promise.all(promises)
+                        .then(result => {
+                            loggerT.verbose('Final res conformityCheckup : ', result)
+                            let errors = [];
+                            if(result) {
+                                result.forEach((r, i) => {
+                                    if(r.hasOwnProperty('errno')) {
+                                        errors.push(res[i]);
+                                    }
+                                });
+                                loggerT.verbose('Errors when trying to conformityCheckup : ', errors);
+                            }
+                        })
+                        .catch(err => {
+                            loggerT.error('Final err conformityCheckup : ', err)
+                        })
+                    ;
+                }
+
+                return Promise.resolve(res);
+
+            })
+            .catch(err => {
+                loggerT.error('[ADMIN] ERROR ON QUERY conformityCheckup : ', err);
                 return Promise.reject(err);
             })
         ;

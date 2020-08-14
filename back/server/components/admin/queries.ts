@@ -13,6 +13,9 @@ export const GET_SUPPLIERS = 'SELECT o.id, o.denomination FROM organisations as 
 export const QUERY_GET_ADMIN = 'SELECT * from admins WHERE id = ? AND email = ? LIMIT 1';
 
 
+export const GET_MONTHLY_CONFORMITY = 'SELECT * FROM supplier_conformity as sc WHERE sc.start_date = ?';
+export const UPDATE_SUPPLIER_CONFORMITY = 'UPDATE supplier_conformity SET kbis=?,lnte=?,urssaf=?,kbis_expiration=?,urssaf_expiration=?,lnte_expiration=? WHERE supplier_id = ? AND client_id=? AND start_date=?';
+
 export const QUERY_GET_SUPPLIERS_USERS = 'SELECT s.name, s.lastname, s.created_at, s.client_id, s.org_id, s.email, s.validity_date, c.org_name, o.denomination FROM `suppliers` AS s LEFT JOIN `client` as c ON c.id = s.client_id LEFT JOIN `organisations` as o ON o.id = s.org_id;';
 export const QUERY_GET_SUPPLIERS_USERS_OFFLIM = "SELECT s.name, s.lastname, s.created_at, s.client_id, s.org_id, s.email, s.validity_date, c.org_name, o.denomination FROM `suppliers` AS s LEFT JOIN `client` as c ON c.id = s.client_id LEFT JOIN `organisations` as o ON o.id = s.org_id LIMIT ? OFFSET ?";
 

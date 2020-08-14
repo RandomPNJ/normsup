@@ -94,15 +94,11 @@ export default class SupplierRegistry {
                                     push = moment().isBefore(validDate);
                                 }
                             } else if(type === 'LNTE'){
-                                if(a !== null) {
-                                    validDate = moment(a, 'DD MMMM YYYY').add(6, 'months').toDate();
-                                } else {
-                                    validDate = a;
-                                }
+                                // TO DO
                             } else if(type === 'KBIS') {
+                                loggerT.verbose('Kbis a = ', a);
                                 if(a !== null) {
                                     validDate = moment(a, 'DD MMMM YYYY').add(6, 'months').toDate();
-
                                     push = moment().isBefore(validDate);
                                 }
                             }
@@ -111,6 +107,7 @@ export default class SupplierRegistry {
                             file['originalname'] = file['originalname'].replace(/ /g, "_");
                             
                             if(push) {
+                                loggerT.verbose('push');
                                 paths.push({path: type + '/' + orgRes[0].siret + '/' + type + '_' + moment(new Date()).format("DD-MM-YYYY"), file: file, type: type, validityDate: validDate});
                             } else {
                                 finalRes[type] = {
@@ -185,6 +182,7 @@ export default class SupplierRegistry {
         const that = this;
         let rows = {};
         let r = null;
+        let firstPage = true;
         let end = false;
         loggerT.verbose('readPdf start type', type);
         return new Promise((resolve, reject) => {
@@ -201,28 +199,40 @@ export default class SupplierRegistry {
                             return resolve(r);
                         }
                         rows = {}; // clear rows for next page
-                    } else if (item.text) {
+                    } else if(item.text) {
                         (rows[item.y] = rows[item.y] || []).push(item.text);
                     }
                   })
                 ;
-            } else {
+            } else if(type === 'KBIS') {
+                loggerT.verbose('Parse type KBIS');
                 this.PdfReader.parseBuffer(buffer, (err, item) => {
                     if(err) {
                         return reject(err);
                     }
-                    if(!item) {
-                        return resolve(r);
+                    if(!item && firstPage) {
+                        r = that.printRows(rows, type);
+                        if(r) {
+                            // r = [r.slice(0, 2), ' ', r.slice(2)].join('');
+                            // r = [r.slice(0, r.length-4), ' ', r.slice(r.length-4)].join('');
+                            r = this.parseDateFromExtract(r);
+                            return resolve(r);
+                        }
+                        firstPage = false;
+                        rows = {}; // clear rows for next page
                     } else if(item.page) {
                         r = that.printRows(rows, type);
                         if(r) {
-                            r = [r.slice(0, 2), ' ', r.slice(2)].join('');
-                            r = [r.slice(0, r.length-4), ' ', r.slice(r.length-4)].join('');
+                            // r = [r.slice(0, 2), ' ', r.slice(2)].join('');
+                            // r = [r.slice(0, r.length-4), ' ', r.slice(r.length-4)].join('');
+                            r = this.parseDateFromExtract(r);
                             return resolve(r);
                         }
                         rows = {}; // clear rows for next page
-                    } else if (item.text) {
+                    } else if(item.text) {
                         (rows[item.y] = rows[item.y] || []).push(item.text);
+                    } else if(!item) {
+                        return resolve(r);
                     }
                   })
                 ;
@@ -241,13 +251,14 @@ export default class SupplierRegistry {
               .forEach(y => {
                   let a = (rows[y] || []).join("");
                   if(a.indexOf('àjour') !== -1 || a.indexOf('à jour') !== -1) {
-                    let dateRegex = /([0-9][0-9])( ){0,1}((J|j)anvier?|(f|F)(é|e)vrier?|(M|m)ars?|(A|a)vril?|(M|m)ai?|(J|j)uin?|(J|j)uillet?|(A|a)o(u|û)t?|(S|s)eptembre?|(O|o)ctobre?|(N|n)ovembre?|(D|d)(e|é)cembre?)( ){0,1}20[1-2][0-9]/g;
+                    let dateRegex = /([0-9]{0,1}[0-9])( ){0,1}((J|j)anvier?|(f|F)(é|e)vrier?|(M|m)ars?|(A|a)vril?|(M|m)ai?|(J|j)uin?|(J|j)uillet?|(A|a)o(u|û)t?|(S|s)eptembre?|(O|o)ctobre?|(N|n)ovembre?|(D|d)(e|é)cembre?)( ){0,1}20[1-2][0-9]/g;
                     const found = rows[y].join("").replace(/\s/g,'').match(dateRegex);
-                    res = (found[0] || null);
+                    res = found && found.length > 0 ? found[0] : null;
                   }
                 })
             ;
         } else if(type === 'LNTE'){
+            // NOT DONE YET
             Object.keys(rows) // => array of y-positions (type: float)
               .sort((y1, y2) => parseFloat(y1) - parseFloat(y2)) // sort float positions
               .forEach(y => {
@@ -403,6 +414,34 @@ export default class SupplierRegistry {
                 return Promise.reject(err);
             })
         ;
+    }
+
+    private parseDateFromExtract(s: String) {
+        if(!s) {
+            return;
+        }
+        let temp = {};
+        let res = '';
+        let i = 0;
+        let mode = 'number';
+        s.split("").forEach(c => {
+            if(mode === 'number' && isNaN(c as any) === true) {
+                i++;
+                mode = 'letter'
+            }
+            if(mode === 'letter' && isNaN(c as any) === false) {
+                i++;
+                mode = 'number'
+            }
+            temp[i] ? temp[i] += c : temp[i] = c;
+        });
+        Object.keys(temp).forEach(e => {
+            if(e == '0')
+                res += temp[e]
+            else
+                res += ' ' + temp[e]
+        });
+        return res;
     }
 
     private allSkippingErrors(promises) {

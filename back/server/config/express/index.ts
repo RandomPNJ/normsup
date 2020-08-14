@@ -99,7 +99,8 @@ export default (expressApp) => {
   const AuthMiddleware = new AuthenticatorMiddleware();
   expressApp.use('/api', (req, res, next) => {
     if(req.url === '/auth/login' || req.url === '/auth/refresh_token' || req.url === '/auth/supplier-login'
-     || req.url === '/users/current' || req.url.indexOf('/auth/admin') !== -1 || req.url === '/admin/daily_reminders') {
+     || req.url === '/users/current' || req.url.indexOf('/auth/admin') !== -1 || req.url === '/admin/daily_reminders'
+     || req.url === '/admin/conformity/checkup') {
       return next();
     }
     if(req.url === '/supplier/currentSupplier' || req.url === '/documents/upload') {
