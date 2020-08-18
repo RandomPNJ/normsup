@@ -22,7 +22,6 @@ export default class RemindersRegistry {
 
     }
 
-    // TODO
     public sendReminder(supplierID, user) {
         let query = {
             timeout: 40000
@@ -53,13 +52,13 @@ export default class RemindersRegistry {
 
                     mailOptions.html = genericTemplate({ 'rTitle': rTitle, 'respresName': _.capitalize(res[0].lastname), 'denomination': res[0].denomination });
                     return this.transporter.sendMail(mailOptions)
-                        .then(res => {
-                            loggerT.verbose('[sendReminder] Send mail res :', res);
+                        .then(result => {
+                            loggerT.verbose('[sendReminder] Send mail res :', result);
                             query['sql'] = Query.UPDATE_SPONT_REMIND;
                             query['values'] = [moment().add(3, 'day').toDate(), supplierID];
                             return this.mysql.query(query)
-                                .then(res => {
-                                    return Promise.resolve(res);
+                                .then(result2 => {
+                                    return Promise.resolve(result2);
                                 })
                                 .catch(err => {
                                     loggerT.error('[sendReminder] Error when updating organisation table with new spont reminder date.');
@@ -68,7 +67,7 @@ export default class RemindersRegistry {
                             ;
                         })
                         .catch(err => {
-                            loggerT.error('[sendReminder] ERROR ON QUERY sendMail.');
+                            loggerT.error('[sendReminder] ERROR ON QUERY sendMail :', err);
                             return Promise.reject(err);
                         })
                     ;
@@ -81,7 +80,7 @@ export default class RemindersRegistry {
         ;
     }
 
-    // TODO
+    // TODO / TOTEST
     public sendGroupReminder(groupID, user) {
         let query = {
             timeout: 40000

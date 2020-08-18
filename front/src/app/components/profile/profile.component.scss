@@ -107,7 +107,7 @@
     align-items: center;
     justify-content: center;
     border-radius: 50%;
-    background: #C7E0FF 0% 0% no-repeat padding-box;
+    // background: #C7E0FF 0% 0% no-repeat padding-box;
     // opacity: 0.61;
 
     .filepicker {
@@ -127,7 +127,7 @@
         width: 53px;
         height: 42px;
         text-indent: 100em;
-        background: url('/src/assets/img/appareil-photo.svg');
+        // background: url('/src/assets/img/appareil-photo.svg');
         background-size: cover;
         overflow: hidden;
         cursor: pointer;
@@ -145,7 +145,7 @@
 .img-preview {
     height: 133px;
     width: 133px;
-    border-radius: 25%;
+    border-radius: 50%;
     position: absolute;
     opacity: 0.61;
 }

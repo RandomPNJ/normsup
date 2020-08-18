@@ -21,7 +21,7 @@
             </div>
             <div *ngIf="loading === false" class="profile-card-body">
               <div class="profile-circle-cont">
-                <div class="input-group upload-file-cont" >
+                <div class="input-group upload-file-cont" [ngStyle]="{'background: #C7E0FF 0% 0% no-repeat padding-box;': !profilePic}">
                   <img src="/src/assets/img/bin.svg" class="del-pic-icn" *ngIf="imgURL" (click)="deletePicture()">
                   <img *ngIf="profilePic && !imgURL" [src]="profilePic" alt="..." height="200" class="img-preview" style="position: absolute;">
                   <img [src]="imgURL" height="200" *ngIf="imgURL" class="img-preview">

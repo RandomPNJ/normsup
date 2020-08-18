@@ -63,14 +63,15 @@ function start(app: any, config: any): any {
   // generate express and routes
   const expressApp = express();
   app.set('expressApp', expressApp, { private: true });
+
   expressConfig(expressApp);
+
   const server = new Server(expressApp, config, loggerT);
   app.set('server', server, { private: true });
 
   // Initialisation de SqlDB
   const sqlDB = new SqlDB(config.mysqlParams, loggerT);
   app.set('db:sqlDB', sqlDB, { onLoad: true });
-  
   
   
   // Initialisation des repositories

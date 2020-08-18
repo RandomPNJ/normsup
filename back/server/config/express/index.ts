@@ -100,7 +100,7 @@ export default (expressApp) => {
   expressApp.use('/api', (req, res, next) => {
     if(req.url === '/auth/login' || req.url === '/auth/refresh_token' || req.url === '/auth/supplier-login'
      || req.url === '/users/current' || req.url.indexOf('/auth/admin') !== -1 || req.url === '/admin/daily_reminders'
-     || req.url === '/admin/conformity/checkup') {
+     || req.url === '/admin/conformity/checkup' || req.url === '/admin/alerts') {
       return next();
     }
     if(req.url === '/supplier/currentSupplier' || req.url === '/documents/upload') {

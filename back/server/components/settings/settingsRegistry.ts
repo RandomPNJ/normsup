@@ -40,7 +40,7 @@ export default class SupplierRegistry {
         };
         const id = data.client_id;
         delete data.clientID;
-        const sqlParams = [data.alerts_state, data.alert_valid_sup, data.alert_invalid_sup, data.alert_invalid_mail, data.alert_frequency];
+        const sqlParams = [data.alerts_state, data.alert_valid_sup, data.alert_invalid_sup, data.alert_invalid_mail, data.alert_frequency, data.alert_offline_sup];
         // Object.keys(data).forEach(key => {
         //     sqlParams.push(data[key]);
         // });

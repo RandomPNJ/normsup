@@ -5,7 +5,7 @@
             <!-- <img class="logo-img" src="../../../assets/img/normsup-logo.png" alt="Logo"> -->
         </a>
         <div style="margin-top: 0px;" class=" logout flyover-subcont media d-flex align-items-center">
-            <img *ngIf="profilePic" [src]="profilePic" alt="..." width="31" class="rounded-circle shadow-sm">
+            <img *ngIf="profilePic" [src]="profilePic" alt="..." width="34" height="34" class="rounded-circle shadow-sm">
             <div class="header-txt-cont" (click)='dropbox()' (clickOutside)="closeDropdown()">
                 <div style="width: 100%;max-width: 400px;" class="inline-b">
                     <h4 class="m-0 one-liner show-username header-txt">{{currentUser.name}} {{currentUser.lastname}} <span>{{currentUser.companyName ? "/ " + currentUser.companyName : ""}}</span></h4>

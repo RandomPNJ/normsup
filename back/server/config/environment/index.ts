@@ -176,7 +176,8 @@ export default {
         { name: 'dailyReminders', uriPattern: '/daily_reminders', method: 'post' },
         { name: 'monthlyConformity', uriPattern: '/monthly_conformity', method: 'post' },
         { name: 'getCurrent', uriPattern: '/current', method: 'get' },
-        { name: 'conformityCheckup', uriPattern: '/conformity/checkup', method: 'get' },
+        { name: 'conformityCheckup', uriPattern: '/conformity/checkup', method: 'post' },
+        { name: 'dailyAlerts', uriPattern: '/alerts', method: 'post' },
       ]
     }
   },

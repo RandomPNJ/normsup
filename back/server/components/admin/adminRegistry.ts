@@ -232,7 +232,75 @@ export default class AdminRegistry {
             })
         ;
     }
+
+    public sendClientAlerts(type) {
+        let query = {
+            timeout: 40000
+        };
+        let mailQuery = {
+            timeout: 40000,
+            sql: '',
+            values: []
+        };
+        let q;
+        let queryEnd;
+        let mailData = {};
+        if(type === 'NORMAL') {
+            q = Query.GET_ALERTS_CLIENTS;
+            let weekday = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+            // TO DECOMMENT
+            // let day = weekday[(new Date()).getDay()];
+            // TO REMOVE
+            let day = 'Monday';
+            if(day === 'Sunday' || day === 'Saturday') {
+                return Promise.reject('Not a weekday.');
+            }
+            queryEnd = this.getAlertType(day);
+            q += queryEnd;
+        } else if(type === 'BIMONTHLY') {
+            q = Query.GET_ALERTS_BIMONTHLY;
+            q += " AND cp.alert_frequency = 'BIMONTHLY' ";
+        } else if(type === 'MONTHLY') {
+            q = Query.GET_ALERTS_MONTHLY;
+            q += " AND cp.alert_frequency = 'MONTHLY' ";
+        }
     
+        
+        
+        query['sql']    = q;
+        query['values'] = [];
+    
+        return this.mysql.query(query)
+            .then(res => {
+                loggerT.verbose('[ADMIN] QUERY dailyAlerts RES ==== ', res);
+                if(res && res.length > 0) {
+                    res.forEach(u => {
+                        
+                    });
+                }
+
+                return Promise.resolve(res);
+
+            })
+            .catch(err => {
+                loggerT.error('[ADMIN] ERROR ON QUERY dailyAlerts : ', err);
+                return Promise.reject(err);
+            })
+        ;
+    }
+    
+    private getAlertType(day) {
+        let res = '';
+        if(day === 'Monday') {
+            res = " AND (cp.alert_frequency = 'EVERYOTHERDAY' OR cp.alert_frequency = 'WEEKLY' OR cp.alert_frequency = 'DAILY')"
+        } else if(day === 'Wednesday' || day === 'Friday') {
+            res = " AND (cp.alert_frequency = 'EVERYOTHERDAY' OR cp.alert_frequency = 'DAILY')"
+        } else {
+            res = " AND cp.alert_frequency = 'DAILY' ";
+        }
+        return res;
+    }
+
     public getUsers(data) {
         let query = {
             timeout: 40000

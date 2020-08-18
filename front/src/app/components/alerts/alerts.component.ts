@@ -41,8 +41,8 @@ export class AlertsComponent implements OnInit {
     { name: 'Journalière', value: 'DAILY'},
     { name: 'Un jour sur deux', value: 'EVERYOTHERDAY'},
     { name: 'Hebdomadaire', value: 'WEEKLY'},
-    { name: 'Bimensuel', value: 'BIMENSUEL'},
-    { name: 'Mensuel', value: 'MENSUEL'},
+    { name: 'Bimensuel', value: 'BIMONTHLY'},
+    { name: 'Mensuel', value: 'MONTHLY'},
   ];
 
   constructor(private modalService: BsModalService, private changeDetection: ChangeDetectorRef,

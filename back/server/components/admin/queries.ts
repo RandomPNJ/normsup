@@ -22,3 +22,7 @@ export const QUERY_GET_SUPPLIERS_USERS_OFFLIM = "SELECT s.name, s.lastname, s.cr
 export const INSERT_ALERT = 'INSERT INTO `client_preferences` (client_id, alerts_state, alert_valid_sup, alert_invalid_sup, alert_invalid_mail, alert_frequency) VALUES (?,?,?,?,?,?) ON DUPLICATE KEY UPDATE alerts_state = ?, alert_valid_sup = ?, alert_invalid_sup = ?, alert_invalid_mail = ?, alert_frequency = ?';
 
 export const FIND_ADMIN_BY_NAME_EMAIL = 'SELECT id,create_time,email,lastname,name,username,password FROM `admins` WHERE `username` = ? OR `email` = ? LIMIT 1';
+
+export const GET_ALERTS_CLIENTS = 'SELECT cp.client_id, cp.alert_valid_sup, cp.alert_invalid_sup, cp.alert_invalid_mail, cp.alert_frequency, cp.alert_offline_supplier, u.organisation, u.name, u.lastname, u.email FROM client_preferences as cp LEFT JOIN `user` as u ON u.id = cp.client_id WHERE cp.alerts_state = 1 ';
+export const GET_ALERTS_BIMONTHLY = 'SELECT SELECT cp.client_id, cp.alert_valid_sup, cp.alert_invalid_sup, cp.alert_invalid_mail, cp.alert_frequency, cp.alert_offline_supplier, u.organisation, u.name, u.lastname, u.email FROM client_preferences as cp LEFT JOIN suppliers as s ON s.id = cp.client_id WHERE cp.alerts_state = 1 ';
+export const GET_ALERTS_MONTHLY = 'SELECT SELECT cp.client_id, cp.alert_valid_sup, cp.alert_invalid_sup, cp.alert_invalid_mail, cp.alert_frequency, cp.alert_offline_supplier, u.organisation, u.name, u.lastname, u.email FROM client_preferences as cp LEFT JOIN suppliers as s ON s.id = cp.client_id WHERE cp.alerts_state = 1 ';
