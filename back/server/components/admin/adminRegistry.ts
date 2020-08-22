@@ -5,15 +5,18 @@ import * as SupplierQuery from '../supplier/queries';
 import config from '../../config/environment/index';
 import * as bcrypt from 'bcrypt';
 import * as moment from 'moment';
+import { alertMail } from './alertMail';
 
 declare var loggerT: any;
 
 export default class AdminRegistry {
 
     private mysql: any;
+    private transporter: any;
 
-    public constructor(mysql) {
+    public constructor(mysql, transporter) {
         this.mysql = mysql;
+        this.transporter = transporter;
     }
 
     public login(login: string, password: string) {
@@ -297,6 +300,30 @@ export default class AdminRegistry {
                             resultData.forEach((data, e) => {
                                 if(data[0]) {
                                     clientIdsDone[data[0].client_id] = data[0];
+                                }
+                            });
+                            let genericTemplate = _.template(alertMail);
+                            let mailOptions = {
+                                from: 'NormSup <mail.normsup@gmail.com>', // sender address
+                                to: '', // list of receivers
+                                subject: 'Dépôt de document sur NormSup', // Subject line
+                                html: 'Empty message. Failed.'
+                            };
+                            // 
+                            res.forEach((user) => {
+                                if(clientIdsDone[user.organisation]) {
+                                    let companyData = clientIdsDone[user.organisation];
+                                    let denom = '';
+                                    let rTitle = 'Monsieur/Madame';
+                                    if(user.gender && user.gender === 'M') {
+                                        rTitle = 'Monsieur';
+                                    } else if(user.gender && user.gender === 'F') {
+                                        rTitle = 'Madame';
+                                    }
+                                    // toDate totalSuppliers notToDate offline
+                                    mailOptions.html = genericTemplate({ 'rTitle': rTitle, 'respresName': _.capitalize(user.lastname), 'toDate': companyData[''] });
+                                    mailOptions.to = user.email;
+                                    denom = companyData.denomination ? ' ' + companyData.denomination.toUpperCase() : '';
                                 }
                             });
                             loggerT.verbose('ADMIN] QUERY clientIdsDone', clientIdsDone);
