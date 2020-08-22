@@ -17,7 +17,7 @@ export class SupplierPerGroupComponent implements OnInit {
 	public groupSContext: CanvasRenderingContext2D;
 	public groupSDoughnut: any;
 	public groupSupplierType = 'doughnut';
-	public groupSColors: Array<string> = ['#4390EF', '#C7E0FF', '#4E5983'];
+	public groupSColors: Array<string> = ['#4390EF', '#C7E0FF', '#4E5983', '#6a7bbe', '#5993d9',  '#2c2296', '#2014a3', '#4614a3', '#95a1d0', '#8b9bda'];
 	public groupData: Array<any> = [];
 	public groupNames: Array<any> = [];
 
@@ -33,14 +33,8 @@ export class SupplierPerGroupComponent implements OnInit {
 			{
 				data: [],
 				backgroundColor: [
-					"#4390EF",
-					"#C7E0FF",
-					'#4E5983'
 				],
 				hoverBackgroundColor: [
-					"#4390EF",
-					"#C7E0FF",
-					'#4E5983'
 				]
 			}]
 	};
@@ -112,9 +106,11 @@ export class SupplierPerGroupComponent implements OnInit {
 				console.log('count res', res);
 				if (res.body && res.body['items']) {
 					console.log("res.body['items']", res.body['items']);
-					res.body['items'].forEach(element => {
+					res.body['items'].forEach((element, i) => {
 						if(element.members_count > 0) {
-							this.groupSupplierSet.datasets[0].data.push(floor(element.members_count / element.total * 100, 1));
+							this.groupSupplierSet.datasets[0].data.push((element.members_count / element.total * 100).toFixed(1).replace(/\.0$/,''));
+							this.groupSupplierSet.datasets[0].backgroundColor.push(this.groupSColors[i]);
+							this.groupSupplierSet.datasets[0].hoverBackgroundColor.push(this.groupSColors[i]);
 							this.groupNames.push(element.name)
 						}
 					});

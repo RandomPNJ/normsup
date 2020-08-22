@@ -1,6 +1,7 @@
 import { Promise, any } from 'bluebird';
 import * as _ from 'lodash';
 import * as Query from './queries';
+import * as SupplierQuery from '../supplier/queries';
 import config from '../../config/environment/index';
 import * as bcrypt from 'bcrypt';
 import * as moment from 'moment';
@@ -248,9 +249,9 @@ export default class AdminRegistry {
         if(type === 'NORMAL') {
             q = Query.GET_ALERTS_CLIENTS;
             let weekday = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
-            // TO DECOMMENT
+            //                      TO DECOMMENT
             // let day = weekday[(new Date()).getDay()];
-            // TO REMOVE
+            //                      TO REMOVE
             let day = 'Monday';
             if(day === 'Sunday' || day === 'Saturday') {
                 return Promise.reject('Not a weekday.');
@@ -269,14 +270,41 @@ export default class AdminRegistry {
         
         query['sql']    = q;
         query['values'] = [];
-    
+        let dataQuery = {
+            timeout: 40000, 
+            values: []
+        };
+        dataQuery['sql']    = Query.ALERT_MAIL_DATA;
+        let allValues = [];
+        let clientIdsDone = {};
         return this.mysql.query(query)
             .then(res => {
                 loggerT.verbose('[ADMIN] QUERY dailyAlerts RES ==== ', res);
                 if(res && res.length > 0) {
-                    res.forEach(u => {
-                        
+                    let id;
+                    res.forEach((u, i) => {
+                        id = u.client_id;
+                        if(!clientIdsDone[id]) {
+                            clientIdsDone[id] = 'empty';
+                            let a = _.cloneDeep(dataQuery);
+                            a.values = [u.client_id, u.client_id, u.client_id, moment().startOf('month').toDate()];
+                            allValues[i] = this.mysql.query(a);
+                        }
                     });
+                    return Promise.all(allValues.map(p => p.catch(e => e)))
+                        .then(resultData => {
+                            loggerT.verbose('ADMIN] QUERY gettingData for clients', resultData);
+                            resultData.forEach((data, e) => {
+                                if(data[0]) {
+                                    clientIdsDone[data[0].client_id] = data[0];
+                                }
+                            });
+                            loggerT.verbose('ADMIN] QUERY clientIdsDone', clientIdsDone);
+                        })
+                        .catch(errorData => {
+                            loggerT.error('ADMIN] ERROR ON QUERY gettingData for clients', errorData);
+                        })
+                    ;
                 }
 
                 return Promise.resolve(res);

@@ -5,7 +5,7 @@ import * as HelperQueries from '../helpers/dbhelpers';
 import * as Query from './queries';
 import config from '../../config/environment/index';
 import * as bcrypt from 'bcrypt';
-import {email as emailTemplate} from './email';
+import {email as emailTemplate, supplierUserEmail} from './email';
 
 declare var loggerT: any;
 
@@ -776,6 +776,7 @@ export default class SupplierRegistry {
         ;
     }
     public deleteSupplier(id, orgID) {
+        // Modify this by CASCADE on SQL
         let query = {
             timeout: 40000
         };
@@ -944,7 +945,7 @@ export default class SupplierRegistry {
         ;
     }
 
-    public createSupplierUser(data) {
+    public createSupplierUser(data, creator, client, supplier, password) {
         loggerT.verbose('Data : ', data);
 
         let query = {
@@ -955,9 +956,31 @@ export default class SupplierRegistry {
 
         return this.mysql.query(query)
             .then(res => {
-                loggerT.verbose('FIRST QUERY RES ==== ', res);
-
-                return Promise.resolve(res)
+                loggerT.verbose('createSupplierUser RES ==== ', res);
+                let genericTemplate = _.template(supplierUserEmail);
+                let mailOptions = {
+                    from: 'NormSup <mail.normsup@gmail.com>', // sender address
+                    to: '', // list of receivers
+                    subject: 'Dépôt de document sur NormSup', // Subject line
+                    html: 'Empty message. Failed.'
+                };
+                let denom = '';
+                let rTitle = 'Monsieur/Madame';
+                denom = supplier.denomination ? ' ' + supplier.denomination.toUpperCase() : '';
+                if(data.gender && data.gender === 'M') {
+                    rTitle = 'Monsieur';
+                } else if(data.gender && data.gender === 'F') {
+                    rTitle = 'Madame';
+                }
+                mailOptions.html = genericTemplate({ 'rTitle': rTitle, 'respresName': _.capitalize(data.lastname), 'client_name': client.denomination, 'denomination': denom, 'login': data.email, 'password': password });
+                mailOptions.to = data.email;
+                return this.transporter.sendMail(mailOptions)
+                    .then(() => {
+                        return Promise.resolve(res);
+                    })
+                    .catch(err => {
+                        return Promise.reject({msg: 'Couldn\'t send mail to supplier\'s representative.'})
+                    })
                 ;
             })
             .catch(err => {
@@ -1097,7 +1120,7 @@ export default class SupplierRegistry {
         return this.mysql.query(query)
             .then(res => {
                 loggerT.verbose('FIRST QUERY updateRepresentative RES ==== ', res);
-
+                
                 return Promise.resolve(res)
                 ;
             })

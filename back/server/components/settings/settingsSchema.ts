@@ -1,7 +1,7 @@
 import * as Joi from 'joi';
 
 export const AlertSchema = Joi.object({
-    client_id: Joi.number().optional(),
+    user_id: Joi.allow(Joi.number(), Joi.string()).optional(),
     alerts_state: Joi.allow(Joi.boolean(), Joi.string()).required(),
     alert_offline_sup: Joi.allow(Joi.boolean(), Joi.string()).required(),
     alert_valid_sup: Joi.allow(Joi.boolean(), Joi.string()).required(),

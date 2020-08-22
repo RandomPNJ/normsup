@@ -18,5 +18,6 @@ export const GroupRemindersSchema = Joi.object({
     name: Joi.string().allow("").optional(),
     id: Joi.allow([Joi.string(), Joi.number()]).optional(),
     creation_time: Joi.date().optional(),
-    last_reminder: Joi.date().optional()
+    last_reminder: Joi.date().optional(),
+    spont_reminder: Joi.date().optional(),
 });

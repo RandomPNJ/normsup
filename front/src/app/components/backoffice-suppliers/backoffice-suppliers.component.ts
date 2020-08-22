@@ -178,7 +178,7 @@ export class BackofficeSuppliersComponent implements OnInit {
       data.client_id = this.clientSelected.id;
       data.org_id = this.supplierSelected.id;
     }
-    this.apiService.postData('/api/admin/suppliers/register', { user: data })
+    this.apiService.postData('/api/admin/suppliers/register', { user: data, supplier: this.supplierSelected, client: this.clientSelected })
       .subscribe(res => {
           this.hideModal('');
         }, err => {

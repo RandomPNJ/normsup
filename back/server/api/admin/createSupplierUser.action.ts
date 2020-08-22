@@ -14,27 +14,46 @@ export default {
 
 export function createSupplierUser(req, SuppliersRegistry) {
     loggerT.verbose('Body to create Users', req.body);
-    let data;
-    if(req.body['user']) {
-        data = req.body['user']
+    
+    
+
+    if(!req.body || !req.body.user) {
+        const err = new Error(`User data missing in body.`);
+        err['statusCode'] = 400;
+        throw err;
     }
+    if(!req.body.client) {
+        const err = new Error(`Client data missing in body.`);
+        err['statusCode'] = 400;
+        throw err;
+    }
+    if(!req.body.supplier) {
+        const err = new Error(`Supplier data missing in body.`);
+        err['statusCode'] = 400;
+        throw err;
+    }
+
     const creator = req.decoded;
+    let data = req.body.user;
+    let supplier = req.body.supplier;
+    let client = req.body.client;
+
     if(isNaN(data.validity)) {
         const error = new Error(`Validity is not a valid number, please retry.`);
-            error['statusCode'] = 400;
-            throw error;
+        error['statusCode'] = 400;
+        throw error;
     }
+
     data.validity = parseInt(data.validity);
     data.created_at = new Date();
     data.validity_date = moment().add(data.validity, 'days').toDate();
     delete data.validity;
 
-    // this removes white spaces
-    // data.username = data.name.replace(/\s+/g, '') + "_" + data.lastname.replace(/\s+/g, '');
-    // data.username = data.username.substring(0, 16);
-
-    // data.password = Math.random().toString(36).slice(-8);
-    data.password = 'supplierpassword';
+    if(!data.password) {
+        data.password = Math.random().toString(36).slice(-8);
+    }
+    let orgPwd = data.password;
+    // data.password = 'supplierpassword';
     loggerT.verbose('User', data);
 
     return bcrypt.hash(data.password, 14, function(err, hash) {
@@ -45,7 +64,7 @@ export function createSupplierUser(req, SuppliersRegistry) {
         }
         // Store hash in your password DB.
         data.password = hash;
-        return SuppliersRegistry.createSupplierUser(data, req.decoded)
+        return SuppliersRegistry.createSupplierUser(data, req.decoded, client, supplier, orgPwd)
             .then(res => {
                 loggerT.verbose('createSupplierUser res', res);
                 let response = {
