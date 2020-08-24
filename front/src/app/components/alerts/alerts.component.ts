@@ -123,11 +123,17 @@ export class AlertsComponent implements OnInit {
 
   updatePreferences() {
     if(this.preferences) {
-      this.preferences.client_id = JSON.parse(this.localStorage.getLocalStorage('current_user')).id;
+      this.preferences.user_id = JSON.parse(this.localStorage.getLocalStorage('current_user')).id;
+      this.preferences.client_id = JSON.parse(this.localStorage.getLocalStorage('current_user')).organisation;
       return this.httpService
         .post('/api/settings/alerts/manage', this.preferences)
         .subscribe(res => {
           // TODO: Make success pop up
+          this.notif.success('Préférences d\'alertes modifiées avec succès.')
+          return;
+        }, err => {
+          this.notif.error('Erreur lors de la modification, veuillez rééssayer plus tard.')
+          console.log('Error updatePreferences :', err);
           return;
         })
       ;

@@ -12,6 +12,11 @@ export default {
 };
 
 export function createUser(req, UsersRegistry) {
+    if(!req.decoded) {
+        const error = new Error(`Invalid request, could not get information from token.`);
+        error['statusCode'] = 400;
+        throw error;
+    }
     loggerT.verbose('Body to create Users', req.body);
     let data;
     const creator = req.decoded;

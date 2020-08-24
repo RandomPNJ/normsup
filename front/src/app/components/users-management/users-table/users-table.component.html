@@ -31,7 +31,7 @@
           <div id="util-btns" [ngClass]="{'custom-tbl-border-right': i !== items.length - 1, 'last-custom-tbl-border-right': i === items.length - 1}" class="badge-container content-cont row-space">
             <div class="badge-container content-cont container">
               <div class="row h-100 cent" style="padding-right: 33px;">
-                <button type="button" class="btn new-btn-normsup default-btn-table btn-user-tbl">Supprimer</button>
+                <button (click)="deleteSupplier(item.id, i)" type="button" class="btn new-btn-normsup default-btn-table btn-user-tbl">Supprimer</button>
               </div>
             </div>
           </div>

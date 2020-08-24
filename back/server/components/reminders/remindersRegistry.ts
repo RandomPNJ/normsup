@@ -248,7 +248,7 @@ export default class RemindersRegistry {
                 mailOptions.to = s.email;
                 mails.push(this.transporter.sendMail(mailOptions));
             } else {
-
+                // TODO
             }
         });
         loggerT.verbose('sendMails2 here ');

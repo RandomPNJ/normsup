@@ -5,7 +5,7 @@ import * as SupplierQuery from '../supplier/queries';
 import config from '../../config/environment/index';
 import * as bcrypt from 'bcrypt';
 import * as moment from 'moment';
-import { alertMail } from './alertMail';
+import * as alertMails from './alertMail';
 
 declare var loggerT: any;
 
@@ -71,27 +71,40 @@ export default class AdminRegistry {
 
                 query['sql']    = Query.INSERT_ROLE;
                 query['values'] = [res.insertId, roleID];
-                
+                let createAlertQ = {
+                    timeout: 40000,
+                    sql: Query.INSERT_ALERT,
+                    values: [data.organisation, res.insertId]
+                };
 
-                return that.mysql.query(query)
-                    .then(res => {
-                        loggerT.verbose('QUERY createRole RES ==== ', res);
-                        query['sql'] = Query.INSERT_USER_PREFERENCES;
-                        query['values'] = [res.insertId];
+                // return that.mysql.query(createAlertQ)
+                //     .then(() => {
                         return that.mysql.query(query)
-                            .then(() => {
-                                return Promise.resolve(res);
+                            .then(subRes => {
+                                loggerT.verbose('QUERY createRole RES ==== ', subRes);
+                                query['sql'] = Query.INSERT_USER_PREFERENCES;
+                                query['values'] = [res.insertId, data.organisation];
+                                return that.mysql.query(query)
+                                    .then(() => {
+                                        return Promise.resolve(res);
+                                    })
+                                    .catch(err => {
+                                        loggerT.error('QUERY INSERT_USER_PREFERENCES ERR ==== ', err);
+                                        return Promise.reject({statusCode: 500, msg: 'Could not create user preferences for user with id :' + res.insertId})
+                                    })
+                                ;
                             })
                             .catch(err => {
-                                loggerT.error('QUERY INSERT_USER_PREFERENCES ERR ==== ', err);
-                                return Promise.reject({statusCode: 500, msg: 'Could not create user preferences for user with id :' + res.insertId})
+                                loggerT.error('QUERY createRole ERR ==== ', err);
+                                return Promise.reject({statusCode: 500, msg: 'Could not create user role for user with id :' + res.insertId})
                             })
-                    })
-                    .catch(err => {
-                        loggerT.error('QUERY createRole ERR ==== ', err);
-                        return Promise.reject({statusCode: 500, msg: 'Could not create user role for user with id :' + res.insertId})
-                    })
-                ;
+                        ;
+                //     })
+                //     .catch(err => {
+                //         loggerT.error('[ADMIN] QUERY createAlert ERR ==== ', err);
+                //         return Promise.reject({statusCode: 500, msg: 'Could not create user alerts for user with id :' + res.insertId})
+                //     })
+                // ;
 
             })
             .catch(err => {
@@ -249,13 +262,13 @@ export default class AdminRegistry {
         let q;
         let queryEnd;
         let mailData = {};
+        let mails = {};
         if(type === 'NORMAL') {
             q = Query.GET_ALERTS_CLIENTS;
             let weekday = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
-            //                      TO DECOMMENT
-            // let day = weekday[(new Date()).getDay()];
+            let day = weekday[(new Date()).getDay()];
             //                      TO REMOVE
-            let day = 'Monday';
+            // let day = 'Monday';
             if(day === 'Sunday' || day === 'Saturday') {
                 return Promise.reject('Not a weekday.');
             }
@@ -280,6 +293,7 @@ export default class AdminRegistry {
         dataQuery['sql']    = Query.ALERT_MAIL_DATA;
         let allValues = [];
         let clientIdsDone = {};
+        let mailPromises = [];
         return this.mysql.query(query)
             .then(res => {
                 loggerT.verbose('[ADMIN] QUERY dailyAlerts RES ==== ', res);
@@ -290,43 +304,101 @@ export default class AdminRegistry {
                         if(!clientIdsDone[id]) {
                             clientIdsDone[id] = 'empty';
                             let a = _.cloneDeep(dataQuery);
-                            a.values = [u.client_id, u.client_id, u.client_id, moment().startOf('month').toDate()];
+                            a.values = [moment().startOf('month').toDate(), u.client_id, u.client_id, u.client_id];
                             allValues[i] = this.mysql.query(a);
                         }
                     });
                     return Promise.all(allValues.map(p => p.catch(e => e)))
                         .then(resultData => {
-                            loggerT.verbose('ADMIN] QUERY gettingData for clients', resultData);
+                            loggerT.verbose('[ADMIN] QUERY gettingData for clients', resultData);
                             resultData.forEach((data, e) => {
-                                if(data[0]) {
-                                    clientIdsDone[data[0].client_id] = data[0];
+                                if(data && data.length > 0) {
+                                    let i = 0;
+                                    data.map(element => {
+                                        if(element.kbis == 1 && element.urssaf == 1 && element.lnte == 1) {
+                                            i++;
+                                        }
+                                    });
+                                    let d = {count: data[0].count, conform: i, offline: data[0].off};
+                                    clientIdsDone[data[0].client_id] = d;
                                 }
                             });
-                            let genericTemplate = _.template(alertMail);
+                            loggerT.verbose('ADMIN] QUERY clientIdsDone', clientIdsDone);
+                            let genericTemplate_0 = _.template(alertMails.alertMail_0);
+                            let genericTemplate_1 = _.template(alertMails.alertMail_1);
+                            let genericTemplate_2 = _.template(alertMails.alertMail_2);
+                            let genericTemplate_3 = _.template(alertMails.alertMail_3);
+                            let genericTemplate_4 = _.template(alertMails.alertMail_4);
+                            let genericTemplate_5 = _.template(alertMails.alertMail_5);
+                            let genericTemplate_6 = _.template(alertMails.alertMail_6);
+
                             let mailOptions = {
                                 from: 'NormSup <mail.normsup@gmail.com>', // sender address
                                 to: '', // list of receivers
-                                subject: 'Dépôt de document sur NormSup', // Subject line
+                                subject: 'NormSup: Alerte sur votre conformité fournisseur', // Subject line
                                 html: 'Empty message. Failed.'
                             };
-                            // 
+
                             res.forEach((user) => {
+                                loggerT.verbose('User : ', user);
                                 if(clientIdsDone[user.organisation]) {
+                                    mails[user.user_id] = _.cloneDeep(mailOptions);
                                     let companyData = clientIdsDone[user.organisation];
-                                    let denom = '';
                                     let rTitle = 'Monsieur/Madame';
                                     if(user.gender && user.gender === 'M') {
                                         rTitle = 'Monsieur';
                                     } else if(user.gender && user.gender === 'F') {
                                         rTitle = 'Madame';
                                     }
-                                    // toDate totalSuppliers notToDate offline
-                                    mailOptions.html = genericTemplate({ 'rTitle': rTitle, 'respresName': _.capitalize(user.lastname), 'toDate': companyData[''] });
-                                    mailOptions.to = user.email;
-                                    denom = companyData.denomination ? ' ' + companyData.denomination.toUpperCase() : '';
+
+                                    if(user.alert_invalid_sup && user.alert_invalid_mail && user.alert_offline_supplier) {
+                                        // notToDate offline invalidMail
+                                        mails[user.user_id].html = genericTemplate_0({ 'rTitle': rTitle, 'respresName': _.capitalize(user.lastname), 'totalSuppliers': companyData['count'], 'notToDate': companyData['count']-companyData['conform'], 'offline': companyData['offline'], 'invalidMail': 'NOTYET'});
+                                    } else if(user.alert_invalid_sup && user.alert_invalid_mail && !user.alert_offline_supplier) {
+                                        // notToDate invalidMail
+                                        mails[user.user_id].html = genericTemplate_1({ 'rTitle': rTitle, 'respresName': _.capitalize(user.lastname), 'totalSuppliers': companyData['count'], 'notToDate': companyData['count']-companyData['conform'] });
+                                    } else if(user.alert_invalid_sup && !user.alert_invalid_mail && user.alert_offline_supplier) {
+                                        // offline notToDate
+                                        mails[user.user_id].html = genericTemplate_2({ 'rTitle': rTitle, 'respresName': _.capitalize(user.lastname), 'totalSuppliers': companyData['count'], 'offline': companyData['offline'], 'invalidMail': 'NOTYET'});
+                                    } else if(!user.alert_invalid_sup && user.alert_invalid_mail && user.alert_offline_supplier) {
+                                        // offline invalidMail
+                                        mails[user.user_id].html = genericTemplate_3({ 'rTitle': rTitle, 'respresName': _.capitalize(user.lastname), 'totalSuppliers': companyData['count'], 'offline': companyData['offline'], 'invalidMail': 'NOTYET'});
+                                    } else if(!user.alert_invalid_sup && !user.alert_invalid_mail && user.alert_offline_supplier) {
+                                        // offline
+                                        mails[user.user_id].html = genericTemplate_5({ 'rTitle': rTitle, 'respresName': _.capitalize(user.lastname), 'totalSuppliers': companyData['count'], 'offline': companyData['offline'] });
+                                    } else if(!user.alert_invalid_sup && user.alert_invalid_mail && !user.alert_offline_supplier) {
+                                        // invalidMail
+                                        mails[user.user_id].html = genericTemplate_4({ 'rTitle': rTitle, 'respresName': _.capitalize(user.lastname), 'totalSuppliers': companyData['count'], 'invalidMail': 'NOTYET' });
+                                    } else if(user.alert_invalid_sup && !user.alert_invalid_mail && !user.alert_offline_supplier) {
+                                        // notToDate
+                                        mails[user.user_id].html = genericTemplate_6({ 'rTitle': rTitle, 'respresName': _.capitalize(user.lastname), 'totalSuppliers': companyData['count'], 'notToDate': companyData['count']-companyData['conform'], });
+                                    }
+
+                                    mails[user.user_id].to = user.email;
                                 }
                             });
-                            loggerT.verbose('ADMIN] QUERY clientIdsDone', clientIdsDone);
+
+                            let v = this.objectToArray(mails);
+                            for (var i = 0; i < v.length; i++) {
+                                loggerT.verbose('V value :', v[i]);
+                                mailPromises.push(new Promise((resolve, reject) => {
+                                    this.transporter.sendMail(v[i])
+                                        .then(res => resolve(res))
+                                        .catch(err => reject(err));
+                                }));
+                            }
+
+                            return Promise.all(mailPromises.map(p => p.catch(e => e)))
+                                .then(lastResult => {
+                                    loggerT.verbose('[ADMIN] alertMails QUERY Last res promise.all', lastResult)
+                                    return Promise.resolve(lastResult);
+                                })
+                                .catch(lastError => {
+                                    loggerT.error('[ADMIN] alertMailsLast err promise.all', lastError);
+                                    return Promise.reject(lastError);
+                                })
+                            ;
+                            
                         })
                         .catch(errorData => {
                             loggerT.error('ADMIN] ERROR ON QUERY gettingData for clients', errorData);
@@ -510,5 +582,14 @@ export default class AdminRegistry {
             throw new Error(message);
         }
         throw new Error();
+    }
+
+    public objectToArray(obj) {
+        let res = [];
+        let k = Object.keys(obj);
+        if(k) {
+            k.forEach(k => res.push(obj[k]));
+        }
+        return res;
     }
 }

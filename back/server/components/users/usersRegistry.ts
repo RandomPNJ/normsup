@@ -273,9 +273,13 @@ export default class UserRegistry {
 
                 query['sql']    = Query.INSERT_ROLE;
                 query['values'] = [res.insertId, roleID];
-                
-
-                return that.mysql.query(query)
+                let createAlertQ = {
+                    timeout: 40000,
+                    sql: Query.INSERT_ALERT,
+                    values: [user.organisation, res.insertId]
+                };
+                let userSubQueries = [that.mysql.query(createAlertQ), that.mysql.query(query)];
+                return Promise.all(userSubQueries.map(p => p.catch(e => e)))
                     .then(res => {
                         loggerT.verbose('[createUser] QUERY createRole RES ==== ', res);
                         let genericTemplate = _.template(emailTemplate);
@@ -428,6 +432,37 @@ export default class UserRegistry {
             });
     }
 
+    public deleteUser(id, user) {
+        let q = {
+            timeout: 40000,
+            sql: Query.CHECK_RIGHT_TO_DELETE,
+            values: [user.id, 1, id]
+        };
+        return this.mysql.query(q)
+            .then(res => {
+                if(res && res[0] && res[0].email) {
+                    let query = {
+                        timeout: 40000,
+                        sql: Query.DELETE_USER,
+                        values: [id, user.organisation]
+                    };
+                    return this.mysql.query(query)
+                        .then(res => {
+                            if(res) {
+                                return Promise.resolve({status: 200, msg: 'Success'});
+                            }
+                        })
+                        .catch(err => {
+                            return Promise.reject(err);
+                        })
+                    ;
+                }
+            })
+            .catch(err => {
+
+            })
+        ;
+    }
 
     private getPictureFromDB(path) {
         return this.s3.getObject({

@@ -588,7 +588,7 @@ export default class SupplierRegistry {
         if(data.client) {
             loggerT.verbose('getDashboardData ', data);
             query['sql']    = Query.GET_DASHBOARD_DATA;
-            query['values'] = [data.client, data.client, data.client, moment().startOf('month').toDate()];
+            query['values'] = [moment().startOf('month').toDate(), data.client, data.client, data.client];
         } else {
             // throw error;
         }

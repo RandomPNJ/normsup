@@ -31,6 +31,7 @@ export class UsersTableComponent implements OnInit {
   items = [
   ];
   reloadVar: Boolean = false;
+
   myTable: Boolean = false;
   itemsToDisplay: Array<any> = [];
   dtOptions: DataTables.Settings = {};
@@ -180,6 +181,20 @@ export class UsersTableComponent implements OnInit {
     this.httpService.put('/api/users/modify/'+item.id+'/role', {rolename: val})
       .subscribe(res => {
         console.log('res', res);
+      }, err => {
+        console.log('Err', err);
+      })
+    ;
+  }
+
+  deleteSupplier(id, i) {
+
+    return this.httpService.post('/api/users/delete/' + id)
+      .subscribe(res => {
+        console.log('res', res);
+        if(res && res.body && res.body['statusCode'] && res.body['statusCode'] === 200) {
+          this.items.splice(i, 1);
+        }
       }, err => {
         console.log('Err', err);
       })

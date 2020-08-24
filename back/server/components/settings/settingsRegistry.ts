@@ -46,7 +46,7 @@ export default class SupplierRegistry {
         // });
         // loggerT.verbose('params : ', [id].concat(sqlParams).concat(sqlParams));
         query['sql']    = Query.INSERT_ALERT;
-        query['values'] = [id].concat(sqlParams).concat(sqlParams);
+        query['values'] = [data.client_id, data.user_id].concat(sqlParams).concat(sqlParams);
 
         return this.mysql.query(query)
             .then(res => {

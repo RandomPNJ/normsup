@@ -23,7 +23,8 @@ export default {
   mailconfig: {
     secureConnection: true, // use SSL
     port: 465, // port for secure SMTP
-    service: 'gmail',
+    // service: 'gmail',
+    host: 'smtp.gmail.com',
     auth: {
       user: 'mail.normsup@gmail.com',
       pass: 'Panda78!'
