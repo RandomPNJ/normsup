@@ -8,7 +8,7 @@
             <img *ngIf="profilePic" [src]="profilePic" alt="..." width="34" height="34" class="rounded-circle shadow-sm">
             <div class="header-txt-cont" (click)='dropbox()' (clickOutside)="closeDropdown()">
                 <div style="width: 100%;max-width: 400px;" class="inline-b">
-                    <h4 class="m-0 one-liner show-username header-txt">{{currentUser.name}} {{currentUser.lastname}} <span>{{currentUser.companyName ? "/ " + currentUser.companyName : ""}}</span></h4>
+                    <h4 class="m-0 one-liner show-username header-txt">{{currentUser.name}} {{currentUser.lastname}} <span>{{role ? "| " + role : ""}}</span></h4>
                 </div>
                 <div class="inline-b">
                     <span class="glyphicon glyphicon-menu-down menu-dwn grow-left"> </span>

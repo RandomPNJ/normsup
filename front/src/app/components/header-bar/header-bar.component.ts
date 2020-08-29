@@ -28,6 +28,7 @@ export class HeaderBarComponent implements OnInit {
   reportingIcon = '';
   contactIcon = '';
   user;
+  role: string = '';
   showHeader;
   isLogout: Boolean = false;
   dropdownSecondBtn = 'Add data';
@@ -63,8 +64,11 @@ export class HeaderBarComponent implements OnInit {
     console.log('this.currentUser.roles', this.currentUser.role);
     console.log('find(this.currentUser.role, "admin")', indexOf(this.currentUser.role, 'admin'))
     if(indexOf(this.currentUser.role, 'admin') !== -1) {
+      this.role = 'Administrateur';
       console.log('admin found');
       this.isAdmin = true;
+    } else {
+      this.role = 'Utilisateur';
     }
   }
 
