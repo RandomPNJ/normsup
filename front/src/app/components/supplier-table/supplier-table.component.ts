@@ -42,7 +42,7 @@ export class SupplierTableComponent implements OnInit, OnDestroy {
     { id: '', name: 'Choisir un groupe' }
   ];
   supplierStates: Array<any> = [ 
-    { id: '', name: 'Type de fournisseur' },
+    { id: '', name: 'Statut des fournisseurs' },
     { id: 'UPTODATE', name: 'Fournisseur à jour' },
     { id: 'NOTUPTODATE', name: 'Fournisseur non à jour' },
     { id: 'OFFLINE', name: 'Fournisseurs hors ligne' },

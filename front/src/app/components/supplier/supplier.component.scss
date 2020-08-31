@@ -96,13 +96,13 @@ hr {
 }
 
 .sub-cont {
-  padding: 25px 0px 20px 25px;
+  padding: 25px 0px 20px 0px;
 }
 
 .title {
   color: #4692EF;
   // padding: 10px 0px 10px 10px;
-  padding: 0px !important;
+  padding: 0px 0px 0px 25px!important;
   font-weight: 500;
   font-size: 25px;
   display: unset;
@@ -382,4 +382,11 @@ hr {
   padding-right: 13px;
   // color: #4390EF;
   color: #4E5983;
+}
+
+.add-supp-cont {
+  width: 200px;
+  right: 43px;
+  position: absolute;
+  z-index: 10;
 }

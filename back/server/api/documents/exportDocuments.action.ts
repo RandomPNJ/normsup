@@ -73,9 +73,15 @@ export function exportDocuments(req, res, DocumentsRegistry, s3) {
         .then(result => {
             if(result) {
                 let files = [];
-                result.forEach(element => {
-                    files.push('DEV/'+element.path);
-                });
+                if(process.env.NODE_ENV !== 'local') {
+                    result.forEach(element => {
+                         files.push(element.path);
+                    });
+                } else {
+                    result.forEach(element => {
+                        files.push('DEV/'+element.path);
+                   });
+                }
                 res.set({'Content-Type': 'application/zip'});
                 return DocumentsRegistry.zipFile(s3, files)
                     .then(resultTwo => {

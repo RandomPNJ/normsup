@@ -141,3 +141,19 @@ hr {
 .loading-spinner {
   
 }
+
+.first-table-cell {
+  margin-left: 50px;
+  border-bottom: 1px solid #F3F7FC;
+  text-align: right !important;
+}
+
+.last-table-cell {
+  margin-right: 50px;
+  border-bottom: 1px solid #F3F7FC;
+  text-align: left !important;
+}
+
+.cent, .doc-cont {
+  border-bottom: 1px solid #F3F7FC;
+}

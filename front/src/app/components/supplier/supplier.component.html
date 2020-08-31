@@ -3,18 +3,15 @@
 
     <div class="sub-cont">
       <div class="container nopadding" style="padding-bottom: 45px !important; padding-top: 20px !important;">
-        <div class="row nopadding">
+        <div class="row nopadding" style="position: relative;">
           <div class="col">
             <span class="title">Fournisseurs</span>
-            
             <span class="item-count count-placement" *ngIf="dataLength !== -1">Vous avez <span class="count-style" *ngIf="dataLength !== -1">{{dataLength| i18nPlural: itemPluralCount['suppliers']}}</span> {{dataLength | i18nPlural: itemPluralMapping['suppliers']}}</span>
           </div>
-          <div class="justify-content-end">
-            <div class="col-lg-auto col-md-auto">
-              <button (click)="openModal(template, 'Supplier')" type="button" class="btn btn-primary custom-normsup-button nopadding">
-                <span class="add-supplier-txt"><img style="height: 10px;" src="../../../assets/img/plus-icn.svg"/> Ajouter un fournisseur</span>
-              </button>
-            </div>
+          <div class="col-lg-auto col-md-auto" class="add-supp-cont">
+            <button (click)="openModal(template, 'Supplier')" type="button" class="btn btn-primary custom-normsup-button nopadding">
+              <span class="add-supplier-txt"><img style="height: 10px;" src="../../../assets/img/plus-icn.svg"/> Ajouter un fournisseur</span>
+            </button>
           </div>
         </div>
       </div>

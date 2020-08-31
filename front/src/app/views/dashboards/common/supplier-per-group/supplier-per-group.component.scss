@@ -8,6 +8,12 @@
     color: #4E5983;
     text-align: center;
     padding-top: 13px;
+    padding-bottom: 0.75rem;
+    background: rgba(243, 247, 252, 0.39);
+}
+
+.card-body {
+    padding: 0.5rem 1.25rem 1.25rem !important;
 }
 
 .table-head-style {
