@@ -1,3 +1,14 @@
+.loginContainer {
+    background-color: #F3F7FC;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    width: 100%;
+    height: 100%;
+    margin: 0px !important;
+    position: absolute;
+}
 
 .loginContainer a {
     padding: 31px;
@@ -26,6 +37,12 @@
     margin: 25px 0 20px 0;
 }
 
+.colorDiv {
+    padding: 30px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0px 0px 55px #4390EF1A;
+}
 
 .error {
     height: 18px;
@@ -161,6 +178,11 @@ select:-webkit-autofill:focus {
     padding-top: 26.250px;
 }
 
+.login-btn {
+    padding-right: 47px;
+    padding-left: 47px;
+}
+
 .forgot-password-lnk {
     padding-top: 25px;
     cursor: pointer;
@@ -172,17 +194,27 @@ select:-webkit-autofill:focus {
     width: 100%;
     text-align: center;
 }
-
+.virtualBg {
+    position: absolute;
+    width: 100%;
+    z-index: 0;
+    bottom: 0;
+}
 
 .custom-label-input-test-active {
     text-align: center;
-    left: 16px !important;
     width: 100%;
 }
 
-.login-btn {
-    padding-right: 47px;
-    padding-left: 47px;
+.supplier-login-title {
+    width: 100%;
+    text-align: center;
+    font-family: 'Roboto Bold';
+    font-size: 15px;
+    letter-spacing: 0;
+    color: #4390EF;
+    padding: 15px 0px 5px 0px;
+    cursor: default;
 }
 
 .login-spinner {

@@ -139,6 +139,7 @@ export class SupplierTableComponent implements OnInit, OnDestroy {
       responsive: true,
       serverSide: true,
       stateSave: false,
+      paging: true,
       processing: true,
       language: {
           lengthMenu: 'Afficher par _MENU_',
@@ -158,9 +159,10 @@ export class SupplierTableComponent implements OnInit, OnDestroy {
           },
       },
       ajax: (dataTablesParameters: any, callback: any) => {
+        console.log('dataTablesParameters', dataTablesParameters)
         const action = this.compareParams(dataTablesParameters);
         if(action === 'query') {
-          
+          console.log('one');
           that.httpService
             .get('/api/suppliers', this.tableParams)
             .subscribe(resp => {
@@ -182,6 +184,42 @@ export class SupplierTableComponent implements OnInit, OnDestroy {
                   recordsFiltered: that.nbOfRows, // Nb d'onglet pagination
                   data: []
                 });
+              } else {
+                that.data = [];
+                that.itemsToDisplay = [];
+                that.nbOfRows = 0;
+                that.myTable = true;
+                callback({
+                  recordsTotal: 0, // grand total avant filtre
+                  recordsFiltered: 0, // Nb d'onglet pagination
+                  data: []
+                });
+              } 
+            });
+        } else if(action === 'length') {
+          console.log('length');
+          that.httpService
+            .get('/api/suppliers', this.tableParams)
+            .subscribe(resp => {
+              console.log('resp');
+              if(resp.body['items'] && resp.body['items'].length > 0) {
+                console.log('not empty res');
+                resp.body['items'].forEach(a => {
+                  if(a.spont_reminder) {
+                    a.spont_reminder = new Date(a.spont_reminder);
+                    this.countDowns[a.id] = cloneDeep(this.countdownConf);
+                    this.countDowns[a.id].leftTime = moment(a.spont_reminder, 'YYYY-MM-DD').diff(moment(), 'seconds');
+                  }
+                });
+                that.data = resp.body['items'];
+                
+                that.itemsToDisplay = that.data.slice(that.tableParams.start, that.tableParams.start + that.tableParams.length);
+                that.myTable = true;
+                callback({
+                  recordsTotal: that.nbOfRows, // grand total avant filtre
+                  recordsFiltered: that.nbOfRows, // Nb d'onglet pagination
+                  data: []
+                });
                 // this.suppliersData.emit(that.data.length);
               } else {
                 that.data = [];
@@ -196,6 +234,7 @@ export class SupplierTableComponent implements OnInit, OnDestroy {
               } 
             });
         } else if(action === 'redraw') {
+          console.log('two');
           that.itemsToDisplay = that.data.slice(that.tableParams.start, that.tableParams.start + that.tableParams.length);
           callback({
             recordsTotal: that.nbOfRows, // grand total avant filtre
@@ -210,27 +249,27 @@ export class SupplierTableComponent implements OnInit, OnDestroy {
         {
           title: 'Fournisseur',
           searchable: true,
-          defaultContent: "lol"
+          defaultContent: "Vide"
         },
         {
           title: 'Interlocuteur',
           searchable: true,
-          defaultContent: "lol"
+          defaultContent: "Vide"
         },
         {
           title: 'Localisation',
           searchable: true,
-          defaultContent: "lol"
+          defaultContent: "Vide"
         },
         {
           title: 'Statut des documents',
           searchable: true,
-          defaultContent: "lol"
+          defaultContent: "Vide"
         },
         {
           title: 'Actions',
           searchable: true,
-          defaultContent: "lol"
+          defaultContent: "Vide"
         }
       ]
     };
@@ -265,9 +304,17 @@ export class SupplierTableComponent implements OnInit, OnDestroy {
       this.recount(this.tableParams.search);
       action = 'query';
     }
+    // if(this.tableParams.length !== datatableParams.length && this.data.length >= datatableParams.length) {
+    //   this.tableParams.length = datatableParams.length;
+    //   action = 'redraw';
+    // } else if(this.tableParams.length !== datatableParams.length) {
+    //   this.tableParams.length = datatableParams.length;
+    //   action = 'query';
+    // }
     if(this.tableParams.length !== datatableParams.length) {
       this.tableParams.length = datatableParams.length;
-      action = 'redraw';
+      this.tableParams.start = 0;
+      action = 'length';
     }
     return action;
 

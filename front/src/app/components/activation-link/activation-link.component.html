@@ -1,0 +1,33 @@
+<div class="activ-page loginContainer">
+  <img src="../../../assets/img/login-footer.svg" class="virtualBg" />
+  <div class="container login-box" *ngIf="activated">
+
+    <div class="row">
+
+      <div class="colorDiv col s12" *ngIf="accActivated">
+        <!-- <img src="../../../assets/img/login-logo.svg" /> -->
+        <img src="../../../assets/img/normsup-logo.png" style="height: 75px;" />
+        <div class="row" style="padding-top: 35px;">
+          <div class="txt-activ">
+            <span class="r-robo-14" style="display: block;width: 100%;">Votre compte a bien été activé.</span>
+            <span class="r-robo-14" style="display: block;width: 100%;">Cliquez <a href="https://app.normsup.com/login">ici</a> afin de vous connecter.</span>
+          </div>
+        </div>
+      </div>
+      <div class="colorDiv col s12" *ngIf="expired || alreadyActivated">
+        <!-- <img src="../../../assets/img/login-logo.svg" /> -->
+        <img src="../../../assets/img/normsup-logo.png" style="height: 75px;" />
+        <div class="row" style="padding-top: 35px;">
+          <div class="txt-activ" *ngIf="expired">
+            <span class="r-robo-14" style="display: block;width: 100%;">Ce lien d'activation a expiré.</span>
+            <span class="r-robo-14" style="display: block;width: 100%;">Cliquez <a href="https://app.normsup.com/supplier/activationLink">ici</a> afin d'en demander un nouveau.</span>
+          </div>
+          <div class="txt-activ" *ngIf="alreadyActivated">
+            <span class="r-robo-14" style="display: block;width: 100%;">Votre compte a déjà été activé.</span>
+            <span class="r-robo-14" style="display: block;width: 100%;">Cliquez <a href="https://app.normsup.com/login">ici</a> afin de vous connecter.</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>

@@ -1,0 +1,39 @@
+<div class="loginContainer">
+  <img src="../../../assets/img/login-footer.svg" class="virtualBg" />
+  <!-- <a href="/" class="brand-logo left"> <img src="../../../assets/img/normsup-logo.png" alt=""></a> -->
+  <div class="container login-box">
+
+    <div class="row">
+
+      <div class="colorDiv col s12">
+        <!-- <img src="../../../assets/img/login-logo.svg" /> -->
+        <img src="../../../assets/img/normsup-logo.png" style="height: 75px;" />
+        <div class="supplier-login-title">
+          Génération lien d'activation
+        </div>
+        <div class="row" style="padding-top: 35px;">  
+          <div class="col-lg-3 col-md-3 col-xs-3 col-3"></div>
+          <div class="input-field col-lg-6 col-md-6 col-xs-6 col-6 s6 nopadding">
+            <input id="credentialsUsername" name="credentialsUsername" type="email"
+              class="form-control  custom-normsup-input-nb" (keydown.enter)="validate()" [(ngModel)]='linkEmail'
+              required>
+            <label class="custom-normsup-label-test custom-label-input-test-active" for="credentialsUsername">Adresse
+              mail</label>
+          </div>
+          <div class="col-lg-3 col-md-3 col-xs-3 col-3"></div>
+        </div>
+        <div>
+          <span *ngIf="errMsg" class="red-err-txt" style="font-size: 13px;padding-top: 10px;">{{errMsg}}</span>
+        </div>
+        <div class="login-btn-cont">
+          <button [disabled]="!linkEmail" class="btn new-btn-normsup login-btn"
+            style="position: relative;padding-bottom: 0.3rem !important;padding-top: 0.3rem !important;" type="submit"
+            name="submit" (click)='generate()'>
+            <span class="searchText">Générer</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
