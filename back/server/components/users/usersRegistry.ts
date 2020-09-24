@@ -5,6 +5,7 @@ import config from '../../config/environment/index';
 import * as bcrypt from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
 import * as uuid from 'uuid/v4';
+import * as moment from 'moment';
 import {email as emailTemplate} from './email';
 
 // const fakeData = require('./fakeData.json');
@@ -35,11 +36,10 @@ export default class UserRegistry {
         return this.mysql.query(query)
             .then(res => {
                 if(res.length === 0) {
-                    return Promise.reject({statusCode: 404, msg: 'User not found.'});
+                    return Promise.reject({statusCode: 404, msg: 'User not found.', code: 0});
                 }
                 let user = res[0];
                 loggerT.verbose('[login] User data :', user);
-
                 return bcrypt.compare(password, user.password)
                     .then(res => {
                         if(res === true) {
@@ -57,13 +57,13 @@ export default class UserRegistry {
                             };
                             return Promise.resolve(payload);
                         }
-                        return Promise.reject({statusCode: 400, msg: 'Wrong credentials.'});
+                        return Promise.reject({statusCode: 400, msg: 'Wrong credentials.', code: 1});
                     }
                 );
             })
             .catch(err => {
                 loggerT.error('[login] ERROR ON QUERY login :', err);
-                return Promise.reject({statusCode: 404, msg: err.msg});
+                return Promise.reject({statusCode: 404, msg: err.msg, code: err.code});
             })
         ;
     }
@@ -278,6 +278,7 @@ export default class UserRegistry {
                     sql: Query.INSERT_ALERT,
                     values: [user.organisation, res.insertId]
                 };
+
                 let userSubQueries = [that.mysql.query(createAlertQ), that.mysql.query(query)];
                 return Promise.all(userSubQueries.map(p => p.catch(e => e)))
                     .then(res => {
@@ -286,7 +287,7 @@ export default class UserRegistry {
                         let mailOptions = {
                             from: 'NormSup <mail.normsup@gmail.com>', // sender address
                             to: data.email, // list of receivers
-                            subject: 'Identifiants plateforme NormSup', // Subject line
+                            subject: 'Normsup: Identifiants plateforme', // Subject line
                             html: ''
                         };
                         let rTitle = 'Monsieur/Madame';

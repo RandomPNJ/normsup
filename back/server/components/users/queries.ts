@@ -15,6 +15,7 @@ export const GET_USER_ROLES = 'SELECT ur.userID, r.description, r.name FROM `use
 export const INSERT_USER = 'INSERT INTO `user` (name, lastname, email, password, username, organisation,createdBy) values (?,?,?,?,?,?,?)';
 export const INSERT_ROLE = 'INSERT INTO `user_roles` (userID, roleID) VALUES (?, ?)';
 export const INSERT_ALERT = "INSERT INTO `normsup`.`client_preferences` (`client_id`, `user_id`, `alerts_state`, `alert_valid_sup`, `alert_invalid_sup`, `alert_invalid_mail`, `alert_frequency`, `alert_offline_supplier`) VALUES (?,?,1,0,1,1,'EVERYOTHERDAY',1)";
+export const INSERT_ACC_ACTIVATION = 'INSERT INTO `account_activation` (`user_id`, `token`, `expiration_time`) VALUES (?, ?, ?)'
 
 
 export const FIND_USER_BY_NAME_EMAIL = 'SELECT user.id,user.create_time,createdBy,email,lastname,user.name,organisation,username,password,user.address,user.phonenumber,user.postalCode,user.city, picture_url, c.org_name as companyName,ur.roleID,r.name AS rolename FROM `user` LEFT JOIN client AS c ON user.organisation = c.id LEFT JOIN `user_roles` AS ur ON user.id = ur.userID LEFT JOIN `roles` AS r ON ur.roleID = r.id WHERE `username` = ? OR `email` = ? LIMIT 1';

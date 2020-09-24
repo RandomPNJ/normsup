@@ -72,7 +72,6 @@ export default (expressApp) => {
       method: req.method,
       datetime: moment.utc().toISOString(),
     });
-    // loggerT.verbose('Req cookies ==', req.cookies.auth);
     next();
   });
 
@@ -85,7 +84,7 @@ export default (expressApp) => {
   // lets create our strategy for web token
   let strategy = new JwtStrategy(jwtOptions, 
     (jwtPayload, next) => {
-    if (Date.now() > jwtPayload.expires) {
+    if(Date.now() > jwtPayload.expires) {
       return next('Token expired');
     }
     return next(null, jwtPayload);
@@ -98,9 +97,10 @@ export default (expressApp) => {
   // Authentification middleware
   const AuthMiddleware = new AuthenticatorMiddleware();
   expressApp.use('/api', (req, res, next) => {
+    loggerT.verbose('here');
     if(req.url === '/auth/login' || req.url === '/auth/refresh_token' || req.url === '/auth/supplier-login'
-     || req.url === '/users/current' || req.url.indexOf('/auth/admin') !== -1 || req.url === '/admin/daily_reminders'
-     || req.url === '/admin/conformity/checkup' || req.url === '/admin/alerts') {
+     || req.url === '/users/current' || req.url.indexOf('/auth/admin') !== -1 || req.url === '/admin/daily_reminders' || req.url === '/auth/activate'
+     || req.url === '/admin/conformity/checkup' || req.url === '/admin/alerts' || req.url === '/auth/reset_password' || req.url === '/auth/generate_activation_link') {
       return next();
     }
     if(req.url === '/supplier/currentSupplier' || req.url === '/documents/upload') {

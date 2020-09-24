@@ -5,7 +5,8 @@ import * as HelperQueries from '../helpers/dbhelpers';
 import * as Query from './queries';
 import config from '../../config/environment/index';
 import * as bcrypt from 'bcrypt';
-import {email as emailTemplate, supplierUserEmail} from './email';
+import * as uuid from 'uuid/v4';
+import {email as emailTemplate, supplierUserEmail, activationMail} from './email';
 
 declare var loggerT: any;
 
@@ -668,7 +669,7 @@ export default class SupplierRegistry {
                                         let mailOptions = {
                                             from: 'NormSup <mail.normsup@gmail.com>', // sender address
                                             to: '', // list of receivers
-                                            subject: 'Dépôt de document sur NormSup', // Subject line
+                                            subject: 'Normsup: Dépot de documents', // Subject line
                                             html: 'Empty message. Failed.'
                                         };
                                         let denom = '';
@@ -951,35 +952,52 @@ export default class SupplierRegistry {
         let query = {
             timeout: 40000
         };
+        let token = uuid();
+        data.token;
         query['sql']    = Query.INSERT_SUPPLIER_USER;
         query['values'] = [data];
-
+        
         return this.mysql.query(query)
             .then(res => {
-                loggerT.verbose('createSupplierUser RES ==== ', res);
-                let genericTemplate = _.template(supplierUserEmail);
-                let mailOptions = {
-                    from: 'NormSup <mail.normsup@gmail.com>', // sender address
-                    to: '', // list of receivers
-                    subject: 'Dépôt de document sur NormSup', // Subject line
-                    html: 'Empty message. Failed.'
+                let queryActication = {
+                    timeout: 40000,
+                    sql: Query.INSERT_ACC_ACTIVATION,
+                    values: [res.insertId, token, moment().add(7, 'days').toDate()]
                 };
-                let denom = '';
-                let rTitle = 'Monsieur/Madame';
-                denom = supplier.denomination ? ' ' + supplier.denomination.toUpperCase() : '';
-                if(data.gender && data.gender === 'M') {
-                    rTitle = 'Monsieur';
-                } else if(data.gender && data.gender === 'F') {
-                    rTitle = 'Madame';
-                }
-                mailOptions.html = genericTemplate({ 'rTitle': rTitle, 'respresName': _.capitalize(data.lastname), 'client_name': client.denomination, 'denomination': denom, 'login': data.email, 'password': password });
-                mailOptions.to = data.email;
-                return this.transporter.sendMail(mailOptions)
-                    .then(() => {
-                        return Promise.resolve(res);
+                return this.mysql.query(queryActication)
+                    .then(res => {
+                        loggerT.verbose('createSupplierUser RES ==== ', res);
+                        let genericTemplate = _.template(activationMail);
+                        let mailOptions = {
+                            from: 'NormSup <mail.normsup@gmail.com>', // sender address
+                            to: '', // list of receivers
+                            subject: 'NormSup: Activation de votre compte fournisseur', // Subject line
+                            html: 'Empty message. Failed.'
+                        };
+                        let denom = '';
+                        let rTitle = 'Monsieur/Madame';
+                        denom = supplier.denomination ? ' ' + supplier.denomination.toUpperCase() : '';
+                        if(data.gender && data.gender === 'M') {
+                            rTitle = 'Monsieur';
+                        } else if(data.gender && data.gender === 'F') {
+                            rTitle = 'Madame';
+                        }
+                        
+                        let link = 'https://app.normsup.com/supplier/activation;activationToken='+token;
+                        // mailOptions.html = genericTemplate({ 'rTitle': rTitle, 'respresName': _.capitalize(data.lastname), 'client_name': client.denomination, 'denomination': denom, 'login': data.email, 'password': password });
+                        mailOptions.html = genericTemplate({ 'rTitle': rTitle, 'respresName': _.capitalize(data.lastname), 'link': link });
+                        mailOptions.to = data.email;
+                        return this.transporter.sendMail(mailOptions)
+                            .then(() => {
+                                return Promise.resolve(res);
+                            })
+                            .catch(err => {
+                                return Promise.reject({msg: 'Couldn\'t send mail to supplier\'s representative.'})
+                            })
+                        ;
                     })
                     .catch(err => {
-                        return Promise.reject({msg: 'Couldn\'t send mail to supplier\'s representative.'})
+                        loggerT.error('[createSupplierUser] ERROR ON QUERY account activation : ', err);
                     })
                 ;
             })

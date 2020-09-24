@@ -78,6 +78,8 @@ export const INSERT_GROUP_REMINDERS = 'INSERT INTO `group_reminders` (group_id, 
 export const MODIFY_GROUP_REMINDERS = 'INSERT INTO `group_reminders` (group_id, activated, legal_docs, comp_docs, frequency, next_reminder) VALUES (?,?,?,?,?,?)' + 
 'ON DUPLICATE KEY UPDATE group_id= ?, activated = ?, legal_docs = ?, comp_docs = ?, frequency = ?, next_reminder = ?';
 export const INSERT_SUPPLIER_USER = 'INSERT INTO `suppliers` SET ?';
+export const INSERT_ACC_ACTIVATION = 'INSERT INTO `account_activation` (`user_id`, `token`, `expiration_time`) VALUES (?, ?, ?)'
+
 
 export const DELETE_GROUP = 'DELETE FROM `groups` WHERE id = ? AND client_id = ?';
 export const DELETE_GROUP_MEMBERS = 'DELETE FROM `group_members` WHERE group_id = ? AND member_id = ?';

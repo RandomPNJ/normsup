@@ -77,34 +77,26 @@ export default class AdminRegistry {
                     values: [data.organisation, res.insertId]
                 };
 
-                // return that.mysql.query(createAlertQ)
-                //     .then(() => {
+                return that.mysql.query(query)
+                    .then(subRes => {
+                        loggerT.verbose('QUERY createRole RES ==== ', subRes);
+                        query['sql'] = Query.INSERT_USER_PREFERENCES;
+                        query['values'] = [res.insertId, data.organisation];
                         return that.mysql.query(query)
-                            .then(subRes => {
-                                loggerT.verbose('QUERY createRole RES ==== ', subRes);
-                                query['sql'] = Query.INSERT_USER_PREFERENCES;
-                                query['values'] = [res.insertId, data.organisation];
-                                return that.mysql.query(query)
-                                    .then(() => {
-                                        return Promise.resolve(res);
-                                    })
-                                    .catch(err => {
-                                        loggerT.error('QUERY INSERT_USER_PREFERENCES ERR ==== ', err);
-                                        return Promise.reject({statusCode: 500, msg: 'Could not create user preferences for user with id :' + res.insertId})
-                                    })
-                                ;
+                            .then(() => {
+                                return Promise.resolve(res);
                             })
                             .catch(err => {
-                                loggerT.error('QUERY createRole ERR ==== ', err);
-                                return Promise.reject({statusCode: 500, msg: 'Could not create user role for user with id :' + res.insertId})
+                                loggerT.error('QUERY INSERT_USER_PREFERENCES ERR ==== ', err);
+                                return Promise.reject({statusCode: 500, msg: 'Could not create user preferences for user with id :' + res.insertId})
                             })
                         ;
-                //     })
-                //     .catch(err => {
-                //         loggerT.error('[ADMIN] QUERY createAlert ERR ==== ', err);
-                //         return Promise.reject({statusCode: 500, msg: 'Could not create user alerts for user with id :' + res.insertId})
-                //     })
-                // ;
+                    })
+                    .catch(err => {
+                        loggerT.error('QUERY createRole ERR ==== ', err);
+                        return Promise.reject({statusCode: 500, msg: 'Could not create user role for user with id :' + res.insertId})
+                    })
+                ;
 
             })
             .catch(err => {

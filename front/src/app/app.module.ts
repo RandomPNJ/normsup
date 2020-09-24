@@ -72,6 +72,9 @@ import { AddRepresentativeComponent } from './components/supplier/add-representa
 import { BackofficeClientComponent } from './components/backoffice-client/backoffice-client.component';
 import { BackofficeClientTableComponent } from './components/backoffice-client/backoffice-client-table/backoffice-client-table.component';
 import { AdminLoginPageComponent } from './components/admin-login-page/admin-login-page.component';
+import { ActivationLinkComponent } from './components/activation-link/activation-link.component';
+import { GenerateActivationLinkComponent } from './components/generate-activation-link/generate-activation-link.component';
+import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 
 @NgModule({
   declarations: [
@@ -119,6 +122,9 @@ import { AdminLoginPageComponent } from './components/admin-login-page/admin-log
     BackofficeClientComponent,
     BackofficeClientTableComponent,
     AdminLoginPageComponent,
+    ActivationLinkComponent,
+    GenerateActivationLinkComponent,
+    ResetPasswordComponent,
   ],
   imports: [
     BrowserModule,

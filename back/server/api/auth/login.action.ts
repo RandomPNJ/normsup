@@ -57,7 +57,17 @@ export function login(body, res, UserRegistry) {
         })
         .catch(err => {
             loggerT.verbose('Final err', err);
-            res.status(err.statusCode).json({ data: {}, msg: err.msg });
+            /**
+             * Login error codes :
+             * 0 ====> 
+             * 1 ====> 
+             * 2 ====> Account has not been activated by the user
+             */
+            let e = { data: {}, msg: err.msg };
+            if(err.code) {
+                e['code'] = err.code;
+            }
+            res.status(err.statusCode).json(e);
             return res;
         })
     ;

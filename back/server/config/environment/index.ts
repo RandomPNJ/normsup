@@ -147,6 +147,10 @@ export default {
       uri: '/api/auth',
       actions: [
         { name: 'login', uriPattern: '/login', method: 'post' },
+        { name: 'resetPassword', uriPattern: '/reset_password', method: 'post' },
+        { name: 'activateAccount', uriPattern: '/activate', method: 'post' },
+        { name: 'generateActivationLink', uriPattern: '/generate_activation_link', method: 'post' },
+        { name: 'modifyPassword', uriPattern: '/modify_password/:id', method: 'post' },
         { name: 'refreshToken', uriPattern: '/refresh_token', method: 'post' },
         { name: 'supplierLogin', uriPattern: '/supplier-login', method: 'post' },
         { name: 'logout', uriPattern: '/logout', method: 'post' },

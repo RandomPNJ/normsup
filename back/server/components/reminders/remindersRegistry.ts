@@ -220,7 +220,7 @@ export default class RemindersRegistry {
         let mailOptions = {
             from: 'NormSup <mail.normsup@gmail.com>', // sender address
             to: '', // list of receivers
-            subject: 'Relance : Dépôt de document sur NormSup', // Subject line
+            subject: 'Relance: Dépôt de document sur NormSup', // Subject line
             html: 'Empty message. Failed.'
         };
         /*

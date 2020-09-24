@@ -112,7 +112,7 @@ function start(app: any, config: any): any {
   app.set('SettingsRegistry', settingsRegistry, {onLoad: true});
   const adminRegistry = new AdminRegistry(sqlDB, mailer);
   app.set('AdminRegistry', adminRegistry, {onLoad: true});
-  const authRegistry = new AuthRegistry();
+  const authRegistry = new AuthRegistry(sqlDB, mailer);
   app.set('AuthRegistry', authRegistry, {onLoad: true});
   const remindersRegistry = new RemindersRegistry(sqlDB, mailer);
   app.set('RemindersRegistry', remindersRegistry, {onLoad: true});
