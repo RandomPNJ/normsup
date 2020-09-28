@@ -169,7 +169,6 @@ export class ProfileComponent implements OnInit {
   }
 
 
-  // TODO modify this.id to only use token
   sendModifications() {
     let main_form: FormData = new FormData();
     let calls = [];
@@ -246,7 +245,6 @@ export class ProfileComponent implements OnInit {
     this.modifyPasswordToggle = false;
   }
 
-  // TODO modify this.id to only use token
   modifyPwFinal() {
     let regexp = /[!@#$%^&*(),.?":{}|<>]/;
     if(this.modifyPwd.newPwd.match(regexp) !== null) {
@@ -331,12 +329,12 @@ export class ProfileComponent implements OnInit {
     }
  }
 
- checkPasswords(group: FormGroup) { // here we have the 'passwords' group
-  console.log('checkPasswords');
-  let pass = group.get('oldPassword').value;
-  let newPass = group.get('newPassword').value;
-  const newPassword = group.controls['newPassword'];
+  checkPasswords(group: FormGroup) { // here we have the 'passwords' group
+    console.log('checkPasswords');
+    let pass = group.get('oldPassword').value;
+    let newPass = group.get('newPassword').value;
+    const newPassword = group.controls['newPassword'];
 
-  pass === newPass ? newPassword.setErrors({ samePassword: true }) : { samePassword: false }     
-}
+    pass === newPass ? newPassword.setErrors({ samePassword: true }) : { samePassword: false }     
+  }
 }

@@ -32,17 +32,17 @@
                 <div style="padding-left: 0px !important; padding-right: 0px !important;" class="profile-info">
                   <div style="padding-bottom: 40px;padding-top: 49px;margin: auto;padding-left: 53px;padding-right: 54px;" class="row">
                     <div style="margin-right: 30px !important;" class="input-field  col s6 nopadding">
-                      <input (focus)="formFocus.one=true" (blur)="formFocus.one=false"  id="userInfo-name" name="userInfo-name" type="text" class="form-control  custom-normsup-input-nb" [(ngModel)]="userInfo.name">
+                      <input [ngClass]="{'custom-normsup-input-nb-active': userInfo.name || formFocus.one === true}" (focus)="formFocus.one=true" (blur)="formFocus.one=false"  id="userInfo-name" name="userInfo-name" type="text" class="form-control  custom-normsup-input-nb" [(ngModel)]="userInfo.name">
                       <label [ngClass]="{'lowered-opac': !userInfo.name && formFocus.one === false, 'custom-label-input-test-active': userInfo.name || formFocus.one === true}" class="custom-normsup-label-test" for="userInfo-name">Prénom</label>
                     </div>
                     <div class="input-field col s6 nopadding">
-                      <input (focus)="formFocus.two=true" (blur)="formFocus.two=false"  id="userInfo-lastname" name="userInfo-lastname" type="text" class="form-control  custom-normsup-input-nb" [(ngModel)]="userInfo.lastname">
+                      <input [ngClass]="{'custom-normsup-input-nb-active': userInfo.lastname || formFocus.two === true}"  (focus)="formFocus.two=true" (blur)="formFocus.two=false"  id="userInfo-lastname" name="userInfo-lastname" type="text" class="form-control  custom-normsup-input-nb" [(ngModel)]="userInfo.lastname">
                       <label [ngClass]="{'lowered-opac': !userInfo.lastname && formFocus.two === false, 'custom-label-input-test-active': userInfo.lastname || formFocus.two === true}" class="custom-normsup-label-test" for="userInfo-lastname">Nom</label>
                     </div>
                   </div>
                   <div style="margin: auto;padding-left: 53px;padding-right: 54px;padding-bottom: 40px;" class="row">
                     <div class="input-field col s6 nopadding">
-                      <input (focus)="formFocus.four=true" (blur)="formFocus.four=false" id="userInfo-mail" name="userInfo-mail" type="text" class="form-control  custom-normsup-input-nb" [(ngModel)]="userInfo.email">
+                      <input [ngClass]="{'custom-normsup-input-nb-active': userInfo.email || formFocus.four === true}"  (focus)="formFocus.four=true" (blur)="formFocus.four=false" id="userInfo-mail" name="userInfo-mail" type="text" class="form-control  custom-normsup-input-nb" [(ngModel)]="userInfo.email">
                       <label [ngClass]="{'lowered-opac': !userInfo.email && formFocus.four === false, 'custom-label-input-test-active': userInfo.email || formFocus.four === true}" class="custom-normsup-label-test" for="userInfo-mail">Email</label>
                     </div>
                   </div>
@@ -72,7 +72,7 @@
                   <div class="row nopadding pwd-form" style="padding-top: 25px !important;">
                     <div class="pwd-input">
                       <div style="" class="input-field col nopadding">
-                        <input formControlName="oldPassword" (focus)="modifyPwdFocus.one=true" (blur)="modifyPwdFocus.one=false"  [ngClass]="{ 'is-invalid': submitted && f.oldPassword.errors }"  id="modifyPwd-lastPwd" name="modifyPwd-lastPwd" type="password" class="form-control  custom-normsup-input-nb">
+                        <input [ngClass]="{'custom-normsup-input-nb-active': f.oldPassword.value || modifyPwdFocus.one === true}" formControlName="oldPassword" (focus)="modifyPwdFocus.one=true" (blur)="modifyPwdFocus.one=false"  [ngClass]="{ 'is-invalid': submitted && f.oldPassword.errors }"  id="modifyPwd-lastPwd" name="modifyPwd-lastPwd" type="password" class="form-control  custom-normsup-input-nb">
                         <label [ngClass]="{'lowered-opac': !f.oldPassword.value && modifyPwdFocus.one === false, 'custom-label-center-active': f.oldPassword.value || modifyPwdFocus.one === true}" class="custom-normsup-label-test align-custom-label" for="modifyPwd-lastPwd">Mot de passe actuel</label>
                         <div *ngIf="submitted && f.oldPassword.errors" class="invalid-feedback">
                           <div *ngIf="f.oldPassword.errors.required">Mot de passe requis</div>
@@ -83,7 +83,7 @@
                   <div class="row nopadding pwd-form">
                     <div class="pwd-input">
                       <div style="" class="input-field col nopadding">
-                        <input formControlName="newPassword" (focus)="modifyPwdFocus.two=true" (blur)="modifyPwdFocus.two=false"  [ngClass]="{ 'is-invalid': submitted && f.newPassword.errors }" id="modifyPwd-newPwd" name="modifyPwd-newPwd" type="password" class="form-control  custom-normsup-input-nb">
+                        <input [ngClass]="{'custom-normsup-input-nb-active': f.newPassword.value || modifyPwdFocus.two === true}" formControlName="newPassword" (focus)="modifyPwdFocus.two=true" (blur)="modifyPwdFocus.two=false"  [ngClass]="{ 'is-invalid': submitted && f.newPassword.errors }" id="modifyPwd-newPwd" name="modifyPwd-newPwd" type="password" class="form-control  custom-normsup-input-nb">
                         <label [ngClass]="{'lowered-opac': !f.newPassword.value && modifyPwdFocus.two === false, 'custom-label-center-active': f.newPassword.value || modifyPwdFocus.two === true}" class="custom-normsup-label-test align-custom-label" for="modifyPwd-newPwd">Nouveau mot de passe</label>
                         <div *ngIf="submitted && f.newPassword.errors" class="invalid-feedback">
                           <div *ngIf="f.newPassword.errors.required">Mot de passe requis</div>
@@ -96,7 +96,7 @@
                   <div class="row nopadding pwd-form" style="padding-bottom: 6px !important;">
                     <div class="pwd-input">
                       <div style="" class="input-field col nopadding">
-                        <input formControlName="confirmPassword" (focus)="modifyPwdFocus.three=true" (blur)="modifyPwdFocus.three=false" [ngClass]="{ 'is-invalid': submitted && f.confirmPassword.errors }" id="modifyPwd-newPwd2" name="modifyPwd-newPwd2" type="password" class="form-control  custom-normsup-input-nb">
+                        <input [ngClass]="{'custom-normsup-input-nb-active': f.confirmPassword.value || modifyPwdFocus.three === true}" formControlName="confirmPassword" (focus)="modifyPwdFocus.three=true" (blur)="modifyPwdFocus.three=false" [ngClass]="{ 'is-invalid': submitted && f.confirmPassword.errors }" id="modifyPwd-newPwd2" name="modifyPwd-newPwd2" type="password" class="form-control  custom-normsup-input-nb">
                         <label [ngClass]="{'lowered-opac': !f.confirmPassword.value && modifyPwdFocus.three === false, 'custom-label-center-active': f.confirmPassword.value || modifyPwdFocus.three === true}" class="custom-normsup-label-test align-custom-label" for="modifyPwd-newPwd2">Confirmer mot de passe</label>
                         <div *ngIf="submitted && f.confirmPassword.errors" class="invalid-feedback">
                           <div *ngIf="f.confirmPassword.errors.required">Mot de passe requis</div>

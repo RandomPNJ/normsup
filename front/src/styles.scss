@@ -1301,6 +1301,10 @@ td {
     border-radius: 0px !important;
 }
 
+.custom-normsup-input-nb-active {
+    border-bottom: 1px solid #4390EF !important;
+}
+
 .ma {
     margin: auto !important;
 }
@@ -2167,4 +2171,8 @@ td {
 .invalid-feedback {
     font-family: 'Roboto Regular';
     font-size: 11px;
+}
+
+.form-control {
+    color: #333 !important;
 }

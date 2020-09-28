@@ -26,7 +26,7 @@ export class MonthlyConformityComponent implements OnInit {
 			label: "Taux de conformité",
 			data: [],
 			borderColor: "#4390EF",
-			// backgroundColor: "#eef5ff",
+			// backgroundColor: "red",
 			// borderColor: "#fff",
 			backgroundColor: "rgba(199,224,255, 0.3)",
 			fill: true,
@@ -45,25 +45,28 @@ export class MonthlyConformityComponent implements OnInit {
 		},
 		borderColor: "#4390EF",
 		scales: {
-			yAxes: [{
-				gridLines: {
-					zeroLineColor: '#D3D3D3',
-					zeroLineWidth: 2
-				},
-				ticks: {
-					callback: function(value, index, values) {
-						if(value === 125) {
-							return null;
-						} else {
-                        	return value;
-						} 
-                    },
-					fontColor: '#5b5f62',
-					max: 125,
-					min: 0,
-					stepSize: 25
-				},
-			}],
+			yAxes: [
+				{
+					gridLines: {
+						color: 'rgba(211, 211, 211, 0.3)',
+						zeroLineColor: '#D3D3D3',
+						zeroLineWidth: 2
+					},
+					ticks: {
+						callback: function(value, index, values) {
+							if(value === 125) {
+								return null;
+							} else {
+								return value;
+							} 
+						},
+						fontColor: '#5b5f62',
+						max: 125,
+						min: 0,
+						stepSize: 25
+					},
+				}
+			],
 			xAxes: [{
 				gridLines: {
 					zeroLineColor: '#D3D3D3',
