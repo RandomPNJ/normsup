@@ -96,9 +96,11 @@ export default (expressApp) => {
 
   // Authentification middleware
   const AuthMiddleware = new AuthenticatorMiddleware();
+
+  //TODO: CHANGE THIS SHIT
   expressApp.use('/api', (req, res, next) => {
     loggerT.verbose('here');
-    if(req.url === '/auth/login' || req.url === '/auth/refresh_token' || req.url === '/auth/supplier-login'
+    if(req.url === '/auth/login' || req.url === '/auth/refresh_token' || req.url === '/auth/supplier-login' || req.url === '/auth/reset_password/modify' 
      || req.url === '/users/current' || req.url.indexOf('/auth/admin') !== -1 || req.url === '/admin/daily_reminders' || req.url === '/auth/activate'
      || req.url === '/admin/conformity/checkup' || req.url === '/admin/alerts' || req.url === '/auth/reset_password' || req.url === '/auth/generate_activation_link') {
       return next();

@@ -7,7 +7,9 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { combineLatest, Subscription, forkJoin } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
+import { MustMatch } from '../../_helpers/must-match.validator';
 import { SettingsService } from 'src/app/services/settings.service';
+import { FormControl, FormArray, FormBuilder, Validators, FormGroup} from '@angular/forms';
 
 @Component({
   selector: 'app-profile',
@@ -72,7 +74,8 @@ export class ProfileComponent implements OnInit {
     two: false,
     three: false
   };
-
+  registerForm: FormGroup;
+  submitted: Boolean = false;
   modifyPwd: any = {
     lastPwd: '',
     newPwd: '',
@@ -80,6 +83,9 @@ export class ProfileComponent implements OnInit {
   };
   modifyPwdErr1: String;
   modifyPwdErr: String;
+
+
+
   constructor(
     private apiService: HttpService,
     private authService: AuthService,
@@ -87,19 +93,27 @@ export class ProfileComponent implements OnInit {
     private bsService: BrowserStorageService, 
     private changeDetection: ChangeDetectorRef,
     private notifService: NotifService,
+    private formBuilder: FormBuilder,
     private modalService: BsModalService,
     private settingsService: SettingsService) { }
 
   ngOnInit() {
-    this.id = JSON.parse(this.bsService.getLocalStorage('current_user')).id;
+    this.registerForm = this.formBuilder.group({
+      oldPassword: ['', Validators.required],
+      newPassword: ['', [Validators.required, Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{8,}')]],
+      confirmPassword: ['', Validators.required]
+    }, {
+        validator: [MustMatch('newPassword', 'confirmPassword'), this.checkPasswords]
+    });
+
     this.apiService.get('/api/users/current')
       .subscribe(res => {
         console.log('userInfo res', res)
         if(res.body['user']) {
+          this.id = res.body['user']['id'];
           this.userInfo = cloneDeep(res.body['user']);
           this.user = cloneDeep(res.body['user']);
           this.loading = false;
-        
         }
       }, err => {
         if(err.code === -1) {
@@ -115,8 +129,6 @@ export class ProfileComponent implements OnInit {
     // Decomment to get the profile picture
     this.apiService.getPicture('/api/users/picture')
       .subscribe(res => {
-        // this.showImg = true;
-        // this.urlToImage = '/src/assets/img/add-pic-two.svg';
         return this.createImageFromBlob(<Blob>res.body);
       }, err => {
         // this.showImg = true;
@@ -127,6 +139,37 @@ export class ProfileComponent implements OnInit {
   }
 
 
+  get f() { console.log('this.registerForm.controls', this.registerForm.controls); return this.registerForm.controls; }
+
+  onSubmit() {
+    this.submitted = true;
+    this.modifyPwdErr = '';
+    console.log('submitted', this.registerForm);
+    console.log('this.submitted', this.submitted);
+    // stop here if form is invalid
+    if (this.registerForm.invalid) {
+        return;
+    }
+
+    this.apiService.post('/api/auth/modify_password/' + this.id, {type: 'CLIENT', email: this.userInfo.email, newPassword: this.registerForm.value.newPassword, oldPassword: this.registerForm.value.oldPassword})
+      .subscribe(res => {
+        console.log('reset_password/modify res : ', res);
+        this.toggleOffPassword();
+        this.notifService.success('Mot de passe modifié.');
+      }, err => {
+        console.log('reset_password/modify err : ', err);
+        if(err.code === 1) {
+          this.modifyPwdErr = 'Mot de passe erroné.';
+        } else if(err.code === 2) {
+          this.modifyPwdErr = 'Utilisateur introuvable.';
+        }
+        // this.toggleOffPassword();
+      })
+    ;
+  }
+
+
+  // TODO modify this.id to only use token
   sendModifications() {
     let main_form: FormData = new FormData();
     let calls = [];
@@ -194,16 +237,16 @@ export class ProfileComponent implements OnInit {
   }
 
   toggleOffPassword() {
-    this.modifyPwd = {
-      lastPwd: '',
-      newPwd: '',
-      newPwd2: ''
-    };
-    this.modifyPwdErr1 = '';
+    this.registerForm.reset();
+    Object.keys(this.registerForm.controls).forEach(key => {
+      this.registerForm.get(key).setErrors(null) ;
+    });
+    // this.modifyPwdErr1 = '';
     this.modifyPwdErr = '';
     this.modifyPasswordToggle = false;
   }
 
+  // TODO modify this.id to only use token
   modifyPwFinal() {
     let regexp = /[!@#$%^&*(),.?":{}|<>]/;
     if(this.modifyPwd.newPwd.match(regexp) !== null) {
@@ -287,4 +330,13 @@ export class ProfileComponent implements OnInit {
        reader.readAsDataURL(image);
     }
  }
+
+ checkPasswords(group: FormGroup) { // here we have the 'passwords' group
+  console.log('checkPasswords');
+  let pass = group.get('oldPassword').value;
+  let newPass = group.get('newPassword').value;
+  const newPassword = group.controls['newPassword'];
+
+  pass === newPass ? newPassword.setErrors({ samePassword: true }) : { samePassword: false }     
+}
 }

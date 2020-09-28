@@ -165,5 +165,6 @@ export class LoginPageComponent implements OnInit, OnDestroy {
         console.error('resetPassword error :', err);
       })
     ;
+    this.hideModal();
   }
 }

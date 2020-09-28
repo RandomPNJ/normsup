@@ -6,6 +6,7 @@ import * as uuid from 'uuid/v4';
 import * as moment from 'moment';
 import * as Query from './query';
 import * as mail from './email';
+import * as bcrypt from 'bcrypt';
 
 declare var loggerT: any;
 
@@ -89,7 +90,7 @@ export default class AuthRegistry {
                                 rTitle = 'Madame';
                             }
                             
-                            let link = 'https://app.normsup.com/supplier/reset_password;type=CLIENT;token='+token;
+                            let link = 'https://app.normsup.com/reset_password;type=CLIENT;token='+token;
                             mailOptions.html = genericTemplate({ 'rTitle': rTitle, 'respresName': _.capitalize(data.lastname), 'link': link });
                             mailOptions.to = data.email;
                             return this.transporter.sendMail(mailOptions)
@@ -163,6 +164,56 @@ export default class AuthRegistry {
         
     }
 
+    public resetPasswordModify(token, password) {
+        let q = {
+            timeout: 40000,
+            sql: Query.CHECK_RESET_PWD_TOKEN,
+            values: [token, password]
+        };
+        
+        return this.mysql.query(q)
+            .then(res => {
+                loggerT.verbose('[resetPasswordModify] res', res);
+                if(res && res[0].count && res[0].count === 1) {
+                    loggerT.verbose('[resetPasswordModify] Token found');
+                    return bcrypt.hash(password, 14, (err, hash) => {
+                        if(err) {
+                            const error = new Error(`Could not change the password, please retry.`);
+                            error['statusCode'] = 400;
+                            throw error;
+                        }
+                        // Store hash in your password DB.
+                        let qChangePwd = {
+                            timeout: 40000,
+                            sql: Query.CHANGE_PASSWORD,
+                            values: [hash, res[0].user_id]
+                        };
+                        let qResetDone = {
+                            timeout: 40000,
+                            sql: Query.RESET_DONE,
+                            values: [new Date(), token]
+                        };
+                        let resetPwdSubQueries = [this.mysql.query(qChangePwd), this.mysql.query(qResetDone)];
+                        return Promise.all(resetPwdSubQueries.map(p => p.catch(e => e)))
+                            .then(res => {
+                                return Promise.resolve(res);
+                            })
+                            .catch(err => {
+                                loggerT.verbose('[resetPasswordModify] err', err);
+                                return Promise.reject(err);
+                            })
+                        ;
+                    });
+                } else {
+                    return Promise.reject({statusCode: 400, msg: 'Token not found', code: 1})
+                }
+            })
+            .catch(err => {
+                return Promise.reject({statusCode: 500, msg: 'Token not found', code: 1})
+            })
+        ;
+    }
+
     public generateActivationLink(email) {
 
         let q0 = {
@@ -232,6 +283,66 @@ export default class AuthRegistry {
             })
         ;
         
+    }
+
+    public modifyPassword(data) {
+        let q = {
+            timeout: 40000,
+            sql: Query.FIND_USER_BY_EMAIL,
+            values: [data.email]
+        };
+        
+        return this.mysql.query(q)
+            .then(res => {
+                loggerT.verbose('[resetPasswordModify] res', res);
+                if(res && res[0] && res[0].id) {
+                    let u = res[0];
+                    loggerT.verbose('[resetPasswordModify] Token found');
+                    return bcrypt.compare(data.oldPassword, u.password)
+                        .then(res => {
+                            loggerT.verbose('[resetPasswordModify] bcrypt.compare res', res);
+                            if(res === true) {
+                                return bcrypt.hash(data.newPassword, 14, (err, hash) => {
+                                    if(err) {
+                                        const error = new Error(`Could not change the password, please retry.`);
+                                        error['statusCode'] = 400;
+                                        throw error;
+                                    }
+                                    // Store hash in your password DB.
+                                    let qChangePwd = {
+                                        timeout: 40000,
+                                        sql: Query.CHANGE_PASSWORD,
+                                        values: [hash, u.id]
+                                    };
+                                    let qResetDone = {
+                                        timeout: 40000,
+                                        sql: Query.CHANGE_PASSWORD_HISTORY,
+                                        values: [u.id]
+                                    };
+                                    let resetPwdSubQueries = [this.mysql.query(qChangePwd), this.mysql.query(qResetDone)];
+                                    return Promise.all(resetPwdSubQueries.map(p => p.catch(e => e)))
+                                        .then(res => {
+                                            return Promise.resolve(res);
+                                        })
+                                        .catch(err => {
+                                            loggerT.verbose('[resetPasswordModify] err', err);
+                                            return Promise.reject(err);
+                                        })
+                                    ;
+                                });
+                            } else {
+                                return Promise.reject({statusCode: 400, msg: 'Old password not correct.', code: 1});
+                            }
+                        })
+                    ;
+                } else {
+                    return Promise.reject({statusCode: 400, msg: 'User not found', code: 2})
+                }
+            })
+            .catch(err => {
+                return Promise.reject(err)
+            })
+        ;
     }
 
     public getSecret() {
