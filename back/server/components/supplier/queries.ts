@@ -56,9 +56,9 @@ export const QUERY_GET_GROUPS_NAME = 'SELECT g.name, g.client_id, g.description,
 
 export const GET_GROUPS_REMINDERS = 'SELECT g.id as id, g.name, g.description, gr.activated, gr.legal_docs, gr.comp_docs, gr.frequency, gr.last_reminder, gr.next_reminder FROM group_reminders as gr INNER JOIN `groups` as g ON gr.group_id = g.id WHERE g.client_id = ? ORDER BY gr.next_reminder ASC LIMIT ?';
 
-export const GET_DASHBOARD_DATA = 'SELECT csr.client_id, o.denomination, o.id, r.count as count, sc.kbis, sc.lnte, sc.urssaf, off_supp.off, sc.supplier_id FROM `organisations` as o INNER JOIN `client_supplier_relation` as csr ON o.id = csr.supplier_id LEFT JOIN `supplier_conformity` as sc ON (o.id = sc.supplier_id AND sc.start_date = ?), (SELECT COUNT(su.id) as off FROM `suppliers` as su WHERE su.client_id = ? AND su.last_connexion IS NULL) as off_supp, (SELECT COUNT(*) as count FROM `organisations` as org INNER JOIN `client_supplier_relation` as c ON org.id = c.supplier_id WHERE c.client_id = ?) as r WHERE csr.client_id = ?;';
+export const GET_DASHBOARD_DATA = 'SELECT csr.client_id, o.denomination, o.id, r.count as count, sc.kbis, sc.lnte, sc.urssaf, off_supp.off, sc.supplier_id FROM `organisations` as o INNER JOIN `client_supplier_relation` as csr ON o.id = csr.supplier_id LEFT JOIN `supplier_conformity` as sc ON (o.id = sc.supplier_id AND sc.start_date = ?), (SELECT COUNT(su.id) as off FROM `suppliers` as su INNER JOIN `supplier_org_relation` as sor ON su.id=sor.supplier_id WHERE sor.client_id = ? AND su.last_connexion IS NULL) as off_supp, (SELECT COUNT(*) as count FROM `organisations` as org INNER JOIN `client_supplier_relation` as c ON org.id = c.supplier_id WHERE c.client_id = ?) as r WHERE csr.client_id = ?;';
 // Redo GET_DASHBOARD_DATA_SEARCH to be like GET_DASHBOARD_DATA
-export const GET_DASHBOARD_DATA_SEARCH = 'SELECT r.count as count, sc.kbis, sc.lnte, sc.urssaf, off_sup.off FROM `organisations` as o INNER JOIN `client_supplier_relation` as csr ON o.id = csr.supplier_id LEFT JOIN `supplier_conformity` as sc ON o.id = sc.supplier_id LEFT JOIN suppliers as s ON o.id = s.org_id, (SELECT COUNT(*) as off FROM suppliers as s WHERE s.client_id = ? AND s.last_connexion IS NOT NULL) as off_sup, (SELECT COUNT(*) as count FROM `organisations` as org INNER JOIN `client_supplier_relation` as c ON org.id = c.supplier_id WHERE c.client_id = ? AND `denomination` LIKE ?) as r WHERE csr.client_id = ?  AND `denomination` LIKE ?;';
+export const GET_DASHBOARD_DATA_SEARCH = 'SELECT r.count as count, sc.kbis, sc.lnte, sc.urssaf, off_sup.off FROM `organisations` as o INNER JOIN `client_supplier_relation` as csr ON o.id = csr.supplier_id LEFT JOIN `supplier_conformity` as sc ON o.id = sc.supplier_id LEFT JOIN suppliers as s ON o.id = s.org_id, (SELECT COUNT(*) as off FROM `suppliers` as s INNER JOIN `supplier_org_relation` as sor ON s.id=sor.supplier_id WHERE sor.client_id = ? AND s.last_connexion IS NOT NULL) as off_sup, (SELECT COUNT(*) as count FROM `organisations` as org INNER JOIN `client_supplier_relation` as c ON org.id = c.supplier_id WHERE c.client_id = ? AND `denomination` LIKE ?) as r WHERE csr.client_id = ?  AND `denomination` LIKE ?';
 
 export const QUERY_COUNT_SUPPLIERS_CLIENT = 'SELECT r.count as count, sc.kbis, sc.lnte, sc.urssaf FROM `organisations` as o INNER JOIN `client_supplier_relation` as csr ON o.id = csr.supplier_id LEFT JOIN `supplier_conformity` as sc ON o.id = sc.supplier_id, (SELECT COUNT(*) as count FROM `organisations` as org INNER JOIN `client_supplier_relation` as c ON org.id = c.supplier_id WHERE c.client_id = ?) as r WHERE csr.client_id = ?';
 export const QUERY_COUNT_SUPPLIERS_SEARCH = 'SELECT r.count as count, sc.kbis, sc.lnte, sc.urssaf FROM `organisations` as o INNER JOIN `client_supplier_relation` as csr ON o.id = csr.supplier_id LEFT JOIN `supplier_conformity` as sc ON o.id = sc.supplier_id, (SELECT COUNT(*) as count FROM `organisations` as org INNER JOIN `client_supplier_relation` as c ON org.id = c.supplier_id WHERE c.client_id = ? AND `denomination` LIKE ?) as r WHERE csr.client_id = ? AND `denomination` LIKE ?';
@@ -73,13 +73,13 @@ export const INSERT_SUPP_CONFORMITY = 'INSERT INTO `supplier_conformity` SET ?';
 export const INSERT_GROUP = 'INSERT INTO `groups` SET ?';
 export const INSERT_GROUP_MEM = 'INSERT INTO `group_members` (group_id, member_id) VALUES ?';
 export const INSERT_REL = 'INSERT INTO `client_supplier_relation` SET ?';
-export const INSERT_REPRESENTATIVE = 'INSERT INTO `representatives` SET ?';
+export const INSERT_REPRESENTATIVE = 'INSERT INTO `representatives` SET ?'; 
 export const INSERT_GROUP_REMINDERS = 'INSERT INTO `group_reminders` (group_id, activated, legal_docs, comp_docs, frequency, last_reminder, next_reminder) VALUES (?,?,?,?,?,?,?)'
 export const MODIFY_GROUP_REMINDERS = 'INSERT INTO `group_reminders` (group_id, activated, legal_docs, comp_docs, frequency, next_reminder) VALUES (?,?,?,?,?,?)' + 
 'ON DUPLICATE KEY UPDATE group_id= ?, activated = ?, legal_docs = ?, comp_docs = ?, frequency = ?, next_reminder = ?';
 export const INSERT_SUPPLIER_USER = 'INSERT INTO `suppliers` SET ?';
 export const INSERT_ACC_ACTIVATION = 'INSERT INTO `account_activation` (`user_id`, `token`, `expiration_time`) VALUES (?, ?, ?)'
-
+export const INSERT_SUPP_ORG_RELATION = 'INSERT INTO `supplier_org_relation` (`client_id`, `org_id`, `supplier_id`) VALUES (?,?,?)';
 
 export const DELETE_GROUP = 'DELETE FROM `groups` WHERE id = ? AND client_id = ?';
 export const DELETE_GROUP_MEMBERS = 'DELETE FROM `group_members` WHERE group_id = ? AND member_id = ?';
@@ -91,7 +91,7 @@ export const DELETE_SUPPLIER = 'DELETE FROM `organisations` WHERE id = ? AND add
 export const DELETE_SUPPLIER_FROM_GROUP = 'DELETE FROM `group_members` WHERE member_id = ?';
 export const DELETE_SUPPLIER_CONFORMITY = 'DELETE FROM `supplier_conformity` WHERE supplier_id = ? AND client_id = ?';
 export const DELETE_GRP_REMINDERS = 'DELETE FROM `group_reminders` WHERE group_id = ?';
-export const DELETE_SUPPLIER_USERS = 'DELETE FROM `suppliers` WHERE org_id = ?';
+export const DELETE_SUPPLIER_USERS = 'DELETE FROM `supplier_org_relation` WHERE org_id = ?';
 
 
 export const UPDATE_REPRES = 'UPDATE `representatives` SET name=?, lastname=?, phonenumber=?, email=? WHERE id = ? AND client_id = ?'
@@ -99,9 +99,10 @@ export const DELETE_REPRES = 'DELETE FROM `representatives` WHERE id = ? AND cli
 
 
 /** SUPPLIERS QUERY */
-export const FIND_USER_BY_NAME_EMAIL = 'SELECT id,created_at,org_id,client_id,name,lastname,email,validity_date,password FROM `suppliers` WHERE `email` = ? LIMIT 1';
-export const FIND_SUPPLIER_BY_ID = 'SELECT created_at,org_id,client_id,name,lastname,email,validity_date FROM `suppliers` WHERE `id` = ? LIMIT 1';
-
+// Need to debug all these
+export const FIND_USER_BY_NAME_EMAIL = 'SELECT id,created_at,name,lastname,email,validity_date,password,sor.client_id, sor.org_id FROM `suppliers` INNER JOIN `supplier_org_relation` as sor ON suppliers.id=sor.supplier_id WHERE `email` = ? LIMIT 1';
+export const FIND_SUPPLIER_BY_ID = 'SELECT id,created_at,name,lastname,email,validity_date,sor.client_id, sor.org_id FROM `suppliers` INNER JOIN `supplier_org_relation` as sor ON suppliers.id=sor.supplier_id  WHERE `id` = ? LIMIT 1';
+export const FIND_DUPLICATE_SUPPLIER = 'SELECT id,created_at,name,lastname,email,validity_date FROM `suppliers` WHERE `email` = ? LIMIT 1';
 
 export const MONTHLY_CONFORMITY = 'SELECT csr.client_id, csr.supplier_id, IF(sc.kbis <> 1 or sc.lnte <> 1 or sc.urssaf <>1, 0, 1) as conformity, sc.start_date, e.connected_suppliers, MONTH(sc.start_date) as month_evaluated FROM client_supplier_relation as csr INNER JOIN `supplier_conformity` as sc ON csr.supplier_id = sc.supplier_id LEFT JOIN (SELECT COUNT(DISTINCT organisation_id) as connected_suppliers, MONTH(sch.date_connexion) as curr FROM supplier_connexion_history as sch INNER JOIN client_supplier_relation  as csr ON csr.supplier_id = sch.organisation_id INNER JOIN suppliers as s ON s.id = sch.supplier_id WHERE sch.client_id = ? GROUP BY curr) as e ON e.curr = MONTH(sc.start_date) WHERE csr.client_id = ? AND sc.start_date >= ? ORDER BY sc.start_date ASC';
 // export const MONTHLY_CONFORMITY_ENDDATE = 'SELECT csr.client_id, csr.supplier_id, IF(sc.kbis <> 1 or sc.lnte <> 1 or sc.urssaf <>1, 0, 1) as conformity, sc.start_date, e.connected_suppliers, MONTH(sc.start_date) as month_evaluated FROM client_supplier_relation as csr INNER JOIN `supplier_conformity` as sc ON csr.supplier_id = sc.supplier_id LEFT JOIN (SELECT COUNT(DISTINCT organisation_id) as connected_suppliers, MONTH(sch.date_connexion) as curr FROM supplier_connexion_history as sch INNER JOIN client_supplier_relation  as csr ON csr.supplier_id = sch.organisation_id INNER JOIN suppliers as s ON s.id = sch.supplier_id WHERE sch.client_id = ? GROUP BY curr) as e ON e.curr = MONTH(sc.start_date) WHERE csr.client_id = ? AND sc.start_date BETWEEN ? AND ? ORDER BY sc.start_date ASC';

@@ -118,7 +118,7 @@ export default class AuthRegistry {
     }
 
     public activateAccount(token) {
-
+        const that = this;
         let q0 = {
             timeout: 40000,
             sql: Query.CHECK_ACTIVATION,
@@ -143,7 +143,60 @@ export default class AuthRegistry {
                                 loggerT.verbose('[AuthRegistry] res on activateAccount ', res)
                                 if(res && res.changedRows && res.changedRows === 1) {
                                     loggerT.verbose('[AuthRegistry] resetPassword activateAccount', res[0])
-                                    return Promise.resolve({validated: true});
+                                    // SEND LOGINS BY MAIL
+                                    let data = acc_token[0];
+                                    let randompwd = Math.random().toString(36).substring(4);
+                                    
+                                    return bcrypt.hash(randompwd, 14, function(err, hash) {
+                                        if(err) {
+                                            const error = new Error(`Could not store the user, please retry.`);
+                                            error['statusCode'] = 400;
+                                            throw error;
+                                        }
+
+                                        let addLoginsQuery = {
+                                            timeout: 40000,
+                                            sql: Query.CHANGE_SUPPLIER_CREDS,
+                                            values: [hash, data.id]
+                                        };
+
+                                        return that.mysql.query(addLoginsQuery)
+                                            .then((addlogRes) => {
+                                                if(addlogRes && addlogRes.changedRows && addlogRes.changedRows === 1) {
+                                                    let genericTemplate = _.template(mail.credentialsMail);
+                                                    let mailOptions = {
+                                                        from: 'NormSup <mail.normsup@gmail.com>', // sender address
+                                                        to: data.email, // list of receivers
+                                                        subject: 'NormSup: Identifiants plateforme', // Subject line
+                                                        html: ''
+                                                    };
+                                                    let rTitle = 'Monsieur/Madame';
+                            
+                                                    if(data.gender === 'M') {
+                                                        rTitle = 'Monsieur';
+                                                    } else if(data.gender === 'F') {
+                                                        rTitle = 'Madame';
+                                                    }
+                
+                                                    mailOptions.html = genericTemplate({ 'rTitle': rTitle, 'respresName': _.capitalize(data.lastname), 'password': randompwd, 'login': data.email});
+                                                    
+                                                    return that.transporter.sendMail(mailOptions)
+                                                        .then(mailRes => {
+                                                            return Promise.resolve(mailRes);
+                                                        })
+                                                        .catch(err => {
+                                                            loggerT.error('[AuthRegistry] activateAccount ERROR ON QUERY sendMail.');
+                                                            return Promise.reject(err);
+                                                        })
+                                                    ;
+                                                }
+                                            })
+                                            .catch(err => {
+                                                return Promise.reject(err);
+                                            })
+                                        ;
+                                    });
+                                    
                                 } else {
                                     return Promise.reject({statusCode: 400, msg: 'Account validation failed.', code: -1})
                                 }
@@ -163,6 +216,7 @@ export default class AuthRegistry {
         ;
         
     }
+
 
     public resetPasswordModify(token, password) {
         let q = {
