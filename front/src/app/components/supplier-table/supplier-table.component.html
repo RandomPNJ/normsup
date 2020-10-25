@@ -218,8 +218,8 @@
                           <input *ngIf="toggleModification" [(ngModel)]="interloc.phonenumber" class="infosupplier-value custom-normsup-input-nb"/>
                         </span>
                         <span class="infosupplier col-6 nopadding">Adresse mail: 
-                          <span *ngIf="!toggleModification" class="infosupplier-value">{{(infoPopup.email) ? infoPopup.email : "Aucun email"}}</span>
-                          <input *ngIf="toggleModification" [(ngModel)]="interloc.email"  class="infosupplier-value custom-normsup-input-nb" />
+                          <span class="infosupplier-value">{{(infoPopup.email) ? infoPopup.email : "Aucun email"}}</span>
+                          <!-- <input *ngIf="toggleModification" [(ngModel)]="interloc.email"  class="infosupplier-value custom-normsup-input-nb" /> -->
                         </span>
                       </div>
                     </div>
@@ -352,13 +352,13 @@
         Confirmez-vous vouloir la suppression {{confirmationModalTxt === 'fournisseur' ? 'du ' + confirmationModalTxt : 'de ' + confirmationModalTxt}} ?
       </div>
       <div class="modal-footer" style="margin: 0 auto;" *ngIf="confirmationModalTxt === 'fournisseur'">
-          <button style="box-shadow: none; font-size: 13px !important;" (click)="deleteSupplier()" type="button"
+          <button style="box-shadow: none; font-size: 13px !important;" (click)="deleteSupplier(indexInfo)" type="button"
           class="btn new-btn-normsup default-btn-table">Confirmer</button>
           <button style="box-shadow: none;margin-bottom: 3.75px; font-size: 13px !important;" (click)="hideModal('')" type="button"
           class="btn new-btn-normsup default-btn-table">Annuler</button>
       </div>
       <div class="modal-footer" style="margin: 0 auto;" *ngIf="confirmationModalTxt !== 'fournisseur'">
-        <button style="box-shadow: none; font-size: 13px !important;" (click)="deleteInterloc()" type="button"
+        <button style="box-shadow: none; font-size: 13px !important;" (click)="deleteInterloc(indexInfo)" type="button"
         class="btn new-btn-normsup default-btn-table">Confirmer</button>
         <button style="box-shadow: none;margin-bottom: 3.75px; font-size: 13px !important;" (click)="hideModal('')" type="button"
         class="btn new-btn-normsup default-btn-table">Annuler</button>

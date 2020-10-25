@@ -436,3 +436,49 @@ CREATE TABLE `admins` (
 ## Applied
 
 True
+
+
+## Date
+
+
+21-10-2020
+
+## Comment
+
+Update table `supplier_org_relation`
+
+## Query
+
+ALTER TABLE `normsup`.`supplier_org_relation` 
+ADD COLUMN `repres_id` INT NOT NULL AFTER `createdAt`,
+DROP PRIMARY KEY,
+ADD PRIMARY KEY (`repres_id`);
+
+
+## Applied
+
+False
+
+## Date
+
+
+21-10-2020
+
+## Comment
+
+Update table `supplier_org_relation`
+
+## Query
+
+ALTER TABLE `normsup`.`supplier_org_relation` 
+ADD CONSTRAINT `r_id`
+  FOREIGN KEY (`repres_id`)
+  REFERENCES `normsup`.`representatives` (`id`)
+  ON DELETE CASCADE
+  ON UPDATE NO ACTION;
+
+
+
+## Applied
+
+False

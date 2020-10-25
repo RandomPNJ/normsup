@@ -33,8 +33,9 @@ export function createSupplier(req, res, SupplierRegistry) {
         // data.dateCreation = moment.unix(data.dateCreation);
     }
 
-    return SupplierRegistry.createSupplier(data, req.decoded, representative)
+    return SupplierRegistry.createSupplierBis(data, req.decoded, representative)
         .then(res => {
+            loggerT.verbose('Res final  = ', res);
             return res;
         })
         .catch(err => {

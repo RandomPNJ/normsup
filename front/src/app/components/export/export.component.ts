@@ -68,6 +68,13 @@ export class ExportComponent implements OnInit {
   groupsChosen: Array<any> = [];
   suppliersChosen: Array<any> = [];
   documentsToRequest: Array<string> = [];
+  documentsSettings: any = {
+    legal: {
+      kbis: false,
+      lnte: false,
+      urssaf: false,
+    }
+  };
 
   searchSupplier = (text$: Observable<string>) =>
     text$.pipe(
@@ -220,6 +227,7 @@ export class ExportComponent implements OnInit {
 
   removeGroup(group) {
     remove(this.groupsChosen, group);
+    this.groupChosen = '';
   }
 
   removeSupplier(supplier) {
@@ -259,6 +267,13 @@ export class ExportComponent implements OnInit {
       // endRes.docs = this.documentsToRequest;
     }
 
+    for(let a in this.documentsSettings.legal) {
+      if(this.documentsSettings.legal[a]) {
+        endRes.docs += a + ',';
+      }
+    }
+    endRes.docs = endRes.docs.slice(0, -1);
+  
     if(this.exportType.group === true) {
       console.log('export if 1');
       endRes.type = 'GROUP';
@@ -308,6 +323,7 @@ export class ExportComponent implements OnInit {
       }, err => {
         console.error('[export] err', err);
       })
+    ;
 
   }
 

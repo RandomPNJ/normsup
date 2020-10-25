@@ -410,6 +410,7 @@ export class SupplierTableComponent implements OnInit, OnDestroy {
   }
 
   openInterlocInfo(item, i) {
+    console.log('openInterlocInfo i = ', i)
     this.modifyInterloc(false);
     if(this.indexInfo === i && this.infoType === 'INTERLOC') {
       this.indexInfo = -1;
@@ -420,6 +421,7 @@ export class SupplierTableComponent implements OnInit, OnDestroy {
       this.infoPopup = item;
       this.indexInfo = i;
     }
+    console.log('openInterlocInfo this.indexInfo = ', this.indexInfo)
   }
 
   modifyInterloc(toggle?) {
@@ -492,12 +494,11 @@ export class SupplierTableComponent implements OnInit, OnDestroy {
     this.interloc = {};
   }
 
-  deleteInterloc() {
-    let i = this.indexInterloc;
+  deleteInterloc(index) {
     return this.httpService.delete('/api/suppliers/representatives/' + this.infoPopup.id + '/delete')
       .subscribe(res => {
         console.log('deleteInterloc res', res);
-        this.deleteLocalInterlocInfo(i);
+        this.deleteLocalInterlocInfo(index);
         this.indexInfo = null;
         this.hideModal('');
         this.notif.success('Interlocuteur supprimé.');

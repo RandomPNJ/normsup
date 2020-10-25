@@ -11,6 +11,7 @@ import * as moment from 'moment';
 import { HttpService } from 'src/app/services/http.service';
 import { HttpParams } from '@angular/common/http';
 import { DaterangepickerConfig } from 'ng2-daterangepicker';
+import { NotifService } from 'src/app/services/notif.service';
 
 declare var require: any;
 
@@ -115,6 +116,7 @@ export class SupplierComponent implements OnInit {
     private modalService: BsModalService,
     private apiService: ProductService,
     private dateRangeConf: DaterangepickerConfig,
+    private notifService: NotifService,
     private changeDetection: ChangeDetectorRef,
     private httpService: HttpService) {
       this.dateRangeConf.settings = {
@@ -328,6 +330,10 @@ export class SupplierComponent implements OnInit {
 
     return this.apiService.postData('/api/suppliers/define_supplier', data)
       .subscribe(res => {
+        console.log('addCompany res : ', res)
+        if(res && res['code'] && res['code'] === 1) {
+          this.notifService.error('Ajout interlocuteur impossible : Cet email est déjà associé à une autre organisation.')
+        }
         // this.hideModal('');
         this.nextState('supplierSuccess');
         this.child.reload();

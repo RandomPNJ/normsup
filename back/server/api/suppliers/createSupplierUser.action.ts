@@ -16,6 +16,11 @@ export function createSupplierUser(req, SuppliersRegistry) {
     loggerT.verbose('Body to create Users', req.body);
     let data;
     const creator = req.decoded;
+    if(!req.body || !req.body.user) {
+        const error = new Error(`Invalid request, user and client must be specified.`);
+        error['statusCode'] = 400;
+        throw error;
+    }
 
     SupplierUserSchema.validate(req.body.user, (err, val) => {
         if (err && err.details[0].message) {
@@ -25,7 +30,7 @@ export function createSupplierUser(req, SuppliersRegistry) {
         }
         data = _.cloneDeep(val);
     });
-
+    
     data.created_at = new Date();
     data.validity_date = moment().add(7, 'days').toDate();
 

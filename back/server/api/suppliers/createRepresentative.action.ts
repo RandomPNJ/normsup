@@ -36,10 +36,11 @@ export function createRepresentative(req, res, SupplierRegistry) {
 
     return SupplierRegistry.createRepresentative(repres, req.body.supplierID, req.decoded)
         .then(res => {
+            loggerT.verbose('[createRepresentative] res  = ', res);
             return res;
         })
         .catch(err => {
-            loggerT.verbose('Err  = ', err);
+            loggerT.verbose('[createRepresentative] Err  = ', err);
             res.status(500).json({status: err.message})
             return err;
         })

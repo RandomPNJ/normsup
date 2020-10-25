@@ -6,7 +6,7 @@ import * as Query from './queries';
 import config from '../../config/environment/index';
 import * as bcrypt from 'bcrypt';
 import * as uuid from 'uuid/v4';
-import { email as emailTemplate, supplierUserEmail, activationMail } from './email';
+import { email as emailTemplate, supplierUserEmail, activationMail, duplicateSupplier } from './email';
 
 declare var loggerT: any;
 
@@ -250,34 +250,65 @@ export default class SupplierRegistry {
             })
             ;
     }
+
+    // REDO THIS FUNCTION
     public deleteRepresentative(id, userID) {
         return HelperQueries.getUserFromDB(userID)
             .then(res => {
                 let user = res[0];
-                let query = {
-                    timeout: 40000
+                let getRepres = {
+                    timeout: 40000,
+                    sql: Query.GET_REPRES,
+                    values: [id]
                 };
-                loggerT.verbose('[deleteRepresentative] id === ', id);
-                loggerT.verbose('[deleteRepresentative] res === ', res);
-                query['sql'] = Query.DELETE_SUPPLIER_REPRES;
-                query['values'] = [id, user.organisation];
-
-                return this.mysql.query(query)
-                    .then((res, fields) => {
-                        loggerT.verbose('QUERY RES deleteRepresentative ==== ', res);
-                        return res;
+                loggerT.verbose('[deleteRepresentative] id  === ', id);
+                return this.mysql.query(getRepres)
+                    .then(repres => {
+                        loggerT.verbose('[deleteRepresentative] repres  === ', repres);
+                        if(repres && repres[0]) {
+                            let r = repres[0];
+                            let query = {
+                                timeout: 40000
+                            };
+                            let query2 = {
+                                timeout: 40000,
+                                sql: Query.DELETE_SUPPLIER_USER,
+                                values: [r.client_id, r.organisation_id]
+                            };
+                            loggerT.verbose('[deleteRepresentative] id === ', id);
+                            loggerT.verbose('[deleteRepresentative] res === ', user);
+                            query['sql'] = Query.DELETE_SUPPLIER_REPRES;
+                            query['values'] = [id, user.organisation];
+                            let prs = [
+                                this.mysql.query(query),
+                                // this.mysql.query(query2)
+                            ];
+                            return Promise.all(prs.map(p => p.catch(e => e)))
+                                .then((promiseRes) => {
+                                    loggerT.verbose('QUERY RES deleteRepresentative ==== ', res);
+                                    return Promise.resolve({msg: 'Success', code: 0});
+                                })
+                                .catch(err => {
+                                    loggerT.error('ERROR ON QUERY deleteRepresentative.');
+                                    return Promise.reject(err);
+                                })
+                            ;
+                        } else {
+                            return Promise.resolve({msg: 'Error: representative not found', code: -1, statusCode: 404});
+                        }
                     })
                     .catch(err => {
                         loggerT.error('ERROR ON QUERY deleteRepresentative.');
                         return Promise.reject(err);
                     })
-                    ;
+                ;
+                
 
             })
             .catch(err => {
                 Promise.reject('[SupplierRegistry] Could not get user from database, query aborted.');
             })
-            ;
+        ;
     }
 
     public updateGroup(group, suppliers, suppToDelete) {
@@ -616,8 +647,7 @@ export default class SupplierRegistry {
             ;
     }
 
-
-    public createSupplier(data, userID, representative) {
+    public createSupplierBis(data, userID, representative) {
         return HelperQueries.getUserFromDB(userID)
             .then(res => {
                 let user = res[0];
@@ -634,137 +664,221 @@ export default class SupplierRegistry {
                 return this.mysql.query(query)
                     .then(res => {
                         loggerT.verbose('[createSupplier] FIRST QUERY RES ==== ', res);
-                        let newInsert = {};
-
-                        newInsert['supplier_id'] = res.insertId;
-                        newInsert['client_id'] = user.organisation;
-                        query['sql'] = Query.INSERT_REL;
-                        query['values'] = [newInsert];
                         let createdOrg = res;
-                        let query2 = { timeout: 40000 };
-                        let query3 = { timeout: 40000 };
-                        let addAccActivation = { timeout: 40000 };
+                        let newInsert = {
+                            supplier_id: res.insertId,
+                            client_id: user.organisation
+                        };
+                        // REPRESENTATIVE 
                         representative['organisation_id'] = createdOrg.insertId;
                         representative['added_by'] = user.id;
                         representative['client_id'] = user.organisation;
+                        let confData = {supplier_id: createdOrg.insertId, client_id: user.organisation, start_date: moment().startOf('month').toDate()};
+                        let promises = [];
+                        promises.push(this.orgConfig(newInsert, confData), this.represConfig(representative))
 
-                        loggerT.verbose('[createSupplier] representative ==== ', representative);
-
-                        query2['sql'] = Query.INSERT_REPRESENTATIVE;
-                        query2['values'] = [representative]
-
-                        query3['sql'] = Query.INSERT_SUPP_CONFORMITY;
-                        query3['values'] = [{ supplier_id: createdOrg.insertId, client_id: user.organisation, start_date: moment().startOf('month').toDate() }];
-
-                        let promises = [
-                            this.mysql.query(query),
-                            this.mysql.query(query3)
-                        ];
-                        if (representative.name && representative.lastname && representative.email && representative.phonenumber) {
-                            promises.push(this.mysql.query(query2));
-                        }
-
-                        return this.allSkippingErrors(promises)
-                            .then(() => {
-                                // C'est stupide, on envoie un mail pour qu'il accède à la partie fournisseur sans qu'il n'ait de log
-                                /*
-                                if(representative && representative.email) {
-                                    let genericTemplate = _.template(emailTemplate);
-                                    let mailOptions = {
-                                        from: 'NormSup <mail.normsup@gmail.com>', // sender address
-                                        to: '', // list of receivers
-                                        subject: 'Normsup: Dépot de documents', // Subject line
-                                        html: 'Empty message. Failed.'
+                        return Promise.all(promises.map(p => p.catch(e => e)))
+                            .then((promiseRes) => {
+                                loggerT.verbose('[createSupplierBis] RES ', promiseRes)
+                                if(promiseRes && promiseRes[1] && promiseRes[1].code === 'ER_DUP_ENTRY') {
+                                    return Promise.resolve({msg: 'Representative email already linked to another organisation', code: 1});
+                                } else {
+                                    let suppData = {
+                                        name: representative.name,
+                                        lastname: representative.lastname,
+                                        email: representative.email,
+                                        password: null,
+                                        created_at: moment().toDate(),
                                     };
-                                    let denom = '';
-                                    let rTitle = 'Monsieur/Madame';
-                                    denom = data.denomination ? ' ' + data.denomination.toUpperCase() : '';
-                                    if(representative.gender && representative.gender === 'M') {
-                                        rTitle = 'Monsieur';
-                                    } else if(representative.gender && representative.gender === 'F') {
-                                        rTitle = 'Madame';
-                                    }
-                                    mailOptions.html = genericTemplate({ 'rTitle': rTitle, 'respresName': _.capitalize(representative.lastname), 'client_name': user.companyName,'denomination': denom });
-                                    mailOptions.to = representative.email;
-                                    return this.transporter.sendMail(mailOptions)
-                                        .then(() => {
-                                            return Promise.resolve(res);
+                                    return this.createSupplierUser(suppData, {id: createdOrg.insertId}, {id: user.organisation}, data, {}, promiseRes[1].insertId)
+                                        .then(res => {
+                                            return Promise.resolve({ msg: 'Supplier and supplier user created successfully.', code: 0 });
                                         })
                                         .catch(err => {
-                                            return Promise.reject({msg: 'Couldn\'t send mail to supplier\'s representative.'})
+                                            return Promise.resolve({ msg: 'Supplier created but couldn\'t create supplier user.', code: 2 });
                                         })
                                     ;
-                                } else {
-                                    return Promise.resolve({msg: 'Couldn\'t send mail to supplier\'s representative.'})
                                 }
-                                */
-                                let suppData = {
-                                    name: representative.name,
-                                    lastname: representative.lastname,
-                                    email: representative.email,
-                                    password: null,
-                                    created_at: moment().toDate(),
-                                };
-                                return this.createSupplierUser(suppData, {id: createdOrg.insertId}, {id: user.organisation}, data, {})
-                                    .then(res => {
-                                        return Promise.resolve({ msg: 'Supplier and supplier user created successfully.', code: 0 });
-                                    })
-                                    .catch(err => {
-                                        return Promise.resolve({ msg: 'Supplier created but couldn\'t create supplier user.', code: 0 });
-                                    })
-                                ;
-                            });
+                            })
+                        ; 
                     })
                     .catch(err => {
-                        loggerT.error('ERROR ON FIRST QUERY createSuppliers : ', err);
-                        if (err.message.includes("Duplicate entry")) {
-                            query['sql'] = Query.QUERY_GET_SUPPLIER_INFO;
-                            query['values'] = [data.siret, data.siret, data.siret];
-                            return this.mysql.query(query)
-                                .then(res => {
-                                    // console.log('err recreate', res);
-                                    if (res && res[0] && res[0].id) {
-                                        let newInsert = {};
-                                        newInsert['supplier_id'] = res[0].id;
-                                        newInsert['client_id'] = user.organisation;
-                                        query['sql'] = Query.INSERT_REL;
-                                        query['values'] = [newInsert];
-
-                                        let query2 = {
-                                            timeout: 40000
-                                        };
-                                        let query3 = {
-                                            timeout: 40000
-                                        };
-
-                                        representative['organisation_id'] = res[0].id;
-                                        representative['added_by'] = user.id;
-                                        representative['client_id'] = user.organisation;
-
-                                        query2['sql'] = Query.INSERT_REPRESENTATIVE;
-                                        query2['values'] = [representative]
-
-                                        query3['sql'] = Query.INSERT_SUPP_CONFORMITY;
-                                        query3['values'] = [{ supplier_id: res.insertId, client_id: user.organisation, start_date: moment().startOf('month').toDate(), end_date: moment().endOf('month').toDate() }];
-
-                                        return this.allSkippingErrors([
-                                            this.mysql.query(query),
-                                            this.mysql.query(query2),
-                                            this.mysql.query(query3)])
-                                        ;
-                                    }
-                                })
-                            ;
-                        } else {
-                            return Promise.reject(err);
-                        }
+                        loggerT.error('[createSupplier] ERROR ON FIRST QUERY createSuppliers : ', err);
+                        return Promise.reject(err);
                     })
-                    ;
+                ;
             })
             .catch(err => {
                 Promise.reject({msg: '[SupplierRegistry] Could not get user from database, query aborted.'});
             })
-            ;
+        ;
+    }
+
+    private orgConfig(relData, confData) {
+        let q = {
+            timeout: 40000,
+            sql: Query.INSERT_REL,
+            values: [relData],
+        };
+        let q1 = {
+            timeout: 40000,
+            sql: Query.INSERT_SUPP_CONFORMITY,
+            values: [confData],
+        };
+
+        let prs = [];
+        prs.push(this.mysql.query(q));
+        prs.push(this.mysql.query(q1));
+        return Promise.all(prs.map(p => p.catch(e => e)))
+            .then((res) => {
+                return Promise.resolve(res);
+            })
+        ;
+    }
+
+    private represConfig(repres) {
+        let checkQ = {
+            timeout: 40000,
+            sql: Query.INSERT_REPRESENTATIVE,
+            values: [repres],
+        };
+
+        return this.mysql.query(checkQ)
+            .then((res) => {
+                return Promise.resolve(res);
+            })
+        ;
+    }
+
+    public createSupplierUser(data, org, client, supplier, password, represID) {
+        loggerT.verbose('[createSupplierUser] Data : ', data);
+        loggerT.verbose('[createSupplierUser] supplier : ', supplier);
+
+
+        let query = {
+            timeout: 40000
+        };
+        let token = uuid();
+        data.token;
+        query['sql'] = Query.INSERT_SUPPLIER_USER;
+        query['values'] = [data];
+
+        return this.mysql.query(query)
+            .then(res => {
+                loggerT.verbose('[createSupplierUser] RES ON QUERY INSERT_SUPPLIER_USER : ', res);
+                return this.supplierConfig(supplier, res.insertId, token, org.id, {id: client.id}, data, false, represID)
+                    .then(res => {
+                        return Promise.resolve(res);
+                    })
+                    .catch(err => {
+                        return Promise.reject(err);
+                    })
+                ;
+            })
+            .catch(err => {
+                if(err && err.message && err.message.includes("Duplicate entry")) {
+                    loggerT.verbose('[createSupplierUser] DUPLICATE ENTRY ');
+                    let q = {
+                        timeout: 40000,
+                        sql: Query.FIND_DUPLICATE_SUPPLIER,
+                        values: [data.email]
+                    };
+                    return this.mysql.query(q)
+                        .then(suppRes => {
+                            loggerT.verbose('[createSupplierUser] DUPLICATE ENTRY suppRes ', suppRes);
+                            if(suppRes && suppRes[0]) {
+                                loggerT.verbose('[createSupplierUser] DUPLICATE ENTRY suppRes if ');
+                                return this.supplierConfig(supplier, suppRes[0].id, token, org.id, {id: client.id, org_name: suppRes[0].org_name}, data, true, represID)
+                                    .then(res => {
+                                        return Promise.resolve(res);
+                                    })
+                                    .catch(err => {
+                                        return Promise.reject(err);
+                                    })
+                                ;
+                            } else {
+                                loggerT.verbose('[createSupplierUser] DUPLICATE ENTRY suppRes else');
+                            }
+                        })
+                        .catch(suppErr => {
+                            loggerT.error('[createSupplierUser] DUPLICATE ENTRY suppErr ', suppErr);
+
+                            return Promise.reject(suppErr);
+                        })
+                    ;
+                } else {
+                    loggerT.error('ERROR ON FIRST QUERY createSuppliers : ', err);
+                    return Promise.reject(err);
+                }
+            })
+        ;
+    }
+
+    private supplierConfig(supplier, id, token, orgID, client, data, duplicate, represID) {
+
+        let addOrgRelation = {
+            timeout: 40000,
+            sql: Query.INSERT_SUPP_ORG_RELATION,
+            values: [client.id, orgID, id, represID]
+        };
+        let promises = [
+            this.mysql.query(addOrgRelation)
+        ];
+        if(!duplicate) {
+            let queryActication = {
+                timeout: 40000,
+                sql: Query.INSERT_ACC_ACTIVATION,
+                values: [id, token, moment().add(7, 'days').toDate()]
+            };
+            promises.push(this.mysql.query(queryActication))
+        }
+
+        return Promise.all(promises.map(p => p.catch(e => e)))
+            .then(res => {
+                loggerT.verbose('supplierConfig RES ==== ', res);
+                let genericTemplate;
+                let mailOptions = {
+                    from: 'NormSup <mail.normsup@gmail.com>', // sender address
+                    to: '', // list of receivers
+                    subject: '', // Subject line
+                    html: 'Empty message. Failed.'
+                };
+                
+                let denom = '';
+                let rTitle = 'Monsieur/Madame';
+                denom = supplier.denomination ? ' ' + supplier.denomination.toUpperCase() : '';
+                if(data.gender && data.gender === 'M') {
+                    rTitle = 'Monsieur';
+                } else if(data.gender && data.gender === 'F') {
+                    rTitle = 'Madame';
+                }
+                
+                if(!duplicate) {
+                    let link = 'https://app.normsup.com/supplier/activation;activationToken=' + token;
+                    genericTemplate = _.template(activationMail);
+                    mailOptions.subject = 'NormSup: Activation de votre compte fournisseur';
+                    mailOptions.html = genericTemplate({ 'rTitle': rTitle, 'respresName': _.capitalize(data.lastname), 'link': link });
+                } else {
+                    genericTemplate = _.template(emailTemplate);
+                    mailOptions.subject = "NormSup: Ajout en tant qu'interlocuteur";
+                    mailOptions.html = genericTemplate({ 'rTitle': rTitle, 'respresName': _.capitalize(data.lastname), 'client_name': client.org_name, 'denomination': supplier.denomination});
+                }
+                
+                mailOptions.to = data.email;
+
+                return this.transporter.sendMail(mailOptions)
+                    .then(() => {
+                        return Promise.resolve(res);
+                    })
+                    .catch(err => {
+                        return Promise.reject({ msg: 'Couldn\'t send mail to supplier\'s representative.' })
+                    })
+                ;
+            })
+            .catch(err => {
+                loggerT.error('[supplierConfig] ERROR ON QUERY account activation : ', err);
+            })
+        ;
     }
 
     // TODO: Add supplier account
@@ -781,10 +895,44 @@ export default class SupplierRegistry {
                 query['sql'] = Query.INSERT_REPRESENTATIVE;
                 query['values'] = [representative]
 
-                return this.mysql.query(query)
-                    .then((res, fields) => {
-                        loggerT.verbose('QUERY RES 35279847400016 ==== ', res);
-                        return res;
+                return this.represConfig(representative)
+                    .then(represConfigRes => {
+                        loggerT.verbose('[createRepresentative] represConfigRes ==== ', represConfigRes);
+                        if(represConfigRes && represConfigRes.code === 'ER_DUP_ENTRY') {
+                            return Promise.resolve({msg: 'Representative email already linked to another organisation', code: 1});
+                        } else {
+                            let suppData = {
+                                name: representative.name,
+                                lastname: representative.lastname,
+                                email: representative.email,
+                                password: null,
+                                created_at: moment().toDate(),
+                            };
+                            let getRepresOrg = {
+                                timeout: 40000,
+                                sql: Query.QUERY_GET_SUPPLIER_INFO_ID,
+                                values: [supplierID]
+                            };
+
+                            return this.mysql.query(getRepresOrg)
+                                .then(orgRes => {
+                                    loggerT.verbose('[createRepresentative] orgRes ==== ', orgRes);
+                                    if(orgRes && orgRes[0]) {
+                                        return this.createSupplierUser(suppData, {id: supplierID}, {id: user.organisation}, orgRes[0], {}, represConfigRes.insertId)
+                                            .then(res => {
+                                                return Promise.resolve({ msg: 'Supplier and supplier user created successfully.', code: 0 });
+                                            })
+                                            .catch(err => {
+                                                return Promise.resolve({ msg: 'Supplier created but couldn\'t create supplier user.', code: 2 });
+                                            })
+                                        ;
+                                    }
+                                })
+                                .catch(err => {
+
+                                })
+                            ;
+                        }
                     })
                     .catch(err => {
                         loggerT.error('ERROR ON QUERY 35279847400016.', err);
@@ -794,7 +942,7 @@ export default class SupplierRegistry {
 
             })
             .catch(err => {
-                Promise.reject('[SupplierRegistry] Could not get user from database, query aborted.');
+                return Promise.reject(err);
             })
             ;
     }
@@ -910,7 +1058,7 @@ export default class SupplierRegistry {
             timeout: 40000
         };
         loggerT.verbose('username ', username)
-        query['sql'] = Query.FIND_USER_BY_NAME_EMAIL;
+        query['sql'] = Query.SUPPLIER_LOGIN;
         query['values'] = [username];
 
         return this.mysql.query(query)
@@ -978,124 +1126,6 @@ export default class SupplierRegistry {
                 return Promise.reject(err);
             })
             ;
-    }
-
-    public createSupplierUser(data, org, client, supplier, password) {
-        loggerT.verbose('Data : ', data);
-
-        let query = {
-            timeout: 40000
-        };
-        let token = uuid();
-        data.token;
-        query['sql'] = Query.INSERT_SUPPLIER_USER;
-        query['values'] = [data];
-
-        return this.mysql.query(query)
-            .then(res => {
-                loggerT.verbose('[createSupplierUser] RES ON QUERY INSERT_SUPPLIER_USER : ', res);
-                return this.supplierConfig(supplier, res.insertId, token, org.id, client.id, data, false)
-                    .then(res => {
-                        return Promise.resolve(res);
-                    })
-                    .catch(err => {
-                        return Promise.reject(err);
-                    })
-                ;
-            })
-            .catch(err => {
-                if(err && err.message && err.message.includes("Duplicate entry")) {
-                    loggerT.verbose('[createSupplierUser] DUPLICATE ENTRY ');
-                    let q = {
-                        timeout: 40000,
-                        sql: Query.FIND_DUPLICATE_SUPPLIER,
-                        values: [data.email]
-                    };
-                    return this.mysql.query(q)
-                        .then(suppRes => {
-                            loggerT.verbose('[createSupplierUser] DUPLICATE ENTRY suppRes ', suppRes);
-                            if(suppRes && suppRes[0]) {
-                                loggerT.verbose('[createSupplierUser] DUPLICATE ENTRY suppRes if ');
-                                return this.supplierConfig(supplier, suppRes[0].id, token, org.id, client.id, data, true)
-                                    .then(res => {
-                                        return Promise.resolve(res);
-                                    })
-                                    .catch(err => {
-                                        return Promise.reject(err);
-                                    })
-                                ;
-                            } else {
-                                loggerT.verbose('[createSupplierUser] DUPLICATE ENTRY suppRes else');
-                            }
-                        })
-                        .catch(suppErr => {
-                            loggerT.error('[createSupplierUser] DUPLICATE ENTRY suppErr ', suppErr);
-                            return Promise.reject(suppErr);
-                        })
-                    ;
-                } else {
-                    loggerT.error('ERROR ON FIRST QUERY createSuppliers : ', err);
-                    return Promise.reject(err);
-                }
-            })
-        ;
-    }
-
-    private supplierConfig(supplier, id, token, orgID, clientID, data, duplicate) {
-
-        let addOrgRelation = {
-            timeout: 40000,
-            sql: Query.INSERT_SUPP_ORG_RELATION,
-            values: [clientID, orgID, id]
-        };
-        let promises = [
-            this.mysql.query(addOrgRelation)
-        ];
-        if(!duplicate) {
-            let queryActication = {
-                timeout: 40000,
-                sql: Query.INSERT_ACC_ACTIVATION,
-                values: [id, token, moment().add(7, 'days').toDate()]
-            };
-            promises.push(this.mysql.query(queryActication))
-        }
-
-        return Promise.all(promises.map(p => p.catch(e => e)))
-            .then(res => {
-                loggerT.verbose('supplierConfig RES ==== ', res);
-                let genericTemplate = _.template(activationMail);
-                let mailOptions = {
-                    from: 'NormSup <mail.normsup@gmail.com>', // sender address
-                    to: '', // list of receivers
-                    subject: 'NormSup: Activation de votre compte fournisseur', // Subject line
-                    html: 'Empty message. Failed.'
-                };
-                let denom = '';
-                let rTitle = 'Monsieur/Madame';
-                denom = supplier.denomination ? ' ' + supplier.denomination.toUpperCase() : '';
-                if(data.gender && data.gender === 'M') {
-                    rTitle = 'Monsieur';
-                } else if(data.gender && data.gender === 'F') {
-                    rTitle = 'Madame';
-                }
-
-                let link = 'https://app.normsup.com/supplier/activation;activationToken=' + token;
-                // mailOptions.html = genericTemplate({ 'rTitle': rTitle, 'respresName': _.capitalize(data.lastname), 'client_name': client.denomination, 'denomination': denom, 'login': data.email, 'password': password });
-                mailOptions.html = genericTemplate({ 'rTitle': rTitle, 'respresName': _.capitalize(data.lastname), 'link': link });
-                mailOptions.to = data.email;
-                return this.transporter.sendMail(mailOptions)
-                    .then(() => {
-                        return Promise.resolve(res);
-                    })
-                    .catch(err => {
-                        return Promise.reject({ msg: 'Couldn\'t send mail to supplier\'s representative.' })
-                    })
-                ;
-            })
-            .catch(err => {
-                loggerT.error('[supplierConfig] ERROR ON QUERY account activation : ', err);
-            })
-        ;
     }
 
     // Need to have the monthly supplier connected data to know the rate

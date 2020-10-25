@@ -774,14 +774,15 @@ td {
 
 
 #tableComp_filter {
-    padding-left: 30px !important;
+    // padding-left: 30px !important;
+    padding-left: 64px !important;
     padding-bottom: 40px !important;
 
     input {
         width: 240px;
         color: #333;
         border: 0px solid #333;
-        border-bottom: 1px solid lightgray;
+        border-bottom: 1px solid #D3D3D3;
         font-weight: 400;
 
         &:active {
@@ -2192,4 +2193,22 @@ td {
 
 .form-control {
     color: #333 !important;
+}
+
+.doc-form-check {
+    width: 100%;
+    padding-top: 10px;
+    text-align: center;
+  
+    & > div {
+      font-family: 'Roboto Regular';
+      color: #4E5983;
+      font-size: 14px;
+    }
+}
+
+.doc-choice-check {
+    padding-right: 13px;
+    // color: #4390EF;
+    color: #4E5983;
 }

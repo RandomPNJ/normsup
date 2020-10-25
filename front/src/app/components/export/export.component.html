@@ -33,7 +33,7 @@
             </div>
           </div>
           <div *ngIf="groupsChosen.length > 0">
-            <div *ngFor="let group of groupsChosen"> 
+            <div *ngFor="let group of groupsChosen" style="position: relative;"> 
               <span  class="grp-list">{{group.name}}</span>
               <span class="trash-icn" (click)="removeGroup(group)"><i class="far fa-trash-alt"></i></span>
             </div>
@@ -55,14 +55,14 @@
               <ng-template #rt let-r="result" let-t="term">
                 <ngb-highlight [result]="r.denomination" [term]="t"></ngb-highlight>
               </ng-template>
-              <input id="typeahead-http" [disabled]="!exportType.supplier" type="text" class="form-control" aria-describedby="supplierHelp" 
+              <input id="typeahead-http" [disabled]="!exportType.supplier" type="text" class="form-control" style="border-radius: 5px;" aria-describedby="supplierHelp" 
               [ngbTypeahead]="searchSupplier" placeholder="Rechercher" [resultTemplate]="rt" [inputFormatter]="formatter" [(ngModel)]="supplierSelected" (keydown.enter)="choseSupplier(rt)">
             </div>
           </div>
           <div *ngIf="suppliersChosen.length > 0">
-            <div *ngFor="let supplier of suppliersChosen">
+            <div *ngFor="let supplier of suppliersChosen" style="position: relative;">
               <span class="spl-list">{{supplier.denomination}}</span>
-              <span class="trash-icn" (click)="removeSupplier(supplier)"><i class="far fa-trash-alt"></i></span>
+              <div class="trash-icn" (click)="removeSupplier(supplier)"><i class="far fa-trash-alt"></i></div>
             </div>
           </div>
         </div>
@@ -73,7 +73,7 @@
         <div class="col-lg-2 col-md-2 col-2 col-xs-2">
 
         </div>
-        <div class="col-lg-8 col-md-8 col-8 col-xs-8 center-row exp-border-bottom" style="padding-bottom: 20px;">
+        <!-- <div class="col-lg-8 col-md-8 col-8 col-xs-8 center-row exp-border-bottom" style="padding-bottom: 20px;">
           <div class="d-block select-cont row-input-style">
             <div class="major-txt-style" style="padding-bottom: 10.5px;">Documents</div>
             <select class="form-control custom-select export-normsup-select" id="documentsChoice"  name="documentsChoice" [(ngModel)]="documentChosen">
@@ -94,6 +94,35 @@
               {{ doc | uppercase }} 
               <span class="trash-icn" (click)="removeDoc(doc)"><i class="far fa-trash-alt"></i></span>
             </span>
+          </div>
+        </div> -->
+        <div class="col-lg-8 col-md-8 col-8 col-xs-8 center-row exp-border-bottom" style="padding-bottom: 20px;">
+          <div class="d-block select-cont row-input-style">
+            <div class="major-txt-style" style="padding-bottom: 10.5px;">Documents</div>
+            <!-- <select class="form-control custom-select export-normsup-select" id="documentsChoice"  name="documentsChoice" [(ngModel)]="documentChosen">
+              <option [ngValue]="undefined" disabled>Choisir document</option>
+              <option *ngFor="let c of documents" [ngValue]="c" [disabled]="c.available === false">{{c.name}}</option>
+            </select> -->
+          </div>
+          <div style="padding-bottom: 30px;padding-top: 30px;margin: auto;padding-left: 53px;padding-right: 54px;" class="row">
+            <div class="doc-form-check">
+              <div class="form-check form-check-inline normsup-checkbox-cont export-checkbox">
+                <input class="form-check-input normsup-checkbox" type="checkbox" id="kbisCheckbox"  [(ngModel)]="documentsSettings.legal.kbis">
+                <!-- <i class="fas fa-check doc-choice-check"></i> -->
+                <label class="form-check-label" for="kbisCheckbox" style="color: #4E5983;">KBIS</label>
+              </div>
+              <div class="form-check form-check-inline normsup-checkbox-cont export-checkbox">
+                <input class="form-check-input normsup-checkbox" type="checkbox" id="urssafCheckbox" [(ngModel)]="documentsSettings.legal.urssaf">
+                <!-- <i class="fas fa-check doc-choice-check"></i> -->
+                <label class="form-check-label" for="urssafCheckbox" style="color: #4E5983;">URSSAF</label>
+              </div>
+              <div class="form-check form-check-inline normsup-checkbox-cont export-checkbox">
+                <input class="form-check-input normsup-checkbox" type="checkbox" id="lnteCheckbox" [(ngModel)]="documentsSettings.legal.lnte">
+                <!-- <i class="fas fa-check doc-choice-check"></i>   -->
+                <label class="form-check-label" for="lnteCheckbox" style="color: #4E5983;">LNTE</label>
+              </div>
+              
+            </div>
           </div>
         </div>
         <div class="col-lg-2 col-md-2 col-2 col-xs-2">
@@ -129,7 +158,7 @@
       </div>
       <div class="row nopadding" style="padding-bottom: 40px !important;">
         <div style="margin: 0 auto;">
-          <button [disabled]="(suppliersChosen.length === 0 && exportType.supplier) || (groupsChosen.length === 0 && exportType.group) || documentsToRequest.length === 0 || !dateRange.startDate || !dateRange.endDate" (click)="export()" type="button" class="btn btn-primary export-btn">Faire un export</button>
+          <button [disabled]="(suppliersChosen.length === 0 && exportType.supplier) || (groupsChosen.length === 0 && exportType.group) || (!documentsSettings.legal.kbis && !documentsSettings.legal.urssaf && !documentsSettings.legal.lnte) || !dateRange.startDate || !dateRange.endDate" (click)="export()" type="button" class="btn btn-primary export-btn">Faire un export</button>
           <!-- <button (click)="export()" type="button" class="btn btn-primary export-btn">Faire un export</button> -->
         </div>
       </div>

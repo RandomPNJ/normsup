@@ -117,11 +117,16 @@
 }
 
 .spl-list {
-    display: inline-block;
+    display: block;
     font-family: 'Roboto Medium';
     font-size: 15px;
     color: #4E5983;
-    padding-left: 10px;
+    // padding-left: 10px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    max-width: 170px;
+    width: 100%;
+    white-space: nowrap;
     text-align: left;
 }
 
@@ -133,9 +138,12 @@
 }
 
 .trash-icn {
-    padding-left: 18px;
+    // padding-left: 18px;
     display: inline-block;
     cursor: pointer;
+    position: absolute;
+    right: 5px;
+    bottom: 3px;
 }
 
 .middle-txt-style {
@@ -155,4 +163,8 @@
 .supp-cont-pos {
     float: left;
     min-width: 180px;
+}
+
+.normsup-checkbox-cont [type="checkbox"]:not(:checked) + label, .normsup-checkbox-cont [type="checkbox"]:checked + label {
+    padding-left: 1.5em !important;
 }
