@@ -211,6 +211,7 @@ export class SupplierComponent implements OnInit {
 
   searchCompany(id: any) {
     this.searchCompany404 = false;
+    this.supplierErrExists = false;
     const params = '&rows=1&q=' + id;
     let p =  new HttpParams().append('siret', id);
     this.loadingSiret = true;
@@ -264,7 +265,11 @@ export class SupplierComponent implements OnInit {
     this.companyToAdd.postalCode = record.codepostaletablissement;
     this.companyToAdd.siren = record.siren;
     this.companyToAdd.address = record.adresseetablissement;
-    this.companyToAdd.dateCreation = moment(record.datecreationetablissement, 'YYYY/MM/DD').format('DD/MM/YYYY');
+    if(record.datecreationetablissement) {
+      this.companyToAdd.dateCreation = moment(record.datecreationetablissement, 'YYYY/MM/DD').format('DD/MM/YYYY');
+    } else {
+      this.companyToAdd.dateCreation = '';
+    }
     this.companyToAdd.siret = record.siret;
     this.companyToAdd.city = record.libellecommuneetablissement;
     // this.companyToAdd.client = 'Fakeclient';

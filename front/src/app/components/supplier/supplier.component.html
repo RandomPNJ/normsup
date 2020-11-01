@@ -51,6 +51,7 @@
                 <span class="searchText">Suivant</span>
               </button>
               <span class="red-err-txt" *ngIf="searchCompany404">Aucun résultat trouvé. Veuillez entrer un siret/siren valide.</span>
+              <span class="red-err-txt" *ngIf="supplierErrExists">Ce siret/siren correspond à un fournisseur déjà créé.</span>
             </div>
           </div>
           <div *ngIf="loadingSiret" style="padding-top: 15px; text-align: center;">

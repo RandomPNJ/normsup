@@ -82,6 +82,7 @@ export function exportDocuments(req, res, DocumentsRegistry, s3) {
                         files.push('DEV/'+element.path);
                    });
                 }
+                loggerT.verbose('files paths', files);
                 res.set({'Content-Type': 'application/zip'});
                 return DocumentsRegistry.zipFile(s3, files)
                     .then(resultTwo => {
@@ -97,7 +98,7 @@ export function exportDocuments(req, res, DocumentsRegistry, s3) {
                 ;
             } else {
                 return res.status(404).json({
-                    msg: 'No picture found.'
+                    msg: 'No document found.'
                 });
             }
         })

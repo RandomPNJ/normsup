@@ -482,3 +482,40 @@ ADD CONSTRAINT `r_id`
 ## Applied
 
 False
+
+## Date
+
+
+25-10-2020
+
+## Comment
+
+Update table `document`
+
+## Query
+
+ALTER TABLE `normsup`.`document` 
+DROP COLUMN `supplier`,
+CHANGE COLUMN `client` `siren` INT(11) NOT NULL ;
+
+## Applied
+
+False
+
+## Date
+
+
+25-10-2020
+
+## Comment
+
+Update table `supplier_connexion_history`
+
+## Query
+
+ALTER TABLE `normsup`.`supplier_connexion_history` 
+CHANGE COLUMN `organisation_id` `organisation_id` INT(11) NULL ;
+
+## Applied
+
+False

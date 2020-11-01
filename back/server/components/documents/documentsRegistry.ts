@@ -5,6 +5,7 @@ import * as moment from 'moment';
 import * as Query from './queries';
 import config from '../../config/environment/index';
 import Bluebird = require('bluebird');
+import { cloneDeep } from 'lodash';
 
 const pdfreader = require('pdfreader');
 declare var loggerT: any;
@@ -53,6 +54,7 @@ export default class SupplierRegistry {
 
 
     public createDocument(files, user) {
+        loggerT.verbose('[createDocument] user === ', user);
         const paths = [];
         // const promises = [];
         let validDate = null;
@@ -60,11 +62,13 @@ export default class SupplierRegistry {
         let query = {
             timeout: 40000,
             sql: Query.GET_ORG_INFO,
-            values: [user.organisation]
+            values: [user.org[0].org]
         };
         let finalRes = {};
+
         return this.mysql.query(query)
             .then(orgRes => {
+                loggerT.verbose('ORGRES === ', orgRes);
 
                 return Promise.map(files, file => {
                     loggerT.verbose('file name ===', file['originalname']);
@@ -98,7 +102,7 @@ export default class SupplierRegistry {
                             } else if(type === 'KBIS') {
                                 loggerT.verbose('Kbis a = ', a);
                                 if(a !== null) {
-                                    validDate = moment(a, 'DD MMMM YYYY').add(6, 'months').toDate();
+                                    validDate = moment(a, 'DD MMMM YYYY').add(6, 'months').format("YYYY-MM-DD HH:mm:ss");
                                     push = moment().isBefore(validDate);
                                 }
                             }
@@ -108,7 +112,7 @@ export default class SupplierRegistry {
                             
                             if(push) {
                                 loggerT.verbose('push');
-                                paths.push({path: type + '/' + orgRes[0].siret + '/' + type + '_' + moment(new Date()).format("DD-MM-YYYY"), file: file, type: type, validityDate: validDate});
+                                paths.push({path: type + '/' + orgRes[0].siren + '/' + type + '_' + moment(new Date()).unix(), file: file, type: type, validityDate: validDate});
                             } else {
                                 finalRes[type] = {
                                     msg: 'Document expiré',
@@ -133,8 +137,7 @@ export default class SupplierRegistry {
                                                 path: path.path,
                                                 filename: currentFile.originalname,
                                                 uploadedBy: user.id,
-                                                supplier: user.organisation,
-                                                client: user.client,
+                                                siren: orgRes[0].siren,
                                                 size: currentFile.size,
                                                 format: currentFile.mimetype,
                                                 category: path.type
@@ -350,70 +353,95 @@ export default class SupplierRegistry {
         ;
     }
 
+
+    // TODO EXPORT FROM GROUP
     private exportDocuments(user, data) {
+        
+
         let query = {
             timeout: 40000
         };
+
         if(data.type === 'SUPPLIER') {
-            let sqlQuery = Query.GET_DOCUMENTS;
-            loggerT.verbose('exportDocuments here : ', sqlQuery);
-            sqlQuery += ' AND d.supplier IN ';
+            // WE GET SUPPLIER'S SIREN FROM THE ID VALUES
+            let getSuppliersQuery = {
+                timeout: 40000,
+                sql: '',
+                values: [user.organisation]
+            };
+            let q = Query.GET_ORGS_INFO;
             for (var i = 0; i < data.values.length; i++) {
                 if(i===0) {
-                    sqlQuery += '('+data.values[i];
+                    q += '('+data.values[i];
                 } else {
-                    sqlQuery += ','+data.values[i];
+                    q += ','+data.values[i];
                 }
                 if(i===data.values.length-1) {
-                    sqlQuery += ')'
+                    q += ')'
                 }
             }
-            sqlQuery += ' AND d.category IN ';
-            for (var i = 0; i < data.docs.length; i++) {
-                if(i===0) {
-                    sqlQuery += "('"+data.docs[i]+"'";
-                } else {
-                    sqlQuery += ",'"+data.docs[i]+"'";
-                }
-                if(i===data.docs.length-1) {
-                    sqlQuery += ')'
-                }
-            }
-            sqlQuery += ' LIMIT 3'; // TO DELETE
-            loggerT.verbose('exportDocuments SQL QUERY : ', sqlQuery);
-            query['sql'] = sqlQuery;
-            query['values'] = [user.organisation, data.startDate, data.endDate]
+            getSuppliersQuery.sql = q;
+            loggerT.verbose('q before === ', q);
+            return this.mysql.query(getSuppliersQuery)
+                .then(firstRes => {
+                    loggerT.verbose('[exportDocument] firstRes ===', firstRes);
+                    if(firstRes && firstRes.length > 0) {
+                        let sqlQuery = Query.GET_DOCUMENTS;
+                        loggerT.verbose('exportDocuments here : ', sqlQuery);
+                        sqlQuery += ' AND d.siren IN ';
+                        for (var i = 0; i < firstRes.length; i++) {
+                            if(i===0) {
+                                sqlQuery += '('+firstRes[i].siren;
+                            } else {
+                                sqlQuery += ','+firstRes[i].siren;
+                            }
+                            if(i===firstRes.length-1) {
+                                sqlQuery += ')'
+                            }
+                        }
+                        sqlQuery += ' AND d.category IN ';
+                        for (var i = 0; i < data.docs.length; i++) {
+                            if(i===0) {
+                                sqlQuery += "('"+data.docs[i]+"'";
+                            } else {
+                                sqlQuery += ",'"+data.docs[i]+"'";
+                            }
+                            if(i===data.docs.length-1) {
+                                sqlQuery += ')'
+                            }
+                        }
+                        sqlQuery += ' LIMIT 3'; // TO DELETE
+                        loggerT.verbose('exportDocuments SQL QUERY : ', sqlQuery);
+                        query['sql'] = sqlQuery;
+                        query['values'] = [data.startDate, data.endDate];
+                        return this.mysql.query(query)
+                            .then(res => {
+                                loggerT.verbose('[exportDocuments] QUERY RES ==== ', res);
+                                if(res && res.length > 0) {
+                                    return Promise.resolve(res);
+                                } else {
+                                    return Promise.reject(new Error('Viewing this document is not possible for the logged in user.'));
+                                }
+                            })
+                            .catch(err => {
+                                loggerT.error('[exportDocuments] ERROR ON QUERY getSuppliers.', err);
+                                return Promise.reject(err);
+                            })
+                        ;
+                    }
+                })
+                .catch(err => {
+
+                })
+            ;
+            
         } else if(data.type === 'GROUP') {
+            // TODO
 
         }
 
-        return this.mysql.query(query)
-            .then(res => {
-                loggerT.verbose('[exportDocuments] QUERY RES ==== ', res);
-                if(res && res.length > 0) {
-                    // let queries = [];
-                    // res.forEach(e => {
-                    //     queries.push(this.s3.getObject({
-                    //         Bucket: 'normsup',
-                    //         Key: config.env === 'local' ? 'DEV/' + e.path : e.path
-                    //     }).createReadStream())
-                    // });
-                    // return Promise.all(queries)
-                    //     .then(s3res => {
-                    //         loggerT.verbose('Multiple S3 GET s3res : ', s3res)
-                    //         return Promise.resolve(s3res);
-                    //     })
-                    // ;
-                    return Promise.resolve(res);
-                } else {
-                    return Promise.reject(new Error('Viewing this document is not possible for the logged in user.'));
-                }
-            })
-            .catch(err => {
-                loggerT.error('ERROR ON QUERY getSuppliers.', err);
-                return Promise.reject(err);
-            })
-        ;
+
+
     }
 
     private parseDateFromExtract(s: String) {
@@ -450,14 +478,19 @@ export default class SupplierRegistry {
         )
     }
 
-    private createMetadata(data, user) {
+    private createMetadata(data, user, correctData?) {
+        loggerT.verbose('[createMetadata] user === ', user);
+        loggerT.verbose('[createMetadata] data === ', data);
         let query = {
             timeout: 40000
         };
         let query2 = {
             timeout: 40000
         };
-
+        let promises = [];
+        let datas = [];
+        let a;
+        let date = data.validityDate ? moment(data.validityDate).format("YYYY-MM-DD HH:mm:ss") : null;
         query['sql']    = Query.INSERT_DOC_METADATA;
         query['values'] = [data];
 
@@ -468,22 +501,24 @@ export default class SupplierRegistry {
         } else if(data.category === 'LNTE') {
             query2['sql']    = Query.UPSERT_SUPPLIER_CONF_LNTE;
         }
+        promises = [this.mysql.query(query)];
+        /**
+         * La première ligne est commentée car la 3ème valeur, le 1, signifie que le fournisseur est valide pour le document
+         * On la passe à 2 quand on a besoin de validation
+         * On la passe à 3 quand le fournisseur est invalide pour le document
+         */
+        user.org.forEach(o => {
+            a = cloneDeep(query2);
+            a['values'] = [o.client, o.org, 2, moment().startOf('month').format("YYYY-MM-DD HH:mm:ss"), date, 2, date];
+            datas.push(a);
+        });
+        datas.forEach(d => promises.push(this.mysql.query(d)));
+        
+        // query2['values'] = [user.client, user.organisation, 1, moment().startOf('month').toDate(), data.validityDate ? data.validityDate : null, 1];
 
-        query2['values'] = [user.client, user.organisation, 1, moment().startOf('month').toDate(), data.validityDate ? data.validityDate : null, 1];
-
-        if(data.validityDate) {
-            query2['values'].push(data.validityDate);
-        } else {
-            query2['values'].push(null);
-        }
-
-        let promises = [this.mysql.query(query), this.mysql.query(query2)];
-
-        return Promise
-            .map(promises, (promise) => {
-                loggerT.verbose('[createMetadata] promise map')
-            })
+        return Promise.all(promises.map(p => p.catch(e => e)))
             .then((res) => {
+                loggerT.verbose('[createMetadata] promise map res', res);
                 return res;
             })
         ;

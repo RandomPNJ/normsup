@@ -87,16 +87,16 @@ export default class SupplierRegistry {
         // loggerT.verbose('Query final === ', final);
 
         if (v === 'C') {// done
-            values = [data.company, data.company, moment().startOf('month').toDate(), data.company, data.company, data.limit, data.start];
+            values = [data.company, moment().startOf('month').toDate(), data.company, data.company, data.limit, data.start];
             final = Query[final];
         } else if (v === 'CGSE') {// done
-            values = [data.company, data.company, moment().startOf('month').toDate(), data.company, data.group, data.company, data.search, data.limit, data.start];
+            values = [data.company, moment().startOf('month').toDate(), data.company, data.group, data.company, data.search, data.limit, data.start];
             final = Query[final];
         } else if (v === 'CG') {// done
-            values = [data.group, data.company, data.company, moment().startOf('month').toDate(), data.company, data.company, data.limit, data.start];
+            values = [data.group, data.company, moment().startOf('month').toDate(), data.company, data.company, data.limit, data.start];
             final = Query[final];
         } else if (v === 'CSE') {// done
-            values = [data.company, data.company, moment().startOf('month').toDate(), data.company, data.search, data.search, data.search, data.company, data.limit, data.start];
+            values = [data.company, moment().startOf('month').toDate(), data.company, data.search, data.search, data.search, data.company, data.limit, data.start];
             final = Query[final];
         } else if (v === 'CST') {// done
             let templateQuery = _.template(Query['GET_SUPPLIER_STATE']);
@@ -108,7 +108,7 @@ export default class SupplierRegistry {
                 final = templateQuery({ state: ' AND d.last_date IS NULL ' });
             }
             loggerT.verbose('Query computed = ', final);
-            values = [data.company, data.company, moment().startOf('month').toDate(), data.company, data.company];
+            values = [data.company, moment().startOf('month').toDate(), data.company, data.company];
         } else if (v === 'CGST') {// done
             let templateQuery = _.template(Query['GET_SUPP_GRP_STATE']);
             if (data.state === 'UPTODATE') {
@@ -119,7 +119,7 @@ export default class SupplierRegistry {
                 final = templateQuery({ state: ' AND d.last_date IS NULL ' });
             }
             loggerT.verbose('Query computed = ', final);
-            values = [data.company, data.company, moment().startOf('month').toDate(), data.group, data.company, data.company];
+            values = [data.company, moment().startOf('month').toDate(), data.group, data.company, data.company];
         } else if (v === 'CSEST') {// testing
             let templateQuery = _.template(Query['GET_SEARCH_STATE']);
             if (data.state === 'UPTODATE') {
@@ -130,7 +130,7 @@ export default class SupplierRegistry {
                 final = templateQuery({ state: ' AND d.last_date IS NULL ' });
             }
             loggerT.verbose('Query computed = ', final);
-            values = [data.company, data.company, moment().startOf('month').toDate(), data.company, data.company, data.search, data.search, data.search];
+            values = [data.company, moment().startOf('month').toDate(), data.company, data.company, data.search, data.search, data.search];
         } else if (v === 'CGSEST') {//
 
         }
@@ -504,12 +504,13 @@ export default class SupplierRegistry {
                 };
                 if (data && data.siret) {
                     query['sql'] = Query.QUERY_CHECK_SUPPLIER_AVAIL;
-                    query['values'] = [data.siret, data.siret];
+                    query['values'] = [user.organisation, data.siret, data.siret];
                 }
+                loggerT.verbose('[checkSupplier] values', query['values']);
                 let finalRes;
                 return this.mysql.query(query)
                     .then((res, fields) => {
-                        // loggerT.verbose('res', res);
+                        loggerT.verbose('[checkSupplier] res', res);
                         if (res && res.length > 0) {
                             let company;
                             for (let i = 0; i < res.length; i++) {
@@ -540,6 +541,7 @@ export default class SupplierRegistry {
                                     company: company
                                 };
                             }
+                            loggerT.verbose('[checkSupplier] finalRes', finalRes);
                             return Promise.resolve(finalRes);
                         } else {
                             finalRes = {
@@ -1069,9 +1071,7 @@ export default class SupplierRegistry {
                 let user = res[0];
                 user.orgs = [];
                 res.map(r => user.orgs.push({org: r.org_id, client: r.client_id }));
-                // if (new Date() > new Date(user.validity_date)) {
-                //     return Promise.reject({ statusCode: 400, msg: 'Your login credentials are expired, please request a new account.' });
-                // }
+                delete user.org_id;
 
                 return bcrypt.compare(password, user.password)
                     .then(res => {
@@ -1114,9 +1114,10 @@ export default class SupplierRegistry {
                 if(res && res.length > 0) {
                     let user = res[0];
                     user.orgs = [];
-                    delete user.org_id;
                     res.map(r => user.orgs.push({org: r.org_id, client: r.client_id }));
-                    return Promise.resolve(res);
+                    delete user.org_id;
+                    loggerT.verbose('[getCurrentLogged] res === ', user);
+                    return Promise.resolve(user);
                 } else {
                     return Promise.reject({msg: 'No supplier found', code: -1, statusCode: 404});
                 }
@@ -1230,7 +1231,7 @@ export default class SupplierRegistry {
         loggerT.verbose('supplierLoginHistory data ', data);
 
         query['sql'] = Query.SUPPLIER_LOGIN_HISTORY;
-        query['values'] = [data.id, data.organisation, data.client, new Date()];
+        query['values'] = [data.id, null, data.client, new Date()];
 
         return this.mysql.query(query)
             .then(res => {

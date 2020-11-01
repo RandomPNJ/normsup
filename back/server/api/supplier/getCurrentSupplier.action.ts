@@ -28,10 +28,11 @@ export function getCurrentLogged(req, res, SupplierRegistry, AuthRegistry) {
 
             return SupplierRegistry.getCurrentLogged(decoded)
                 .then(res => {
-                    if(res && res[0]) {
+                    loggerT.verbose('[getCurrentLogged] supplier res ', res);
+                    if(res) {
                         return {
                             authentified: true,
-                            supplier: res[0]
+                            supplier: res
                         };
                     } else {
                         return {

@@ -15,6 +15,7 @@ services:
     restart: always
     command: bash -c "(grunt build && npm run deploy;) && grunt"
     environment:
+      NODE_ENV: 'local'
       TZ: 'Europe/Paris' 
       PORT: 8080
     volumes:
