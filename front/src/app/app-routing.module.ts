@@ -31,10 +31,12 @@ import { AdminLoginPageComponent } from './components/admin-login-page/admin-log
 import { ActivationLinkComponent } from './components/activation-link/activation-link.component'
 import { GenerateActivationLinkComponent } from './components/generate-activation-link/generate-activation-link.component'
 import { ResetPasswordComponent } from "./components/reset-password/reset-password.component";
+import {DashboardSupplierComponent} from "./components/supplier/dashboard-supplier/dashboard-supplier.component";
 const routes: Routes = [
   { path: 'supplier',
     children: [
       { path: 'login', component: SupplierLoginPageComponent },
+      { path: 'dashboard', component: DashboardSupplierComponent },
       { path: 'upload', component: SupplierUploadPageComponent, canActivate: [GuestGuard],
         children: [
           { path: '', component: SupplierUploadInterfaceComponent },
@@ -49,7 +51,7 @@ const routes: Routes = [
   { path: 'supplier/activationLink', component: GenerateActivationLinkComponent },
   { path: 'supplier/activation', component: ActivationLinkComponent },
   { path: 'logout', component: LogoutPageComponent },
-  { path: 'dashboard', component: DashboardComponent, canActivate: [LoggedinGuard],  
+  { path: 'dashboard', component: DashboardComponent, canActivate: [LoggedinGuard],
     children: [
       { path: 'main', component: Dashboard1Component },
       { path: 'supplier', component: SupplierComponent },
@@ -67,7 +69,7 @@ const routes: Routes = [
     ]
   },
   {
-    path: 'backoffice', component: BackofficeComponent, canActivate: [BackofficeGuard], 
+    path: 'backoffice', component: BackofficeComponent, canActivate: [BackofficeGuard],
     children: [
       { path: 'users', component: BackofficeUsersComponent },
       { path: 'suppliers', component: BackofficeSuppliersComponent },
