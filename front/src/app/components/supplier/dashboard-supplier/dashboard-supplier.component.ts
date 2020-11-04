@@ -27,8 +27,6 @@ export class DashboardSupplierComponent implements OnInit {
 
     this.httpService.get('/api/supplier/currentSupplier').subscribe(res => {
 
-      console.log(res);
-
       if (this.isResValid(res)) {
         this.authorized = true;
         this.user = res.body['supplier'];

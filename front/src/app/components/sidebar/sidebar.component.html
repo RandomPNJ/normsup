@@ -1,3 +1,27 @@
+<div style="background-color: transparent;" class="vertical-nav" id="sidebar">
+
+  <ul *ngIf="navLinks && navLinks.length > 0" style="padding-top: 107px;" class="nav flex-column mb-0">
+
+    <li *ngFor="let navLink of navLinks" class="nav-item">
+      <a id="main" routerLinkActive="active" routerLink="{{navLink.navLink}}" class="nav-link text-dark nav-link-s" role="tab"
+         routerLinkActive="active"  #rla="routerLinkActive">
+        <div class="side-icon-placement">
+          <span class="icn-cont dashboard-icn" style="bottom: 12px;">
+            <img *ngIf="navLink.logoLink" [src]="navLink.logoLink" class="icn-style added-pad" />
+          </span>
+          <span class="link-txt">
+            {{ navLink.label }}
+          </span>
+          <img *ngIf="defaultLinkImgCircle && rla.isActive" [src]="defaultLinkImgCircle"  class="active-lnk-icn added-pad"  />
+        </div>
+      </a>
+    </li>
+
+  </ul>
+
+
+</div>
+<!--
 <div style="background-color: transparent;" *ngIf="showHeader" class="vertical-nav" id="sidebar">
 
   <ul *ngIf="!isBackoffice"style="padding-top: 107px;" class="nav flex-column mb-0">
@@ -37,7 +61,7 @@
         </div>
       </a>
     </li>
-    <!-- <li class="nav-item">
+    <li class="nav-item">
       <a id="stats" routerLinkActive="active" class="nav-link text-dark nav-link-s" routerLink="/dashboard/stats"
         role="tab">
         <div class="side-icon-placement">
@@ -47,8 +71,8 @@
           <span class="link-txt">Statistiques</span>
         </div>
       </a>
-    </li> -->
-    <!-- <li class="nav-item">
+    </li>
+     <li class="nav-item">
       <a id="alerts" routerLinkActive="active" class="nav-link text-dark nav-link-s" routerLink="/dashboard/alerts"
         role="tab">
         <div class="side-icon-placement">
@@ -58,7 +82,7 @@
           <span class="link-txt">Alertes</span>
         </div>
       </a>
-    </li> -->
+    </li>
     <li class="nav-item">
       <a id="reminder" routerLinkActive="active" class="nav-link text-dark nav-link-s" routerLink="/dashboard/export"
         role="tab">
@@ -73,7 +97,7 @@
     </li>
   </ul>
 
-  <ul *ngIf="isBackoffice"style="padding-top: 107px;" class="nav flex-column mb-0">
+<ul *ngIf="isBackoffice"style="padding-top: 107px;" class="nav flex-column mb-0">
     <li class="nav-item">
       <a id="main" routerLinkActive="active" routerLink="/backoffice/client" class="nav-link text-dark nav-link-s"
         role="tab">
@@ -111,4 +135,4 @@
 
   </ul>
 
-</div>
+</div>-->
