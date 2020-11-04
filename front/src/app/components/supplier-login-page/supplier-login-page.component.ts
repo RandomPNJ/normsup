@@ -126,13 +126,13 @@ export class SupplierLoginPageComponent implements OnInit, OnDestroy {
             this.showModal();
           } else {
             console.log('supplier login one', res);
-            this.router.navigate(['supplier', 'upload']);
+            this.router.navigate(['supplier', 'dashboard']);
           }
         }, error => {
           console.log('error', error);
           // if(error.error.msg === 'Wrong credentials.' || error.error.msg === 'User not found.') {
           //   this.errMsg = 'Email ou mot de passe erroné.';
-          // } else 
+          // } else
           if(error.error.msg === 'Your login credentials are expired, please request a new account.') {
             this.errMsg = 'Identifiants expirés, veuillez en demander de nouveaux.';
           } else {

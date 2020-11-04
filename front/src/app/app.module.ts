@@ -75,6 +75,7 @@ import { AdminLoginPageComponent } from './components/admin-login-page/admin-log
 import { ActivationLinkComponent } from './components/activation-link/activation-link.component';
 import { GenerateActivationLinkComponent } from './components/generate-activation-link/generate-activation-link.component';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
+import {DashboardSupplierComponent} from "./components/supplier/dashboard-supplier/dashboard-supplier.component";
 
 @NgModule({
   declarations: [
@@ -125,6 +126,9 @@ import { ResetPasswordComponent } from './components/reset-password/reset-passwo
     ActivationLinkComponent,
     GenerateActivationLinkComponent,
     ResetPasswordComponent,
+
+    // Supplier components
+    DashboardSupplierComponent
   ],
   imports: [
     BrowserModule,

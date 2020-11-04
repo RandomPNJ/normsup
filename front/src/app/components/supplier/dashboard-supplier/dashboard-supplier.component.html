@@ -1,0 +1,12 @@
+<div *ngIf="authorized">
+  <app-header-bar *ngIf="user" [currentUser]="user"></app-header-bar>
+
+  <div [ngClass]="{'sidebar-padding': sidebarVisible}" class="dash-bg invisible-scrollbar">
+
+    <div class="dashboard-supplier__container">
+      <router-outlet></router-outlet>
+    </div>
+
+  </div>
+
+</div>
