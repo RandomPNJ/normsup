@@ -1,3 +1,21 @@
+<app-sidebar
+  [navLinks]="[
+      {
+        id: 'clients',
+        navLink: '/supplier/client',
+        logoLink: '../../assets/img/menu-dashboard.svg',
+        label: 'Clients'
+      },
+      {
+        id: 'users',
+        navLink: '/supplier/dashboard/documents',
+        logoLink: '../../assets/img/menu-exports.svg',
+        label: 'Documents'
+      }
+    ]"
+  [defaultLinkImgCircle]="'../../assets/img/active-link.svg'">
+</app-sidebar>
+
 <div *ngIf="authorized">
   <app-header-bar *ngIf="user" [currentUser]="user"></app-header-bar>
 

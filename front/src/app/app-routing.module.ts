@@ -28,15 +28,20 @@ import { BackofficeSuppliersComponent } from './components/backoffice-suppliers/
 import { GuestGuard } from './auth/guest.guard';
 import { BackofficeClientComponent } from './components/backoffice-client/backoffice-client.component';
 import { AdminLoginPageComponent } from './components/admin-login-page/admin-login-page.component';
-import { ActivationLinkComponent } from './components/activation-link/activation-link.component'
-import { GenerateActivationLinkComponent } from './components/generate-activation-link/generate-activation-link.component'
-import { ResetPasswordComponent } from "./components/reset-password/reset-password.component";
-import {DashboardSupplierComponent} from "./components/supplier/dashboard-supplier/dashboard-supplier.component";
+import { ActivationLinkComponent } from './components/activation-link/activation-link.component';
+import { GenerateActivationLinkComponent } from './components/generate-activation-link/generate-activation-link.component';
+import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
+import {DashboardSupplierComponent} from './components/supplier/dashboard-supplier/dashboard-supplier.component';
+import {SupplierDocumentComponent} from "./components/supplier/dashboard-supplier/supplier-document/supplier-document.component";
 const routes: Routes = [
   { path: 'supplier',
     children: [
       { path: 'login', component: SupplierLoginPageComponent },
-      { path: 'dashboard', component: DashboardSupplierComponent },
+      { path: 'dashboard', component: DashboardSupplierComponent,
+        children: [
+          { path: 'documents', component: SupplierDocumentComponent }
+        ]
+      },
       { path: 'upload', component: SupplierUploadPageComponent, canActivate: [GuestGuard],
         children: [
           { path: '', component: SupplierUploadInterfaceComponent },

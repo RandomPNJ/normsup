@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute, ActivationEnd, ActivationStart, NavigationStart, ResolveStart, RouterEvent, NavigationEnd } from '@angular/router';
+import {Component, Input, OnInit} from '@angular/core';
+import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 import { filter } from 'rxjs/operators';
@@ -10,6 +10,9 @@ import { filter } from 'rxjs/operators';
   styleUrls: ['./sidebar.component.scss']
 })
 export class SidebarComponent implements OnInit {
+
+  @Input() navLinks = [];
+  @Input() defaultLinkImgCircle;
 
   user;
   showHeader;
@@ -42,3 +45,11 @@ export class SidebarComponent implements OnInit {
   }
 
 }
+
+/*
+  - id
+  - logoLink
+  - label
+  - routerLink
+
+ */

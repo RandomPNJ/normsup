@@ -75,7 +75,8 @@ import { AdminLoginPageComponent } from './components/admin-login-page/admin-log
 import { ActivationLinkComponent } from './components/activation-link/activation-link.component';
 import { GenerateActivationLinkComponent } from './components/generate-activation-link/generate-activation-link.component';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
-import {DashboardSupplierComponent} from "./components/supplier/dashboard-supplier/dashboard-supplier.component";
+import {DashboardSupplierComponent} from './components/supplier/dashboard-supplier/dashboard-supplier.component';
+import {SupplierDocumentComponent} from './components/supplier/dashboard-supplier/supplier-document/supplier-document.component';
 
 @NgModule({
   declarations: [
@@ -128,7 +129,8 @@ import {DashboardSupplierComponent} from "./components/supplier/dashboard-suppli
     ResetPasswordComponent,
 
     // Supplier components
-    DashboardSupplierComponent
+    DashboardSupplierComponent,
+    SupplierDocumentComponent
   ],
   imports: [
     BrowserModule,
