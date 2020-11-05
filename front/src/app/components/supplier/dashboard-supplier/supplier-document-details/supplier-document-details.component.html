@@ -1,0 +1,28 @@
+<div class="group-details-cont container component-padding" *ngIf="documentType">
+  <app-ui-back-link
+    [link]="'../'"
+    [label]="'Retour aux documents'">
+  </app-ui-back-link>
+
+  <div class="row nopadding col-lg-11 col-md-12 col-sm-7 col-8" style="padding-top: 45px !important; padding-bottom: 25px !important;">
+    <div class="col-lg-7 col-md-12 col-sm-10 col-8 title nopadding">
+      <app-ui-page-title [title]="documentType"></app-ui-page-title>
+      <span class="item-count">
+        <span class="count-style">
+          15
+        </span>
+        clients utilisant ce document
+      </span>
+    </div>
+    <div class="col-lg-5 nopadding">
+      <div class="row nopadding">
+        <div class="col-6" style="padding-right: 0px !important;">
+          <button style="height: 30px;margin-left: 0px !important;" type="button" class="btn new-btn-normsup comp-btn">
+            <span class="button-txt" style="padding-right: 17px !important;padding-left: 17px !important;">Déposer</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

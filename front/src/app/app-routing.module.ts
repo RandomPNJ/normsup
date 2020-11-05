@@ -32,14 +32,16 @@ import { ActivationLinkComponent } from './components/activation-link/activation
 import { GenerateActivationLinkComponent } from './components/generate-activation-link/generate-activation-link.component';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 import {DashboardSupplierComponent} from './components/supplier/dashboard-supplier/dashboard-supplier.component';
-import {SupplierDocumentComponent} from "./components/supplier/dashboard-supplier/supplier-document/supplier-document.component";
+import {SupplierDocumentComponent} from './components/supplier/dashboard-supplier/supplier-document/supplier-document.component';
+import {SupplierDocumentDetailsComponent} from './components/supplier/dashboard-supplier/supplier-document-details/supplier-document-details.component';
 const routes: Routes = [
   { path: 'supplier',
     children: [
       { path: 'login', component: SupplierLoginPageComponent },
       { path: 'dashboard', component: DashboardSupplierComponent,
         children: [
-          { path: 'documents', component: SupplierDocumentComponent }
+          { path: 'documents', component: SupplierDocumentComponent },
+          { path: 'documents/details', component: SupplierDocumentDetailsComponent }
         ]
       },
       { path: 'upload', component: SupplierUploadPageComponent, canActivate: [GuestGuard],

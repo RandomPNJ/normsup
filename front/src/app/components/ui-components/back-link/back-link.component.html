@@ -1,0 +1,8 @@
+<div class="row nopadding previous-lnk-row">
+  <div [routerLink]="[link]">
+    <span class="glyphicon glyphicon-chevron-left previous-arrow" aria-hidden="true"></span>
+    <span *ngIf="label" class="previous-txt">
+      {{ label }}
+    </span>
+  </div>
+</div>

@@ -77,6 +77,9 @@ import { GenerateActivationLinkComponent } from './components/generate-activatio
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 import {DashboardSupplierComponent} from './components/supplier/dashboard-supplier/dashboard-supplier.component';
 import {SupplierDocumentComponent} from './components/supplier/dashboard-supplier/supplier-document/supplier-document.component';
+import {SupplierDocumentDetailsComponent} from './components/supplier/dashboard-supplier/supplier-document-details/supplier-document-details.component';
+import {BackLinkComponent} from './components/ui-components/back-link/back-link.component';
+import {PageTitleComponent} from "./components/ui-components/page-title/page-title.component";
 
 @NgModule({
   declarations: [
@@ -130,7 +133,12 @@ import {SupplierDocumentComponent} from './components/supplier/dashboard-supplie
 
     // Supplier components
     DashboardSupplierComponent,
-    SupplierDocumentComponent
+    SupplierDocumentComponent,
+    SupplierDocumentDetailsComponent,
+
+    // UI Components
+    BackLinkComponent,
+    PageTitleComponent
   ],
   imports: [
     BrowserModule,
