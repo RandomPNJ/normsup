@@ -1,9 +1,39 @@
 <div class="container component-padding">
   <div class="row nopadding col-lg-11 col-md-12 col-sm-10 col-8" style="padding-top: 45px !important; padding-bottom: 25px !important;">
-    <div class="col title nopadding">
+    <div class="row title nopadding">
       <span  class="group-title" style="padding-right: 20px;">Documents</span>
+    </div>
+
+    <div *ngIf="supplierDocuments && 0 !== supplierDocuments.length" style="display: flex; align-items: center;">
+      Vous avez
+      <span style="font-weight: bold; color: #4390EF; padding-left: 2px; padding-right: 2px;"> {{ supplierDocuments.length }} </span>
+      {{ supplierDocuments.length <= 1 ? 'document': 'documents'}}.
     </div>
   </div>
 
-  <!-- Content Here -->
+  <div class="row nopadding groups-cont col-lg-11 col-md-12 col-sm-12 col-12 mb-5">
+    <div class="group-card-style col-lg-3 col-md-4 col-sm-6 col-3" *ngFor="let document of supplierDocuments; let i = index;">
+      <mdb-card class="canvaCard group-card">
+        <mdb-card-body>
+          <div class="group-card-content">
+
+            <div class="group-card-header">
+              <img src="../../../assets/img/group-icn.svg" style="width: 20px;height: 12px;"/>
+              <span class="group-name-style text-ov" style="padding-left:5px">{{document.name}}</span>
+            </div>
+
+            <div class="params-btn">
+              <button (click)="open(document)" type="button" class="btn new-btn-normsup">
+                    <span class="params-btn-txt">
+                      <img width="15" height="15" class="button-logo" src="../../../assets/img/param-icn.svg"/>
+                      <span style="margin-left:5px;">Déposer</span>
+                    </span>
+              </button>
+            </div>
+          </div>
+        </mdb-card-body>
+      </mdb-card>
+    </div>
+  </div>
+
 </div>

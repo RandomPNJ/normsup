@@ -1,0 +1,226 @@
+.group-details-cont {
+  height: 100%;
+}
+.normsup-checkbox-cont {
+  [type="checkbox"]:not(:checked) + label,
+  [type="checkbox"]:checked + label {
+    padding-left: 1.8em !important; /* fait un peu d'espace pour notre case à venir */
+    line-height: 1.4 !important;
+  }
+}
+
+.data-row {
+  height: 100%;
+}
+
+.data-cont-one {
+  padding-right: 7px !important;
+}
+
+.data-cont-two {
+  padding-left: 7px !important;
+}
+
+.button-txt {
+  font-family: 'Roboto Medium';
+  font-size: 13px;
+  letter-spacing: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  display: block;
+  text-overflow: ellipsis;
+}
+
+.fourn-list-style {
+  white-space: nowrap;
+  overflow: hidden;
+  display: block;
+  text-overflow: ellipsis;
+}
+.comp-btn {
+  width: 100%;
+  border: 1px solid #C7E0FF !important;
+  padding: unset !important;
+  box-shadow: unset;
+  text-transform: unset;
+
+  .button-txt {
+    color: #4E5983;
+
+    &:hover {
+      color: white;
+    }
+  }
+}
+
+.spont-btn {
+  width: 100%;
+  border: 1px solid #4390EF !important;
+  padding: unset !important;
+  box-shadow: unset;
+  text-transform: unset;
+
+  .button-txt {
+    // color: #4390EF;
+  }
+}
+
+.save-btn {
+  border-radius: 5px !important;
+
+  .button-txt {
+    color: #FFFFFF;
+    text-transform: none;
+  }
+}
+.group-card-row {
+  padding-top: 20px;
+  padding-bottom: 19px;
+  border-bottom: 1px solid #F3F7FC;
+}
+
+.basic-txt {
+  font-family: 'Roboto Medium';
+  font-size: 15px;
+  letter-spacing: 0;
+  color: #4E5983;
+}
+
+.switch-cont {
+  float: right;
+  padding-right: 45px;
+}
+
+
+.text-cont {
+  padding-left: 35px;
+}
+
+.params-input {
+  padding-top: 21px !important;
+
+  &:first-child {
+    padding-top: 27px;
+  }
+}
+
+.sub-txt {
+  font-family: 'Roboto Regular';
+  font-size: 14px;
+  letter-spacing: 0;
+  color: #4390EF;
+  vertical-align: middle;
+  height: 100%;
+}
+
+.doc-form-check {
+  float: right;
+  padding-right: 35px;
+
+  & > div {
+    font-family: 'Roboto Regular';
+    color: #4E5983;
+    font-size: 14px;
+  }
+}
+
+.select-cont {
+  padding-right: 0px;
+  max-width: 255px;
+  width: 100%;
+}
+
+.freq-txt {
+  padding-top: 20px;
+  font-family: 'Roboto Regular';
+  font-size: 14px;
+  letter-spacing: 0;
+  color: #4E5983;
+}
+
+.select-cont2 {
+  padding-left: 10px;
+}
+
+.disabled-row {
+  opacity: 0.3;
+  -webkit-transition: opacity 0.6s, visibility 0s 0.6s;
+  transition: opacity 0.6s, visibility 0s 0.6s;
+}
+
+.select-comp-but {
+  padding-bottom: 30px;
+}
+
+.add-doc-details {
+  padding-top: 10px;
+  padding-right: 45px;
+  cursor: pointer;
+  text-align: right;
+}
+
+.delete-grp-txt {
+  width: 100%;
+  text-align: center;
+  padding-bottom: 30px;
+  font-family: 'Roboto Regular';
+  font-size: 15px;
+  letter-spacing: 0;
+  color: #4E5983;
+}
+.del-grp-btn {
+  border-radius: 5px;
+  float: left;
+  width: 100%;
+  padding-bottom: 8px !important;
+  padding-top: 8px !important;
+}
+
+.normsup-card {
+  box-shadow: 0px 0px 55px #4390EF1A !important;
+  height: 100%;
+  max-width: 450px;
+  min-width: 331px;
+  max-height: 492px;
+  min-height: 492px;
+  box-shadow: 0px 0px 15px #0000001A;
+}
+
+@media (max-width: 576px) {
+
+  .data-cont-one {
+    padding-right: 0px !important;
+    padding-bottom: 10px;
+    margin: 0 auto 10px auto !important;
+  }
+
+  .data-cont-two {
+    padding-left: 0px !important;
+    margin: 0 auto 10px auto !important;
+  }
+}
+
+.group-select-doc {
+  position: relative;
+  font-family: 'Roboto Regular' !important;
+  font-size: 14px;
+  line-height: 14px;
+  padding: 7px 0px 7px 10px;
+  color: #4E5983;
+  background-position-y: 50%;
+  background-repeat: no-repeat;
+  background-position-x: 90%;
+  border: 1px solid #D3D3D3;
+  border-radius: 5px;
+}
+
+.button-cont-gdetails {
+
+}
+
+@media (max-width: 1359px) {
+  .button-cont-gdetails {
+    padding-top: 9px !important;
+  }
+}
+
