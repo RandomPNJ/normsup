@@ -1,56 +1,55 @@
-<div class="client-details-cont container component-padding" *ngIf="documentType">
-  <app-ui-back-link
-    [link]="'../'"
-    [label]="'Retour aux documents'">
-  </app-ui-back-link>
+<div class="container client-documents-information-container">
 
-  <div class="row nopadding col-lg-11 col-md-12 col-sm-7 col-8" style="padding-top: 45px !important; padding-bottom: 25px !important;">
-    <div class="col-lg-7 col-md-12 col-sm-10 col-8 title nopadding">
+  <div class="flex-row">
+    <app-ui-back-link
+      [link]="'../'"
+      [label]="'Retour aux documents'">
+    </app-ui-back-link>
+  </div>
+
+  <div class="title-row" style="padding-top: 45px !important; padding-bottom: 25px !important;">
+
+    <div class="flex-row">
       <app-ui-page-title [title]="documentType"></app-ui-page-title>
-      <span class="item-count" *ngIf="clients">
-        <span class="count-style">
-          {{ clients.length }}
-        </span>
+
+      <span class="span-row-centered item-count" *ngIf="clients">
+        <span class="count-style">{{ clients.length }}</span>
         clients utilisant ce document
       </span>
     </div>
-    <div class="col-lg-5 nopadding">
-      <div class="row nopadding">
-        <div class="col-6" style="padding-right: 0px !important;">
-          <button style="height: 30px;margin-left: 0px !important;" type="button" class="btn new-btn-normsup comp-btn">
-            <span class="button-txt" style="padding-right: 17px !important;padding-left: 17px !important;">Déposer</span>
-          </button>
+
+    <div class="row nopadding row-line-btn">
+      <button style="height: 30px;margin-left: 0px !important;" type="button" class="btn new-btn-normsup comp-btn">
+        <span class="button-txt">Déposer</span>
+      </button>
+    </div>
+
+  </div>
+
+
+  <div class="clients-cards-container">
+
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 client-list-container">
+          <app-ui-card-template
+            [headerTitle]="'Liste des clients'"
+            [templateBody]="clientListTemplate">
+          </app-ui-card-template>
         </div>
-      </div>
-    </div>
+
+
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 nopadding">
+          <app-ui-card-template
+            [headerTitle]="'Gestion du document'"
+            [templateBody]="documentDetailTemplate">
+          </app-ui-card-template>
+        </div>
+
   </div>
 
-  <div class="row nopadding col-lg-11 col-md-12 col-sm-7 col-8 mb-5">
 
-    <div class="container nopadding">
-
-      <!-- Liste des clients -->
-      <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
-        <app-ui-card-template
-          [headerTitle]="'Liste des clients'"
-          [templateBody]="clientListTemplate">
-        </app-ui-card-template>
-      </div>
-
-
-      <!-- Paramètre des relances -->
-      <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
-        <app-ui-card-template
-          [headerTitle]="'Gestion du document'"
-          [templateBody]="documentDetailTemplate">
-        </app-ui-card-template>
-      </div>
-    </div>
-  </div>
 
 
 </div>
-
 
 <ng-template #clientListTemplate>
   <div
@@ -65,8 +64,10 @@
 
 <ng-template #documentDetailTemplate>
 
-  <div class="row-line client-txt font-weight-bold" *ngIf="!selectedClient; else elseBlock">
-    Aucun client sélectionné.
+  <div class="client-card-row" *ngIf="!selectedClient; else elseBlock">
+    <div class="row-line client-txt font-weight-bold">
+      Aucun client sélectionné.
+    </div>
   </div>
 
   <ng-template #elseBlock>

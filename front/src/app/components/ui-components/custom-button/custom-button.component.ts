@@ -42,6 +42,8 @@ export class CustomButtonComponent implements OnInit {
   private initButtonColorClass() {
     if ('white' === this.buttonColor) {
       return 'btn-color-white';
+    } else if ('transparent' === this.buttonColor) {
+      return 'btn-color-transparent';
     }
     return 'btn-color-white';
   }
