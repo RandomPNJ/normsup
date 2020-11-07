@@ -10,6 +10,8 @@ import {NotifService} from '../../../../services/notif.service';
 })
 export class SupplierDocumentComponent implements OnInit {
 
+  cards = [];
+
   constructor(
     private router: Router,
     private supplierService: SupplierService,
@@ -21,16 +23,30 @@ export class SupplierDocumentComponent implements OnInit {
   ngOnInit(): void {
     this.supplierService.getDocumentsListMock().subscribe(data => {
       this.supplierDocuments = data;
+      this.initializeCards();
     }, error => {
       console.log(error);
       this.notificationService.error('Impossible de récupérer la liste des documents.');
     });
   }
 
-  open(supplierDocument) {
+  onBtnCardClickEvent(document) {
     this.router.navigate(['/supplier/dashboard/documents/details'], { queryParams: {
-        documentType: supplierDocument.name
+        documentType: document.name
       }});
+  }
+
+  initializeCards() {
+    this.cards = [];
+    if (this.supplierDocuments && 0 !== this.supplierDocuments.length) {
+      this.supplierDocuments.forEach(supplierDoc => {
+        this.cards.push({
+          id: supplierDoc.id,
+          // icon: supplierDoc.icon
+          name: supplierDoc.name
+        });
+      });
+    }
   }
 
 }

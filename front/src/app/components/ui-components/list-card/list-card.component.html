@@ -1,0 +1,24 @@
+<div class="row nopadding list-card-parent-container col-lg-12 col-md-12 col-sm-12 col-12 mb-5">
+  <div class="card-parent-container col-xl-3 col-lg-4 col-md-6 col-sm-12 col-12" *ngFor="let card of cards; let i = index;">
+    <mdb-card class="canvaCard list-card-container">
+      <mdb-card-body class="canva-card">
+        <div class="card-content">
+
+          <div class="card-header">
+            <img class="card-header-icon" src="../../../assets/img/group-icn.svg" />
+            <span class="card-header-title text-ov">{{ card.name }}</span>
+          </div>
+
+          <div class="card-btn-container">
+            <button (click)="onclickCardBtnEvent(card)" type="button" class="btn new-btn-normsup">
+              <span class="card-btn-txt-container">
+                <img width="15" height="15" class="button-logo" src="../../../assets/img/param-icn.svg"/>
+                <span style="margin-left:5px;">{{ btnCardLabel }}</span>
+              </span>
+            </button>
+          </div>
+        </div>
+      </mdb-card-body>
+    </mdb-card>
+  </div>
+</div>

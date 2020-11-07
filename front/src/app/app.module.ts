@@ -78,10 +78,7 @@ import { ResetPasswordComponent } from './components/reset-password/reset-passwo
 import {DashboardSupplierComponent} from './components/supplier/dashboard-supplier/dashboard-supplier.component';
 import {SupplierDocumentComponent} from './components/supplier/dashboard-supplier/supplier-document/supplier-document.component';
 import {SupplierDocumentDetailsComponent} from './components/supplier/dashboard-supplier/supplier-document-details/supplier-document-details.component';
-import {BackLinkComponent} from './components/ui-components/back-link/back-link.component';
-import {PageTitleComponent} from "./components/ui-components/page-title/page-title.component";
-import {CardTemplateComponent} from "./components/ui-components/card-template/card-template.component";
-import {CustomButtonComponent} from "./components/ui-components/custom-button/custom-button.component";
+import {UiComponentModule} from './components/ui-components/ui-component.module';
 
 @NgModule({
   declarations: [
@@ -136,13 +133,7 @@ import {CustomButtonComponent} from "./components/ui-components/custom-button/cu
     // Supplier components
     DashboardSupplierComponent,
     SupplierDocumentComponent,
-    SupplierDocumentDetailsComponent,
-
-    // UI Components
-    BackLinkComponent,
-    PageTitleComponent,
-    CardTemplateComponent,
-    CustomButtonComponent
+    SupplierDocumentDetailsComponent
   ],
   imports: [
     BrowserModule,
@@ -169,6 +160,8 @@ import {CustomButtonComponent} from "./components/ui-components/custom-button/cu
     ModalModule.forRoot(),
     DataTablesModule,
     CountdownModule,
+
+    UiComponentModule
   ],
   exports: [
     AddSupplierModalComponent,

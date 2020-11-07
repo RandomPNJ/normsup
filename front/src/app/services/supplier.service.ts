@@ -17,23 +17,28 @@ export class SupplierService {
     // TODO Must call API
     return of([
       {
+        id: 1,
         name: 'KBIS',
         customerCount: 10
       },
       {
+        id: 2,
         name: 'URSSAF',
         customerCount: 7
       },
       {
+        id: 3,
         name: 'LNTE',
         customerCount: 34
       },
       {
-        name: 'URSSAF',
+        id: 4,
+        name: 'Doc. Complémentaire',
         customerCount: 7
       },
       {
-        name: 'LNTE',
+        id: 5,
+        name: 'Impôts',
         customerCount: 34
       }
     ]);
@@ -42,6 +47,38 @@ export class SupplierService {
   getClientListMock() {
     // TODO Must call API
     return of([
+      {
+        id: 1,
+        name : 'SFR'
+      },
+      {
+        id: 2,
+        name : 'Pizzano Pizza'
+      },
+      {
+        id: 3,
+        name : 'Nike'
+      },
+      {
+        id: 4,
+        name : 'Bouygues Telecom'
+      },
+      {
+        id: 1,
+        name : 'SFR'
+      },
+      {
+        id: 2,
+        name : 'Pizzano Pizza'
+      },
+      {
+        id: 3,
+        name : 'Nike'
+      },
+      {
+        id: 4,
+        name : 'Bouygues Telecom'
+      },
       {
         id: 1,
         name : 'SFR'
