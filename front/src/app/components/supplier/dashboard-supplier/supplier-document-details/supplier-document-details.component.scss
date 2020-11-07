@@ -1,3 +1,5 @@
+@import "src/assets/css/variable";
+
 .group-details-cont {
   height: 100%;
 }
@@ -214,13 +216,57 @@
   border-radius: 5px;
 }
 
-.button-cont-gdetails {
-
-}
-
 @media (max-width: 1359px) {
   .button-cont-gdetails {
     padding-top: 9px !important;
   }
+}
+
+.status-document {
+  font-family: 'Roboto';
+  font-size: 14px;
+}
+
+.status-document-valid {
+  color: $normsup-valid-green;
+}
+
+.status-document-invalid {
+  color: $normsup-invalid-red;
+}
+
+.save-document-btn {
+  padding-top: 20px;
+}
+
+.information-line {
+  margin-top: 7px;
+  margin-bottom: 7px;
+
+  .left-column-information {
+    color: $normsup-blue;
+    font-size: 14px;
+  }
+
+  .right-column-information {
+    font-size: 14px;
+  }
+}
+
+.client-row {
+  padding: 11px 0;
+
+  .client-txt {
+    padding-left: 35px;
+    font-family: 'Roboto Regular';
+    font-size: 14px;
+    color: $normsup-dark-blue;
+    text-transform: capitalize;
+  }
+}
+
+.client-row:hover {
+  cursor: pointer;
+  background: $light-grey;
 }
 

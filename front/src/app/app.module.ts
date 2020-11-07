@@ -80,6 +80,8 @@ import {SupplierDocumentComponent} from './components/supplier/dashboard-supplie
 import {SupplierDocumentDetailsComponent} from './components/supplier/dashboard-supplier/supplier-document-details/supplier-document-details.component';
 import {BackLinkComponent} from './components/ui-components/back-link/back-link.component';
 import {PageTitleComponent} from "./components/ui-components/page-title/page-title.component";
+import {CardTemplateComponent} from "./components/ui-components/card-template/card-template.component";
+import {CustomButtonComponent} from "./components/ui-components/custom-button/custom-button.component";
 
 @NgModule({
   declarations: [
@@ -138,7 +140,9 @@ import {PageTitleComponent} from "./components/ui-components/page-title/page-tit
 
     // UI Components
     BackLinkComponent,
-    PageTitleComponent
+    PageTitleComponent,
+    CardTemplateComponent,
+    CustomButtonComponent
   ],
   imports: [
     BrowserModule,

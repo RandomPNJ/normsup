@@ -4,7 +4,9 @@
       <span  class="group-title" style="padding-right: 20px;">Documents</span>
     </div>
 
-    <div *ngIf="supplierDocuments && 0 !== supplierDocuments.length" style="display: flex; align-items: center;">
+    <div
+      *ngIf="supplierDocuments && 0 !== supplierDocuments.length"
+      style="display: flex; align-items: center;">
       Vous avez
       <span style="font-weight: bold; color: #4390EF; padding-left: 2px; padding-right: 2px;"> {{ supplierDocuments.length }} </span>
       {{ supplierDocuments.length <= 1 ? 'document': 'documents'}}.
