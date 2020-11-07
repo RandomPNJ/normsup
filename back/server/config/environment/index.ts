@@ -154,6 +154,8 @@ export default {
         { name: 'modifyPassword', uriPattern: '/modify_password/:id', method: 'post' },
         { name: 'refreshToken', uriPattern: '/refresh_token', method: 'post' },
         { name: 'supplierLogin', uriPattern: '/supplier-login', method: 'post' },
+        { name: 'supplierResetPassword', uriPattern: '/supplier_reset_password', method: 'post' },
+        { name: 'modifyResetPwdSupplier', uriPattern: '/supplier_reset_password/modify', method: 'post' },
         { name: 'logout', uriPattern: '/logout', method: 'post' },
         { name: 'adminLogin', uriPattern: '/admin/login', method: 'post' },
         { name: 'adminLogout', uriPattern: '/admin/logout', method: 'post' },

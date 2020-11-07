@@ -1065,6 +1065,7 @@ export default class SupplierRegistry {
 
         return this.mysql.query(query)
             .then(res => {
+                loggerT.verbose('[SUPPLIER] login res : ', res);
                 if(res.length === 0) {
                     return Promise.reject({ statusCode: 404, msg: 'User not found.' });
                 }
@@ -1073,9 +1074,12 @@ export default class SupplierRegistry {
                 res.map(r => user.orgs.push({org: r.org_id, client: r.client_id }));
                 delete user.org_id;
 
+                loggerT.verbose('[SUPPLIER] password : ', password);
+                loggerT.verbose('[SUPPLIER] user.password : ', user.password);
+
                 return bcrypt.compare(password, user.password)
                     .then(res => {
-                        if (res === true) {
+                        if(res === true) {
                             const payload = {
                                 id: user.id,
                                 email: user.email,
@@ -1092,12 +1096,12 @@ export default class SupplierRegistry {
                     .catch(err => {
                         loggerT.verbose('test err3', err);
                     })
-                    ;
+                ;
             })
             .catch(err => {
                 return Promise.reject({ statusCode: err.statusCode ? err.statusCode : 500, msg: err.msg });
             })
-            ;
+        ;
     }
 
     public getCurrentLogged(data) {

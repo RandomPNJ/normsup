@@ -99,6 +99,7 @@ export class LoginPageComponent implements OnInit, OnDestroy {
     this.modalService.hide(1);
     this.modalRef = null;
   }
+
   // TODO: change this ugly af function
   validate() {
     console.log('this.credentials', this.credentials);

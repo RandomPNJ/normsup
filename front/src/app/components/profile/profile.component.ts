@@ -139,23 +139,28 @@ export class ProfileComponent implements OnInit {
   }
 
 
-  get f() { console.log('this.registerForm.controls', this.registerForm.controls); return this.registerForm.controls; }
+  get f() { 
+    console.log('this.registerForm.controls', this.registerForm.controls); 
+    return this.registerForm.controls; }
 
-  onSubmit() {
+  onSubmit() {  
     this.submitted = true;
     this.modifyPwdErr = '';
     console.log('submitted', this.registerForm);
     console.log('this.submitted', this.submitted);
+    console.log('this.registerForm.invalid', this.registerForm.invalid);
     // stop here if form is invalid
-    if (this.registerForm.invalid) {
-        return;
+    if(this.registerForm.invalid) {
+      // this.modifyPwdErr = 'Champs invalide.';
+      return;
     }
-
+    console.log('onSubmit valid form');
     this.apiService.post('/api/auth/modify_password/' + this.id, {type: 'CLIENT', email: this.userInfo.email, newPassword: this.registerForm.value.newPassword, oldPassword: this.registerForm.value.oldPassword})
       .subscribe(res => {
         console.log('reset_password/modify res : ', res);
         this.toggleOffPassword();
         this.notifService.success('Mot de passe modifié.');
+        this.submitted = false;
       }, err => {
         console.log('reset_password/modify err : ', err);
         if(err.code === 1) {
@@ -246,6 +251,7 @@ export class ProfileComponent implements OnInit {
   }
 
   modifyPwFinal() {
+    console.log('modifyPwFinal');
     let regexp = /[!@#$%^&*(),.?":{}|<>]/;
     if(this.modifyPwd.newPwd.match(regexp) !== null) {
       console.log('lastpwd',this.modifyPwd.lastPwd);
@@ -273,7 +279,7 @@ export class ProfileComponent implements OnInit {
         })
       ;
     } else {
-      this.modifyPwdErr1 = 'Nouveau mot de passe doit contenir au moins un charactère spécial.'
+      this.modifyPwdErr1 = 'Nouveau mot de passe doit contenir au moins un charactère spécial.';
     }
   }
 

@@ -74,7 +74,7 @@
                       <div style="" class="input-field col nopadding">
                         <input [ngClass]="{'custom-normsup-input-nb-active': f.oldPassword.value || modifyPwdFocus.one === true}" formControlName="oldPassword" (focus)="modifyPwdFocus.one=true" (blur)="modifyPwdFocus.one=false"  [ngClass]="{ 'is-invalid': submitted && f.oldPassword.errors }"  id="modifyPwd-lastPwd" name="modifyPwd-lastPwd" type="password" class="form-control  custom-normsup-input-nb">
                         <label [ngClass]="{'lowered-opac': !f.oldPassword.value && modifyPwdFocus.one === false, 'custom-label-center-active': f.oldPassword.value || modifyPwdFocus.one === true}" class="custom-normsup-label-test align-custom-label" for="modifyPwd-lastPwd">Mot de passe actuel</label>
-                        <div *ngIf="submitted && f.oldPassword.errors" class="invalid-feedback">
+                        <div *ngIf="submitted && f.oldPassword.errors" class="text-danger">
                           <div *ngIf="f.oldPassword.errors.required">Mot de passe requis</div>
                         </div>
                       </div>
@@ -85,10 +85,10 @@
                       <div style="" class="input-field col nopadding">
                         <input [ngClass]="{'custom-normsup-input-nb-active': f.newPassword.value || modifyPwdFocus.two === true}" formControlName="newPassword" (focus)="modifyPwdFocus.two=true" (blur)="modifyPwdFocus.two=false"  [ngClass]="{ 'is-invalid': submitted && f.newPassword.errors }" id="modifyPwd-newPwd" name="modifyPwd-newPwd" type="password" class="form-control  custom-normsup-input-nb">
                         <label [ngClass]="{'lowered-opac': !f.newPassword.value && modifyPwdFocus.two === false, 'custom-label-center-active': f.newPassword.value || modifyPwdFocus.two === true}" class="custom-normsup-label-test align-custom-label" for="modifyPwd-newPwd">Nouveau mot de passe</label>
-                        <div *ngIf="submitted && f.newPassword.errors" class="invalid-feedback">
-                          <div *ngIf="f.newPassword.errors.required">Mot de passe requis</div>
-                          <div *ngIf="f.oldPassword.errors.samePassword">Nouveau mot de passe doit être différent de l'ancien</div>
-                          <div *ngIf="f.newPassword.errors.pattern">Mot de passe doit contenir au moins 8 caractères, dont une majuscule, un chiffre et un caractère spécial</div>
+                        <div *ngIf="submitted && f.newPassword.errors" class="text-danger">
+                          <div *ngIf="f.newPassword.errors && f.newPassword.errors.required">Mot de passe requis</div>
+                          <div *ngIf="f.newPassword.errors && f.newPassword.errors.samePassword">Nouveau mot de passe doit être différent de l'ancien</div>
+                          <div *ngIf="f.newPassword.errors && f.newPassword.errors.pattern">Mot de passe doit contenir au moins 8 caractères, dont une majuscule, un chiffre et un caractère spécial</div>
                       </div>
                       </div>
                     </div>
@@ -98,7 +98,7 @@
                       <div style="" class="input-field col nopadding">
                         <input [ngClass]="{'custom-normsup-input-nb-active': f.confirmPassword.value || modifyPwdFocus.three === true}" formControlName="confirmPassword" (focus)="modifyPwdFocus.three=true" (blur)="modifyPwdFocus.three=false" [ngClass]="{ 'is-invalid': submitted && f.confirmPassword.errors }" id="modifyPwd-newPwd2" name="modifyPwd-newPwd2" type="password" class="form-control  custom-normsup-input-nb">
                         <label [ngClass]="{'lowered-opac': !f.confirmPassword.value && modifyPwdFocus.three === false, 'custom-label-center-active': f.confirmPassword.value || modifyPwdFocus.three === true}" class="custom-normsup-label-test align-custom-label" for="modifyPwd-newPwd2">Confirmer mot de passe</label>
-                        <div *ngIf="submitted && f.confirmPassword.errors" class="invalid-feedback">
+                        <div *ngIf="submitted && f.confirmPassword.errors" class="text-danger">
                           <div *ngIf="f.confirmPassword.errors.required">Mot de passe requis</div>
                           <div *ngIf="f.confirmPassword.errors.mustMatch">Mots de passe doivent être identique</div>
                         </div>
@@ -133,7 +133,7 @@
   </div>
 </div>
 
-<ng-template #modifyPassword>
+<!-- <ng-template #modifyPassword>
   <div class="modal-header own-modal-header-supplier">
   </div>
   <div class="modal-body">
@@ -187,4 +187,4 @@
   </div>
   <div class="modal-footer" style="padding: 4px;border-style: none !important;">
   </div>
-</ng-template>
+</ng-template> -->

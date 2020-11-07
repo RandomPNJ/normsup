@@ -304,13 +304,6 @@ export class SupplierTableComponent implements OnInit, OnDestroy {
       this.recount(this.tableParams.search);
       action = 'query';
     }
-    // if(this.tableParams.length !== datatableParams.length && this.data.length >= datatableParams.length) {
-    //   this.tableParams.length = datatableParams.length;
-    //   action = 'redraw';
-    // } else if(this.tableParams.length !== datatableParams.length) {
-    //   this.tableParams.length = datatableParams.length;
-    //   action = 'query';
-    // }
     if(this.tableParams.length !== datatableParams.length) {
       this.tableParams.length = datatableParams.length;
       this.tableParams.start = 0;

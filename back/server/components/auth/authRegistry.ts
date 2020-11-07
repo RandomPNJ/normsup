@@ -117,6 +117,69 @@ export default class AuthRegistry {
         ;
     }
 
+    public supplierResetPassword(email) {
+        let q = {
+            timeout: 40000,
+            sql: Query.CHECK_SUPPLIER_EMAIL_EXIST,
+            values: [email]
+        };
+
+        return this.mysql.query(q)
+            .then(res => {
+                loggerT.verbose('[supplierResetPassword] CHECK_SUPPLIER_EMAIL_EXIST res : ', res);
+                if(res && res[0] && res[0].activated !== null) {
+                    let data = res[0];
+                    let token = uuid();
+
+                    q.sql = Query.INSERT_RESET_PASSWORD;
+                    q.values = [data.id, 'SUPPLIER', token];
+
+                    return this.mysql.query(q)  
+                        .then(res => {
+                            let genericTemplate = _.template(mail.resetPwdMail);
+                            let mailOptions = {
+                                from: 'NormSup <mail.normsup@gmail.com>', // sender address
+                                to: '', // list of receivers
+                                subject: 'NormSup: Réinitialisation de mot de passe', // Subject line
+                                html: 'Empty message. Failed.'
+                            };
+        
+                            let denom = '';
+                            let rTitle = 'Monsieur/Madame';
+                            denom = data.denomination ? ' ' + data.denomination.toUpperCase() : '';
+                            if(data.gender && data.gender === 'M') {
+                                rTitle = 'Monsieur';
+                            } else if(data.gender && data.gender === 'F') {
+                                rTitle = 'Madame';
+                            }
+                            
+                            let link = 'https://app.normsup.com/reset_password;type=SUPPLIER;token='+token;
+                            mailOptions.html = genericTemplate({ 'rTitle': rTitle, 'respresName': _.capitalize(data.lastname), 'link': link });
+                            mailOptions.to = data.email;
+                            return this.transporter.sendMail(mailOptions)
+                                .then(() => {
+                                    return Promise.resolve(res);
+                                })
+                                .catch(err => {
+                                    return Promise.reject({msg: ''})
+                                })
+                            ;
+                        })
+                        .catch(err => {
+                            return Promise.reject({msg: ''})
+                        })
+                    ;
+
+                } else if(res && res[0] && res[0].activated === null){
+                    return Promise.reject({msg: 'Account not activated.'})
+                }
+            })
+            .catch(err => {
+                return Promise.reject(err)
+            })
+        ;
+    }
+
     public activateAccount(token) {
         const that = this;
         let q0 = {
@@ -217,7 +280,57 @@ export default class AuthRegistry {
         
     }
 
+    
+    public resetPasswordModifySupplier(token, password) {
+        let q = {
+            timeout: 40000,
+            sql: Query.CHECK_RESET_PWD_TOKEN,
+            values: [token, password]
+        };
+        
+        return this.mysql.query(q)
+            .then(res => {
+                loggerT.verbose('[resetPasswordModify] res', res);
+                if(res && res[0].count && res[0].count === 1) {
+                    loggerT.verbose('[resetPasswordModify] Token found');
+                    return bcrypt.hash(password, 14, (err, hash) => {
+                        if(err) {
+                            const error = new Error(`Could not change the password, please retry.`);
+                            error['statusCode'] = 400;
+                            throw error;
+                        }
+                        // Store hash in your password DB.
+                        let qChangePwd = {
+                            timeout: 40000,
+                            sql: Query.CHANGE_PASSWORD_SUPPLIER,
+                            values: [hash, res[0].user_id]
+                        };
+                        let qResetDone = {
+                            timeout: 40000,
+                            sql: Query.RESET_DONE,
+                            values: [new Date(), token]
+                        };
+                        let resetPwdSubQueries = [this.mysql.query(qChangePwd), this.mysql.query(qResetDone)];
 
+                        return Promise.all(resetPwdSubQueries.map(p => p.catch(e => e)))
+                            .then(res => {
+                                return Promise.resolve(res);
+                            })
+                            .catch(err => {
+                                loggerT.verbose('[resetPasswordModify] err', err);
+                                return Promise.reject(err);
+                            })
+                        ;
+                    });
+                } else {
+                    return Promise.reject({statusCode: 400, msg: 'Token not found', code: 1})
+                }
+            })
+            .catch(err => {
+                return Promise.reject({statusCode: 500, msg: 'Token not found', code: 1})
+            })
+        ;
+    }
     public resetPasswordModify(token, password) {
         let q = {
             timeout: 40000,

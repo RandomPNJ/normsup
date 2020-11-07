@@ -19,11 +19,7 @@ export function getSuppliers(req, res, SupplierRegistry) {
 
     const params = req.query;
     loggerT.verbose('Getting the suppliers.', req.decoded);
-    // if(!params.company) {
-    //     const error = new Error(`Invalid request, organisation needs to be provided.`);
-    //     error['statusCode'] = 400;
-    //     throw error;
-    // }
+
     if(!params.length) {
         params.length = 10;
     } else {

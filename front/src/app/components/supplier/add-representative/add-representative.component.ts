@@ -49,7 +49,11 @@ export class AddRepresentativeComponent implements OnInit {
           this.modalState = 'interlocSuccess';
         }, err => {
           console.error('[AddRepresentativeComponent] Error :', err);
-          this.notif.error('Une erreur s\'est produite, veuillez réessayer.');
+          if(err.status.indexOf('Duplicate entry') != -1) {
+            this.notif.error('Cet email est déjà associé à un autre interlocuteur.');
+          } else {
+            this.notif.error('Une erreur s\'est produite, veuillez réessayer.');
+          }
           this.hideModal.emit();  
         })
       ;

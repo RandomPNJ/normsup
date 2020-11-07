@@ -399,25 +399,40 @@ export default class UserRegistry {
         ;
 
     }
+
     public getUsersManagement(data, user) {
         let query = {
             timeout: 40000
         };
+        let isAdmin = false;
 
-        if(data.start) {
-            query['sql']    = Query.QUERY_GET_USERS_NOTADMIN_OFFLIM;
-            query['values'] = [data.company, user.id, data.limit || 10, data.start];
+        user.role.map(r => r === 'admin' ? isAdmin = true : null);
+
+        if(isAdmin) {
+            query['sql']    = Query.QUERY_GET_USERS_ADMIN_OFFLIM;
+            query['values'] = [data.org, data.length || 10, data.start || 0];
         } else {
-            query['sql'] = Query.QUERY_GET_USERS_NOTADMIN;
-            query['values'] = [data.org, user.id];
+            // WHAT TO DO IF USER IS NOT ADMIN ?
         }
+
         return this.mysql.query(query)
             .then(res => {
-                loggerT.verbose('QUERY RES ==== ', res);
-                return Promise.resolve(res);
+                let fRes = {}; 
+                _.reduce(res, (acc, v, k) => {
+                    if(!acc[v.id]) {
+                        acc[v.id] = v;
+                        acc[v.id].roles = [v.rolename];
+                        delete acc[v.id].rolename;
+                        delete acc[v.id].roleID;
+                    } else {
+                        acc[v.id].roles.push(v.rolename);
+                    }
+                    return acc;
+                }, fRes);
+                return Promise.resolve(_.values(fRes));
             })
             .catch(err => {
-                loggerT.error('ERROR ON QUERY getUsers.');
+                loggerT.error('[getUsersManagement] ERROR WHEN GETTING USERS :', err);
                 return Promise.reject(err);
             })
         ;

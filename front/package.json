@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
+    "prefixcss": "postcss -u autoprefixer --autoprefixer.browsers 'last 2 versions' -r src/**/*.scss",
     "start": "ng serve",
     "build": "ng build --prod",
     "test": "ng test",
@@ -50,6 +51,7 @@
     "ngx-cookie-service": "2.3.0",
     "ngx-countdown": "^3.2.0",
     "ngx-show-hide-password": "^1.2.6",
+    "normalize.css": "^8.0.1",
     "npm": "^6.11.2",
     "rxjs": "~6.2.0",
     "zone.js": "^0.8.29"
@@ -68,6 +70,7 @@
     "@types/jasmine": "^2.8.16",
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "~8.9.4",
+    "autoprefixer": "^10.0.1",
     "codelyzer": "~4.3.0",
     "jasmine-core": "~2.99.1",
     "jasmine-spec-reporter": "~4.2.1",
@@ -76,6 +79,8 @@
     "karma-coverage-istanbul-reporter": "^2.0.5",
     "karma-jasmine": "~1.1.2",
     "karma-jasmine-html-reporter": "^0.2.2",
+    "postcss": "^8.1.4",
+    "postcss-cli": "^8.2.0",
     "protractor": "~5.4.0",
     "ts-node": "~7.0.0",
     "tslint": "~5.11.0",

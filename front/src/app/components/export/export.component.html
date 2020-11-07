@@ -161,6 +161,7 @@
           <button [disabled]="(suppliersChosen.length === 0 && exportType.supplier) || (groupsChosen.length === 0 && exportType.group) || (!documentsSettings.legal.kbis && !documentsSettings.legal.urssaf && !documentsSettings.legal.lnte) || !dateRange.startDate || !dateRange.endDate" (click)="export()" type="button" class="btn btn-primary export-btn">Faire un export</button>
           <!-- <button (click)="export()" type="button" class="btn btn-primary export-btn">Faire un export</button> -->
         </div>
+        <div class="red-err-txt">{{errMessage}}</div>
       </div>
     </div>
   </div>

@@ -1,12 +1,13 @@
-import { Component, OnInit, Input, Output, EventEmitter, ViewChild, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild, OnDestroy, TemplateRef, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { BrowserStorageService } from 'src/app/services/storageService';
 import { ModalComponent } from '../modal/modal.component';
 import { AuthService } from 'src/app/services/auth.service';
-import { Subscription } from 'rxjs';
+import { Subscription, combineLatest } from 'rxjs';
 import { Configuration } from '../../config/environment';
 import { HttpService } from 'src/app/services/http.service';
-
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { cloneDeep } from 'lodash';
 
 @Component({
   selector: 'app-supplier-login-page',
@@ -16,6 +17,7 @@ import { HttpService } from 'src/app/services/http.service';
 export class SupplierLoginPageComponent implements OnInit, OnDestroy {
 
   @ViewChild(ModalComponent) appModal: ModalComponent;
+  @ViewChild('resetPassword') public resetPasswordRef: TemplateRef<any>;
 
   formFocus: any = {
     one: false,
@@ -36,8 +38,21 @@ export class SupplierLoginPageComponent implements OnInit, OnDestroy {
   isLoader: Boolean = false;
   show = false;
   errMsg: String;
+
+  subscriptions: Subscription[] = [];
+  resetPasswordMail: String = '';
+  resetPwdErrMsg: String = '';
+  modalConfig = {
+    animated: true,
+    class: 'modal-dialog-centered'
+  };
+  searchEmail: String = '';
+  modalRef: BsModalRef;
+
   constructor(private router: Router,
     private bsService: BrowserStorageService,
+    private modalService: BsModalService,
+    private changeDetection: ChangeDetectorRef,
     private httpService: HttpService,
     public authService: AuthService) { }
 
@@ -51,6 +66,43 @@ export class SupplierLoginPageComponent implements OnInit, OnDestroy {
   }
   showModal() {
     this.appModal.openLogin(this.type, this.message, this.title);
+  }
+  openModal(template: TemplateRef<any>) {
+    const _combine = combineLatest(
+      this.modalService.onShow,
+      this.modalService.onShown,
+      this.modalService.onHide,
+      this.modalService.onHidden
+    ).subscribe(() => this.changeDetection.markForCheck());
+
+    this.subscriptions.push(
+      this.modalService.onHidden.subscribe(() => {
+        this.resetPasswordMail = '';
+        this.unsubscribe();
+      })
+    );
+    
+    const config = cloneDeep(this.modalConfig);
+    config.class += ' modal-medium';
+    this.modalRef = this.modalService.show(template, config);
+  }
+
+  unsubscribe() {
+    this.subscriptions.forEach((subscription: Subscription) => {
+      subscription.unsubscribe();
+    });
+    this.subscriptions = [];
+  }
+
+  hideModal(type?) {
+    if (!this.modalRef) {
+      return;
+    }
+    this.searchEmail = '';
+    this.resetPwdErrMsg = '';
+    this.resetPasswordMail = '';
+    this.modalService.hide(1);
+    this.modalRef = null;
   }
 
   // TODO: change this ugly af function
@@ -103,6 +155,27 @@ export class SupplierLoginPageComponent implements OnInit, OnDestroy {
   remove() {
     this.iserror = 'hide';
     this.iserror1 = 'hide';
+  }
+
+  supplierResetPassword(mail) {
+    this.resetPwdErrMsg = '';
+    this.authService.supplierResetPassword(mail)
+      .subscribe(res => {
+        console.log('supplierResetPassword res :', res);
+        console.log('supplierResetPassword res :', res.hasOwnProperty('exists'));
+        if(res && res.hasOwnProperty('exists') && res['exists'] === false) {
+          console.log('here');
+          this.resetPwdErrMsg = "L'adresse email spécifiée n'existe pas.";
+        } else if(res && res.hasOwnProperty('msg') && res.msg === 'Account not activated') {
+          this.resetPwdErrMsg = "Votre compte n'a pas encore été activé.";
+        } else {
+          this.hideModal();
+        }
+      }, err => {
+        console.error('supplierResetPassword error :', err);
+      })
+    ;
+    
   }
 
 }

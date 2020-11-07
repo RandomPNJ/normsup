@@ -52,11 +52,11 @@ export class UsersTableComponent implements OnInit {
       ordering: false,
       searching: false,
       responsive: true,
-      paging: false,
+      paging: true,
       info: false,
-      // pageLength: 10,
+      // pageLength: 30,
       serverSide: true,
-      processing: false,
+      processing: true,
       language: {
         lengthMenu: 'Voir _MENU_ résultats par page',
         zeroRecords: 'Aucun résultat trouvé',
@@ -73,9 +73,9 @@ export class UsersTableComponent implements OnInit {
       },
       ajax: (dataTablesParameters: any, callback: any) => {
         const action = this.compareParams(dataTablesParameters);
-        if (that.reloadVar === true) {
+        if(that.reloadVar === true) {
           setTimeout(() => {that.httpService
-            .get('/api/users/management', dataTablesParameters)
+            .get('/api/users/management', this.tableParams)
             .subscribe(resp => {
               that.items = resp.body['items'];
               that.itemsToDisplay = that.items.slice(that.tableParams.start, that.tableParams.start + that.tableParams.length);
@@ -92,7 +92,7 @@ export class UsersTableComponent implements OnInit {
             })}, 2500);
         } else {
           that.httpService
-            .get('/api/users/management', dataTablesParameters)
+            .get('/api/users/management', this.tableParams)
             .subscribe(resp => {
               that.items = that.items.concat(resp.body['items']);
               that.itemsToDisplay = that.items.slice(that.tableParams.start, that.tableParams.start + that.tableParams.length);
@@ -132,26 +132,29 @@ export class UsersTableComponent implements OnInit {
 
   compareParams(datatableParams) {
     // TODO : Ordering with multiple columns
-    if (!this.tableParams.start) {
-      this.tableParams = cloneDeep(datatableParams);
-      return 'query';
-    }
-    if (this.tableParams.start !== datatableParams.start && this.items.length <= datatableParams.start) {
-      this.tableParams = cloneDeep(datatableParams);
-      return 'query';
-    } else if (this.tableParams.search !== datatableParams.search.value) {
-      this.tableParams = cloneDeep(datatableParams);
-      return 'query';
-    } else if (this.tableParams.length !== datatableParams.length) {
-      this.tableParams = cloneDeep(datatableParams);
+    let action = 'none';
 
-      return 'query';
+    if(this.tableParams.start !== datatableParams.start) {
+      this.tableParams.start = datatableParams.start;
+      if(this.items.length <= datatableParams.start) {
+        action = 'query';
+      } else {
+        action = 'redraw';
+      }
     }
-    this.tableParams = cloneDeep(datatableParams);
-    return 'redraw';
-    // if(this.tableParams.order.col != datatableParams.order.col) {
-
-    // }
+    if(this.tableParams.search !== datatableParams.search.value) {
+      this.items.length = 0;
+      this.tableParams.search = datatableParams.search.value;
+      // this.recount(this.tableParams.search);
+      action = 'query';
+    }
+    if(this.tableParams.length !== datatableParams.length) {
+      this.tableParams.length = datatableParams.length;
+      this.tableParams.start = 0;
+      action = 'length';
+    }
+    console.log('compareParams : ', this.tableParams);
+    return action;
 
   }
 

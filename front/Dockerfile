@@ -1,4 +1,4 @@
-FROM node:8
+FROM node:10
 
 RUN mkdir -p /usr/src/app && \
   chown -R node:node /usr/src/app && \
@@ -21,7 +21,9 @@ WORKDIR /usr/src/app
 
 # RUN npm install -g @angular/cli@6.2.7
 # RUN cd /usr/src/app && npm install
-
 USER root
+
+RUN npm run prefixcss
+
 
 EXPOSE 4200

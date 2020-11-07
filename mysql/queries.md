@@ -519,3 +519,66 @@ CHANGE COLUMN `organisation_id` `organisation_id` INT(11) NULL ;
 ## Applied
 
 False
+
+## Date
+ 
+05-11-2020
+ 
+## Comment
+ 
+Create table `doc_types`
+ 
+## Query
+ 
+CREATE TABLE `normsup`.`doc_types` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(255) NULL,
+  `type` VARCHAR(45) NULL,
+  `description` VARCHAR(255) NULL,
+  PRIMARY KEY (`id`));
+ 
+ 
+## Applied
+ 
+False
+ 
+ 
+## Date
+ 
+05-11-2020
+ 
+## Comment
+ 
+Create table `supplier_doc_relation`
+ 
+## Query
+ 
+CREATE TABLE `normsup`.`supplier_doc_relation` (
+  `doc_id` INT NOT NULL,
+  `org_id` INT NOT NULL,
+  `client_id` INT NOT NULL,
+  PRIMARY KEY (`doc_id`, `org_id`, `client_id`),
+  INDEX `id_idx` (`org_id` ASC) VISIBLE,
+  INDEX `id_idx1` (`client_id` ASC) VISIBLE,
+  CONSTRAINT `doctypeid`
+    FOREIGN KEY (`doc_id`)
+    REFERENCES `normsup`.`doc_types` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION,
+  CONSTRAINT `orgid`
+    FOREIGN KEY (`org_id`)
+    REFERENCES `normsup`.`organisations` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION,
+  CONSTRAINT `clientid`
+    FOREIGN KEY (`client_id`)
+    REFERENCES `normsup`.`client` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION);
+ 
+ 
+ 
+ 
+## Applied
+ 
+False

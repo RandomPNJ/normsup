@@ -55,6 +55,7 @@ export function exportDocuments(req, res, DocumentsRegistry, s3) {
             throw error;
         }
     }
+
     if(!data.values) {
         const error = new Error(`Invalid request, please provide values.`);
         error['statusCode'] = 400;
@@ -97,12 +98,13 @@ export function exportDocuments(req, res, DocumentsRegistry, s3) {
                     })
                 ;
             } else {
-                return res.status(404).json({
-                    msg: 'No document found.'
-                });
+                const error = new Error(`No document found.`);
+                error['statusCode'] = 404;
+                throw error;
             }
         })
         .catch(err => {
+            loggerT.error('ERROR CATCH ', err);
             delete err.stackTrace;
             throw err;
         })

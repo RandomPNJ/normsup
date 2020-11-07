@@ -19,7 +19,7 @@
     width="100%" style="height: 100%;" #suppliersTable>
     <tbody >
       <tr *ngFor="let item of itemsToDisplay; let i = index">
-        <td *ngIf="indexInfo == -1 || i <= indexInfo" style="cursor: pointer;"
+        <td class="td-style" *ngIf="indexInfo == -1 || i <= indexInfo" style="cursor: pointer;"
           (click)="openSupplierInfo(item, i)">
           <div class="badge-container content-cont container">
             <div class="row h-100 cent first-table-cell">
@@ -31,7 +31,7 @@
             </div>
           </div>
         </td>
-        <td *ngIf="(indexInfo == -1 || i <= indexInfo) && (item.name || item.lastname)" style="cursor: pointer;" 
+        <td class="td-style" *ngIf="(indexInfo == -1 || i <= indexInfo) && (item.name || item.lastname)" style="cursor: pointer;" 
         (click)="openInterlocInfo(item, i)">
           <div class="badge-container content-cont container">
             <div class="row h-100 cent">
@@ -43,7 +43,7 @@
             </div>
           </div>
         </td>
-        <td *ngIf="(indexInfo == -1 || i <= indexInfo) && (!item.name || !item.lastname)">
+        <td class="td-style" *ngIf="(indexInfo == -1 || i <= indexInfo) && (!item.name || !item.lastname)">
           <div class="badge-container content-cont container">
             <div class="row h-100 cent">
               <span class="no-interloc-txt">Pas d'interlocuteur enregistré</span>
@@ -53,7 +53,7 @@
             </div>
           </div>
         </td>
-        <td *ngIf="indexInfo == -1 || i <= indexInfo">
+        <td class="td-style" *ngIf="indexInfo == -1 || i <= indexInfo">
           <div class="badge-container content-cont container">
             <div class="row h-100 cent">
               <!-- TODO Find a way to load flag -->
@@ -63,7 +63,7 @@
             </div>
           </div>
         </td>
-        <td *ngIf="indexInfo == -1 || i <= indexInfo">
+        <td class="td-style" *ngIf="indexInfo == -1 || i <= indexInfo">
           <div class="badge-container content-cont container">
             <div class="row flex-grow-1 h-100" style="margin-bottom: 0px;">
               <div style="padding-right: 5px;" class="doc-cont h-100" [ngClass]="{'col-6': item.comp_docs_count > 0, 'col-12': item.comp_docs_count === 0}" (click)="openLegalDocModal(item)"
@@ -90,7 +90,7 @@
             </div>
           </div>
         </td>
-        <td *ngIf="indexInfo == -1 || i <= indexInfo">
+        <td class="td-style" *ngIf="indexInfo == -1 || i <= indexInfo">
           <div id="util-btns" class="badge-container content-cont">
             <div class="badge-container content-cont container nopadding">
               <div class="row h-100 cent last-table-cell">
@@ -250,17 +250,17 @@
           </td>
         </tr>
       <tr *ngFor="let item of itemsToDisplay; let i = index">
-        <td *ngIf="indexInfo != -1 && i > indexInfo" style="cursor: pointer;"
+        <td class="td-style" *ngIf="indexInfo != -1 && i > indexInfo" style="cursor: pointer;"
           (click)="openSupplierInfo(item, i)">
           <div class="badge-container content-cont container">
-            <div class="row h-100  cent">
+            <div class="row h-100 cent">
               <span class="col-9   assign-link nopadding">{{item.denomination | titlecase }}</span>
               <span style="text-align: left;" class="col-2 nopadding"><img class="arw-dwn"
                   src="../../../assets/img/arrow-down@2x.png" /></span>
             </div>
           </div>
         </td>
-        <td *ngIf="(indexInfo != -1 && i > indexInfo) && (item.name || item.lastname)" style="cursor: pointer;" 
+        <td class="td-style" *ngIf="(indexInfo != -1 && i > indexInfo) && (item.name || item.lastname)" style="cursor: pointer;" 
           (click)="openInterlocInfo(item, i)">
           <div class="badge-container content-cont container">
             <div class="row h-100 cent">
@@ -270,7 +270,7 @@
             </div>
           </div>
         </td>
-        <td *ngIf="(indexInfo != -1 && i > indexInfo) && (!item.name || !item.lastname)">
+        <td class="td-style" *ngIf="(indexInfo != -1 && i > indexInfo) && (!item.name || !item.lastname)">
           <div class="badge-container content-cont container">
             <div class="row h-100 cent">
               <span class="no-interloc-txt">Pas d'interlocuteur enregistré</span>
@@ -280,7 +280,7 @@
             </div>
           </div>
         </td>
-        <td *ngIf="indexInfo != -1 && i > indexInfo">
+        <td class="td-style" *ngIf="indexInfo != -1 && i > indexInfo">
           <div class="badge-container content-cont container">
             <div class="row h-100 cent">
               <!-- TODO Find a way to load flag -->
@@ -290,7 +290,7 @@
             </div>
           </div>
         </td>
-        <td *ngIf="indexInfo != -1 && i > indexInfo">
+        <td class="td-style" *ngIf="indexInfo != -1 && i > indexInfo">
           <div class="badge-container content-cont container">
             <div class="row flex-grow-1 h-100" style="margin-bottom: 0px;">
               <div style="padding-right: 5px;" class="doc-cont h-100" [ngClass]="{'col-6': item.comp_docs_count > 0, 'col-12': item.comp_docs_count === 0}" (click)="openLegalDocModal(item)"
@@ -318,7 +318,7 @@
             </div>
           </div>
         </td>
-        <td *ngIf="indexInfo != -1 && i > indexInfo">
+        <td class="td-style" *ngIf="indexInfo != -1 && i > indexInfo">
           <div id="util-btns" class="badge-container content-cont">
             <div class="badge-container content-cont container nopadding">
               <div class="row h-100 cent last-table-cell">

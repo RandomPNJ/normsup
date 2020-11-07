@@ -75,6 +75,8 @@ export class ExportComponent implements OnInit {
       urssaf: false,
     }
   };
+  errMessage: String;
+
 
   searchSupplier = (text$: Observable<string>) =>
     text$.pipe(
@@ -252,6 +254,7 @@ export class ExportComponent implements OnInit {
   }
 
   export() {
+    this.errMessage = '';
     console.log('export');
     let length;
     const endRes = {
@@ -322,6 +325,14 @@ export class ExportComponent implements OnInit {
         window.location.href = url;
       }, err => {
         console.error('[export] err', err);
+        let decodedString = String.fromCharCode.apply(null, new Uint8Array(err));
+        let obj = JSON.parse(decodedString);
+        if(obj && obj.message === "No document found.") {
+          this.errMessage = "Aucun document n'a été trouvé pour ces dates.";
+        } else {
+          this.errMessage = "Une erreur s'est produite, veuillez réessayer plus tard.";
+        }
+        console.log('obj :', obj);
       })
     ;
 

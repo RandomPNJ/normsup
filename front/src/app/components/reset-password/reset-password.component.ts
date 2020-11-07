@@ -55,12 +55,22 @@ export class ResetPasswordComponent implements OnInit {
     }
 
     console.log('this.registerForm', this.registerForm.value);
-    this.httpService.post('/api/auth/reset_password/modify', {token: this.token, password: this.registerForm.value.password})
-      .subscribe(res => {
-        console.log('reset_password/modify res : ', res);
-      }, err => {
-        console.log('reset_password/modify err : ', err);
-      })
-    ;
+    if(this.type === 'CLIENT') {
+      this.httpService.post('/api/auth/reset_password/modify', {token: this.token, password: this.registerForm.value.password})
+        .subscribe(res => {
+          console.log('reset_password/modify res : ', res);
+        }, err => {
+          console.log('reset_password/modify err : ', err);
+        })
+      ;
+    } else if(this.type === 'SUPPLIER') {
+      this.httpService.post('/api/auth/supplier_reset_password/modify', {token: this.token, password: this.registerForm.value.password})
+        .subscribe(res => {
+          console.log('supplier_reset_password/modify res : ', res);
+        }, err => {
+          console.log('supplier_reset_password/modify err : ', err);
+        })
+      ;
+    }
   }
 }

@@ -479,7 +479,7 @@ td {
     position: relative;
     text-align: center;
     vertical-align: middle;
-    display: inline-block !important;
+    display: inline-table !important;
 
     .badge-red {
         border: 1px solid red !important;
@@ -497,6 +497,10 @@ td {
         &:last-child {
             margin-right: 0px;
         }
+    }
+
+    .h-100 {
+        min-height: 86px !important;
     }
 }
 
@@ -529,7 +533,6 @@ td {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    // min-height: 70px;
     width: 100%;
 }
 
@@ -960,6 +963,7 @@ td {
 }
 
 .red-err-txt {
+    cursor: default;
     display: block;
     width: 100%;
     text-align: center;
@@ -1797,7 +1801,7 @@ td {
     letter-spacing: 0;
     color: #4390EF;
     opacity: 0.6;
-
+    max-width: 170px;
     &::placeholder {
         font-family: 'Roboto Regular';
         font-size: 15px;
@@ -2211,4 +2215,8 @@ td {
     padding-right: 13px;
     // color: #4390EF;
     color: #4E5983;
+}
+
+.row:before, .row:after {
+    display: inline-block;
 }

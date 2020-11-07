@@ -11,3 +11,4 @@ export const UPSERT_SUPPLIER_CONF_LNTE = 'INSERT INTO `supplier_conformity` (cli
 
 export const GET_ORG_INFO = 'SELECT * from organisations WHERE id = ?';
 export const GET_ORGS_INFO = 'SELECT * from organisations as o INNER JOIN client_supplier_relation as csr ON o.id = csr.supplier_id AND csr.client_id = ? WHERE id IN ';
+export const GET_ORGS_INFO_FROM_GROUP = 'SELECT * FROM `groups` as g INNER JOIN group_members as gm ON g.id=gm.group_id INNER JOIN organisations as o ON gm.member_id=o.id INNER JOIN client_supplier_relation as csr ON o.id = csr.supplier_id AND csr.client_id = ? WHERE g.id IN ';

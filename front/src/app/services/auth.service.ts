@@ -125,6 +125,18 @@ export class AuthService implements OnInit {
     );
   }
 
+  public supplierResetPassword(email): any {
+    let body = {email: email};
+    return this.http
+      .post(Configuration.serverUrl + '/api/auth/supplier_reset_password', body)
+      .pipe(map((response: any) => {
+        this.isLogged.next(response);
+        console.log('[AuthService] Response resetPassword', response);
+        return response;
+      })
+    );
+  }
+  
   public logOutUser() {
     this.bsService.clearLocalStorage();
     this.cookieService.delete('auth');

@@ -431,12 +431,85 @@ export default class SupplierRegistry {
                     }
                 })
                 .catch(err => {
-
+                    loggerT.error('[exportDocument] getSuppliersQuery err ===', err);
+                    return Promise.reject(err);
                 })
             ;
             
         } else if(data.type === 'GROUP') {
             // TODO
+            let getGroupsQuery = {
+                timeout: 40000,
+                sql: '',
+                values: [user.organisation]
+            };
+            let q = Query.GET_ORGS_INFO_FROM_GROUP;
+            for (var i = 0; i < data.values.length; i++) {
+                if(i===0) {
+                    q += '('+data.values[i];
+                } else {
+                    q += ','+data.values[i];
+                }
+                if(i===data.values.length-1) {
+                    q += ')'
+                }
+            }
+            getGroupsQuery.sql = q;
+            loggerT.verbose('q before === ', q);
+            loggerT.verbose('getGroupsQuery values before === ', getGroupsQuery.values);
+            return this.mysql.query(getGroupsQuery)
+                .then(firstRes => {
+                    loggerT.verbose('[exportDocument] getGroupsQuery firstRes ===', firstRes);
+                    if(firstRes && firstRes.length > 0) {
+                        let sqlQuery = Query.GET_DOCUMENTS;
+                        loggerT.verbose('exportDocuments here : ', sqlQuery);
+                        sqlQuery += ' AND d.siren IN ';
+                        for (var i = 0; i < firstRes.length; i++) {
+                            if(i===0) {
+                                sqlQuery += '('+firstRes[i].siren;
+                            } else {
+                                sqlQuery += ','+firstRes[i].siren;
+                            }
+                            if(i===firstRes.length-1) {
+                                sqlQuery += ')'
+                            }
+                        }
+                        sqlQuery += ' AND d.category IN ';
+                        for (var i = 0; i < data.docs.length; i++) {
+                            if(i===0) {
+                                sqlQuery += "('"+data.docs[i]+"'";
+                            } else {
+                                sqlQuery += ",'"+data.docs[i]+"'";
+                            }
+                            if(i===data.docs.length-1) {
+                                sqlQuery += ')'
+                            }
+                        }
+                        sqlQuery += ' LIMIT 3'; // TO DELETE
+                        loggerT.verbose('exportDocuments SQL QUERY : ', sqlQuery);
+                        query['sql'] = sqlQuery;
+                        query['values'] = [data.startDate, data.endDate];
+                        return this.mysql.query(query)
+                            .then(res => {
+                                loggerT.verbose('[exportDocuments] QUERY getDocuments metadata RES ==== ', res);
+                                if(res && res.length > 0) {
+                                    return Promise.resolve(res);
+                                } else {
+                                    return Promise.reject(new Error('Viewing this document is not possible for the logged in user.'));
+                                }
+                            })
+                            .catch(err => {
+                                loggerT.error('[exportDocuments] ERROR ON QUERY getDocuments metadata : ', err);
+                                return Promise.reject(err);
+                            })
+                        ;
+                    }
+                })
+                .catch(err => {
+                    loggerT.error('[exportDocument] getGroupsQuery err ===', err);
+                    return Promise.reject(err);
+                })
+            ;
 
         }
 

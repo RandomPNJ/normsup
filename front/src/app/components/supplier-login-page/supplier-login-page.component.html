@@ -41,7 +41,7 @@
                     </button>
                 </div>
               </div>
-          <span class="forgot-password-lnk">Vous avez oublié votre mot de passe</span>
+          <span (click)="openModal(resetPasswordRef)"  class="forgot-password-lnk">Vous avez oublié votre mot de passe</span>
       </div>
       
   </div>
@@ -55,3 +55,53 @@
         </div>
     </div>
 </div>
+
+
+<ng-template #resetPassword>
+    <div class="modal-header own-modal-header-supplier"></div>
+    <div class="modal-body">
+        <div class="mod-header">
+            <div style="display: block;">
+                &nbsp;
+                <button type="button" style="cursor:pointer;width:20px;height:20px;" class="close pull-right"
+                    aria-label="Close" (click)="hideModal('resetPwd')">
+                    <img src="../../../assets/img/close-icn.svg"
+                        style="height: 16px; cursor:pointer;pointer-events: none;" />
+                </button>
+            </div>
+            <div class="supplier-modal-title">Mot de passe oublié</div>
+        </div>
+        <div>
+            <div>
+                <div class="row">
+                    <!-- <span class="title-add-sup">Information sur l'entreprise recherchée</span> -->
+                    <div style="text-align: center; padding: 0px 107px;" class="input-field col s12">
+                        <!-- <span class="comp-txt">Email</span> -->
+                        <label class="addSupp-label" for="company-input">Email</label>
+                        <input pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$" required
+                            class="form-control custom-normsup-input-nb enter-siret-input" [(ngModel)]="searchEmail"
+                            (keydown.enter)="resetPassword(searchEmail)" #companyInput id="company-input" type="text"
+                            data-length="10" appFocus>
+                    </div>
+                </div>
+                <div style="padding-top: 5px;">
+                    <span *ngIf="resetPwdErrMsg" class="red-err-txt" style="font-size: 13px;">{{resetPwdErrMsg}}</span>
+                </div>
+                <div class="f-button-addsup">
+                    <button (click)="supplierResetPassword(searchEmail)" [disabled]="!searchEmail"
+                        class="btn btn-primary custom-normsup-button nxt-btn-addsup" type="submit" name="action">
+                        <span class="searchText">Valider</span>
+                    </button>
+                    <span class="red-err-txt" *ngIf="searchEmail404">Cet email n'est pas utilisé par un de nos
+                        utilisateur.</span>
+                </div>
+            </div>
+            <div *ngIf="loadingSiret" style="padding-top: 15px; text-align: center;">
+                <div class="loading-spinner spinner-border text-primary" role="status">
+                    <span class="sr-only">Chargement...</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer" style="padding: 4px;border-style: none !important;"></div>
+</ng-template>
