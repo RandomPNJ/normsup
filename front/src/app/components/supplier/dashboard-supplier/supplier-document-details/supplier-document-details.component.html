@@ -25,4 +25,113 @@
     </div>
   </div>
 
+  <div class="row nopadding col-lg-11 col-md-12 col-sm-7 col-8 data-row mb-5">
+
+    <div class="container nopadding">
+
+      <!-- Liste des clients -->
+      <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6 data-cont-one">
+        <app-ui-card-template
+          [headerTitle]="'Liste des clients'"
+          [templateBody]="clientListTemplate">
+        </app-ui-card-template>
+      </div>
+
+
+      <!-- Paramètre des relances -->
+      <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6 data-cont-one">
+        <app-ui-card-template
+          [headerTitle]="'Gestion du document'"
+          [templateBody]="documentDetailTemplate">
+        </app-ui-card-template>
+      </div>
+    </div>
+  </div>
+
+
 </div>
+
+
+<ng-template #clientListTemplate>
+  <div
+    (click)="onClientRowClick(client)"
+    *ngFor="let client of clients"
+    class="client-row">
+    <span class="client-txt">
+      {{ client.name }}
+    </span>
+  </div>
+</ng-template>
+
+<ng-template #documentDetailTemplate>
+
+  <div class="basic-txt" style="padding-left: 35px" *ngIf="!selectedClient; else elseBlock">
+    Aucun client sélectionné.
+  </div>
+
+  <ng-template #elseBlock>
+
+    <div class="group-card-row">
+      <div class="row-line">
+        <div class="basic-txt">
+          Statut du document
+        </div>
+
+        <div class="status-document" [ngClass]="{
+          'status-document-valid' : selectedClient.isValid,
+          'status-document-invalid' : !selectedClient.isValid
+        }">
+          {{ selectedClient.isValid ? 'À jour' : 'À mettre à jour' }}
+        </div>
+      </div>
+    </div>
+
+    <div class="group-card-row">
+      <div class="text-cont" style="margin-bottom: 25px;">
+        <div class="basic-txt">
+          Informations
+        </div>
+      </div>
+
+      <div class="row-line information-line">
+        <span class="left-column-information">Date d'expiration</span>
+        <span class="right-column-information">
+          {{ selectedClient.expirationDate ? (selectedClient.expirationDate | date: 'dd/MM/yyyy') : 'N/A' }}
+        </span>
+      </div>
+
+      <div class="row-line information-line">
+        <span class="left-column-information">Date du dernier upload</span>
+        <span class="right-column-information">
+          {{ selectedClient.uploadDate ? (selectedClient.uploadDate | date: 'dd/MM/yyyy') : 'N/A' }}
+        </span>
+      </div>
+
+      <div class="row-line information-line">
+        <span class="left-column-information">Utilisateur</span>
+        <span class="right-column-information">{{ selectedClient.user | userNamePipe : 'uppercase' : 'nameCut' }}</span>
+      </div>
+
+      <div class="row-line information-line">
+        <span class="left-column-information">Durée de validité</span>
+        <span class="right-column-information">{{ selectedClient.durationValidity ? selectedClient.durationValidity + ' mois' : 'N/A'}}</span>
+      </div>
+    </div>
+
+    <div class="group-card-row">
+      <div class="text-cont">
+        <div class="basic-txt">
+          Déposer un nouveau document
+        </div>
+      </div>
+    </div>
+
+    <div class="row-line-centered save-document-btn">
+      <app-ui-custom-button
+        [label]="'Enregistrer'">
+      </app-ui-custom-button>
+    </div>
+
+  </ng-template>
+
+</ng-template>

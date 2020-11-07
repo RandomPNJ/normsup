@@ -6,6 +6,7 @@ import { CascadingPanelComponent } from './components/cascading-panel/cascading-
 import { CascadingCardComponent } from './components/cascading-card/cascading-card.component';
 import { OverlayCardComponent } from './components/overlay-card/overlay-card.component';
 import { PanelComponent } from './components/panel/panel.component';
+import {UserNamePipe} from './pipes/user-name.pipe';
 
 @NgModule({
   imports: [
@@ -18,6 +19,9 @@ import { PanelComponent } from './components/panel/panel.component';
     OverlayCardComponent,
     PanelComponent,
     ModalComponent,
+
+    // Pipes
+    UserNamePipe
   ],
   exports: [
     MDBBootstrapModule,
@@ -26,6 +30,7 @@ import { PanelComponent } from './components/panel/panel.component';
     OverlayCardComponent,
     PanelComponent,
     ModalComponent,
+    UserNamePipe,
   ],
   providers: [
   ],

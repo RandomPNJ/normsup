@@ -1,5 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {Router} from "@angular/router";
+import {Router} from '@angular/router';
+import {SupplierService} from '../../../../services/supplier.service';
+import {NotifService} from '../../../../services/notif.service';
 
 @Component({
   selector: 'app-supplier-document',
@@ -9,33 +11,21 @@ import {Router} from "@angular/router";
 export class SupplierDocumentComponent implements OnInit {
 
   constructor(
-    private router: Router
+    private router: Router,
+    private supplierService: SupplierService,
+    private notificationService: NotifService
   ) {}
 
-  supplierDocuments = [
-    {
-      name: 'KBIS',
-      customerCount: 10
-    },
-    {
-      name: 'URSSAF',
-      customerCount: 7
-    },
-    {
-      name: 'LNTE',
-      customerCount: 34
-    },
-    {
-      name: 'URSSAF',
-      customerCount: 7
-    },
-    {
-      name: 'LNTE',
-      customerCount: 34
-    }
-  ];
+  supplierDocuments = [];
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.supplierService.getDocumentsListMock().subscribe(data => {
+      this.supplierDocuments = data;
+    }, error => {
+      console.log(error);
+      this.notificationService.error('Impossible de récupérer la liste des documents.');
+    });
+  }
 
   open(supplierDocument) {
     this.router.navigate(['/supplier/dashboard/documents/details'], { queryParams: {
