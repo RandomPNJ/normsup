@@ -15,7 +15,6 @@
 }
 
 .comp-btn {
-  width: 100%;
   border: 1px solid #C7E0FF !important;
   padding: unset !important;
   box-shadow: unset;
@@ -23,6 +22,7 @@
 
   .button-txt {
     color: #4E5983;
+    padding: 0 54px;
 
     &:hover {
       color: white;
@@ -89,3 +89,57 @@
   background: $light-grey;
 }
 
+.row-line-btn {
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.client-list-container {
+  padding-left: 0 !important;
+  padding-right: 20px !important;
+}
+
+.document-information-container {
+  padding-left: 20px !important;
+  padding-right: 0 !important;
+}
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.title-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.span-row-centered {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.client-documents-information-container {
+  padding: 0 80px;
+
+  @media screen and (max-width: 1170px) {
+    padding: 0;
+  }
+
+  .clients-cards-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    @media screen and (max-width: 992px) {
+      flex-direction: column;
+
+      .client-list-container {
+        padding: 0 !important;
+        margin-bottom: 30px;
+      }
+    }
+  }
+}
