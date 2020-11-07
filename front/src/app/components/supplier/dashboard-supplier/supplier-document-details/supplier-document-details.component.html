@@ -1,4 +1,4 @@
-<div class="group-details-cont container component-padding" *ngIf="documentType">
+<div class="client-details-cont container component-padding" *ngIf="documentType">
   <app-ui-back-link
     [link]="'../'"
     [label]="'Retour aux documents'">
@@ -7,9 +7,9 @@
   <div class="row nopadding col-lg-11 col-md-12 col-sm-7 col-8" style="padding-top: 45px !important; padding-bottom: 25px !important;">
     <div class="col-lg-7 col-md-12 col-sm-10 col-8 title nopadding">
       <app-ui-page-title [title]="documentType"></app-ui-page-title>
-      <span class="item-count">
+      <span class="item-count" *ngIf="clients">
         <span class="count-style">
-          15
+          {{ clients.length }}
         </span>
         clients utilisant ce document
       </span>
@@ -25,12 +25,12 @@
     </div>
   </div>
 
-  <div class="row nopadding col-lg-11 col-md-12 col-sm-7 col-8 data-row mb-5">
+  <div class="row nopadding col-lg-11 col-md-12 col-sm-7 col-8 mb-5">
 
     <div class="container nopadding">
 
       <!-- Liste des clients -->
-      <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6 data-cont-one">
+      <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
         <app-ui-card-template
           [headerTitle]="'Liste des clients'"
           [templateBody]="clientListTemplate">
@@ -39,7 +39,7 @@
 
 
       <!-- Paramètre des relances -->
-      <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6 data-cont-one">
+      <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
         <app-ui-card-template
           [headerTitle]="'Gestion du document'"
           [templateBody]="documentDetailTemplate">
@@ -57,7 +57,7 @@
     (click)="onClientRowClick(client)"
     *ngFor="let client of clients"
     class="client-row">
-    <span class="client-txt">
+    <span class="row-line client-txt text-capitalize">
       {{ client.name }}
     </span>
   </div>
@@ -65,13 +65,13 @@
 
 <ng-template #documentDetailTemplate>
 
-  <div class="basic-txt" style="padding-left: 35px" *ngIf="!selectedClient; else elseBlock">
+  <div class="row-line client-txt font-weight-bold" *ngIf="!selectedClient; else elseBlock">
     Aucun client sélectionné.
   </div>
 
   <ng-template #elseBlock>
 
-    <div class="group-card-row">
+    <div class="client-card-row">
       <div class="row-line">
         <div class="basic-txt">
           Statut du document
@@ -86,8 +86,8 @@
       </div>
     </div>
 
-    <div class="group-card-row">
-      <div class="text-cont" style="margin-bottom: 25px;">
+    <div class="client-card-row">
+      <div class="row-line client-txt" style="margin-bottom: 25px;">
         <div class="basic-txt">
           Informations
         </div>
@@ -118,11 +118,9 @@
       </div>
     </div>
 
-    <div class="group-card-row">
-      <div class="text-cont">
-        <div class="basic-txt">
+    <div class="client-card-row">
+      <div class="row-line client-txt font-weight-bold">
           Déposer un nouveau document
-        </div>
       </div>
     </div>
 
