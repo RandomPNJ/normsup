@@ -37,6 +37,7 @@ export class SupplierTableComponent implements OnInit, OnDestroy {
   toggleModification: Boolean = false;
   interloc: any;
   supplier: any;
+  processing: Boolean = true;
   data: Array<any> = [];
   groups: Array<any> = [ 
     { id: '', name: 'Choisir un groupe' }
@@ -140,7 +141,7 @@ export class SupplierTableComponent implements OnInit, OnDestroy {
       serverSide: true,
       stateSave: false,
       paging: true,
-      processing: true,
+      processing: false,
       language: {
           lengthMenu: 'Afficher par _MENU_',
           zeroRecords: 'Aucun résultat trouvé',
@@ -159,6 +160,7 @@ export class SupplierTableComponent implements OnInit, OnDestroy {
           },
       },
       ajax: (dataTablesParameters: any, callback: any) => {
+        that.processing = true;
         console.log('dataTablesParameters', dataTablesParameters)
         const action = this.compareParams(dataTablesParameters);
         if(action === 'query') {
@@ -179,6 +181,7 @@ export class SupplierTableComponent implements OnInit, OnDestroy {
                 that.data = that.data.concat(resp.body['items']);
                 that.itemsToDisplay = that.data.slice(that.tableParams.start, that.tableParams.start + that.tableParams.length);
                 that.myTable = true;
+                that.processing = false;
                 callback({
                   recordsTotal: that.nbOfRows, // grand total avant filtre
                   recordsFiltered: that.nbOfRows, // Nb d'onglet pagination
@@ -189,6 +192,7 @@ export class SupplierTableComponent implements OnInit, OnDestroy {
                 that.itemsToDisplay = [];
                 that.nbOfRows = 0;
                 that.myTable = true;
+                that.processing = false;
                 callback({
                   recordsTotal: 0, // grand total avant filtre
                   recordsFiltered: 0, // Nb d'onglet pagination
@@ -215,6 +219,7 @@ export class SupplierTableComponent implements OnInit, OnDestroy {
                 
                 that.itemsToDisplay = that.data.slice(that.tableParams.start, that.tableParams.start + that.tableParams.length);
                 that.myTable = true;
+                that.processing = false;
                 callback({
                   recordsTotal: that.nbOfRows, // grand total avant filtre
                   recordsFiltered: that.nbOfRows, // Nb d'onglet pagination
@@ -226,6 +231,7 @@ export class SupplierTableComponent implements OnInit, OnDestroy {
                 that.itemsToDisplay = [];
                 that.nbOfRows = 0;
                 that.myTable = true;
+                that.processing = false;
                 callback({
                   recordsTotal: 0, // grand total avant filtre
                   recordsFiltered: 0, // Nb d'onglet pagination
@@ -242,8 +248,6 @@ export class SupplierTableComponent implements OnInit, OnDestroy {
             data: []
           });
         }
-      },
-      preDrawCallback: function(settings) {
       },
       columns: [
         {

@@ -13,17 +13,7 @@ export class UsersTableComponent implements OnInit {
 
   @ViewChild(DataTableDirective) datatableElement: DataTableDirective;
   @Output() modifyUser = new EventEmitter<string>();
-  loggedUser = {
-    username: 'lob123',
-    email: 'yass.elf@gmail.com',
-    name: 'El Fahim',
-    lastname: 'Yassin',
-    role: 'Admin',
-    id: '0',
-    organisation: 1,
-    client: 1,
-    createdBy: 'GOD'
-  };
+
   tableParams: any = {
     start: 0,
     length: 50
@@ -31,7 +21,7 @@ export class UsersTableComponent implements OnInit {
   items = [
   ];
   reloadVar: Boolean = false;
-
+  processing: Boolean = true;
   myTable: Boolean = false;
   itemsToDisplay: Array<any> = [];
   dtOptions: DataTables.Settings = {};
@@ -45,6 +35,12 @@ export class UsersTableComponent implements OnInit {
   constructor(private httpService: HttpService) { }
 
   ngOnInit() {
+    this.httpService
+      .get('/api/users/count')
+      .subscribe(res => {
+        this.dataSize = res.body['count'];
+      })
+    ;
     const that = this;
     this.dtOptions = {
       lengthMenu: [10, 25, 50, -1],
@@ -56,7 +52,7 @@ export class UsersTableComponent implements OnInit {
       info: false,
       // pageLength: 30,
       serverSide: true,
-      processing: true,
+      processing: false,
       language: {
         lengthMenu: 'Voir _MENU_ résultats par page',
         zeroRecords: 'Aucun résultat trouvé',
@@ -72,46 +68,72 @@ export class UsersTableComponent implements OnInit {
         },
       },
       ajax: (dataTablesParameters: any, callback: any) => {
+        that.processing = true;
         const action = this.compareParams(dataTablesParameters);
-        if(that.reloadVar === true) {
-          setTimeout(() => {that.httpService
+        console.log('action ===', action);
+        if(action === 'query') {
+          that.httpService
             .get('/api/users/management', this.tableParams)
             .subscribe(resp => {
               that.items = resp.body['items'];
               that.itemsToDisplay = that.items.slice(that.tableParams.start, that.tableParams.start + that.tableParams.length);
-              that.dataSize = that.items.length;
+              // that.dataSize = that.items.length;
               that.reloadVar = false;
               that.myTable = true;
+              that.processing = false;
               callback({
                 recordsTotal: that.items.length,
                 recordsFiltered: that.items.length,
-                data: []
+                data: [],
+                draw: 1,
               });
             }, err => {
               console.log('/api/users err', err);
-            })}, 2500);
-        } else {
+            })
+        } else if(action === 'length') {
+          console.log('length');
           that.httpService
             .get('/api/users/management', this.tableParams)
             .subscribe(resp => {
-              that.items = that.items.concat(resp.body['items']);
-              that.itemsToDisplay = that.items.slice(that.tableParams.start, that.tableParams.start + that.tableParams.length);
-              that.dataSize = that.items.length;
-
-              that.myTable = true;
-              callback({
-                recordsTotal: that.items.length,
-                recordsFiltered: that.items.length,
-                data: []
-              });
-            }, err => {
-              console.log('/api/users err', err);
+              console.log('resp');
+              if(resp.body['items'] && resp.body['items'].length > 0) {
+                that.items = resp.body['items'];
+                // that.dataSize = that.items.length;
+                that.itemsToDisplay = that.items.slice(that.tableParams.start, that.tableParams.start + that.tableParams.length);
+                that.myTable = true;
+                that.processing = false;
+                callback({
+                  recordsTotal: that.items.length, // grand total avant filtre
+                  recordsFiltered: that.items.length, // Nb d'onglet pagination
+                  data: []
+                });
+                // this.suppliersData.emit(that.data.length);
+              } else {
+                that.items = [];
+                that.itemsToDisplay = [];
+                that.items.length = 0;
+                that.myTable = true;
+                that.processing = false;
+                callback({
+                  recordsTotal: 0, // grand total avant filtre
+                  recordsFiltered: 0, // Nb d'onglet pagination
+                  data: [],
+                  draw: 1,
+                });
+              } 
             });
+        } else if(action === 'redraw') {
+          console.log('two');
+          that.itemsToDisplay = that.items.slice(that.tableParams.start, that.tableParams.start + that.tableParams.length);
+          that.processing = false;
+          callback({
+            recordsTotal: that.items.length, // grand total avant filtre
+            recordsFiltered: that.items.length, // Nb d'onglet pagination
+            data: [],
+            draw: 1,
+          });
         }
-      },
-      preDrawCallback: function (settings) {
-        that.tableParams.start = settings._iDisplayStart;
-        that.tableParams.length = settings._iDisplayLength;
+        
       },
       columns: [
         {
@@ -133,7 +155,6 @@ export class UsersTableComponent implements OnInit {
   compareParams(datatableParams) {
     // TODO : Ordering with multiple columns
     let action = 'none';
-
     if(this.tableParams.start !== datatableParams.start) {
       this.tableParams.start = datatableParams.start;
       if(this.items.length <= datatableParams.start) {
@@ -145,7 +166,6 @@ export class UsersTableComponent implements OnInit {
     if(this.tableParams.search !== datatableParams.search.value) {
       this.items.length = 0;
       this.tableParams.search = datatableParams.search.value;
-      // this.recount(this.tableParams.search);
       action = 'query';
     }
     if(this.tableParams.length !== datatableParams.length) {
@@ -159,12 +179,32 @@ export class UsersTableComponent implements OnInit {
   }
 
   reload() {
-    console.log('reload');
-    this.reloadVar = true;
     this.datatableElement.dtInstance.then((dtInstance: DataTables.Api) => {
+      this.httpService
+        .get('/api/users/management', this.tableParams)
+        .subscribe(resp => {
+          console.log(resp);
+          if(resp.body && resp.body['items'] && resp.body['items'].length > 0) {
+            this.items = resp.body['items'];
+            this.itemsToDisplay = this.items.slice(this.tableParams.start, this.tableParams.start + this.tableParams.length);
+          } else {
+            this.items = [];
+            this.itemsToDisplay = [];
+            this.items.length = 0;
+          }
+          
+        });
+      this.httpService
+        .get('/api/users/count')
+        .subscribe(res => {
+          this.dataSize = res.body['count'];
+        })
+      ;
+      dtInstance.page('last');
       dtInstance.ajax.reload();
     });
   }
+
   delete(item) {
 
   }

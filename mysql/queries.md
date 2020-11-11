@@ -457,7 +457,7 @@ ADD PRIMARY KEY (`repres_id`);
 
 ## Applied
 
-False
+True
 
 ## Date
 
@@ -481,7 +481,7 @@ ADD CONSTRAINT `r_id`
 
 ## Applied
 
-False
+True
 
 ## Date
 
@@ -500,7 +500,8 @@ CHANGE COLUMN `client` `siren` INT(11) NOT NULL ;
 
 ## Applied
 
-False
+True
+
 
 ## Date
 
@@ -518,7 +519,7 @@ CHANGE COLUMN `organisation_id` `organisation_id` INT(11) NULL ;
 
 ## Applied
 
-False
+True
 
 ## Date
  
@@ -540,7 +541,7 @@ CREATE TABLE `normsup`.`doc_types` (
  
 ## Applied
  
-False
+True
  
  
 ## Date
@@ -581,4 +582,4 @@ CREATE TABLE `normsup`.`supplier_doc_relation` (
  
 ## Applied
  
-False
+True

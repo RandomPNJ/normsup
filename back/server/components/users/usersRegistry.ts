@@ -438,6 +438,32 @@ export default class UserRegistry {
         ;
     }
 
+    public countUsersManagement(data, user) {
+        let query = {
+            timeout: 40000
+        };
+        data.client = user.organisation;
+        const s = data.search ? data.search = '%' + data.search + '%' : '';
+        loggerT.verbose('Count data : ', data);
+        if(data.client && data.search) {
+            //NOT USED YET
+        } else if(data.client) {
+            loggerT.verbose('Recount 2 == ', s);
+            query['sql'] = Query.QUERY_COUNT_USERS_NONADM;
+            query['values'] = [data.client];
+        }
+        return this.mysql.query(query)
+            .then(res => {
+                loggerT.verbose('[countSuppliers] res', res)
+                return Promise.resolve({ count: res[0].count || 0 });
+            })
+            .catch(err => {
+                loggerT.error('ERROR ON QUERY getSuppliers.');
+                return Promise.reject(err);
+            })
+            ;
+    }
+
     public getPicture(id) {
         return this.runQuery('FIND_USER_BY_ID', [id])
             .then((res) => {

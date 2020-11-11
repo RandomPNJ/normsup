@@ -1,7 +1,7 @@
 <div class="table-responsive">
   <table datatable [dtOptions]="dtOptions" id="tableComp" class="table pageResize compact" cellspacing="0"
     width="100%" style="height: 100%;">
-    <tbody *ngIf="myTable">
+    <tbody *ngIf="myTable" [hidden]="processing">
       <tr *ngFor="let item of items; let i = index">
         <td style="border-top: none !important;text-align: center;">
           <div style="width: 20%; display: inline-block;">&nbsp;</div>
@@ -21,7 +21,7 @@
         <td class="row-border" [ngClass]="{'noborder': i === items.length - 1}">
           <div class="badge-container content-cont container row-space">
             <div class="row h-100 cent">
-              <select (ngModelChange)="changeRole($event, item)" class="form-control custom-normsup-select" id="role"  name="role" [(ngModel)]="item.rolename" style="color: #4E5983;">
+              <select (ngModelChange)="changeRole($event, item)" class="form-control custom-normsup-select" id="role"  name="role" [(ngModel)]="item.roles[0]" style="color: #4E5983;">
                 <option *ngFor="let c of roles" [ngValue]="c.value" [disabled]="c.name === ' '">{{c.name}}</option>
               </select>
             </div>
@@ -40,4 +40,5 @@
       </tr>
     </tbody>
   </table>
+  <div *ngIf="processing"></div>
 </div>
