@@ -1,21 +1,52 @@
 <div class="container component-padding">
-  <div class="row nopadding col-lg-11 col-md-12 col-sm-10 col-8" style="padding-top: 45px !important; padding-bottom: 25px !important;">
-    <div class="row title nopadding">
-      <span  class="group-title" style="padding-right: 20px;">Documents</span>
-    </div>
 
-    <div
-      *ngIf="supplierDocuments && 0 !== supplierDocuments.length"
-      style="display: flex; align-items: center;">
-      Vous avez
-      <span style="font-weight: bold; color: #4390EF; padding-left: 2px; padding-right: 2px;"> {{ supplierDocuments.length }} </span>
-      {{ supplierDocuments.length <= 1 ? 'document': 'documents'}}.
-    </div>
+  <!-- Document légaux -->
+  <div class="row nopadding col-lg-11 col-md-12 col-sm-10 col-8"
+       style="padding-top: 45px !important; padding-bottom: 25px !important;">
+    <app-ui-page-title
+      [title]="'Mes documents légaux'">
+    </app-ui-page-title>
   </div>
 
-  <app-ui-list-card
-    [btnCardLabel]="'Déposer'"
-    [cards]="cards"
-    (clickCardBtnEvent)="onBtnCardClickEvent($event)">
-  </app-ui-list-card>
+  <app-layout-reponsive-list-card
+    [withBorder]="false"
+    *ngIf="mandatoryDocuments && 0 !== mandatoryDocuments.length">
+
+    <div class="card-parent-container col-xl-3 col-lg-4 col-md-6 col-sm-12 col-12"
+         *ngFor="let document of mandatoryDocuments">
+
+      <app-ui-card-document-template
+        [document]="document"
+        (clickCardBtnEvent)="onBtnCardClickEvent($event)">
+      </app-ui-card-document-template>
+
+    </div>
+
+  </app-layout-reponsive-list-card>
+
+
+  <!-- Document complémentaires -->
+  <div class="row nopadding col-lg-11 col-md-12 col-sm-10 col-8"
+       style="padding-top: 45px !important; padding-bottom: 25px !important;">
+    <app-ui-page-title
+      [title]="'Mes documents complémentaires'">
+    </app-ui-page-title>
+  </div>
+
+  <app-layout-reponsive-list-card
+    [withBorder]="false"
+    *ngIf="optionalDocuments && 0 !== optionalDocuments.length">
+
+    <div class="card-parent-container col-xl-3 col-lg-4 col-md-6 col-sm-12 col-12"
+         *ngFor="let document of optionalDocuments">
+
+      <app-ui-card-document-template
+        [document]="document">
+      </app-ui-card-document-template>
+
+    </div>
+
+  </app-layout-reponsive-list-card>
+
+
 </div>

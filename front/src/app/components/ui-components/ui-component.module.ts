@@ -3,20 +3,23 @@ import {BackLinkComponent} from './back-link/back-link.component';
 import {PageTitleComponent} from './page-title/page-title.component';
 import {CardTemplateComponent} from './card-template/card-template.component';
 import {CustomButtonComponent} from './custom-button/custom-button.component';
-import {ListCardComponent} from './list-card/list-card.component';
 import {MDBBootstrapModule} from 'angular-bootstrap-md';
 import {CommonModule} from '@angular/common';
 import {BrowserModule} from '@angular/platform-browser';
 import {RouterModule} from '@angular/router';
+import {CardDocumentTemplateComponent} from './card-document-templat/card-document-template.component';
 
-
-@NgModule({
-  declarations: [
+const components = [
     BackLinkComponent,
     PageTitleComponent,
     CardTemplateComponent,
     CustomButtonComponent,
-    ListCardComponent
+    CardDocumentTemplateComponent
+];
+
+@NgModule({
+  declarations: [
+    components
   ],
   imports: [
     CommonModule,
@@ -25,11 +28,7 @@ import {RouterModule} from '@angular/router';
     MDBBootstrapModule
   ],
   exports: [
-    BackLinkComponent,
-    PageTitleComponent,
-    CardTemplateComponent,
-    CustomButtonComponent,
-    ListCardComponent
+    components
   ]
 })
 export class UiComponentModule {}

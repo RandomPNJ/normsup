@@ -1,0 +1,27 @@
+<div class="row nopadding list-card-parent-container col-lg-12 col-md-12 col-sm-12 col-12 mb-5" [ngClass]="{
+  'list-card-parent-with-border' : withBorder
+}">
+
+  <ng-container>
+    <ng-content></ng-content>
+  </ng-container>
+
+</div>
+
+<!--<div class="card-parent-container col-xl-3 col-lg-4 col-md-6 col-sm-12 col-12" *ngFor="let card of cards; let i = index;"
+    [ngClass]="{
+      'card-parent-without-padding' : !withBorder
+    }">
+    <mdb-card class="canvaCard list-card-container">
+      <mdb-card-body class="canva-card">
+        <div class="card-content">
+
+          <ng-container
+            [ngTemplateOutlet]="cardTemplate"
+            [ngTemplateOutletContext]="{card: card}">
+          </ng-container>
+
+        </div>
+      </mdb-card-body>
+    </mdb-card>
+  </div>-->

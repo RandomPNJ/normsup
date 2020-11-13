@@ -1,0 +1,58 @@
+<mdb-card class="canvaCard list-card-container">
+  <mdb-card-body class="canva-card">
+    <div class="card-content">
+
+      <div class="card-header">
+        <span class="card-header-title">{{ document.name }}</span>
+      </div>
+
+      <div class="card-btn-container">
+        <ng-container
+          [ngTemplateOutlet]="btnTemplate">
+        </ng-container>
+
+        <ng-container
+          *ngIf="document.expirationDate"
+          [ngTemplateOutlet]="cardStatusTemplate">
+        </ng-container>
+      </div>
+
+    </div>
+  </mdb-card-body>
+</mdb-card>
+
+<!-- Card status template -->
+<ng-template #cardStatusTemplate>
+  <span *ngIf="'EXPIRED' === status" class="exp-date-text status-expired">
+    Expiré depuis le {{ document.expirationDate | date : 'dd/MM/yyyy' }}
+  </span>
+
+  <span *ngIf="'EXPIRED_SOON' === status" class="exp-date-text status-expired-soon">
+    Expire le {{ document.expirationDate | date : 'dd/MM/yyyy' }}
+  </span>
+
+  <span *ngIf="'UP_TO_DATE' === status" class="exp-date-text status-up-to-date">
+    Expire le {{ document.expirationDate | date : 'dd/MM/yyyy' }}
+  </span>
+</ng-template>
+
+
+<!-- Btn template -->
+<ng-template #btnTemplate>
+
+  <button (click)="onclickCardBtnEvent(document)" type="button" class="btn new-btn-normsup">
+      <span class="card-btn-txt-container">
+        <img width="12" height="12" class="button-logo"
+             [src]="status === 'EXPIRED' || status === 'NOT_EXIST'
+             ? '../../../assets/img/loupe.svg'
+             : '../../../assets/img/menu-exports.svg'"
+             style="margin-right:5px;"/>
+        <span>
+          {{
+          status === 'EXPIRED' || status === 'NOT_EXIST' ? 'Déposer' : 'Consulter'
+          }}
+        </span>
+      </span>
+  </button>
+
+</ng-template>

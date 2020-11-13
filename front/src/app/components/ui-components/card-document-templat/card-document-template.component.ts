@@ -1,0 +1,41 @@
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import * as moment from 'moment';
+
+@Component({
+  selector: 'app-ui-card-document-template',
+  templateUrl: './card-document-template.component.html',
+  styleUrls: ['./card-document-template.component.scss']
+})
+export class CardDocumentTemplateComponent implements OnInit {
+
+  NB_DAYS_FOR_STATUS_EXPIRED_SOON = 30;
+
+  @Input() withBorder = false;
+  @Input() document;
+
+  status;
+
+  @Output() clickCardBtnEvent = new EventEmitter();
+
+  onclickCardBtnEvent(document) {
+    this.clickCardBtnEvent.emit(document);
+  }
+
+  getExpirationStatus(expirationDate) {
+    if (expirationDate) {
+      const nbDays = moment(expirationDate).diff(moment(), 'days');
+      if (nbDays < 0) {
+        return 'EXPIRED';
+      } else if (nbDays <= this.NB_DAYS_FOR_STATUS_EXPIRED_SOON) {
+        return 'EXPIRED_SOON';
+      }
+      return 'UP_TO_DATE';
+    }
+    return 'NOT_EXIST';
+  }
+
+  ngOnInit(): void {
+    this.status = this.getExpirationStatus(this.document.expirationDate);
+  }
+
+}
