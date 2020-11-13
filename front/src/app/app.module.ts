@@ -79,6 +79,7 @@ import {DashboardSupplierComponent} from './components/supplier/dashboard-suppli
 import {SupplierDocumentComponent} from './components/supplier/dashboard-supplier/supplier-document/supplier-document.component';
 import {SupplierDocumentDetailsComponent} from './components/supplier/dashboard-supplier/supplier-document-details/supplier-document-details.component';
 import {UiComponentModule} from './components/ui-components/ui-component.module';
+import {LayoutModule} from "./components/layouts/layout.module";
 
 @NgModule({
   declarations: [
@@ -161,7 +162,8 @@ import {UiComponentModule} from './components/ui-components/ui-component.module'
     DataTablesModule,
     CountdownModule,
 
-    UiComponentModule
+    UiComponentModule,
+    LayoutModule
   ],
   exports: [
     AddSupplierModalComponent,

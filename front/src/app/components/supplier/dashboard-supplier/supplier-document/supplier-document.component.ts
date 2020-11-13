@@ -10,43 +10,34 @@ import {NotifService} from '../../../../services/notif.service';
 })
 export class SupplierDocumentComponent implements OnInit {
 
-  cards = [];
-
   constructor(
     private router: Router,
     private supplierService: SupplierService,
     private notificationService: NotifService
   ) {}
 
-  supplierDocuments = [];
+  mandatoryDocuments = [];
+  optionalDocuments = [];
 
   ngOnInit(): void {
-    this.supplierService.getDocumentsListMock().subscribe(data => {
-      this.supplierDocuments = data;
-      this.initializeCards();
+    this.supplierService.getMandatoryDocumentsListMock().subscribe(data => {
+      this.mandatoryDocuments = data;
     }, error => {
       console.log(error);
-      this.notificationService.error('Impossible de récupérer la liste des documents.');
+      this.notificationService.error('Impossible de récupérer la liste des documents légaux.');
+    });
+
+    this.supplierService.getOptionalDocumentsListMock().subscribe(data => {
+      this.optionalDocuments = data;
+    }, error => {
+      console.log(error);
+      this.notificationService.error('Impossible de récupérer la liste des documents complémentaires.');
     });
   }
 
   onBtnCardClickEvent(document) {
     this.router.navigate(['/supplier/dashboard/documents/details'], { queryParams: {
         documentType: document.name
-      }});
+    }});
   }
-
-  initializeCards() {
-    this.cards = [];
-    if (this.supplierDocuments && 0 !== this.supplierDocuments.length) {
-      this.supplierDocuments.forEach(supplierDoc => {
-        this.cards.push({
-          id: supplierDoc.id,
-          // icon: supplierDoc.icon
-          name: supplierDoc.name
-        });
-      });
-    }
-  }
-
 }

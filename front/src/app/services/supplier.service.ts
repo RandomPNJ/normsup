@@ -13,33 +13,50 @@ export class SupplierService {
     private httpClient: HttpClient
   ) {}
 
-  getDocumentsListMock() {
+  getMandatoryDocumentsListMock() {
     // TODO Must call API
     return of([
       {
         id: 1,
-        name: 'KBIS',
-        customerCount: 10
+        name: 'Extrait de KBIS',
+        logoLink: '../../../assets/img/param-icn.svg',
+        expirationDate: '2020-08-24 21:22:38'
       },
       {
         id: 2,
-        name: 'URSSAF',
-        customerCount: 7
+        name: 'Attestation de vigilance',
+        logoLink: '../../../assets/img/param-icn.svg',
+        expirationDate: '2020-11-24 21:22:38'
       },
       {
         id: 3,
-        name: 'LNTE',
-        customerCount: 34
+        name: 'Liste nominative des travailleurs étrangers',
+        logoLink: '../../../assets/img/param-icn.svg',
+        expirationDate: '2020-12-24 21:22:38'
+      }
+    ]);
+  }
+
+  getOptionalDocumentsListMock() {
+    // TODO Must call API
+    return of([
+      {
+        id: 10,
+        name: 'Licence de transport',
+        logoLink: '../../../assets/img/param-icn.svg',
+        expirationDate: '2020-08-24 21:22:38'
       },
       {
-        id: 4,
-        name: 'Doc. Complémentaire',
-        customerCount: 7
+        id: 11,
+        name: 'Attestation fiscale',
+        logoLink: '../../../assets/img/param-icn.svg',
+        expirationDate: '2020-08-24 21:22:38'
       },
       {
-        id: 5,
-        name: 'Impôts',
-        customerCount: 34
+        id: 12,
+        name: 'Attestation d\'assurance',
+        logoLink: '../../../assets/img/param-icn.svg',
+        expirationDate: '2020-08-24 21:22:38'
       }
     ]);
   }
