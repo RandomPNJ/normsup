@@ -1,4 +1,4 @@
-<div class="container component-padding">
+<app-layout-page-content>
 
   <!-- Document légaux -->
   <div class="row nopadding col-lg-11 col-md-12 col-sm-10 col-8"
@@ -17,6 +17,7 @@
 
       <app-ui-card-document-template
         [document]="document"
+        [noBoxShadow]="true"
         (clickCardBtnEvent)="onBtnCardClickEvent($event)">
       </app-ui-card-document-template>
 
@@ -41,12 +42,13 @@
          *ngFor="let document of optionalDocuments">
 
       <app-ui-card-document-template
-        [document]="document">
+        [document]="document"
+        [noBoxShadow]="true"
+        (clickCardBtnEvent)="onBtnCardClickEvent($event)">
       </app-ui-card-document-template>
 
     </div>
 
   </app-layout-reponsive-list-card>
 
-
-</div>
+</app-layout-page-content>

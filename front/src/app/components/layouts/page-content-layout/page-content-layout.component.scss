@@ -1,0 +1,7 @@
+.page-content-layout {
+  padding: 0 80px;
+
+  @media screen and (max-width: 1170px) {
+    padding: 0;
+  }
+}

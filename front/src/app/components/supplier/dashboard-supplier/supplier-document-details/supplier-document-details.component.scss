@@ -57,7 +57,9 @@
 }
 
 .save-document-btn {
-  padding-top: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
 }
 
 .information-line {
@@ -142,4 +144,31 @@
       }
     }
   }
+}
+
+.clients-cards-container {
+
+  ::ng-deep .normsup-card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+}
+
+.card-btn-txt-container {
+  display: flex;
+  align-items: center;
+  height: 100%;
+
+  & span {
+    font-size: 13px;
+    font-family: 'Roboto Medium';
+    text-transform: none;
+    text-align: center;
+  }
+}
+
+.custom-btn {
+  padding: 5px 62px !important;
+  height: fit-content !important;
 }

@@ -13,7 +13,7 @@ export class SupplierDocumentDetailsComponent implements OnInit {
   documentType: string;
 
   clients = []; // la liste des clients
-  selectedClient; // le client sélectionné
+  currentDocument; // le document
 
   constructor(
     private route: ActivatedRoute,
@@ -26,10 +26,11 @@ export class SupplierDocumentDetailsComponent implements OnInit {
       this.documentType = data.documentType;
 
       this.initMockClientList();
+      this.initDocument();
     });
   }
 
-  initMockClientList() {
+  private initMockClientList() {
     this.supplierService.getClientListMock().subscribe(data => {
       this.clients = data;
     }, error => {
@@ -38,17 +39,13 @@ export class SupplierDocumentDetailsComponent implements OnInit {
     });
   }
 
-  onClientRowClick(client) {
-    if (client) {
-      this.supplierService.getDocumentInformation(this.documentType, client.id).subscribe(data => {
-        this.selectedClient = data;
-      }, error => {
-        this.notificationService.error('Impossible de récupérer les informations du document.');
-        console.log(error);
-      });
-    } else {
-      this.selectedClient = undefined;
-    }
+  private initDocument() {
+    this.supplierService.getDocumentInformation(this.documentType).subscribe(data => {
+      this.currentDocument = data;
+    }, error => {
+      this.notificationService.error('Impossible de récupérer les informations du document.');
+      console.log(error);
+    });
   }
 
 }

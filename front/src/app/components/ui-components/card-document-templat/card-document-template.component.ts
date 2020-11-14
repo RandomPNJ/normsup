@@ -12,6 +12,7 @@ export class CardDocumentTemplateComponent implements OnInit {
 
   @Input() withBorder = false;
   @Input() document;
+  @Input() noBoxShadow = false;
 
   status;
 

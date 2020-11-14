@@ -37,7 +37,7 @@ export class SupplierDocumentComponent implements OnInit {
 
   onBtnCardClickEvent(document) {
     this.router.navigate(['/supplier/dashboard/documents/details'], { queryParams: {
-        documentType: document.name
+        documentType: document.type
     }});
   }
 }

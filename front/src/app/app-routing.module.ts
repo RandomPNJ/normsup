@@ -34,22 +34,35 @@ import { ResetPasswordComponent } from './components/reset-password/reset-passwo
 import {DashboardSupplierComponent} from './components/supplier/dashboard-supplier/dashboard-supplier.component';
 import {SupplierDocumentComponent} from './components/supplier/dashboard-supplier/supplier-document/supplier-document.component';
 import {SupplierDocumentDetailsComponent} from './components/supplier/dashboard-supplier/supplier-document-details/supplier-document-details.component';
+import {SupplierSurveyComponent} from "./components/supplier/dashboard-supplier/supplier-survey/supplier-survey.component";
 const routes: Routes = [
-  { path: 'supplier',
+  {
+    path: 'supplier',
     children: [
-      { path: 'login', component: SupplierLoginPageComponent },
-      { path: 'dashboard', component: DashboardSupplierComponent,
+      {
+        path: 'login', component: SupplierLoginPageComponent
+      },
+      {
+        path: 'dashboard', component: DashboardSupplierComponent,
         children: [
+          { path: 'survey', component: SupplierSurveyComponent },
           { path: 'documents', component: SupplierDocumentComponent },
-          { path: 'documents/details', component: SupplierDocumentDetailsComponent }
+          { path: 'documents/details', component: SupplierDocumentDetailsComponent },
+          { path: '', redirectTo: 'documents', pathMatch: 'full'}
         ]
       },
-      { path: 'upload', component: SupplierUploadPageComponent, canActivate: [GuestGuard],
+      {
+        path: 'upload', component: SupplierUploadPageComponent, canActivate: [GuestGuard],
         children: [
           { path: '', component: SupplierUploadInterfaceComponent },
           { path: 'success', component: SupplierUploadSuccessComponent },
         ]
       },
+      {
+        path: '**',
+        redirectTo: 'dashboard',
+        pathMatch: 'full'
+      }
     ]
   },
   { path: 'login', component: LoginPageComponent, canActivate: [] },
