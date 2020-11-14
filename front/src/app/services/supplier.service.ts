@@ -18,18 +18,21 @@ export class SupplierService {
     return of([
       {
         id: 1,
+        type: 'KBIS',
         name: 'Extrait de KBIS',
         logoLink: '../../../assets/img/param-icn.svg',
         expirationDate: '2020-08-24 21:22:38'
       },
       {
         id: 2,
+        type: 'ATTESTATION_VIGILANCE',
         name: 'Attestation de vigilance',
         logoLink: '../../../assets/img/param-icn.svg',
         expirationDate: '2020-11-24 21:22:38'
       },
       {
         id: 3,
+        type: 'LISTE_TRAVAILLEURS',
         name: 'Liste nominative des travailleurs étrangers',
         logoLink: '../../../assets/img/param-icn.svg',
         expirationDate: '2020-12-24 21:22:38'
@@ -42,18 +45,21 @@ export class SupplierService {
     return of([
       {
         id: 10,
+        type: 'TRANSPORT',
         name: 'Licence de transport',
         logoLink: '../../../assets/img/param-icn.svg',
         expirationDate: '2020-08-24 21:22:38'
       },
       {
         id: 11,
+        type: 'FISCALE',
         name: 'Attestation fiscale',
         logoLink: '../../../assets/img/param-icn.svg',
         expirationDate: '2020-08-24 21:22:38'
       },
       {
         id: 12,
+        type: 'ASSURANCE',
         name: 'Attestation d\'assurance',
         logoLink: '../../../assets/img/param-icn.svg',
         expirationDate: '2020-08-24 21:22:38'
@@ -115,11 +121,12 @@ export class SupplierService {
     ]);
   }
 
-  getDocumentInformation(documentType, clientId) {
+  getDocumentInformation(documentType) {
     // TODO Must call API
     // TODO create model object for data
-    if (clientId % 2) { // if nb is pair
-      return of({
+    return of({
+        name: 'Nom du document',
+        type: documentType,
         expirationDate: '2022-09-24 14:25:01',
         uploadDate: '2020-09-24 14:25:01',
         durationValidity: 10,
@@ -130,19 +137,6 @@ export class SupplierService {
           name: 'Yassin'
         }
       });
-    } else {
-      return of({
-        expirationDate: '2019-09-24 14:25:01',
-        uploadDate: '2019-09-24 14:25:01',
-        durationValidity: 4,
-        isValid: false,
-        user: {
-          id: 2,
-          lastname: 'BONNEROT',
-          name: 'Julien'
-        }
-      });
-    }
   }
 
 }
