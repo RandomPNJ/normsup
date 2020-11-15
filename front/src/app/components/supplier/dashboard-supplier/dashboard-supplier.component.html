@@ -1,5 +1,5 @@
 <app-sidebar
-  [navLinks]="[
+  [topMenuNavLinks]="[
      {
         id: 'documents',
         navLink: '/supplier/dashboard/documents',
@@ -13,6 +13,14 @@
         label: 'Questionnaire'
       }
     ]"
+  [bottomMenuNavLinks]="[
+    {
+        id: 'help',
+        navLink: '/supplier/dashboard/help',
+        logoLink: '../../assets/img/menu-groups.svg',
+        label: 'Besoin d\'aide'
+     }
+  ]"
   [defaultLinkImgCircle]="'../../assets/img/active-link.svg'">
 </app-sidebar>
 

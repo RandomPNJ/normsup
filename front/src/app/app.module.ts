@@ -81,6 +81,7 @@ import {SupplierDocumentDetailsComponent} from './components/supplier/dashboard-
 import {UiComponentModule} from './components/ui-components/ui-component.module';
 import {LayoutModule} from "./components/layouts/layout.module";
 import {SupplierSurveyComponent} from "./components/supplier/dashboard-supplier/supplier-survey/supplier-survey.component";
+import {SupplierHelpComponent} from "./components/supplier/dashboard-supplier/supplier-help/supplier-help.component";
 
 @NgModule({
   declarations: [
@@ -136,7 +137,8 @@ import {SupplierSurveyComponent} from "./components/supplier/dashboard-supplier/
     DashboardSupplierComponent,
     SupplierDocumentComponent,
     SupplierDocumentDetailsComponent,
-    SupplierSurveyComponent
+    SupplierSurveyComponent,
+    SupplierHelpComponent
   ],
   imports: [
     BrowserModule,

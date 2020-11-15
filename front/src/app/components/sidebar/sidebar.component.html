@@ -1,9 +1,9 @@
 <div style="background-color: transparent;" class="vertical-nav" id="sidebar">
 
-  <ul *ngIf="navLinks && navLinks.length > 0" style="padding-top: 107px;" class="nav flex-column mb-0">
+  <ul *ngIf="topMenuNavLinks && topMenuNavLinks.length > 0" style="padding-top: 107px;" class="nav flex-column mb-0">
 
-    <li *ngFor="let navLink of navLinks" class="nav-item">
-      <a id="main" routerLinkActive="active" routerLink="{{navLink.navLink}}" class="nav-link text-dark nav-link-s" role="tab"
+    <li *ngFor="let navLink of topMenuNavLinks" class="nav-item">
+      <a id="{{navLink.id}}" routerLinkActive="active" routerLink="{{navLink.navLink}}" class="nav-link text-dark nav-link-s" role="tab"
          routerLinkActive="active"  #rla="routerLinkActive">
         <div class="side-icon-placement">
           <span class="icn-cont dashboard-icn" style="bottom: 12px;">
@@ -19,120 +19,20 @@
 
   </ul>
 
-
+  <ul *ngIf="bottomMenuNavLinks && 0 !== bottomMenuNavLinks.length" class="nav flex-column mb-0 bottom-menu">
+    <li *ngFor="let bottomNavLink of bottomMenuNavLinks" class="nav-item" class="nav-item">
+      <a id="{{bottomNavLink.id}}" routerLinkActive="active" routerLink="{{bottomNavLink.navLink}}" class="nav-link text-dark nav-link-s" role="tab"
+         routerLinkActive="active"  #rla="routerLinkActive">
+        <div class="side-icon-placement">
+          <span class="icn-cont dashboard-icn" style="bottom: 12px;">
+            <img *ngIf="bottomNavLink.logoLink" [src]="bottomNavLink.logoLink" class="icn-style added-pad" />
+          </span>
+          <span class="link-txt">
+            {{ bottomNavLink.label }}
+          </span>
+          <img *ngIf="defaultLinkImgCircle && rla.isActive" [src]="defaultLinkImgCircle"  class="active-lnk-icn added-pad"  />
+        </div>
+      </a>
+    </li>
+  </ul>
 </div>
-<!--
-<div style="background-color: transparent;" *ngIf="showHeader" class="vertical-nav" id="sidebar">
-
-  <ul *ngIf="!isBackoffice"style="padding-top: 107px;" class="nav flex-column mb-0">
-    <li class="nav-item">
-      <a id="main" routerLinkActive="active" routerLink="/dashboard/main" class="nav-link text-dark nav-link-s"
-        role="tab">
-        <div class="side-icon-placement">
-          <span class="icn-cont dashboard-icn" style="bottom: 12px;">
-            <img src="../../../assets/img/menu-dashboard.svg" class="icn-style added-pad" />
-          </span>
-          <span class="link-txt">Tableau de bord</span>
-          <img *ngIf="active" src="../../../assets/img/active-link.svg"  class="active-lnk-icn added-pad"  />
-        </div>
-      </a>
-    </li>
-    <li class="nav-item">
-      <a id="supplier" routerLinkActive="active" class="nav-link text-dark nav-link-s" routerLink="/dashboard/supplier"
-        role="tab">
-        <div class="side-icon-placement">
-          <span class="icn-cont supplier-icn">
-            <img src="../../../assets/img/menu-suppliers.svg"  class="icn-style added-pad"  />
-          </span>
-          <span class="link-txt">Fournisseurs</span>
-          <img *ngIf="active" src="../../../assets/img/active-link.svg"  class="active-lnk-icn added-pad"  />
-        </div>
-      </a>
-    </li>
-    <li class="nav-item">
-      <a id="groups" routerLinkActive="active" class="nav-link text-dark nav-link-s" routerLink="/dashboard/groups"
-        role="tab">
-        <div class="side-icon-placement">
-          <span class="icn-cont grp-icn">
-            <img src="../../../assets/img/menu-groups.svg"  class="icn-style added-pad" style="padding-left: 8px !important;"  />
-          </span>
-          <span class="link-txt">Groupes</span>
-          <img *ngIf="active" src="../../../assets/img/active-link.svg"  class="active-lnk-icn added-pad"/>
-        </div>
-      </a>
-    </li>
-    <li class="nav-item">
-      <a id="stats" routerLinkActive="active" class="nav-link text-dark nav-link-s" routerLink="/dashboard/stats"
-        role="tab">
-        <div class="side-icon-placement">
-          <span class="icn-cont">
-            <img src="../../../assets/img/menu-stats.svg"  class="icn-style added-pad"  />
-          </span>
-          <span class="link-txt">Statistiques</span>
-        </div>
-      </a>
-    </li>
-     <li class="nav-item">
-      <a id="alerts" routerLinkActive="active" class="nav-link text-dark nav-link-s" routerLink="/dashboard/alerts"
-        role="tab">
-        <div class="side-icon-placement">
-          <span class="icn-cont">
-            <img src="../../../assets/img/menu-" />
-          </span>
-          <span class="link-txt">Alertes</span>
-        </div>
-      </a>
-    </li>
-    <li class="nav-item">
-      <a id="reminder" routerLinkActive="active" class="nav-link text-dark nav-link-s" routerLink="/dashboard/export"
-        role="tab">
-        <div class="side-icon-placement">
-          <span class="icn-cont export-icn">
-            <img src="../../../assets/img/menu-exports.svg"  class="icn-style added-pad" style="padding-left: 12px !important;" />
-          </span>
-          <span class="link-txt">Exports</span>
-          <img *ngIf="active" src="../../../assets/img/active-link.svg"  class="active-lnk-icn added-pad"/>
-        </div>
-      </a>
-    </li>
-  </ul>
-
-<ul *ngIf="isBackoffice"style="padding-top: 107px;" class="nav flex-column mb-0">
-    <li class="nav-item">
-      <a id="main" routerLinkActive="active" routerLink="/backoffice/client" class="nav-link text-dark nav-link-s"
-        role="tab">
-        <div class="side-icon-placement">
-          <span class="icn-cont dashboard-icn" style="bottom: 12px;">
-            <img src="../../../assets/img/menu-dashboard.svg" class="icn-style added-pad" />
-          </span>
-          <span class="link-txt">Clients</span>
-          <img *ngIf="active" src="../../../assets/img/active-link.svg"  class="active-lnk-icn added-pad"  />
-        </div>
-      </a>
-    </li>
-    <li class="nav-item">
-      <a id="supplier" routerLinkActive="active" class="nav-link text-dark nav-link-s" routerLink="/backoffice/users" role="tab">
-        <div class="side-icon-placement">
-          <span class="icn-cont supplier-icn">
-            <img src="../../../assets/img/menu-suppliers.svg"  class="icn-style added-pad"  />
-          </span>
-          <span class="link-txt">Utilisateurs</span>
-          <img *ngIf="active" src="../../../assets/img/active-link.svg"  class="active-lnk-icn added-pad"  />
-        </div>
-      </a>
-    </li>
-    <li class="nav-item">
-      <a id="groups" routerLinkActive="active" class="nav-link text-dark nav-link-s" routerLink="/backoffice/suppliers" role="tab">
-        <div class="side-icon-placement">
-          <span class="icn-cont grp-icn">
-            <img src="../../../assets/img/menu-groups.svg"  class="icn-style added-pad" style="padding-left: 8px !important;"  />
-          </span>
-          <span class="link-txt">Utilisateurs (fournisseurs)</span>
-          <img *ngIf="active" src="../../../assets/img/active-link.svg"  class="active-lnk-icn added-pad"/>
-        </div>
-      </a>
-    </li>
-
-  </ul>
-
-</div>-->

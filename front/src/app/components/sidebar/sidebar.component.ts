@@ -11,8 +11,11 @@ import { filter } from 'rxjs/operators';
 })
 export class SidebarComponent implements OnInit {
 
-  @Input() navLinks = [];
+  @Input() topMenuNavLinks = [];
+  @Input() bottomMenuNavLinks = [];
   @Input() defaultLinkImgCircle;
+
+  withHelp = true;
 
   user;
   showHeader;
@@ -25,19 +28,19 @@ export class SidebarComponent implements OnInit {
     private authService: AuthService) { }
 
   ngOnInit() {
-    if(this.router.url.indexOf('/backoffice') !== -1) {
+    if (this.router.url.indexOf('/backoffice') !== -1) {
       this.isBackoffice = true;
     }
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)).subscribe(() => {
-        if(this.activatedRoute.snapshot['_routerState'].url.indexOf('/backoffice') !== -1) {
+        if (this.activatedRoute.snapshot['_routerState'].url.indexOf('/backoffice') !== -1) {
           this.isBackoffice = true;
         } else {
           this.isBackoffice = false;
         }
       });
     this.isLoggedIn = this.authService.isLogged.subscribe(res => {
-      if(res !== false && res.data) {
+      if (res !== false && res.data) {
         this.user = res.data;
       }
       this.showHeader = !!res;
