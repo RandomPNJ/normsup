@@ -79,9 +79,17 @@ import {DashboardSupplierComponent} from './components/supplier/dashboard-suppli
 import {SupplierDocumentComponent} from './components/supplier/dashboard-supplier/supplier-document/supplier-document.component';
 import {SupplierDocumentDetailsComponent} from './components/supplier/dashboard-supplier/supplier-document-details/supplier-document-details.component';
 import {UiComponentModule} from './components/ui-components/ui-component.module';
-import {LayoutModule} from "./components/layouts/layout.module";
-import {SupplierSurveyComponent} from "./components/supplier/dashboard-supplier/supplier-survey/supplier-survey.component";
-import {SupplierHelpComponent} from "./components/supplier/dashboard-supplier/supplier-help/supplier-help.component";
+import {LayoutModule} from './components/layouts/layout.module';
+import {SupplierSurveyComponent} from './components/supplier/dashboard-supplier/supplier-survey/supplier-survey.component';
+import {SupplierHelpComponent} from './components/supplier/dashboard-supplier/supplier-help/supplier-help.component';
+import {SupplierLoggedInGuard} from './auth/supplier-logged-in.guard';
+
+const guards = [
+  GuestGuard,
+  LoggedinGuard,
+  SupplierLoggedInGuard
+];
+
 
 @NgModule({
   declarations: [
@@ -177,8 +185,7 @@ import {SupplierHelpComponent} from "./components/supplier/dashboard-supplier/su
   ],
   providers: [
     BrowserStorageService,
-    GuestGuard,
-    LoggedinGuard,
+    guards,
     NotifService,
     CookieService,
     { provide: HTTP_INTERCEPTORS, useClass: HttpConfigInterceptor, multi: true }
