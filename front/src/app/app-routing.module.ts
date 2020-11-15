@@ -34,17 +34,20 @@ import { ResetPasswordComponent } from './components/reset-password/reset-passwo
 import {DashboardSupplierComponent} from './components/supplier/dashboard-supplier/dashboard-supplier.component';
 import {SupplierDocumentComponent} from './components/supplier/dashboard-supplier/supplier-document/supplier-document.component';
 import {SupplierDocumentDetailsComponent} from './components/supplier/dashboard-supplier/supplier-document-details/supplier-document-details.component';
-import {SupplierSurveyComponent} from "./components/supplier/dashboard-supplier/supplier-survey/supplier-survey.component";
-import {SupplierHelpComponent} from "./components/supplier/dashboard-supplier/supplier-help/supplier-help.component";
+import {SupplierSurveyComponent} from './components/supplier/dashboard-supplier/supplier-survey/supplier-survey.component';
+import {SupplierHelpComponent} from './components/supplier/dashboard-supplier/supplier-help/supplier-help.component';
+import {SupplierLoggedInGuard} from './auth/supplier-logged-in.guard';
 const routes: Routes = [
   {
     path: 'supplier',
     children: [
       {
-        path: 'login', component: SupplierLoginPageComponent
+        path: 'login',
+        component: SupplierLoginPageComponent
       },
       {
         path: 'dashboard', component: DashboardSupplierComponent,
+        canActivate: [SupplierLoggedInGuard],
         children: [
           { path: 'survey', component: SupplierSurveyComponent },
           { path: 'help', component: SupplierHelpComponent },
