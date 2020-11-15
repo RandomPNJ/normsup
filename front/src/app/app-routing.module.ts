@@ -35,6 +35,7 @@ import {DashboardSupplierComponent} from './components/supplier/dashboard-suppli
 import {SupplierDocumentComponent} from './components/supplier/dashboard-supplier/supplier-document/supplier-document.component';
 import {SupplierDocumentDetailsComponent} from './components/supplier/dashboard-supplier/supplier-document-details/supplier-document-details.component';
 import {SupplierSurveyComponent} from "./components/supplier/dashboard-supplier/supplier-survey/supplier-survey.component";
+import {SupplierHelpComponent} from "./components/supplier/dashboard-supplier/supplier-help/supplier-help.component";
 const routes: Routes = [
   {
     path: 'supplier',
@@ -46,6 +47,7 @@ const routes: Routes = [
         path: 'dashboard', component: DashboardSupplierComponent,
         children: [
           { path: 'survey', component: SupplierSurveyComponent },
+          { path: 'help', component: SupplierHelpComponent },
           { path: 'documents', component: SupplierDocumentComponent },
           { path: 'documents/details', component: SupplierDocumentDetailsComponent },
           { path: '', redirectTo: 'documents', pathMatch: 'full'}
