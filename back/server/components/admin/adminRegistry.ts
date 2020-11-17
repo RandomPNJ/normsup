@@ -206,7 +206,7 @@ export default class AdminRegistry {
                         }
                         if(toPush) {
                             let z = _.cloneDeep(subQuery);
-                            z.values = [e.kbis,e.lnte,e.urssaf,e.kbis_expiration,e.urssaf_expiration,e.lnte_expiration,e.supplier_id,e.client_id,date];
+                            z.values = [e.kbis,e.lnte,e.urssaf,e.kbis_expiration,e.urssaf_expiration,e.lnte_expiration,e.siren,date];
                             toModify.push(this.mysql.query(z));
                         }
                     });

@@ -582,7 +582,7 @@ export default class SupplierRegistry {
          */
         user.org.forEach(o => {
             a = cloneDeep(query2);
-            a['values'] = [o.client, o.org, 2, moment().startOf('month').format("YYYY-MM-DD HH:mm:ss"), date, 2, date];
+            a['values'] = [o.siren, 2, moment().startOf('month').format("YYYY-MM-DD HH:mm:ss"), date, 2, date];
             datas.push(a);
         });
         datas.forEach(d => promises.push(this.mysql.query(d)));

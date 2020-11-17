@@ -265,6 +265,7 @@ export class Dashboard1Component implements OnInit, AfterViewInit {
 		const verticalLinePlugin = {
 			getLinePosition: function (chart, pointIndex) {
 				const meta = chart.getDatasetMeta(0); // first dataset is used to discover X coordinate of a point
+				console.log('meta', meta);
 				const data = meta.data;
 				return data[pointIndex]._model.x;
 			},

@@ -106,6 +106,9 @@ export class BackofficeDocumentTableComponent implements OnInit {
             title: 'Dénomination',
           },
           {
+            title: 'Statut',
+          },
+          {
             title: 'Date de création',
           },
           {

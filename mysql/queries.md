@@ -583,3 +583,25 @@ CREATE TABLE `normsup`.`supplier_doc_relation` (
 ## Applied
  
 True
+
+## Date
+ 
+17-11-2020
+ 
+## Comment
+ 
+Create table `supplier_conformity`
+ 
+## Query
+ 
+ALTER TABLE `normsup`.`supplier_conformity` 
+DROP COLUMN `client_id`,
+CHANGE COLUMN `supplier_id` `siren` INT(9) NOT NULL ,
+DROP PRIMARY KEY,
+ADD PRIMARY KEY (`siren`, `start_date`);
+; 
+ 
+## Applied
+ 
+False
+
