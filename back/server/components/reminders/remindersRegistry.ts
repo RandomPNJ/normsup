@@ -36,7 +36,7 @@ export default class RemindersRegistry {
         let rTitle = 'Monsieur/Madame';
 
         query['sql']    = Query.GET_SUPPLIER_INFO;
-        query['values'] = [user.id, supplierID];
+        query['values'] = [supplierID];
     
         return this.mysql.query(query)
             .then((res) => {

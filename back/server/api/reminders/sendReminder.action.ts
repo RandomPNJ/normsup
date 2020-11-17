@@ -11,7 +11,7 @@ export default {
     handler: (req, res, app) => sendReminder(req, res, app.get('RemindersRegistry')),
 };
 
-export function sendReminder(req, res, SupplierRegistry) {
+export function sendReminder(req, res, RemindersRegistry) {
     if(!req.decoded) {
         return Promise.reject(`Cannot get user informations, invalid request.`);
     }
@@ -26,7 +26,7 @@ export function sendReminder(req, res, SupplierRegistry) {
     let id = parseInt(req.params.id, 10);
     loggerT.verbose('Sending reminder to supplier with id :', req.params.id);
 
-    return SupplierRegistry.sendReminder(id, req.decoded)
+    return RemindersRegistry.sendReminder(id, req.decoded)
         .then(res => {
             return res;
         })
