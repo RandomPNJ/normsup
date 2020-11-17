@@ -40,4 +40,9 @@ export class SupplierDocumentComponent implements OnInit {
         documentType: document.type
     }});
   }
+
+  onBtnDropOffClickEvent(document) {
+    // Drop off document
+    console.log(document);
+  }
 }

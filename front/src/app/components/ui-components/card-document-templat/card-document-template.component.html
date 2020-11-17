@@ -10,7 +10,7 @@
 
       <div class="card-btn-container">
         <ng-container
-          [ngTemplateOutlet]="btnTemplate">
+          [ngTemplateOutlet]="status === 'EXPIRED' || status === 'NOT_EXIST' ? expiredBtnTemplate : notExpiredBtnTemplate">
         </ng-container>
 
         <ng-container
@@ -39,22 +39,23 @@
 </ng-template>
 
 
-<!-- Btn template -->
-<ng-template #btnTemplate>
+<!-- Btn template for btn 'Déposer' -->
+<ng-template #expiredBtnTemplate>
 
-  <button (click)="onclickCardBtnEvent(document)" type="button" class="btn new-btn-normsup">
+  <button (mouseover)="hover = true" (mouseout)="hover = false" (click)="onClickDropOffBtnEvent(document)" type="button" class="btn new-btn-normsup card-document-btn">
       <span class="card-btn-txt-container">
-        <img width="12" height="12" class="button-logo"
-             [src]="status === 'EXPIRED' || status === 'NOT_EXIST'
-             ? '../../../assets/img/loupe.svg'
-             : '../../../assets/img/menu-exports.svg'"
-             style="margin-right:5px;"/>
-        <span>
-          {{
-          status === 'EXPIRED' || status === 'NOT_EXIST' ? 'Déposer' : 'Consulter'
-          }}
-        </span>
+        <img width="12" height="12" class="button-logo" [src]="hover ? '../../../assets/img/white-loupe.svg' : '../../../assets/img/loupe.svg'" />
+        <span>Déposer</span>
       </span>
   </button>
+</ng-template>
 
+<!-- Btn template for btn 'Consulter' -->
+<ng-template #notExpiredBtnTemplate>
+  <button (mouseover)="hover = true" (mouseout)="hover = false" (click)="onclickCardBtnEvent(document)" type="button" class="btn new-btn-normsup card-document-btn">
+      <span class="card-btn-txt-container">
+        <img width="12" height="12" class="button-logo" [src]="hover ? '../../../assets/img/white-loupe.svg' : '../../../assets/img/loupe.svg'" />
+        <span>Consulter</span>
+      </span>
+  </button>
 </ng-template>

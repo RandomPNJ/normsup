@@ -16,10 +16,13 @@ export class CardDocumentTemplateComponent implements OnInit {
 
   status;
 
-  @Output() clickCardBtnEvent = new EventEmitter();
+  hover = false;
+
+  @Output() clickViewBtnEvent = new EventEmitter();
+  @Output() clickDropOffBtnEvent = new EventEmitter();
 
   onclickCardBtnEvent(document) {
-    this.clickCardBtnEvent.emit(document);
+    this.clickViewBtnEvent.emit(document);
   }
 
   getExpirationStatus(expirationDate) {
@@ -37,6 +40,10 @@ export class CardDocumentTemplateComponent implements OnInit {
 
   ngOnInit(): void {
     this.status = this.getExpirationStatus(this.document.expirationDate);
+  }
+
+  onClickDropOffBtnEvent(document) {
+    this.clickDropOffBtnEvent.emit(document);
   }
 
 }

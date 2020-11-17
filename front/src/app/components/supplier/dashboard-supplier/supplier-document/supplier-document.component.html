@@ -18,7 +18,8 @@
       <app-ui-card-document-template
         [document]="document"
         [noBoxShadow]="true"
-        (clickCardBtnEvent)="onBtnCardClickEvent($event)">
+        (clickViewBtnEvent)="onBtnCardClickEvent($event)"
+        (clickDropOffBtnEvent)="onBtnDropOffClickEvent($event)">
       </app-ui-card-document-template>
 
     </div>
@@ -44,7 +45,7 @@
       <app-ui-card-document-template
         [document]="document"
         [noBoxShadow]="true"
-        (clickCardBtnEvent)="onBtnCardClickEvent($event)">
+        (clickViewBtnEvent)="onBtnCardClickEvent($event)">
       </app-ui-card-document-template>
 
     </div>

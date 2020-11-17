@@ -41,13 +41,19 @@
     .card-btn-txt-container {
       display: flex;
       align-items: center;
+      justify-content: center;
       height: 100%;
 
       & span {
+        padding-left: 2px;
         font-size: 13px;
         font-family: 'Roboto Medium';
         text-transform: none;
         text-align: center;
+      }
+
+      & .button-logo {
+        padding-right: 2px;
       }
     }
   }
@@ -97,4 +103,8 @@
 
 .no-box-shadow ::ng-deep .card {
   box-shadow: none !important;
+}
+
+.card-document-btn {
+  width: 135px !important;
 }
