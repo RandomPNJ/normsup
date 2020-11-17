@@ -11,7 +11,7 @@ export const QUERY_GET_ALL_CLIENTS = 'SELECT * FROM client';
 export const GET_SUPPLIERS_CLIENTID = 'SELECT o.id, o.denomination FROM organisations as o LEFT JOIN client_supplier_relation as c ON c.supplier_id = o.id WHERE c.client_id = ? AND (denomination LIKE ? OR siret = ?)'
 export const GET_SUPPLIERS = 'SELECT o.id, o.denomination FROM organisations as o LEFT JOIN client_supplier_relation as c ON c.supplier_id = o.id WHERE c.client_id = ? AND (denomination LIKE ? OR siret = ?)'
 export const QUERY_GET_ADMIN = 'SELECT * from admins WHERE id = ? AND email = ? LIMIT 1';
-
+export const QUERY_GET_DOCUMENTS = 'SELECT DISTINCT d.createdAt, d.filename, d.id, d.path, d.siren, d.uploadedBy, d.validityDate,  o.denomination FROM `document` d INNER JOIN `organisations` o on d.siren = o.siren GROUP BY d.id, o.id, d.siren, o.denomination ORDER BY d.createdAt DESC;'
 
 export const GET_MONTHLY_CONFORMITY = 'SELECT * FROM supplier_conformity as sc WHERE sc.start_date = ?';
 export const UPDATE_SUPPLIER_CONFORMITY = 'UPDATE supplier_conformity SET kbis=?,lnte=?,urssaf=?,kbis_expiration=?,urssaf_expiration=?,lnte_expiration=? WHERE supplier_id = ? AND client_id=? AND start_date=?';

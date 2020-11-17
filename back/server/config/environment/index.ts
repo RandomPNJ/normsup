@@ -175,6 +175,7 @@ export default {
       uri: '/api/admin',
       actions: [
         { name: 'getUsers', uriPattern: '/users', method: 'get' },
+        { name: 'getDocuments', uriPattern: '/documents', method: 'get' },
         { name: 'getClients', uriPattern: '/clients', method: 'get' },
         { name: 'getSuppliers', uriPattern: '/suppliers', method: 'get' },
         { name: 'getSuppliersUsers', uriPattern: '/suppliers/users', method: 'get' },

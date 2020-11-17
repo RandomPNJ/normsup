@@ -420,6 +420,34 @@ export default class AdminRegistry {
         return res;
     }
 
+    public getDocuments(data) {
+        let query = {
+            timeout: 40000,
+            values: []
+        };
+
+        loggerT.verbose('[getDocuments] data : ', data);
+
+        // TODO work with params
+        if(data !== '') {
+            // query['sql'] = Query.;
+            // query['values'] = ;
+        }
+
+        query['sql'] = Query.QUERY_GET_DOCUMENTS;
+
+        return this.mysql.query(query)
+            .then(res => {
+                loggerT.verbose('[getDocuments] QUERY RES ==== ', res);
+                return Promise.resolve(res);
+            })
+            .catch(err => {
+                loggerT.error('[getDocuments] ERROR ON QUERY getDocuments.');
+                return Promise.reject(err);
+            })
+        ;
+    }
+
     public getUsers(data) {
         let query = {
             timeout: 40000

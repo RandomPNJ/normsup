@@ -89,10 +89,6 @@ export class BackofficeClientTableComponent implements OnInit {
             });
           }
         },
-        preDrawCallback: function(settings) {
-          that.tableParams.start = settings._iDisplayStart;
-          that.tableParams.length = settings._iDisplayLength;
-        },
         columns: [
           {
             title: 'Dénomination',
@@ -105,6 +101,10 @@ export class BackofficeClientTableComponent implements OnInit {
           },
           {
             title: 'Pays',
+          }
+          ,
+          {
+            title: 'Action',
           }
         ]
       };

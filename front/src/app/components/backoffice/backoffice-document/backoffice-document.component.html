@@ -1,0 +1,102 @@
+<div style="overflow: auto;height: 100%;">
+  <div class="container">
+    <div class="col-lg-1">
+      &nbsp;
+    </div>
+    <div class="col-lg-10">
+      <div class="main-cont-umanag">
+        <div class="container nopadding" style="margin-bottom: 45px !important; padding-top: 45px !important;">
+          <div class="row nopadding">
+            <div class="col" style="padding-left: 50px;">
+              <span class="title">Documents</span>
+              
+              <span class="item-count count-placement" *ngIf="dataLength !== -1"><span class="count-style" *ngIf="dataLength !== -1">{{usersTableRef.dataSize | i18nPlural: itemPluralCount['users']}}</span>{{usersTableRef.dataSize | i18nPlural: itemPluralMapping['users']}}</span>
+            </div>
+            <div class="justify-content-end">
+              <div class="col-lg-auto col-md-auto">
+                <!-- <button (click)="openModal(template, 'Supplier')" type="button" class="btn btn-primary custom-normsup-button nopadding">
+                  <span class="add-supplier-txt"><img style="height: 10px;" src="../../../assets/img/plus-icn.svg"/> Ajouter un client</span>
+                </button> -->
+              </div>
+            </div>
+          </div>
+        <div class="row nopadding">
+          <div class="sub-cont" style="width: 100%;">
+            <div class="table-cont">
+              <app-backoffice-document-table #usersTable (modifyUser)="fillUser($event)"></app-backoffice-document-table>
+            </div>
+          </div>
+        </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-1">
+      &nbsp;
+    </div>
+    
+    <!-- <ng-template class="test" #template>
+      <div class="modal-header own-modal-header-supplier">
+        </div>
+      <div class="modal-body">
+        <div class="normsup-mod-header">
+          <div style="display: block;">
+            &nbsp;
+            <button type="button" style="cursor:pointer;width:20px;height:20px;" class="close pull-right" aria-label="Close" (click)="hideModal('mainModal')">
+              <img src="../../../assets/img/close-icn.svg" style="height: 16px; cursor:pointer;pointer-events: none;" />
+            </button>
+          </div>
+          <div class="supplier-modal-title">Nouveau client</div>
+        </div>
+        <div class="container">
+          <div class="row fade-in">
+            <form autocomplete="new-password" action="#" class="form-style">
+                <div class="container">
+                  <div style="padding: 20px 60px 10px 50px !important;" class="row">
+                    <div class="form-group  col s6 nopadding">
+                      <input (focus)="focus.one=true" (blur)="focus.one=false" id="org_name" name="org_name" type="text" class="form-control custom-normsup-input-nb input-style-umag" [(ngModel)]="clientToAdd.org_name">
+                      <label style="width: 100% !important;text-align: center !important;" [ngClass]="{'lowered-opac': !clientToAdd.org_name && focus.one === false, 'custom-label-input-test-active': clientToAdd.org_name || focus.one === true}" class="custom-normsup-label-test" for="org_name">Dénomination</label>
+                    </div>
+                  </div>
+                  <div style="padding: 10px 60px 10px 50px !important;" class="row">
+                    <div class="form-group  col s6 nopadding">
+                      <input (focus)="focus.two=true" (blur)="focus.two=false" id="address" name="address" type="text" class="form-control custom-normsup-input-nb input-style-umag" [(ngModel)]="clientToAdd.address">
+                      <label style="width: 100% !important;text-align: center !important;" [ngClass]="{'lowered-opac': !clientToAdd.address && focus.two === false, 'custom-label-input-test-active': clientToAdd.address || focus.two === true}" class="custom-normsup-label-test" for="address">Adresse</label>
+                    </div>
+                  </div>
+                  <div style="padding: 10px 60px 10px 50px !important;" class="row">
+                    <div class="form-group col s6 nopadding">
+                      <input OnlyNumber='true' (focus)="focus.three=true" (blur)="focus.three=false" id="postalCode" name="postalCode" type="text" class="form-control custom-normsup-input-nb input-style-umag" [(ngModel)]="clientToAdd.postalCode">
+                      <label style="width: 100% !important;text-align: center !important;" [ngClass]="{'lowered-opac': !clientToAdd.postalCode && focus.three === false, 'custom-label-input-test-active': clientToAdd.postalCode || focus.three === true}" class="custom-normsup-label-test" for="postalCode">Code Postal</label>
+                    </div>
+                  </div>
+                  <div style="padding: 10px 60px 10px 50px !important;" class="row">
+                    <div class="form-group col s6 nopadding">
+                      <input (focus)="focus.four=true" (blur)="focus.four=false" id="city" name="city" type="text" class="form-control custom-normsup-input-nb input-style-umag" [(ngModel)]="clientToAdd.city">
+                      <label style="width: 100% !important;text-align: center !important;" [ngClass]="{'lowered-opac': !clientToAdd.city && focus.four === false, 'custom-label-input-test-active': clientToAdd.city || focus.four === true}" class="custom-normsup-label-test" for="city">Ville</label>
+                    </div>
+                  </div>
+                  <div style="padding: 10px 60px 10px 50px !important;" class="row">
+                    <div class="form-group col s6 nopadding">
+                      <input (focus)="focus.five=true" (blur)="focus.five=false" id="country" name="country" type="text" class="form-control custom-normsup-input-nb input-style-umag" [(ngModel)]="clientToAdd.country">
+                      <label style="width: 100% !important;text-align: center !important;" [ngClass]="{'lowered-opac': !clientToAdd.country && focus.five === false, 'custom-label-input-test-active': clientToAdd.country || focus.five === true}" class="custom-normsup-label-test" for="country">Pays</label>
+                    </div>
+                  </div>
+                </div>
+              <div class="select-comp-but">
+                <div class="container">
+                  <div class="row nopadding" style="padding: 10px 0px 40px 0px !important;">
+                    <div class="center-btn">
+                        <button style="width: 137px;" type="button" class="btn btn-primary text-capitalize btn-primary-normsup" (click)="addClient(clientToAdd)">
+                          <span class="button-txt">Valider</span>
+                        </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </ng-template> -->
+  </div>
+</div>
