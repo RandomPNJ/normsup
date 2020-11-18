@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, EventEmitter, Input, Output, ViewChild} from '@angular/core';
 
 @Component({
   selector: 'app-ui-checkbox-form',
@@ -13,8 +13,14 @@ export class CheckboxFormComponent {
 
   @Output() checkboxEvent = new EventEmitter();
 
+  @ViewChild('inputElement') inputElement;
+
   onCheckboxEvent(event) {
     this.checkboxEvent.emit(event);
+  }
+
+  setCheckboxValue(value: boolean) {
+    this.inputElement.nativeElement.checked = value;
   }
 
 }

@@ -1,5 +1,6 @@
-import {Component, EventEmitter, Output} from '@angular/core';
+import {Component, EventEmitter, Output, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {CheckboxFormComponent} from '../../../../ui-components/checkbox-form/checkbox-form.component';
 
 @Component({
   selector: 'app-nominative-list-foreign-worker-form',
@@ -7,6 +8,9 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
   styleUrls: ['./nominative-list-foreign-worker-form.component.scss']
 })
 export class NominativeListForeignWorkerFormComponent {
+
+  @ViewChild('nominativeListCheckboxFormComponent') nominativeListCheckboxFormComponent: CheckboxFormComponent;
+  @ViewChild('noNominativeListCheckboxFormComponent') noNominativeListCheckboxFormComponent: CheckboxFormComponent;
 
   @Output() dropOffBtnEvent = new EventEmitter();
 
@@ -24,11 +28,19 @@ export class NominativeListForeignWorkerFormComponent {
 
   onNominativeListCheckboxChangeEvent(event) {
     const checked = event.target.checked;
+    if (checked) {
+      this.noNominativeListCheckboxFormComponent.setCheckboxValue(false);
+      this.workerForm.get('noNominativeList').setValue(false);
+    }
     this.workerForm.get('nominativeList').setValue(checked);
   }
 
   onNoNominativeListCheckboxChangeEvent(event) {
     const checked = event.target.checked;
+    if (checked) {
+      this.nominativeListCheckboxFormComponent.setCheckboxValue(false);
+      this.workerForm.get('nominativeList').setValue(false);
+    }
     this.workerForm.get('noNominativeList').setValue(checked);
   }
 
@@ -38,6 +50,14 @@ export class NominativeListForeignWorkerFormComponent {
 
   onSubmit() {
     this.dropOffBtnEvent.emit(this.workerForm);
+  }
+
+  isFormValid() {
+    const nominativeListChecked = this.workerForm.get('nominativeList').value;
+    const noNominativeListChecked = this.workerForm.get('noNominativeList').value;
+    const checkboxValid = (nominativeListChecked && !noNominativeListChecked)
+      || (!nominativeListChecked && noNominativeListChecked);
+    return this.workerForm.valid && checkboxValid;
   }
 
 }

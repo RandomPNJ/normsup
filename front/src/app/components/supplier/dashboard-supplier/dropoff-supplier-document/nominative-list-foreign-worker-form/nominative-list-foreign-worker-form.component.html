@@ -1,5 +1,6 @@
 <div [formGroup]="workerForm">
   <app-ui-checkbox-form
+    #nominativeListCheckboxFormComponent
     [id]="'nominativeList'"
     [name]="'nominativeList'"
     [label]="'Je dépose ma liste nominative des travailleurs étrangers'"
@@ -7,6 +8,7 @@
   </app-ui-checkbox-form>
 
   <app-ui-checkbox-form
+    #noNominativeListCheckboxFormComponent
     [id]="'noNominativeList'"
     [name]="'noNominativeList'"
     [label]="'Je déclare ne pas employer des travailleurs étrangers'"
@@ -22,7 +24,7 @@
   </div>
 
   <div class="row-line-form row-line-centered row-line-form-btn">
-    <button type="submit" class="form-btn" [disabled]="!workerForm.valid"
+    <button type="submit" class="form-btn" [disabled]="!isFormValid()"
             (click)="onSubmit()">
       <span class="card-btn-txt-container">
         <span>Déposer</span>
