@@ -42,6 +42,19 @@ export class DropoffSupplierDocumentComponent implements OnInit {
     });
   }
 
+  onNominativeListForeignWorkerSaveEvent(form) {
+    const nominativeList = form.get('nominativeList').value;
+    const noNominativeList = form.get('noNominativeList').value;
+    const file = form.get('file').value;
+
+    console.log('In onNominativeListForeignWorkerSaveEvent method');
+    console.log({
+      nominativeList: nominativeList,
+      noNominativeList: noNominativeList,
+      file: file
+    });
+  }
+
   private initDocument() {
     // Call api by document type
     // If error, redirection
@@ -62,6 +75,12 @@ export class DropoffSupplierDocumentComponent implements OnInit {
       case 'ATTESTATION_VIGILANCE':
         this.currentDocument = {
           name: 'Attestation de vigilance',
+          type: this.documentType
+        };
+        break;
+      case 'LISTE_TRAVAILLEURS':
+        this.currentDocument = {
+          name: 'Liste nominative des travailleurs étrangers',
           type: this.documentType
         };
         break;

@@ -27,6 +27,10 @@
           <app-vigilance-certificate-form (dropOffBtnEvent)="onVigilanceCertificateSaveEvent($event)"></app-vigilance-certificate-form>
         </div>
 
+        <div *ngIf="'LISTE_TRAVAILLEURS' === documentType">
+          <app-nominative-list-foreign-worker-form (dropOffBtnEvent)="onNominativeListForeignWorkerSaveEvent($event)"></app-nominative-list-foreign-worker-form>
+        </div>
+
       </div>
 
     </div>

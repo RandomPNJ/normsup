@@ -35,7 +35,7 @@ export class SupplierService {
         type: 'LISTE_TRAVAILLEURS',
         name: 'Liste nominative des travailleurs étrangers',
         logoLink: '../../../assets/img/param-icn.svg',
-        expirationDate: '2020-12-24 21:22:38'
+        expirationDate: '2020-10-24 21:22:38'
       }
     ]);
   }

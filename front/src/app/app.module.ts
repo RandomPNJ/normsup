@@ -83,9 +83,10 @@ import {LayoutModule} from './components/layouts/layout.module';
 import {SupplierSurveyComponent} from './components/supplier/dashboard-supplier/supplier-survey/supplier-survey.component';
 import {SupplierHelpComponent} from './components/supplier/dashboard-supplier/supplier-help/supplier-help.component';
 import {SupplierLoggedInGuard} from './auth/supplier-logged-in.guard';
-import {DropoffSupplierDocumentComponent} from "./components/supplier/dashboard-supplier/dropoff-supplier-document/dropoff-supplier-document.component";
-import {KbisFormComponent} from "./components/supplier/dashboard-supplier/dropoff-supplier-document/kbis-form/kbis-form.component";
-import {VigilanceCertificateFormComponent} from "./components/supplier/dashboard-supplier/dropoff-supplier-document/vigilance-certificate-form/vigilance-certificate-form.component";
+import {DropoffSupplierDocumentComponent} from './components/supplier/dashboard-supplier/dropoff-supplier-document/dropoff-supplier-document.component';
+import {KbisFormComponent} from './components/supplier/dashboard-supplier/dropoff-supplier-document/kbis-form/kbis-form.component';
+import {VigilanceCertificateFormComponent} from './components/supplier/dashboard-supplier/dropoff-supplier-document/vigilance-certificate-form/vigilance-certificate-form.component';
+import {NominativeListForeignWorkerFormComponent} from './components/supplier/dashboard-supplier/dropoff-supplier-document/nominative-list-foreign-worker-form/nominative-list-foreign-worker-form.component';
 
 const guards = [
   GuestGuard,
@@ -152,6 +153,7 @@ const guards = [
     SupplierHelpComponent,
     DropoffSupplierDocumentComponent,
     KbisFormComponent,
+    NominativeListForeignWorkerFormComponent,
     VigilanceCertificateFormComponent
   ],
   imports: [
