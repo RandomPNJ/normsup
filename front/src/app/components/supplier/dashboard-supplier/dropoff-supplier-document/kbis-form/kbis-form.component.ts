@@ -25,7 +25,6 @@ export class KbisFormComponent {
   }
 
   onSubmit() {
-    console.log(this.kbisForm);
     this.dropOffBtnEvent.emit(this.kbisForm);
   }
 }

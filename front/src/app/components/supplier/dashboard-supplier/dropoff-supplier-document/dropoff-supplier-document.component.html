@@ -20,7 +20,11 @@
       <div class="drop-off-document-body">
 
         <div *ngIf="'KBIS' === documentType">
-          <app-kbis-form></app-kbis-form>
+          <app-kbis-form (dropOffBtnEvent)="onKbisSaveEvent($event)"></app-kbis-form>
+        </div>
+
+        <div *ngIf="'ATTESTATION_VIGILANCE' === documentType">
+          <app-vigilance-certificate-form (dropOffBtnEvent)="onVigilanceCertificateSaveEvent($event)"></app-vigilance-certificate-form>
         </div>
 
       </div>

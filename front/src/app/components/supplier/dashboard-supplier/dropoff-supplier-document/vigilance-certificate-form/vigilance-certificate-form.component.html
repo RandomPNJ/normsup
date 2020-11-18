@@ -1,0 +1,32 @@
+<div [formGroup]="vigilanceCertificateForm">
+    <app-ui-checkbox-form
+      [id]="'urssaf'"
+      [name]="'urssaf'"
+      [label]="'Je cotise auprès de l\'Urssaf'"
+      (checkboxEvent)="onUrssafCheckboxChangeEvent($event)">
+    </app-ui-checkbox-form>
+
+  <app-ui-checkbox-form
+    [id]="'otherOrganization'"
+    [name]="'otherOrganization'"
+    [label]="'Je cotise auprès d\'un autre organisme'"
+    (checkboxEvent)="onOtherOrganizationCheckboxChangeEvent($event)">
+  </app-ui-checkbox-form>
+
+  <div class="row-column" style="padding-top: 30px;">
+    <app-ui-upload-document-btn
+      [acceptedFormat]="'application/pdf'"
+      [acceptedFormatsLabel]="'Format accepté: pdf'"
+      (fileChangeEvent)="onFileChangeEvent($event)">
+    </app-ui-upload-document-btn>
+  </div>
+
+  <div class="row-line-form row-line-centered row-line-form-btn">
+    <button type="submit" class="form-btn" [disabled]="!vigilanceCertificateForm.valid"
+            (click)="onSubmit()">
+      <span class="card-btn-txt-container">
+        <span>Déposer</span>
+      </span>
+    </button>
+  </div>
+</div>

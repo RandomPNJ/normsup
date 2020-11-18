@@ -28,7 +28,7 @@ export class SupplierService {
         type: 'ATTESTATION_VIGILANCE',
         name: 'Attestation de vigilance',
         logoLink: '../../../assets/img/param-icn.svg',
-        expirationDate: '2020-11-24 21:22:38'
+        expirationDate: '2020-04-12 21:22:38'
       },
       {
         id: 3,

@@ -85,6 +85,7 @@ import {SupplierHelpComponent} from './components/supplier/dashboard-supplier/su
 import {SupplierLoggedInGuard} from './auth/supplier-logged-in.guard';
 import {DropoffSupplierDocumentComponent} from "./components/supplier/dashboard-supplier/dropoff-supplier-document/dropoff-supplier-document.component";
 import {KbisFormComponent} from "./components/supplier/dashboard-supplier/dropoff-supplier-document/kbis-form/kbis-form.component";
+import {VigilanceCertificateFormComponent} from "./components/supplier/dashboard-supplier/dropoff-supplier-document/vigilance-certificate-form/vigilance-certificate-form.component";
 
 const guards = [
   GuestGuard,
@@ -150,7 +151,8 @@ const guards = [
     SupplierSurveyComponent,
     SupplierHelpComponent,
     DropoffSupplierDocumentComponent,
-    KbisFormComponent
+    KbisFormComponent,
+    VigilanceCertificateFormComponent
   ],
   imports: [
     BrowserModule,

@@ -9,11 +9,14 @@ import {BrowserModule} from '@angular/platform-browser';
 import {RouterModule} from '@angular/router';
 import {CardDocumentTemplateComponent} from './card-document-templat/card-document-template.component';
 import {UploadDocumentBtnComponent} from './upload-document-btn/upload-document-btn.component';
+import {CheckboxFormComponent} from './checkbox-form/checkbox-form.component';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 const components = [
   BackLinkComponent,
   CardDocumentTemplateComponent,
   CardTemplateComponent,
+  CheckboxFormComponent,
   CustomButtonComponent,
   PageTitleComponent,
   UploadDocumentBtnComponent
@@ -27,7 +30,9 @@ const components = [
     CommonModule,
     BrowserModule,
     RouterModule,
-    MDBBootstrapModule
+    MDBBootstrapModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   exports: [
     components

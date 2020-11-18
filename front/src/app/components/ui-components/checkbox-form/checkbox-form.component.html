@@ -1,0 +1,12 @@
+<div class="row-form-checkbox">
+  <input
+    [id]="id"
+    [name]="name"
+    type="checkbox"
+    (change)="onCheckboxEvent($event)">
+
+  <label
+    [for]="id">
+    {{ label }}
+  </label>
+</div>
