@@ -1,0 +1,28 @@
+@import "src/assets/css/variable";
+
+.drop-off-document-container {
+  max-width: 825px;
+  width: 100%;
+  background: white;
+  box-shadow: 0 0 55px #4390EF1A;
+  border-radius: 10px;
+
+  .drop-off-document-title {
+    background: #F3F7FC;
+    height: 100px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    span {
+      color: $normsup_blue;
+      font: normal normal bold 25px/33px Roboto;
+    }
+  }
+
+  .drop-off-document-body {
+    padding: 30px 20px;
+  }
+
+}

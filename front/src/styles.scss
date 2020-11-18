@@ -2224,3 +2224,8 @@ td {
 .row-line-centered {
   text-align: center;
 }
+
+.row-column {
+  display: flex;
+  flex-direction: column;
+}

@@ -83,6 +83,8 @@ import {LayoutModule} from './components/layouts/layout.module';
 import {SupplierSurveyComponent} from './components/supplier/dashboard-supplier/supplier-survey/supplier-survey.component';
 import {SupplierHelpComponent} from './components/supplier/dashboard-supplier/supplier-help/supplier-help.component';
 import {SupplierLoggedInGuard} from './auth/supplier-logged-in.guard';
+import {DropoffSupplierDocumentComponent} from "./components/supplier/dashboard-supplier/dropoff-supplier-document/dropoff-supplier-document.component";
+import {KbisFormComponent} from "./components/supplier/dashboard-supplier/dropoff-supplier-document/kbis-form/kbis-form.component";
 
 const guards = [
   GuestGuard,
@@ -146,7 +148,9 @@ const guards = [
     SupplierDocumentComponent,
     SupplierDocumentDetailsComponent,
     SupplierSurveyComponent,
-    SupplierHelpComponent
+    SupplierHelpComponent,
+    DropoffSupplierDocumentComponent,
+    KbisFormComponent
   ],
   imports: [
     BrowserModule,

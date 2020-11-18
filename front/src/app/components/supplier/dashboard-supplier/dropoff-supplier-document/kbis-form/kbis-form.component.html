@@ -1,0 +1,20 @@
+<div [formGroup]="kbisForm">
+
+  <div class="row-column">
+    <app-ui-upload-document-btn
+      [acceptedFormat]="'application/pdf'"
+      [acceptedFormatsLabel]="'Format accepté: pdf'"
+      (fileChangeEvent)="onFileChangeEvent($event)">
+    </app-ui-upload-document-btn>
+  </div>
+
+
+  <div class="row-line-form row-line-centered row-line-form-btn">
+    <button type="submit" class="form-btn" [disabled]="!kbisForm.valid"
+      (click)="onSubmit()">
+      <span class="card-btn-txt-container">
+        <span>Déposer</span>
+      </span>
+    </button>
+  </div>
+</div>

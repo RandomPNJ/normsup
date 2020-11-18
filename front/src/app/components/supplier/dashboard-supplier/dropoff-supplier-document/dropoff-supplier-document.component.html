@@ -1,0 +1,31 @@
+<div class="container client-documents-information-container">
+
+  <div class="flex-row">
+    <app-ui-back-link
+      [link]="'../'"
+      [label]="'Retour aux documents'">
+    </app-ui-back-link>
+  </div>
+
+  <div class="title-row" style="padding-top: 45px !important; padding-bottom: 25px !important;">
+
+    <div class="drop-off-document-container" *ngIf="currentDocument">
+
+      <div class="drop-off-document-title">
+        <span>
+          {{ currentDocument.name }}
+        </span>
+      </div>
+
+      <div class="drop-off-document-body">
+
+        <div *ngIf="'KBIS' === documentType">
+          <app-kbis-form></app-kbis-form>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+</div>

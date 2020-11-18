@@ -8,13 +8,15 @@ import {CommonModule} from '@angular/common';
 import {BrowserModule} from '@angular/platform-browser';
 import {RouterModule} from '@angular/router';
 import {CardDocumentTemplateComponent} from './card-document-templat/card-document-template.component';
+import {UploadDocumentBtnComponent} from './upload-document-btn/upload-document-btn.component';
 
 const components = [
-    BackLinkComponent,
-    PageTitleComponent,
-    CardTemplateComponent,
-    CustomButtonComponent,
-    CardDocumentTemplateComponent
+  BackLinkComponent,
+  CardDocumentTemplateComponent,
+  CardTemplateComponent,
+  CustomButtonComponent,
+  PageTitleComponent,
+  UploadDocumentBtnComponent
 ];
 
 @NgModule({

@@ -43,6 +43,8 @@ export class SupplierDocumentComponent implements OnInit {
 
   onBtnDropOffClickEvent(document) {
     // Drop off document
-    console.log(document);
+    this.router.navigate(['/supplier/dashboard/documents/drop-off'], { queryParams: {
+        documentType: document.type
+      }});
   }
 }

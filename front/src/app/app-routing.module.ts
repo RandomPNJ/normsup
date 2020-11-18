@@ -37,6 +37,7 @@ import {SupplierDocumentDetailsComponent} from './components/supplier/dashboard-
 import {SupplierSurveyComponent} from './components/supplier/dashboard-supplier/supplier-survey/supplier-survey.component';
 import {SupplierHelpComponent} from './components/supplier/dashboard-supplier/supplier-help/supplier-help.component';
 import {SupplierLoggedInGuard} from './auth/supplier-logged-in.guard';
+import {DropoffSupplierDocumentComponent} from "./components/supplier/dashboard-supplier/dropoff-supplier-document/dropoff-supplier-document.component";
 const routes: Routes = [
   {
     path: 'supplier',
@@ -53,6 +54,7 @@ const routes: Routes = [
           { path: 'help', component: SupplierHelpComponent },
           { path: 'documents', component: SupplierDocumentComponent },
           { path: 'documents/details', component: SupplierDocumentDetailsComponent },
+          { path: 'documents/drop-off', component: DropoffSupplierDocumentComponent },
           { path: '', redirectTo: 'documents', pathMatch: 'full'}
         ]
       },
