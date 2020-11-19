@@ -16,6 +16,8 @@ export class VigilanceCertificateFormComponent {
 
   vigilanceCertificateForm: FormGroup;
 
+  signatureValue = undefined;
+
   constructor(
     private fb: FormBuilder
   ) {
@@ -59,6 +61,11 @@ export class VigilanceCertificateFormComponent {
     const checkboxValid = (urssafChecked && !otherOrganizationListChecked)
       || (!urssafChecked && otherOrganizationListChecked);
     return this.vigilanceCertificateForm.valid && checkboxValid;
+  }
+
+  onSignatureEvent(signature) {
+    this.signatureValue = signature;
+    console.log(this.signatureValue);
   }
 
 }

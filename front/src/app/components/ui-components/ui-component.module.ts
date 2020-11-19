@@ -11,6 +11,8 @@ import {CardDocumentTemplateComponent} from './card-document-templat/card-docume
 import {UploadDocumentBtnComponent} from './upload-document-btn/upload-document-btn.component';
 import {CheckboxFormComponent} from './checkbox-form/checkbox-form.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {SignaturePadComponent} from './signature-pad/signature-pad.component';
+import {SignaturePadModule} from "angular2-signaturepad";
 
 const components = [
   BackLinkComponent,
@@ -19,6 +21,7 @@ const components = [
   CheckboxFormComponent,
   CustomButtonComponent,
   PageTitleComponent,
+  SignaturePadComponent,
   UploadDocumentBtnComponent
 ];
 
@@ -32,7 +35,8 @@ const components = [
     RouterModule,
     MDBBootstrapModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SignaturePadModule
   ],
   exports: [
     components

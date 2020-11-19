@@ -1,0 +1,33 @@
+@import "src/assets/css/variable";
+
+.signature-container {
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin-top: 50px;
+
+  .signature-span {
+    font: italic normal 300 10px/13px Roboto;
+    letter-spacing: 0;
+    color: $normsup-dark-blue;
+    padding-bottom: 5px;
+  }
+
+  .signature-pad-container {
+    border: 1px solid $normsup-blue-border;
+    width: fit-content;
+    height: fit-content;
+    border-radius: 7px;
+  }
+
+  .signature-btn-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    padding-top: 20px;
+    width: 316px;
+  }
+
+}

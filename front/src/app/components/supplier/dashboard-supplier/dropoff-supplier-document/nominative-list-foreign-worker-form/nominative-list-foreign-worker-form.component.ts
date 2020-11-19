@@ -9,6 +9,8 @@ import {CheckboxFormComponent} from '../../../../ui-components/checkbox-form/che
 })
 export class NominativeListForeignWorkerFormComponent {
 
+  signatureValue = undefined;
+
   @ViewChild('nominativeListCheckboxFormComponent') nominativeListCheckboxFormComponent: CheckboxFormComponent;
   @ViewChild('noNominativeListCheckboxFormComponent') noNominativeListCheckboxFormComponent: CheckboxFormComponent;
 
@@ -58,6 +60,11 @@ export class NominativeListForeignWorkerFormComponent {
     const checkboxValid = (nominativeListChecked && !noNominativeListChecked)
       || (!nominativeListChecked && noNominativeListChecked);
     return this.workerForm.valid && checkboxValid;
+  }
+
+  onValidateSignature(signature) {
+    this.signatureValue = signature;
+    console.log(this.signatureValue);
   }
 
 }
