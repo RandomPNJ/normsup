@@ -32,7 +32,48 @@
     </button>
   </div>
 
+  <ng-container
+    *ngIf="currentUser && currentUserCompany"
+    [ngTemplateOutlet]="swornStatementTemplate">
+  </ng-container>
+
   <app-ui-signature-pad
     (validateSignatureEvent)="onValidateSignature($event)">
   </app-ui-signature-pad>
 </div>
+
+<ng-template #swornStatementTemplate>
+
+  <div style="width: 100%; border: 1px solid black; border-radius: 5px; padding: 60px 30px 60px 30px;">
+
+    <h1 style="text-align: center; padding-bottom: 20px;">Attestation sur l'honneur</h1>
+
+    <p class="sworn-statement-text">
+      Je soussigné Mr/Mme {{ currentUser.lastname + ' ' + currentUser.firstname }}, agissant en qualité de Fonction,
+      de la société {{ currentUserCompany.denomination }} de la société immatriculée sous le numéro
+      {{ currentUserCompany.siret }}, dans le siège social est à l' adresse {{ currentUserCompany.address }},
+    </p>
+
+    <p class="sworn-statement-text">Atteste sur l’honneur:</p>
+
+    <li class="sworn-statement-text">
+      être à jour de ses obligations relatives à la sécurité sociale, aux impôts et aux taxes,
+      selon les dispositions légales françaises;
+    </li>
+
+    <li class="sworn-statement-text">
+      garantir, dans l’exécution des prestations, la régularité de sa situation ainsi que celle de ses salariés,
+      au regard, notamment, des articles L.1221-10 à L.1221-12, R.1221-13, 3243-1, 3243-2, 3243-4 et R.3243-5 du
+      Code du Travail;
+    </li>
+
+    <li class="sworn-statement-text">
+      que, au cas où de la main d’oeuvre étrangère serait employée, les salariés étrangers disposent
+      des titres de séjour et de toutes les autorisations administratives nécessaires à l’exercice en France d’une
+      activité salariée, conformément aux dispositions légales en vigueur et notamment à l’article L.8251-1 du Code
+      du Travail.
+    </li>
+
+  </div>
+
+</ng-template>

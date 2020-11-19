@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Output, ViewChild} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {CheckboxFormComponent} from '../../../../ui-components/checkbox-form/checkbox-form.component';
 
@@ -7,7 +7,7 @@ import {CheckboxFormComponent} from '../../../../ui-components/checkbox-form/che
   templateUrl: './nominative-list-foreign-worker-form.component.html',
   styleUrls: ['./nominative-list-foreign-worker-form.component.scss']
 })
-export class NominativeListForeignWorkerFormComponent {
+export class NominativeListForeignWorkerFormComponent implements OnInit {
 
   signatureValue = undefined;
 
@@ -18,6 +18,9 @@ export class NominativeListForeignWorkerFormComponent {
 
   workerForm: FormGroup;
 
+  currentUser;
+  currentUserCompany;
+
   constructor(
     private fb: FormBuilder
   ) {
@@ -26,6 +29,20 @@ export class NominativeListForeignWorkerFormComponent {
       noNominativeList: [false, [Validators.required]],
       file: [null, [Validators.required]]
     });
+  }
+
+  ngOnInit() {
+    // Call HTTP for getting current user/company
+    this.currentUser = {
+      firstname: 'Yassin',
+      lastname: 'El Fahim'
+    };
+
+    this.currentUserCompany = {
+      denomination: 'AXA Banque et Assurance',
+      siret: '11111111111111',
+      address: '1 Rue du Temple, Paris, 75001, France'
+    };
   }
 
   onNominativeListCheckboxChangeEvent(event) {
