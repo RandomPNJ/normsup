@@ -1,4 +1,4 @@
-import {Component, EventEmitter, HostListener, Input, Output} from '@angular/core';
+import {Component, ElementRef, EventEmitter, HostListener, Input, Output, ViewChild} from '@angular/core';
 
 @Component({
   selector: 'app-ui-upload-document-btn',
@@ -12,6 +12,8 @@ export class UploadDocumentBtnComponent {
 
   @Output() fileChangeEvent = new EventEmitter();
 
+  @ViewChild('fileInput') fileInput: ElementRef;
+
   file: File | null = null;
 
   @HostListener('change', ['$event.target.files']) emitFiles( event: FileList ) {
@@ -21,6 +23,10 @@ export class UploadDocumentBtnComponent {
       this.file = null;
     }
     this.fileChangeEvent.emit(this.file);
+  }
+
+  deleteFile() {
+    this.fileInput.nativeElement.value = '';
   }
 
 }

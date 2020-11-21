@@ -1,5 +1,27 @@
+@import "src/assets/css/variable";
+
 .sworn-statement-text {
   font: normal normal normal 13px/15px Helvetica Neue;
   letter-spacing: 0;
   color: #707070;
+}
+
+.statement-container {
+  border: 1px solid $normsup-blue-border;
+  width: 100%;
+  border-radius: 5px;
+  padding: 60px;
+  margin-top: 50px;
+
+  h1 {
+    font: normal normal medium 16px/21px Roboto;
+    letter-spacing: 0;
+    color: $normsup-dark-blue;
+  }
+
+  p, li {
+    font: normal normal normal 13px/15px Helvetica Neue;
+    letter-spacing: 0;
+    color: #707070;
+  }
 }

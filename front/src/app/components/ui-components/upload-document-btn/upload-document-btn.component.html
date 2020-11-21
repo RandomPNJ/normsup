@@ -1,7 +1,7 @@
 <span class="span-file-format" *ngIf="acceptedFormatsLabel">{{ acceptedFormatsLabel }}</span>
 
 <div class="custom-input-container">
-  <input id="file" class="fileInput" type="file" name="file1" accept="{{acceptedFormat}}" />
+  <input #fileInput id="file" class="fileInput" type="file" name="file1" accept="{{acceptedFormat}}" />
   <label for="file" id="selector" class="file-input-label">Selectionner un fichier</label>
 </div>
 
