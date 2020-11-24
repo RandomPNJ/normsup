@@ -457,7 +457,7 @@ export default class SupplierRegistry {
                 loggerT.error('ERROR ON QUERY getGroups.');
                 return Promise.reject(err);
             })
-            ;
+        ;
     }
 
     public checkGroup(org, data) {

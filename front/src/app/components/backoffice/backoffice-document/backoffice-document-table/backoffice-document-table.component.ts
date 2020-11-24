@@ -106,6 +106,9 @@ export class BackofficeDocumentTableComponent implements OnInit {
             title: 'Dénomination',
           },
           {
+            title: 'Document',
+          },
+          {
             title: 'Statut',
           },
           {
@@ -181,5 +184,39 @@ export class BackofficeDocumentTableComponent implements OnInit {
     assign(item) {
       console.log('Item = ', item);
     }
-
+    downloadDocument(item) {
+      return this.httpService.getFile('/api/admin/documents/download/'+item.id)
+        .subscribe(res => {
+          console.log('downloadDocument res', res);
+          return this.readFileFromBlob(<Blob>res.body);
+        }, err => {
+          console.log('[downloadDocument] err', err)
+        })
+      ;
+    }
+  
+    readFileFromBlob(blob) {
+      if(blob) {
+        // reader.readAsDataURL(blob);
+        const fileURL = URL.createObjectURL(blob);
+        console.log('fileURL', fileURL)
+        window.open(fileURL, '_blank');
+      }
+    }
+    validate(item, validated) {
+      let data = {
+        item: {
+          validityDate: item.validityDate
+        },
+        validated: validated
+      };
+      return this.httpService
+        .post('/api/admin/documents/validation/'+item.id, data)
+        .subscribe(res => {
+          console.log('[BackofficeDocumentTableComponent] validate res', res);
+        }, err => {
+          console.log('[BackofficeDocumentTableComponent] validate err', err);
+        })
+      ;
+    }
 }

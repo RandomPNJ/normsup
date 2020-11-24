@@ -590,7 +590,7 @@ True
  
 ## Comment
  
-Create table `supplier_conformity`
+Alter table `supplier_conformity`
  
 ## Query
  
@@ -604,4 +604,23 @@ ADD PRIMARY KEY (`siren`, `start_date`);
 ## Applied
  
 False
+
+## Date
+ 
+17-11-2020
+ 
+## Comment
+ 
+Alter table `document`
+ 
+## Query
+ 
+ALTER TABLE `normsup`.`document` 
+ADD COLUMN `state` INT(1) NULL DEFAULT 2 AFTER `id`;
+
+
+## Applied
+ 
+False
+
 

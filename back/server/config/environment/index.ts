@@ -188,6 +188,8 @@ export default {
         { name: 'getCurrent', uriPattern: '/current', method: 'get' },
         { name: 'conformityCheckup', uriPattern: '/conformity/checkup', method: 'post' },
         { name: 'dailyAlerts', uriPattern: '/alerts', method: 'post' },
+        { name: 'documentValidation', uriPattern: '/documents/validation/:id', method: 'post' },
+        { name: 'downloadDocument', uriPattern: '/documents/download/:id', method: 'get' },
       ]
     }
   },
