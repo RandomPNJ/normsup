@@ -1,0 +1,18 @@
+@import "src/assets/css/variable";
+
+.vigilance-certificate-form-container {
+
+  input {
+    border-left: none !important;
+    border-right: none !important;
+    border-top: none !important;
+    border-bottom: 1px solid $normsup-border-grey !important;
+    font: italic normal normal 12px/16px Roboto;
+    margin-left: 10px;
+    height: max-content
+  }
+
+  input[type="text"]:disabled {
+    background: $normsup-border-grey;
+  }
+}

@@ -51,15 +51,17 @@
 
 <ng-template #noNominativeListCheckedTemplate>
 
-  <ng-container
-    *ngIf="currentUser && currentUserCompany"
-    [ngTemplateOutlet]="swornStatementTemplate">
-  </ng-container>
+  <div style="padding-bottom: 40px;">
+    <ng-container
+      *ngIf="currentUser && currentUserCompany"
+      [ngTemplateOutlet]="swornStatementTemplate">
+    </ng-container>
 
-  <app-ui-signature-pad
-    #signaturePadComponent
-    (validateSignatureEvent)="onValidateSignature($event)">
-  </app-ui-signature-pad>
+    <app-ui-signature-pad
+      #signaturePadComponent
+      (validateSignatureEvent)="onValidateSignature($event)">
+    </app-ui-signature-pad>
+  </div>
 
 </ng-template>
 
@@ -106,6 +108,8 @@
     </li>
 
     <br/><br/>
+
+    <p class="sworn-statement-text">Fait à Paris, le {{ now | date : 'dd/MM/yyyy'}}</p>
 
   </div>
 

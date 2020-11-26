@@ -32,12 +32,14 @@ export class DropoffSupplierDocumentComponent implements OnInit {
   onVigilanceCertificateSaveEvent(form) {
     const urssaf = form.get('urssaf').value;
     const otherOrganization = form.get('otherOrganization').value;
+    const otherOrganizationName = form.get('otherOrganizationName').value;
     const file = form.get('file').value;
 
     console.log('In onVigilanceCertificateSaveEvent method');
     console.log({
       urssaf: urssaf,
       otherOrganization: otherOrganization,
+      otherOrganizationName: otherOrganizationName,
       file: file
     });
   }

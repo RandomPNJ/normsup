@@ -16,7 +16,7 @@ export class VigilanceCertificateFormComponent {
 
   vigilanceCertificateForm: FormGroup;
 
-  signatureValue = undefined;
+  disableOtherOrganizationName = true;
 
   constructor(
     private fb: FormBuilder
@@ -24,6 +24,7 @@ export class VigilanceCertificateFormComponent {
     this.vigilanceCertificateForm = this.fb.group({
       urssaf: [false, [Validators.required]],
       otherOrganization: [false, [Validators.required]],
+      otherOrganizationName: [''],
       file: [null, [Validators.required]]
     });
   }
@@ -37,6 +38,8 @@ export class VigilanceCertificateFormComponent {
 
     if (checked) {
       this.vigilanceCertificateForm.get('otherOrganization').setValue(false);
+      this.vigilanceCertificateForm.get('otherOrganizationName').setValue('');
+      this.disableOtherOrganizationName = true;
       this.otherOrganizationCheckboxFormComponent.setCheckboxValue(false);
     }
     this.vigilanceCertificateForm.get('urssaf').setValue(checked);
@@ -47,6 +50,7 @@ export class VigilanceCertificateFormComponent {
     if (checked) {
       this.vigilanceCertificateForm.get('urssaf').setValue(false);
       this.urssafCheckboxFormComponent.setCheckboxValue(false);
+      this.disableOtherOrganizationName = false;
     }
     this.vigilanceCertificateForm.get('otherOrganization').setValue(checked);
   }
@@ -58,14 +62,10 @@ export class VigilanceCertificateFormComponent {
   isFormValid() {
     const urssafChecked = this.vigilanceCertificateForm.get('urssaf').value;
     const otherOrganizationListChecked = this.vigilanceCertificateForm.get('otherOrganization').value;
+    const otherOrganizationNameValue = this.vigilanceCertificateForm.get('otherOrganizationName').value;
     const checkboxValid = (urssafChecked && !otherOrganizationListChecked)
-      || (!urssafChecked && otherOrganizationListChecked);
+      || (!urssafChecked && otherOrganizationListChecked && '' !== otherOrganizationNameValue);
     return this.vigilanceCertificateForm.valid && checkboxValid;
-  }
-
-  onSignatureEvent(signature) {
-    this.signatureValue = signature;
-    console.log(this.signatureValue);
   }
 
 }

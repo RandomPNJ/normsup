@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {CheckboxFormComponent} from '../../../../ui-components/checkbox-form/checkbox-form.component';
 import {SignaturePadComponent} from '../../../../ui-components/signature-pad/signature-pad.component';
 import {UploadDocumentBtnComponent} from '../../../../ui-components/upload-document-btn/upload-document-btn.component';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-nominative-list-foreign-worker-form',
@@ -30,6 +31,8 @@ export class NominativeListForeignWorkerFormComponent implements OnInit {
   displayNoNominativeListTemplate = false;
 
   formValid = false;
+
+   now = moment();
 
   constructor(
     private fb: FormBuilder

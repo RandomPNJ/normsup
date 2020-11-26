@@ -21,7 +21,7 @@ export class SupplierService {
         type: 'KBIS',
         name: 'Extrait de KBIS',
         logoLink: '../../../assets/img/param-icn.svg',
-        expirationDate: '2020-08-24 21:22:38'
+        expirationDate: '2020-11-30 21:22:38'
       },
       {
         id: 2,

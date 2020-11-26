@@ -1,4 +1,4 @@
-<div [formGroup]="vigilanceCertificateForm">
+<div class="vigilance-certificate-form-container" [formGroup]="vigilanceCertificateForm">
     <app-ui-checkbox-form
       #urssafCheckboxFormComponent
       [id]="'urssaf'"
@@ -7,13 +7,21 @@
       (checkboxEvent)="onUrssafCheckboxChangeEvent($event)">
     </app-ui-checkbox-form>
 
-  <app-ui-checkbox-form
-    #otherOrganizationCheckboxFormComponent
-    [id]="'otherOrganization'"
-    [name]="'otherOrganization'"
-    [label]="'Je cotise auprès d\'un autre organisme'"
-    (checkboxEvent)="onOtherOrganizationCheckboxChangeEvent($event)">
-  </app-ui-checkbox-form>
+  <div style="display: flex; flex-direction: row;">
+    <app-ui-checkbox-form
+      #otherOrganizationCheckboxFormComponent
+      [id]="'otherOrganization'"
+      [name]="'otherOrganization'"
+      [label]="'Je cotise auprès d\'un autre organisme'"
+      (checkboxEvent)="onOtherOrganizationCheckboxChangeEvent($event)">
+    </app-ui-checkbox-form>
+
+    <input
+      [attr.disabled]="disableOtherOrganizationName ? '' : null"
+      [formControlName]="'otherOrganizationName'"
+      [type]="'text'"
+      [placeholder]="'Nom de l\'organisme'"/>
+  </div>
 
   <div class="row-column" style="padding-top: 30px;">
     <app-ui-upload-document-btn
@@ -31,9 +39,5 @@
       </span>
     </button>
   </div>
-
-  <app-ui-signature-pad
-    (validateSignatureEvent)="onSignatureEvent($event)">
-  </app-ui-signature-pad>
 
 </div>
