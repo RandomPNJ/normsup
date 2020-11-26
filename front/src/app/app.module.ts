@@ -75,6 +75,25 @@ import { AdminLoginPageComponent } from './components/admin-login-page/admin-log
 import { ActivationLinkComponent } from './components/activation-link/activation-link.component';
 import { GenerateActivationLinkComponent } from './components/generate-activation-link/generate-activation-link.component';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
+import {DashboardSupplierComponent} from './components/supplier/dashboard-supplier/dashboard-supplier.component';
+import {SupplierDocumentComponent} from './components/supplier/dashboard-supplier/supplier-document/supplier-document.component';
+import {SupplierDocumentDetailsComponent} from './components/supplier/dashboard-supplier/supplier-document-details/supplier-document-details.component';
+import {UiComponentModule} from './components/ui-components/ui-component.module';
+import {LayoutModule} from './components/layouts/layout.module';
+import {SupplierSurveyComponent} from './components/supplier/dashboard-supplier/supplier-survey/supplier-survey.component';
+import {SupplierHelpComponent} from './components/supplier/dashboard-supplier/supplier-help/supplier-help.component';
+import {SupplierLoggedInGuard} from './auth/supplier-logged-in.guard';
+import {DropoffSupplierDocumentComponent} from './components/supplier/dashboard-supplier/dropoff-supplier-document/dropoff-supplier-document.component';
+import {KbisFormComponent} from './components/supplier/dashboard-supplier/dropoff-supplier-document/kbis-form/kbis-form.component';
+import {VigilanceCertificateFormComponent} from './components/supplier/dashboard-supplier/dropoff-supplier-document/vigilance-certificate-form/vigilance-certificate-form.component';
+import {NominativeListForeignWorkerFormComponent} from './components/supplier/dashboard-supplier/dropoff-supplier-document/nominative-list-foreign-worker-form/nominative-list-foreign-worker-form.component';
+
+const guards = [
+  GuestGuard,
+  LoggedinGuard,
+  SupplierLoggedInGuard
+];
+
 
 @NgModule({
   declarations: [
@@ -125,6 +144,17 @@ import { ResetPasswordComponent } from './components/reset-password/reset-passwo
     ActivationLinkComponent,
     GenerateActivationLinkComponent,
     ResetPasswordComponent,
+
+    // Supplier components
+    DashboardSupplierComponent,
+    SupplierDocumentComponent,
+    SupplierDocumentDetailsComponent,
+    SupplierSurveyComponent,
+    SupplierHelpComponent,
+    DropoffSupplierDocumentComponent,
+    KbisFormComponent,
+    NominativeListForeignWorkerFormComponent,
+    VigilanceCertificateFormComponent
   ],
   imports: [
     BrowserModule,
@@ -151,6 +181,9 @@ import { ResetPasswordComponent } from './components/reset-password/reset-passwo
     ModalModule.forRoot(),
     DataTablesModule,
     CountdownModule,
+
+    UiComponentModule,
+    LayoutModule
   ],
   exports: [
     AddSupplierModalComponent,
@@ -160,8 +193,7 @@ import { ResetPasswordComponent } from './components/reset-password/reset-passwo
   ],
   providers: [
     BrowserStorageService,
-    GuestGuard,
-    LoggedinGuard,
+    guards,
     NotifService,
     CookieService,
     { provide: HTTP_INTERCEPTORS, useClass: HttpConfigInterceptor, multi: true }

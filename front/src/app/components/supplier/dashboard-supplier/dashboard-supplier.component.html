@@ -1,0 +1,38 @@
+<app-sidebar
+  [topMenuNavLinks]="[
+     {
+        id: 'documents',
+        navLink: '/supplier/dashboard/documents',
+        logoLink: '../../assets/img/menu-groups.svg',
+        label: 'Mes documents'
+     },
+     {
+        id: 'survey',
+        navLink: '/supplier/dashboard/survey',
+        logoLink: '../../assets/img/menu-suppliers.svg',
+        label: 'Questionnaire'
+      }
+    ]"
+  [bottomMenuNavLinks]="[
+    {
+        id: 'help',
+        navLink: '/supplier/dashboard/help',
+        logoLink: '../../assets/img/menu-groups.svg',
+        label: 'Besoin d\'aide'
+     }
+  ]"
+  [defaultLinkImgCircle]="'../../assets/img/active-link.svg'">
+</app-sidebar>
+
+<div *ngIf="authorized">
+  <app-header-bar *ngIf="user" [currentUser]="user"></app-header-bar>
+
+  <div [ngClass]="{'sidebar-padding': sidebarVisible}" class="dash-bg invisible-scrollbar">
+
+    <div class="dashboard-supplier__container">
+      <router-outlet></router-outlet>
+    </div>
+
+  </div>
+
+</div>

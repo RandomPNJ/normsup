@@ -19,7 +19,8 @@ export class AppComponent {
     this.router.events.subscribe((e) => {
         if (e instanceof NavigationEnd) {
             // Function you want to call here
-            if(this.router && this.router.url) {
+          this.sidebar = 0;
+            /*if(this.router && this.router.url) {
               if(this.router.url.startsWith('/supplier')){
                 this.sidebar = 1;
               } else {
@@ -27,7 +28,7 @@ export class AppComponent {
               }
             } else {
               this.sidebar = 0;
-            }
+            }*/
         }
      });
      setTheme('bs3');

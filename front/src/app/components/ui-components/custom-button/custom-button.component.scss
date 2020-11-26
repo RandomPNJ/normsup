@@ -1,0 +1,27 @@
+@import "src/assets/css/variable";
+
+/* Btn sizes */
+.size-medium {
+  padding: 7px 50px;
+  font-size: 13px;
+  border-radius: 5px;
+}
+
+/* Border classes */
+.border-color-blue {
+  border: 1px solid $normsup-blue;
+}
+
+/* Text classes */
+.text-color-blue {
+  color: $normsup-blue;
+}
+
+/* Background btn classes */
+.btn-color-white {
+  background: #fff;
+}
+
+.btn-color-transparent {
+  background: transparent;
+}

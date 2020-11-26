@@ -1,0 +1,13 @@
+<div class="row-form-checkbox normsup-checkbox-cont">
+  <input
+    #inputElement
+    [id]="id"
+    [name]="name"
+    type="checkbox"
+    (change)="onCheckboxEvent($event)">
+
+  <label
+    [for]="id">
+    {{ label }}
+  </label>
+</div>

@@ -1,0 +1,11 @@
+<div class="normsup-card">
+  <div class="normsup-card-header">
+    <span class="header-title">
+      {{ headerTitle }}
+    </span>
+  </div>
+
+  <div *ngIf="templateBody" class="normsup-card-body">
+    <ng-template [ngTemplateOutlet]="templateBody"></ng-template>
+  </div>
+</div>

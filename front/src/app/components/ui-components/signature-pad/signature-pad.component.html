@@ -1,0 +1,27 @@
+<div class="signature-container">
+
+  <span class="signature-span">Veuillez aposer votre signature ci-dessous</span>
+
+  <div class="signature-pad-container">
+    <signature-pad
+      [options]="signatureOptions"
+      (onEndEvent)="drawComplete()">
+    </signature-pad>
+  </div>
+
+  <div class="signature-btn-container">
+
+    <button type="button" class="form-btn" (click)="clearSignature()">
+      <span class="card-btn-txt-container">
+        <span>Effacer</span>
+      </span>
+    </button>
+
+    <button type="button" class="form-btn" [disabled]="!hasSigned" (click)="validateSignature()">
+      <span class="card-btn-txt-container">
+        <span>Valider</span>
+      </span>
+    </button>
+  </div>
+
+</div>

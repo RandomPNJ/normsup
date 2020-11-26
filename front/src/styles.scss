@@ -1,16 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 // @import "~@ng-select/ng-select/themes/material.theme.css";
 @import "~@ng-select/ng-select/themes/default.theme.css";
-/* ----- Variables ---- */
-
-$normsup-blue: #4390EF;
-$normsup-black: #333;
-$normsup-dark-blue: #4E5983;
-$normsup-gray: #818181;
-$datepicker-color: #A3A6B6;
-$datepicker-font-weight: 600;
-$datepicker-placeholder-color: #A3A6B6;
-$datepicker-placeholder-weight: 700;
+@import "src/assets/css/variable";
 
 /* ----- Fonts ----- */
 
@@ -262,7 +253,7 @@ body {
 ::-webkit-scrollbar {
     display: none;
   }
-  
+
 /* Hide scrollbar for IE and Edge */
 .invisible-scrollbar {
     -ms-overflow-style: none;
@@ -802,11 +793,11 @@ td {
             color: #4E5983;
             opacity: 1; /* Firefox */
         }
-          
+
         &:-ms-input-placeholder { /* Internet Explorer 10-11 */
         color: #4E5983;
         }
-        
+
         &::-ms-input-placeholder { /* Microsoft Edge */
         color: #4E5983;
         }
@@ -884,7 +875,7 @@ td {
 }
 
 .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
-    
+
 }
 
 /** Datatable Pagination Custom CSS END **/
@@ -1109,7 +1100,7 @@ td {
     background-color: white !important;
     color: $normsup-blue !important;
     border-radius: 5px !important;
-    // height: 
+    // height:
 
     &:focus,
     &:active {
@@ -1248,7 +1239,7 @@ td {
 .normsup-card-border {
 
     border: 1px solid white !important;
-    
+
     // &:hover {
     //     border: 1px solid #4390EF !important;
     // }
@@ -1385,13 +1376,13 @@ td {
 //     display: table;
 //     height: 100%;
 // }
-// .v-list { 
+// .v-list {
 //     height: 100%;
-//     display:table-cell; 
-//     vertical-align:bottom; 
+//     display:table-cell;
+//     vertical-align:bottom;
 // }
 
-// .v-cont { 
+// .v-cont {
 // }
 
 // .v-list-scroll {
@@ -1513,6 +1504,7 @@ td {
     font-size: 14px;
     letter-spacing: 0;
     color: #4390EF;
+    padding-left: 3px;
     padding-right: 3px;
 }
 
@@ -1548,7 +1540,7 @@ td {
     font-family: 'Roboto Light';
     color: #4E5983;
     width: 100%;
-    
+
 }
 
 .ipt-label-style {
@@ -1567,14 +1559,14 @@ td {
         color: #4E5983;
         opacity: 1; /* Firefox */
       }
-      
+
     &:-ms-input-placeholder { /* Internet Explorer 10-11 */
         font-family: 'Roboto Regular', 'FontAwesome';
         font-size: 14px;
         letter-spacing: 0;
         color: #4E5983;
       }
-      
+
     &::-ms-input-placeholder { /* Microsoft Edge */
         font-family: 'Roboto Regular', 'FontAwesome';
         font-size: 14px;
@@ -1596,7 +1588,7 @@ td {
 
 .normsup-checkbox-cont {
 
-    [type="checkbox"]:not(:checked), 
+    [type="checkbox"]:not(:checked),
     [type="checkbox"]:checked {
         /* Cache la checkbox sans
         la désactiver pour les
@@ -1705,7 +1697,7 @@ td {
         right: 70px;
         left: unset;
     }
-    
+
 }
 .export-checkbox [type="checkbox"]:not(:checked) + label, .normsup-checkbox-cont [type="checkbox"]:checked + label {
     line-height: 1.4 !important;
@@ -1722,7 +1714,7 @@ td {
     border-radius: 10px 10px 0px 0px;
     vertical-align: middle;
     line-height: 49px;
-    
+
     span {
         font-family: 'Roboto Bold';
         font-size: 15px;
@@ -1755,9 +1747,9 @@ td {
 }
 
 .group-card-row {
-    .custom-control-label::before, 
+    .custom-control-label::before,
     .custom-control-label::after {
-        top: .6rem; 
+        top: .6rem;
         height: 1.25rem;
     }
 
@@ -1772,7 +1764,7 @@ td {
         -webkit-transform: translateX(1.5rem);
         transform: translateX(1.5rem);
     }
-    
+
 }
 
 .add-doc-link {
@@ -1801,7 +1793,7 @@ td {
     letter-spacing: 0;
     color: #4390EF;
     opacity: 0.6;
-    max-width: 170px;
+
     &::placeholder {
         font-family: 'Roboto Regular';
         font-size: 15px;
@@ -1897,7 +1889,7 @@ td {
         max-width: 88% !important;
     }
 
-    
+
 
 }
 
@@ -1917,9 +1909,9 @@ td {
         max-width: 20% !important;
     }
 
-    
+
 }
-@media (max-width: 992px) { 
+@media (max-width: 992px) {
     .dash-no-pad-md {
         margin: 0 auto !important;
         padding-left: 0px !important;
@@ -1928,7 +1920,7 @@ td {
     }
 }
 
-@media (max-width: 768px) { 
+@media (max-width: 768px) {
     .dash-no-pad-sm {
         margin: 0 auto !important;
         padding-left: 0px !important;
@@ -2018,13 +2010,13 @@ td {
         padding-left: 2.25rem;
         padding-bottom: 1rem; // added for positioning
       }
-      
+
       .custom-control-label { // added for alignment with the switch
         padding-top: 0.5rem;
         padding-left: 2rem;
         padding-bottom: 0.1rem;
       }
-      
+
       .custom-switch .custom-control-label::before {
         left: -2.4rem;
         height: 1.8rem;
@@ -2032,7 +2024,7 @@ td {
         pointer-events: all;
         border-radius: 1rem;
       }
-      
+
       .custom-switch .custom-control-label::after {
         top: calc(0.2rem + 2px);
         left: calc(-2.4rem + 2px);
@@ -2049,7 +2041,7 @@ td {
           transition: none;
         }
       }
-      
+
       .custom-switch .custom-control-input:checked ~ .custom-control-label::after {
         background-color: #fff;
         -webkit-transform: translateX(1.6rem); //translateX(0.75rem);
@@ -2092,7 +2084,7 @@ td {
 
 .select-comp-but {
     position: relative;
-  
+
 }
 
 .next-btn-supplier {
@@ -2102,13 +2094,13 @@ td {
     padding: 6px 46px !important;
     color: #FFFFFF;
     background-color: #4390EF !important;
-  
+
     &:hover {
       box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
     }
 }
 
-@media (min-width: 768px) { 
+@media (min-width: 768px) {
     .group-details-cont.container {
         max-width: unset !important;
     }
@@ -2203,7 +2195,7 @@ td {
     width: 100%;
     padding-top: 10px;
     text-align: center;
-  
+
     & > div {
       font-family: 'Roboto Regular';
       color: #4E5983;
@@ -2219,4 +2211,51 @@ td {
 
 .row:before, .row:after {
     display: inline-block;
+}
+
+.row-line {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-left: 35px;
+  padding-right: 35px;
+}
+
+.row-line-centered {
+  text-align: center;
+}
+
+.row-column {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Save btn */
+.form-btn {
+  padding: 5px 45px;
+  border: 1px solid $normsup-blue;
+  color: $normsup-blue;
+  border-radius: 5px;
+  background: transparent;
+}
+
+.form-btn:hover {
+  border: 1px solid $normsup-blue;
+  color: #fff;
+  background: $normsup-blue;
+}
+
+.form-btn:disabled {
+  border: 1px solid $normsup-gray !important;
+  color: $normsup-gray !important;
+}
+
+.row-line-form {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.row-line-form-btn {
+  padding-top: 70px;
 }

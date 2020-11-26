@@ -1,0 +1,118 @@
+<div *ngIf="currentDocument" class="container client-documents-information-container">
+
+  <div class="flex-row">
+    <app-ui-back-link
+      [link]="'../'"
+      [label]="'Retour aux documents'">
+    </app-ui-back-link>
+  </div>
+
+  <div class="title-row" style="padding-top: 45px !important; padding-bottom: 25px !important;">
+
+    <div class="flex-row">
+      <app-ui-page-title [title]="currentDocument.name"></app-ui-page-title>
+
+      <span class="span-row-centered item-count" *ngIf="clients">
+        Ce document est disponible pour
+        <span class="count-style"> {{ clients.length }}</span>
+        clients.
+      </span>
+    </div>
+
+  </div>
+
+
+  <div class="clients-cards-container">
+
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 client-list-container">
+          <app-ui-card-template
+            [headerTitle]="'Liste des clients'"
+            [templateBody]="clientListTemplate">
+          </app-ui-card-template>
+        </div>
+
+
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 nopadding">
+          <app-ui-card-template
+            [headerTitle]="'Informations'"
+            [templateBody]="documentDetailTemplate">
+          </app-ui-card-template>
+        </div>
+
+  </div>
+</div>
+
+<ng-template #clientListTemplate>
+  <div
+    *ngFor="let client of clients"
+    class="client-row">
+    <span class="row-line client-txt text-capitalize">
+      {{ client.name }}
+    </span>
+  </div>
+</ng-template>
+
+<ng-template #documentDetailTemplate>
+
+  <div class="top-content">
+    <div class="client-card-row">
+      <div class="row-line">
+        <div class="basic-txt">
+          Statut du document
+        </div>
+
+        <div class="status-document" [ngClass]="{
+          'status-document-valid' : currentDocument.isValid,
+          'status-document-invalid' : !currentDocument.isValid
+        }">
+          {{ currentDocument.isValid ? 'À jour' : 'À mettre à jour' }}
+        </div>
+      </div>
+    </div>
+
+    <div class="client-card-row">
+      <div class="row-line information-line">
+        <span class="left-column-information">Date d'expiration</span>
+        <span class="right-column-information">
+          {{ currentDocument.expirationDate ? (currentDocument.expirationDate | date: 'dd/MM/yyyy') : 'N/A' }}
+        </span>
+      </div>
+
+      <div class="row-line information-line">
+        <span class="left-column-information">Date du dernier upload</span>
+        <span class="right-column-information">
+          {{ currentDocument.uploadDate ? (currentDocument.uploadDate | date: 'dd/MM/yyyy') : 'N/A' }}
+        </span>
+      </div>
+
+      <div class="row-line information-line">
+        <span class="left-column-information">Utilisateur</span>
+        <span class="right-column-information">{{ currentDocument.user | userNamePipe : 'uppercase' : 'nameCut' }}</span>
+      </div>
+
+      <div class="row-line information-line">
+        <span class="left-column-information">Durée de validité</span>
+        <span class="right-column-information">{{ currentDocument.durationValidity ? currentDocument.durationValidity + ' mois' : 'N/A'}}</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="bottom-content">
+    <div class="client-card-row row-line-centered save-document-btn">
+
+      <button type="button" class="btn new-btn-normsup custom-btn">
+        <span class="card-btn-txt-container">
+          <span>Déposer</span>
+        </span>
+      </button>
+
+      <button type="button" class="btn new-btn-normsup custom-btn">
+        <span class="card-btn-txt-container">
+          <span>Consulter</span>
+        </span>
+      </button>
+
+    </div>
+  </div>
+
+</ng-template>

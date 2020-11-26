@@ -1,0 +1,116 @@
+<div [formGroup]="workerForm">
+  <app-ui-checkbox-form
+    #nominativeListCheckboxFormComponent
+    [id]="'nominativeList'"
+    [name]="'nominativeList'"
+    [label]="'Je dépose ma liste nominative des travailleurs étrangers'"
+    (checkboxEvent)="onNominativeListCheckboxChangeEvent($event)">
+  </app-ui-checkbox-form>
+
+  <app-ui-checkbox-form
+    #noNominativeListCheckboxFormComponent
+    [id]="'noNominativeList'"
+    [name]="'noNominativeList'"
+    [label]="'Je déclare ne pas employer des travailleurs étrangers'"
+    (checkboxEvent)="onNoNominativeListCheckboxChangeEvent($event)">
+  </app-ui-checkbox-form>
+
+  <ng-container
+    *ngIf="displayNominativeListTemplate"
+    [ngTemplateOutlet]="nominativeListCheckedTemplate">
+  </ng-container>
+
+  <ng-container
+    *ngIf="displayNoNominativeListTemplate"
+    [ngTemplateOutlet]="noNominativeListCheckedTemplate">
+  </ng-container>
+
+</div>
+
+<ng-template #nominativeListCheckedTemplate>
+
+  <div class="row-column" style="padding-top: 30px;">
+    <app-ui-upload-document-btn
+      #uploadDocumentBtnComponent
+      [acceptedFormat]="'application/pdf'"
+      [acceptedFormatsLabel]="'Format accepté: pdf'"
+      (fileChangeEvent)="onFileChangeEvent($event)">
+    </app-ui-upload-document-btn>
+  </div>
+
+  <div class="row-line-form row-line-centered row-line-form-btn">
+    <button type="submit" class="form-btn" [disabled]="!formValid"
+            (click)="onSubmit()">
+      <span class="card-btn-txt-container">
+        <span>Déposer</span>
+      </span>
+    </button>
+  </div>
+
+</ng-template>
+
+<ng-template #noNominativeListCheckedTemplate>
+
+  <div style="padding-bottom: 40px;">
+    <ng-container
+      *ngIf="currentUser && currentUserCompany"
+      [ngTemplateOutlet]="swornStatementTemplate">
+    </ng-container>
+
+    <app-ui-signature-pad
+      #signaturePadComponent
+      (validateSignatureEvent)="onValidateSignature($event)">
+    </app-ui-signature-pad>
+  </div>
+
+</ng-template>
+
+<ng-template #swornStatementTemplate>
+
+  <div class="statement-container">
+
+    <h1 style="text-align: center; padding-bottom: 20px;">Attestation sur l'honneur</h1>
+
+    <br/>
+
+    <p class="sworn-statement-text">
+      Je soussigné Mr/Mme {{ currentUser.lastname + ' ' + currentUser.firstname }}, agissant en qualité de Fonction,
+      de la société {{ currentUserCompany.denomination }} de la société immatriculée sous le numéro
+      {{ currentUserCompany.siret }}, dans le siège social est à l' adresse {{ currentUserCompany.address }},
+    </p>
+
+    <br/>
+
+    <p class="sworn-statement-text">Atteste sur l’honneur:</p>
+
+    <br/><br/>
+
+    <li class="sworn-statement-text">
+      être à jour de ses obligations relatives à la sécurité sociale, aux impôts et aux taxes,
+      selon les dispositions légales françaises;
+    </li>
+
+    <br/>
+
+    <li class="sworn-statement-text">
+      garantir, dans l’exécution des prestations, la régularité de sa situation ainsi que celle de ses salariés,
+      au regard, notamment, des articles L.1221-10 à L.1221-12, R.1221-13, 3243-1, 3243-2, 3243-4 et R.3243-5 du
+      Code du Travail;
+    </li>
+
+    <br/>
+
+    <li class="sworn-statement-text">
+      que, au cas où de la main d’oeuvre étrangère serait employée, les salariés étrangers disposent
+      des titres de séjour et de toutes les autorisations administratives nécessaires à l’exercice en France d’une
+      activité salariée, conformément aux dispositions légales en vigueur et notamment à l’article L.8251-1 du Code
+      du Travail.
+    </li>
+
+    <br/><br/>
+
+    <p class="sworn-statement-text">Fait à Paris, le {{ now | date : 'dd/MM/yyyy'}}</p>
+
+  </div>
+
+</ng-template>

@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute, ActivationEnd, ActivationStart, NavigationStart, ResolveStart, RouterEvent, NavigationEnd } from '@angular/router';
+import {Component, Input, OnInit} from '@angular/core';
+import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 import { filter } from 'rxjs/operators';
@@ -10,6 +10,12 @@ import { filter } from 'rxjs/operators';
   styleUrls: ['./sidebar.component.scss']
 })
 export class SidebarComponent implements OnInit {
+
+  @Input() topMenuNavLinks = [];
+  @Input() bottomMenuNavLinks = [];
+  @Input() defaultLinkImgCircle;
+
+  withHelp = true;
 
   user;
   showHeader;
@@ -22,19 +28,19 @@ export class SidebarComponent implements OnInit {
     private authService: AuthService) { }
 
   ngOnInit() {
-    if(this.router.url.indexOf('/backoffice') !== -1) {
+    if (this.router.url.indexOf('/backoffice') !== -1) {
       this.isBackoffice = true;
     }
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)).subscribe(() => {
-        if(this.activatedRoute.snapshot['_routerState'].url.indexOf('/backoffice') !== -1) {
+        if (this.activatedRoute.snapshot['_routerState'].url.indexOf('/backoffice') !== -1) {
           this.isBackoffice = true;
         } else {
           this.isBackoffice = false;
         }
       });
     this.isLoggedIn = this.authService.isLogged.subscribe(res => {
-      if(res !== false && res.data) {
+      if (res !== false && res.data) {
         this.user = res.data;
       }
       this.showHeader = !!res;
@@ -42,3 +48,11 @@ export class SidebarComponent implements OnInit {
   }
 
 }
+
+/*
+  - id
+  - logoLink
+  - label
+  - routerLink
+
+ */

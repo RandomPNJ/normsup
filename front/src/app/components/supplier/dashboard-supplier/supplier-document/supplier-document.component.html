@@ -1,0 +1,55 @@
+<app-layout-page-content>
+
+  <!-- Document légaux -->
+  <div class="row nopadding col-lg-11 col-md-12 col-sm-10 col-8"
+       style="padding-top: 45px !important; padding-bottom: 25px !important;">
+    <app-ui-page-title
+      [title]="'Mes documents légaux'">
+    </app-ui-page-title>
+  </div>
+
+  <app-layout-reponsive-list-card
+    [withBorder]="false"
+    *ngIf="mandatoryDocuments && 0 !== mandatoryDocuments.length">
+
+    <div class="card-parent-container col-xl-3 col-lg-4 col-md-6 col-sm-12 col-12"
+         *ngFor="let document of mandatoryDocuments">
+
+      <app-ui-card-document-template
+        [document]="document"
+        [noBoxShadow]="true"
+        (clickViewBtnEvent)="onBtnCardClickEvent($event)"
+        (clickDropOffBtnEvent)="onBtnDropOffClickEvent($event)">
+      </app-ui-card-document-template>
+
+    </div>
+
+  </app-layout-reponsive-list-card>
+
+
+  <!-- Document complémentaires -->
+  <div class="row nopadding col-lg-11 col-md-12 col-sm-10 col-8"
+       style="padding-top: 45px !important; padding-bottom: 25px !important;">
+    <app-ui-page-title
+      [title]="'Mes documents complémentaires'">
+    </app-ui-page-title>
+  </div>
+
+  <app-layout-reponsive-list-card
+    [withBorder]="false"
+    *ngIf="optionalDocuments && 0 !== optionalDocuments.length">
+
+    <div class="card-parent-container col-xl-3 col-lg-4 col-md-6 col-sm-12 col-12"
+         *ngFor="let document of optionalDocuments">
+
+      <app-ui-card-document-template
+        [document]="document"
+        [noBoxShadow]="true"
+        (clickViewBtnEvent)="onBtnCardClickEvent($event)">
+      </app-ui-card-document-template>
+
+    </div>
+
+  </app-layout-reponsive-list-card>
+
+</app-layout-page-content>

@@ -1,0 +1,110 @@
+.card-content {
+
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: space-between;
+
+  .card-header {
+    font-family: 'Roboto Medium';
+    font-size: 15px;
+    color: #4390EF;
+    text-align: center;
+    border: none;
+    background: transparent;
+
+    .card-header-title {
+      display: block;
+      font-family: 'Roboto Medium';
+      font-size: 15px;
+      color: #4390EF;
+      text-align: center;
+    }
+
+    .card-header-icon {
+      width: 20px;
+      height: 12px;
+    }
+  }
+
+  .card-btn-container {
+    display: flex;
+    flex-direction: column;
+
+    margin: 0 auto;
+    text-align: center;
+
+    .btn {
+      font-size: 10px;
+    }
+
+    .card-btn-txt-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+
+      & span {
+        padding-left: 2px;
+        font-size: 13px;
+        font-family: 'Roboto Medium';
+        text-transform: none;
+        text-align: center;
+      }
+
+      & .button-logo {
+        padding-right: 2px;
+      }
+    }
+  }
+}
+
+.text-ov {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+::ng-deep .canva-card {
+  background: #FFFFFF 0 0 no-repeat padding-box;
+  box-shadow: 0 0 55px #4390EF3C;
+  opacity: 1;
+  border-radius: 10px !important;
+}
+
+::ng-deep mdb-card.card {
+  border-radius: 10px !important;
+}
+
+::ng-deep mdb-card.canvaCard .card {
+  border-radius: 10px !important;
+  height: 170px;
+}
+
+.exp-date-text {
+  //text-align: left;
+  font: italic normal normal 11px Roboto;
+  letter-spacing: 0;
+  padding-top: 5px;
+  text-align: center;
+}
+
+.status-up-to-date {
+  color: #66B961D6;
+}
+
+.status-expired {
+  color: #FF0A00;
+}
+
+.status-expired-soon {
+  color: #EB8824D6;
+}
+
+.no-box-shadow ::ng-deep .card {
+  box-shadow: none !important;
+}
+
+.card-document-btn {
+  width: 135px !important;
+}

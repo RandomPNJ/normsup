@@ -1,0 +1,174 @@
+@import "src/assets/css/variable";
+
+.client-details-cont {
+  height: 100%;
+}
+
+.button-txt {
+  font-family: 'Roboto Medium';
+  font-size: 13px;
+  letter-spacing: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  display: block;
+  text-overflow: ellipsis;
+}
+
+.comp-btn {
+  border: 1px solid #C7E0FF !important;
+  padding: unset !important;
+  box-shadow: unset;
+  text-transform: unset;
+
+  .button-txt {
+    color: #4E5983;
+    padding: 0 54px;
+
+    &:hover {
+      color: white;
+    }
+  }
+}
+
+.client-card-row {
+  padding-top: 20px;
+  padding-bottom: 19px;
+  border-bottom: 1px solid $normsup-border-grey;
+}
+
+.basic-txt {
+  font-family: 'Roboto Medium';
+  font-size: 15px;
+  letter-spacing: 0;
+  color: $normsup-dark-blue;
+}
+
+.status-document {
+  font-family: 'Roboto';
+  font-size: 14px;
+}
+
+.status-document-valid {
+  color: $normsup-valid-green;
+}
+
+.status-document-invalid {
+  color: $normsup-invalid-red;
+}
+
+.save-document-btn {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.information-line {
+  margin-top: 7px;
+  margin-bottom: 7px;
+
+  .left-column-information {
+    color: $normsup-blue;
+    font-size: 14px;
+  }
+
+  .right-column-information {
+    font-size: 14px;
+  }
+}
+
+.client-row {
+  padding: 11px 0;
+}
+
+.client-txt {
+  font-family: 'Roboto Regular';
+  font-size: 14px;
+  color: $normsup-dark-blue;
+}
+
+.client-row:hover {
+  cursor: pointer;
+  background: $light-grey;
+}
+
+.row-line-btn {
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.client-list-container {
+  padding-left: 0 !important;
+  padding-right: 20px !important;
+}
+
+.document-information-container {
+  padding-left: 20px !important;
+  padding-right: 0 !important;
+}
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.title-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.span-row-centered {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.client-documents-information-container {
+  padding: 0 80px;
+
+  @media screen and (max-width: 1170px) {
+    padding: 0;
+  }
+
+  .clients-cards-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    @media screen and (max-width: 992px) {
+      flex-direction: column;
+
+      .client-list-container {
+        padding: 0 !important;
+        margin-bottom: 30px;
+      }
+    }
+  }
+}
+
+.clients-cards-container {
+
+  ::ng-deep .normsup-card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+}
+
+.card-btn-txt-container {
+  display: flex;
+  align-items: center;
+  height: 100%;
+
+  & span {
+    font-size: 13px;
+    font-family: 'Roboto Medium';
+    text-transform: none;
+    text-align: center;
+  }
+}
+
+.custom-btn {
+  padding: 5px 62px !important;
+  height: fit-content !important;
+}
