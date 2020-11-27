@@ -80,6 +80,12 @@ export class DashboardComponent implements OnInit {
         navLink: '/backoffice/suppliers',
         logoLink: '../../../assets/img/menu-groups.svg',
         label: 'Utilisateurs (fournisseurs)'
+      },
+      {
+        id: 'document',
+        navLink: '/backoffice/documents',
+        logoLink: '../../../assets/img/menu-groups.svg',
+        label: 'Documents'
       }
     ];
   }
@@ -104,18 +110,12 @@ export class DashboardComponent implements OnInit {
         logoLink: '../../../assets/img/menu-groups.svg',
         label: 'Groupes'
       },
-      {
-        id: 'stats',
-        navLink: '/dashboard/stats',
-        logoLink: '../../../assets/img/menu-stats.svg',
-        label: 'Statistiques'
-      },
-      {
-        id: 'alerts',
-        navLink: '/dashboard/alerts',
-        logoLink: '../../../assets/img/menu-',
-        label: 'Alertes'
-      },
+      // {
+      //   id: 'stats',
+      //   navLink: '/dashboard/stats',
+      //   logoLink: '../../../assets/img/menu-stats.svg',
+      //   label: 'Statistiques'
+      // },
       {
         id: 'export',
         navLink: '/dashboard/export',
