@@ -30,7 +30,7 @@
     
       <div class="row wow fadeIn mt-4">
         <div class="col-lg-6 col-md-8 dash-no-pad-md" style="padding-left: 0px !important;">
-          <app-monthly-conformity></app-monthly-conformity>
+          <app-monthly-conformity *ngIf="showMonthlyRateGraph === true" [nbSuppliers]="nbSuppliers"></app-monthly-conformity>
         </div>
         <div class="col-lg-6 col-md-8  dash-no-pad-md" style="padding-right: 0px !important;">
           <app-dash-group-card></app-dash-group-card>

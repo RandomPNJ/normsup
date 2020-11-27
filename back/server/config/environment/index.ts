@@ -175,6 +175,7 @@ export default {
       uri: '/api/admin',
       actions: [
         { name: 'getUsers', uriPattern: '/users', method: 'get' },
+        { name: 'getDocuments', uriPattern: '/documents', method: 'get' },
         { name: 'getClients', uriPattern: '/clients', method: 'get' },
         { name: 'getSuppliers', uriPattern: '/suppliers', method: 'get' },
         { name: 'getSuppliersUsers', uriPattern: '/suppliers/users', method: 'get' },
@@ -187,6 +188,8 @@ export default {
         { name: 'getCurrent', uriPattern: '/current', method: 'get' },
         { name: 'conformityCheckup', uriPattern: '/conformity/checkup', method: 'post' },
         { name: 'dailyAlerts', uriPattern: '/alerts', method: 'post' },
+        { name: 'documentValidation', uriPattern: '/documents/validation/:id', method: 'post' },
+        { name: 'downloadDocument', uriPattern: '/documents/download/:id', method: 'get' },
       ]
     }
   },

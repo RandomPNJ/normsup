@@ -541,7 +541,7 @@ CREATE TABLE `normsup`.`doc_types` (
  
 ## Applied
  
-True
+False
  
  
 ## Date
@@ -561,17 +561,17 @@ CREATE TABLE `normsup`.`supplier_doc_relation` (
   PRIMARY KEY (`doc_id`, `org_id`, `client_id`),
   INDEX `id_idx` (`org_id` ASC) VISIBLE,
   INDEX `id_idx1` (`client_id` ASC) VISIBLE,
-  CONSTRAINT `doctypeid`
+  CONSTRAINT `doctypeidfk`
     FOREIGN KEY (`doc_id`)
     REFERENCES `normsup`.`doc_types` (`id`)
     ON DELETE CASCADE
     ON UPDATE NO ACTION,
-  CONSTRAINT `orgid`
+  CONSTRAINT `orgidfk`
     FOREIGN KEY (`org_id`)
     REFERENCES `normsup`.`organisations` (`id`)
     ON DELETE CASCADE
     ON UPDATE NO ACTION,
-  CONSTRAINT `clientid`
+  CONSTRAINT `clientidfk`
     FOREIGN KEY (`client_id`)
     REFERENCES `normsup`.`client` (`id`)
     ON DELETE CASCADE
@@ -582,4 +582,45 @@ CREATE TABLE `normsup`.`supplier_doc_relation` (
  
 ## Applied
  
-True
+False
+
+## Date
+ 
+17-11-2020
+ 
+## Comment
+ 
+Alter table `supplier_conformity`
+ 
+## Query
+ 
+ALTER TABLE `normsup`.`supplier_conformity` 
+DROP COLUMN `client_id`,
+CHANGE COLUMN `supplier_id` `siren` INT(9) NOT NULL ,
+DROP PRIMARY KEY,
+ADD PRIMARY KEY (`siren`, `start_date`);
+; 
+ 
+## Applied
+ 
+False
+
+## Date
+ 
+17-11-2020
+ 
+## Comment
+ 
+Alter table `document`
+ 
+## Query
+ 
+ALTER TABLE `normsup`.`document` 
+ADD COLUMN `state` INT(1) NULL DEFAULT 2 AFTER `id`;
+
+
+## Applied
+ 
+False
+
+

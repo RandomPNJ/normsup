@@ -110,7 +110,7 @@ function start(app: any, config: any): any {
   app.set('UsersRegistry', userRegistry, {onLoad: true});
   const settingsRegistry = new SettingsRegistry(sqlDB);
   app.set('SettingsRegistry', settingsRegistry, {onLoad: true});
-  const adminRegistry = new AdminRegistry(sqlDB, mailer);
+  const adminRegistry = new AdminRegistry(sqlDB, mailer, s3Client);
   app.set('AdminRegistry', adminRegistry, {onLoad: true});
   const authRegistry = new AuthRegistry(sqlDB, mailer);
   app.set('AuthRegistry', authRegistry, {onLoad: true});

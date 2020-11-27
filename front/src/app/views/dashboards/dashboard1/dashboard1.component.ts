@@ -26,7 +26,8 @@ export class Dashboard1Component implements OnInit, AfterViewInit {
 	public reminders: Array<any>;
 	public groupSColors: Array<string> = ['#4390EF', '#C7E0FF', '#4E5983'];
 	public showConformRateGraph: Boolean = false;
-
+	public showMonthlyRateGraph: Boolean = false;
+	
 	public nbSuppliers: any;
 	public conform: any;
 	public notConform: any;
@@ -386,6 +387,7 @@ export class Dashboard1Component implements OnInit, AfterViewInit {
 					this.notConform = this.nbSuppliers >= this.conform ? this.nbSuppliers - this.conform : 0;
 				}
 				this.showConformRateGraph = true;
+				this.showMonthlyRateGraph = true;
 			}, err => {
 				console.log('[StatsCardComponent] getSuppliers count', err);
 				this.nbSuppliers = 0;

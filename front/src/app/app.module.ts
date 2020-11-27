@@ -87,6 +87,8 @@ import {DropoffSupplierDocumentComponent} from './components/supplier/dashboard-
 import {KbisFormComponent} from './components/supplier/dashboard-supplier/dropoff-supplier-document/kbis-form/kbis-form.component';
 import {VigilanceCertificateFormComponent} from './components/supplier/dashboard-supplier/dropoff-supplier-document/vigilance-certificate-form/vigilance-certificate-form.component';
 import {NominativeListForeignWorkerFormComponent} from './components/supplier/dashboard-supplier/dropoff-supplier-document/nominative-list-foreign-worker-form/nominative-list-foreign-worker-form.component';
+import { BackofficeDocumentComponent } from './components/backoffice/backoffice-document/backoffice-document.component';
+import { BackofficeDocumentTableComponent } from './components/backoffice/backoffice-document/backoffice-document-table/backoffice-document-table.component';
 
 const guards = [
   GuestGuard,
@@ -154,7 +156,9 @@ const guards = [
     DropoffSupplierDocumentComponent,
     KbisFormComponent,
     NominativeListForeignWorkerFormComponent,
-    VigilanceCertificateFormComponent
+    VigilanceCertificateFormComponent,
+    BackofficeDocumentComponent,
+    BackofficeDocumentTableComponent,
   ],
   imports: [
     BrowserModule,

@@ -38,6 +38,9 @@ import {SupplierSurveyComponent} from './components/supplier/dashboard-supplier/
 import {SupplierHelpComponent} from './components/supplier/dashboard-supplier/supplier-help/supplier-help.component';
 import {SupplierLoggedInGuard} from './auth/supplier-logged-in.guard';
 import {DropoffSupplierDocumentComponent} from "./components/supplier/dashboard-supplier/dropoff-supplier-document/dropoff-supplier-document.component";
+import { BackofficeDocumentComponent } from './components/backoffice/backoffice-document/backoffice-document.component';
+
+
 const routes: Routes = [
   {
     path: 'supplier',
@@ -101,6 +104,7 @@ const routes: Routes = [
       { path: 'users', component: BackofficeUsersComponent },
       { path: 'suppliers', component: BackofficeSuppliersComponent },
       { path: 'client', component: BackofficeClientComponent },
+      { path: 'documents', component: BackofficeDocumentComponent },
       { path: '', pathMatch: 'full', redirectTo: 'client'},
     ]
   },

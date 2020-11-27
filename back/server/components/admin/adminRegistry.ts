@@ -13,10 +13,12 @@ export default class AdminRegistry {
 
     private mysql: any;
     private transporter: any;
+    private s3: any;
 
-    public constructor(mysql, transporter) {
+    public constructor(mysql, transporter, s3Client) {
         this.mysql = mysql;
         this.transporter = transporter;
+        this.s3 = s3Client;
     }
 
     public login(login: string, password: string) {
@@ -206,7 +208,7 @@ export default class AdminRegistry {
                         }
                         if(toPush) {
                             let z = _.cloneDeep(subQuery);
-                            z.values = [e.kbis,e.lnte,e.urssaf,e.kbis_expiration,e.urssaf_expiration,e.lnte_expiration,e.supplier_id,e.client_id,date];
+                            z.values = [e.kbis,e.lnte,e.urssaf,e.kbis_expiration,e.urssaf_expiration,e.lnte_expiration,e.siren,date];
                             toModify.push(this.mysql.query(z));
                         }
                     });
@@ -420,6 +422,86 @@ export default class AdminRegistry {
         return res;
     }
 
+    public getDocuments(data) {
+        let query = {
+            timeout: 40000,
+            values: []
+        };
+
+        loggerT.verbose('[getDocuments] data : ', data);
+
+        // TODO work with params
+        if(data !== '') {
+            // query['sql'] = Query.;
+            // query['values'] = ;
+        }
+
+        query['sql'] = Query.QUERY_GET_DOCUMENTS;
+
+        return this.mysql.query(query)
+            .then(res => {
+                loggerT.verbose('[getDocuments] QUERY RES ==== ', res);
+                return Promise.resolve(res);
+            })
+            .catch(err => {
+                loggerT.error('[getDocuments] ERROR ON QUERY getDocuments.');
+                return Promise.reject(err);
+            })
+        ;
+    }
+
+    public validate(id, data, validated) {
+        let changeMetadata = {
+            timeout: 40000,
+            sql: Query.UPDATE_METADATA,
+            values: [validated ? 1 : 0, data.validityDate, id]
+        };
+        let changeToReplaced = {
+            timeout: 40000,
+            sql: Query.UPDATE_DOC_TO_REPLACED,
+            values: [validated ? 1 : 0, data.validityDate, id]
+        };
+        let queries = [];
+
+        if(validated) {
+            queries.push(this.mysql.query(changeToReplaced));
+        }
+        queries.push(this.mysql.query(changeMetadata));
+
+        return Promise.all(queries.map(p => p.catch(e => e)))
+            .then((res) => {
+                return Promise.resolve(res);
+            })
+        ;
+    }
+
+    private downloadDocument(user, id) {
+        let query = {
+            timeout: 40000
+        };
+
+        query['sql'] = Query.GET_DOCUMENT;
+        query['values'] = [id]
+
+        return this.mysql.query(query)
+            .then(res => {
+                loggerT.verbose('QUERY RES ==== ', res);
+                if(res && res.length > 0) {
+                    return this.s3.getObject({
+                        Bucket: 'normsup',
+                        Key: config.env === 'local' ? 'DEV/' + res[0].path : res[0].path
+                    }).promise()
+                    ;
+                } else {
+                    return Promise.reject(new Error('Viewing this document is not possible for the logged in user.'));
+                }
+            })
+            .catch(err => {
+                loggerT.error('ERROR ON QUERY getSuppliers.', err);
+                return Promise.reject(err);
+            })
+        ;
+    }
     public getUsers(data) {
         let query = {
             timeout: 40000

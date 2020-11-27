@@ -34,5 +34,17 @@
         </div>
       </a>
     </li>
+    <li class="nav-item">
+      <a id="documents" routerLinkActive="active" class="nav-link text-dark nav-link-s" routerLink="/backoffice/documents" role="tab">
+        <div class="side-icon-placement">
+          <span class="icn-cont grp-icn">
+            <img src="../../../assets/img/doc-icn.svg"  class="icn-style added-pad" style="width: 29px;height: 15px;"/>
+          </span>
+          <span class="link-txt">Documents</span>
+          <img *ngIf="active" src="../../../assets/img/active-link.svg"  class="active-lnk-icn added-pad"/>
+        </div>
+      </a>
+    </li>
+
   </ul>
 </div>

@@ -1,28 +1,21 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, ViewChildren } from '@angular/core';
+import { DaterangepickerConfig, DaterangePickerComponent } from 'ng2-daterangepicker';
 import { HttpService } from 'src/app/services/http.service';
 import { HttpParams } from '@angular/common/http';
 import { DataTableDirective } from 'angular-datatables';
 import { cloneDeep } from 'lodash';
+import * as moment from 'moment';
 
 @Component({
-  selector: 'app-backoffice-users-table',
-  templateUrl: './backoffice-users-table.component.html',
-  styleUrls: ['./backoffice-users-table.component.scss']
+  selector: 'app-backoffice-document-table',
+  templateUrl: './backoffice-document-table.component.html',
+  styleUrls: ['./backoffice-document-table.component.scss']
 })
-export class BackofficeUsersTableComponent implements OnInit {
-  
-    @Output() modifyUser = new EventEmitter<string>();
-    loggedUser = {
-      username: 'lob123',
-      email: 'yass.elf@gmail.com',
-      name: 'El Fahim',
-      lastname: 'Yassin',
-      role: 'Admin',
-      id: '0',
-      organisation: 1,
-      client: 1,
-      createdBy: 'GOD'
-    };
+export class BackofficeDocumentTableComponent implements OnInit {
+
+  @ViewChildren('daterangepicker1') startDatePicker: DaterangePickerComponent;
+  @Output() modifyUser = new EventEmitter<string>();
+
     tableParams: any = {
       start: 0,
       length: 9
@@ -40,7 +33,16 @@ export class BackofficeUsersTableComponent implements OnInit {
     ];
     dataSize: any = 0;
     firstDraw: Boolean = true;
-  
+    settingsDP1 = {
+      locale: { format: 'DD-MM-YYYY', cancelLabel: 'Annuler' },
+      singleDatePicker: true,
+      alwaysShowCalendars: false,
+      opens: 'right',
+      drops: 'up',
+      autoUpdateInput: false,
+      autoApply: true
+    };
+
     constructor(private httpService: HttpService) { }
   
     ngOnInit() {
@@ -72,10 +74,10 @@ export class BackofficeUsersTableComponent implements OnInit {
         },
         ajax: (dataTablesParameters: any, callback: any) => {
           const action = this.compareParams(dataTablesParameters);
-          console.log('tableParams', dataTablesParameters);
+          console.log(' suppliers tableParams', dataTablesParameters);
           if(action === 'query') {
             that.httpService
-              .get('/api/admin/users', dataTablesParameters)
+              .get('/api/admin/documents', that.tableParams)
               .subscribe(resp => {
                 that.items = that.items.concat(resp.body['items']);
                 that.itemsToDisplay = that.items.slice(that.tableParams.start, that.tableParams.start + that.tableParams.length);
@@ -88,7 +90,7 @@ export class BackofficeUsersTableComponent implements OnInit {
                   data: []
                 });
               }, err => {
-                console.log('/api/users err', err);
+                console.log('[BackofficeClientTableComponent] /api/admin/clients err', err);
               });
           } else if(action === 'redraw') {
             that.itemsToDisplay = that.items.slice(that.tableParams.start, that.tableParams.start + that.tableParams.length);
@@ -101,19 +103,25 @@ export class BackofficeUsersTableComponent implements OnInit {
         },
         columns: [
           {
-            title: 'Nom',
+            title: 'Dénomination',
           },
           {
-            title: 'Email',
+            title: 'Document',
           },
           {
-            title: 'Organisation',
+            title: 'Statut',
           },
           {
-            title: 'Rôle',
+            title: 'Date de création',
           },
           {
-            title: 'Action'
+            title: 'Date de péremption',
+          },
+          {
+            title: 'Consulter',
+          },
+          {
+            title: 'Action',
           }
         ]
       };
@@ -150,6 +158,19 @@ export class BackofficeUsersTableComponent implements OnInit {
       return action;
   
     }
+
+    selectedDate(e, index) {
+      console.log('selectedDate e', e.start.toDate());
+      console.log('selectedDate index', index);
+      this.items[this.tableParams.start + index].validityDate = e.start.format('DD-MM-YYYYTHH:mm:ss.SSS');
+      this.itemsToDisplay[index].validityDate = e.start.format('DD-MM-YYYYTHH:mm:ss.SSS');
+      console.log('this.itemsToDisplay :', this.itemsToDisplay);
+      // console.log('selectedDate e', e);
+    }
+  
+    closeDatePicker(e) {
+      
+    }
   
     delete(item) {
   
@@ -163,5 +184,39 @@ export class BackofficeUsersTableComponent implements OnInit {
     assign(item) {
       console.log('Item = ', item);
     }
-  }
+    downloadDocument(item) {
+      return this.httpService.getFile('/api/admin/documents/download/'+item.id)
+        .subscribe(res => {
+          console.log('downloadDocument res', res);
+          return this.readFileFromBlob(<Blob>res.body);
+        }, err => {
+          console.log('[downloadDocument] err', err)
+        })
+      ;
+    }
   
+    readFileFromBlob(blob) {
+      if(blob) {
+        // reader.readAsDataURL(blob);
+        const fileURL = URL.createObjectURL(blob);
+        console.log('fileURL', fileURL)
+        window.open(fileURL, '_blank');
+      }
+    }
+    validate(item, validated) {
+      let data = {
+        item: {
+          validityDate: item.validityDate
+        },
+        validated: validated
+      };
+      return this.httpService
+        .post('/api/admin/documents/validation/'+item.id, data)
+        .subscribe(res => {
+          console.log('[BackofficeDocumentTableComponent] validate res', res);
+        }, err => {
+          console.log('[BackofficeDocumentTableComponent] validate err', err);
+        })
+      ;
+    }
+}

@@ -15,7 +15,7 @@ export function createRepresentative(req, res, SupplierRegistry) {
         return Promise.reject(`Cannot get user informations, invalid request.`);
     }
 
-    loggerT.verbose('Modifying representative.');
+    loggerT.verbose('Creating representative.');
 
     let repres;
 

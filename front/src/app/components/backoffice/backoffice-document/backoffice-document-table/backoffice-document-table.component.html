@@ -1,0 +1,76 @@
+<div class="table-responsive">
+  <table datatable [dtOptions]="dtOptions" id="tableComp" class="table pageResize compact" cellspacing="0"
+    width="100%" style="height: 100%;">
+    <tbody *ngIf="myTable">
+      <tr *ngFor="let item of itemsToDisplay; let i = index">
+        <td style="border-top: none !important;text-align: center;">
+          <div style="width: 20%; display: inline-block;">&nbsp;</div>
+          <div [ngClass]="{'custom-tbl-border': i !== items.length - 1, 'last-custom-tbl-border': i === items.length - 1 }" class="badge-container content-cont container row-space">
+            <div class="row h-100  cent">
+              <span class="name-style nopadding">{{item.denomination}}</span>
+            </div>
+          </div>
+        </td>
+        <td style="border-top: none !important;text-align: center;">
+          <div style="width: 20%; display: inline-block;">&nbsp;</div>
+          <div [ngClass]="{'custom-tbl-border': i !== items.length - 1, 'last-custom-tbl-border': i === items.length - 1 }" class="badge-container content-cont container row-space">
+            <div class="row h-100  cent">
+              <span class="name-style nopadding">{{item.category}}</span>
+            </div>
+          </div>
+        </td>
+        <td style="border-top: none !important;text-align: center;">
+          <div style="width: 20%; display: inline-block;">&nbsp;</div>
+          <div [ngClass]="{'custom-tbl-border': i !== items.length - 1, 'last-custom-tbl-border': i === items.length - 1 }" class="badge-container content-cont container row-space">
+            <div class="row h-100  cent">
+              <span *ngIf="item.state===2" class="name-style nopadding" style="color: yellow;">En attente</span>
+              <span *ngIf="item.state===0" class="name-style nopadding" style="color: red;">Invalide</span>
+              <span *ngIf="item.state===1" class="name-style nopadding" style="color: green;">Valide</span>
+              <span *ngIf="item.state===3" class="name-style nopadding" style="color: black;">Remplacé</span>
+            </div>
+          </div>
+        </td>
+        <td class="row-border" [ngClass]="{'noborder': i === items.length - 1}">
+          <div class="badge-container content-cont container row-space">
+            <div class="row h-100 cent">
+              <span class="r-robo-14">{{item.createdAt | date:'d MMM y, H:mm'}}</span>
+            </div>
+          </div>
+        </td>
+        <td class="row-border" [ngClass]="{'noborder': i === items.length - 1}">
+          <div class="badge-container content-cont container row-space">
+            <div class="row h-100 cent">
+              <input autocomplete="off" id="datestart" class="datepicker-ph custom-normsup-input-nb"
+              (hideDaterangepicker)="closeDatePicker($event, i)" [(ngModel)]="item.validityDate"
+              (selected)="selectedDate($event, i)" type="text" name="Date" placeholder="JJ-MM-AAAA"
+              #daterangepicker1 daterangepicker [options]="settingsDP1"
+              (cancelDaterangepicker)="clear()"/>
+            </div>
+          </div>
+        </td>
+        <td class="row-border" [ngClass]="{'noborder': i === items.length - 1}">
+          <div id="util-btns" class="badge-container content-cont">
+            <div class="badge-container content-cont container nopadding">
+              <div class="row h-100 cent last-table-cell">
+                <button (click)="downloadDocument(item)" style="box-shadow: none;" type="button"
+                  class="btn new-btn-normsup default-btn-table" style="color: #4E5983 !important;border: 1px solid #C7E0FF !important;box-shadow: none !important; font-size: 13px !important;"><i style="font-size: 16px; color: #4390EF;" class="fas fa-eye"></i></button>
+              </div>
+            </div>
+          </div>
+        </td>
+        <td style="border-top: none !important;text-align: center;">
+          <div id="util-btns" class="badge-container content-cont">
+            <div class="badge-container content-cont container nopadding">
+              <div class="row h-100 cent last-table-cell">
+                <button [disabled]="item.state===1" (click)="validate(item, true)" style="box-shadow: none;" type="button"
+                  class="btn new-btn-normsup default-btn-table" style="color: #4E5983 ;border: 1px solid #C7E0FF !important;box-shadow: none !important; font-size: 13px !important;">Valider</button>
+                <button [disabled]="item.state===0" (click)="validate(item, false)" style="box-shadow: none;" type="button"
+                  class="btn new-btn-normsup default-btn-table" style="color: #4E5983 ;border: 1px solid #C7E0FF !important;box-shadow: none !important; font-size: 13px !important;">Invalider</button>
+              </div>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -457,7 +457,7 @@ export default class SupplierRegistry {
                 loggerT.error('ERROR ON QUERY getGroups.');
                 return Promise.reject(err);
             })
-            ;
+        ;
     }
 
     public checkGroup(org, data) {
@@ -1149,18 +1149,32 @@ export default class SupplierRegistry {
                     query['sql'] = Query.MONTHLY_CONFORMITY;
                     query['values'] = [user.organisation, user.organisation, moment().startOf('month').subtract(4, 'months').toDate()];
                 }
+                // let query2 = {
+                //     timeout: 40000,
+                //     sql: Query.CURRENT_MONTH_CONFORMITY,
+                //     values: [user.organisation]
+                // };
 
                 return this.mysql.query(query)
                     .then(res => {
                         let conformity = {};
+                        loggerT.verbose('[monthlyConformity] res', res);
+
                         res.map(e => {
-                            if (!conformity[e.month_evaluated]) {
+                            if(!conformity[e.month_evaluated]) {
                                 conformity[e.month_evaluated] = {};
                                 conformity[e.month_evaluated].totalConnected = 0;
                                 conformity[e.month_evaluated].totalConform = 0;
                             }
-                            conformity[e.month_evaluated].totalConnected = e.connected_suppliers ? e.connected_suppliers : 0;
-                            conformity[e.month_evaluated].totalConform += e.conformity ? e.conformity : 0;
+                            if(e.current_month === 0) {
+                                conformity[e.month_evaluated].totalConnected = e.connected_suppliers ? parseInt(e.connected_suppliers, 10) : 0;
+                                conformity[e.month_evaluated].totalConform += e.conformity ? parseInt(e.conformity, 10) : 0;
+                            } else if(e.current_month === 1 && e.conformity == e.nb_doc_req) {
+                                conformity[e.month_evaluated].totalConnected = e.connected_suppliers !== null ? e.connected_suppliers : 0;
+                                conformity[e.month_evaluated].totalConform += 1;
+                            } else if(e.current_month === 1 && e.conformity != e.nb_doc_req) {
+                                conformity[e.month_evaluated].totalConnected = e.connected_suppliers !== null ? e.connected_suppliers : 0;
+                            }
                         });
                         loggerT.verbose('conformity', conformity);
                         return Promise.resolve(conformity);
