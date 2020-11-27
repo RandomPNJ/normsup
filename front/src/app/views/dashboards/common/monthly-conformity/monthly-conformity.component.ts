@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Input } from '@angular/core';
 import { HttpService } from 'src/app/services/http.service';
 import * as moment from 'moment';
 import { Chart } from 'chart.js';
@@ -12,6 +12,7 @@ import 'chartjs-plugin-labels';
 export class MonthlyConformityComponent implements OnInit {
 
   @ViewChild('conformityChart') private conformityChartRef: ElementRef;
+  @Input() nbSuppliers: any;
 
   public lineContext: CanvasRenderingContext2D;
   public showConformityChart: Boolean = false;
@@ -116,12 +117,16 @@ export class MonthlyConformityComponent implements OnInit {
   getConformityRateData(data?) {
 		this.chartDatasets.labels.push(' ');
 		Object.keys(data).forEach((k, index) => {
+			// ?????
 			if(index === 0) {
 				if(data[k].totalConnected === 0) {
 					this.chartDatasets.datasets[0].data.push(0)
 				} else {
 					this.chartDatasets.datasets[0].data.push((data[k].totalConform / data[k].totalConnected) * 100)
 				}
+			} else if(index === Object.keys(data).length-1) {
+				this.chartDatasets.labels.push(this.months[parseInt(k, 10) - 1]);
+				this.chartDatasets.datasets[0].data.push((data[k].totalConform / this.nbSuppliers) * 100)
 			} else {
 				if(data[k].totalConnected === 0) {
 					this.chartDatasets.datasets[0].data.push(0)
