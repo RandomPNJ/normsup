@@ -78,8 +78,8 @@ const routes: Routes = [
   { path: 'login', component: LoginPageComponent, canActivate: [] },
   { path: 'admin/login', component: AdminLoginPageComponent, canActivate: [] },
   { path: 'reset_password', component: ResetPasswordComponent, canActivate: [] },
-  { path: 'supplier/activationLink', component: GenerateActivationLinkComponent },
-  { path: 'supplier/activation', component: ActivationLinkComponent },
+  { path: 'suppliers/activationLink', component: GenerateActivationLinkComponent },
+  { path: 'suppliers/activation', component: ActivationLinkComponent },
   { path: 'logout', component: LogoutPageComponent },
   { path: 'dashboard', component: DashboardComponent, canActivate: [LoggedinGuard],
     children: [

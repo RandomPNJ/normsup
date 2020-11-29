@@ -423,7 +423,7 @@ export default class AuthRegistry {
                                     rTitle = 'Madame';
                                 }
                                 
-                                let link = 'https://app.normsup.com/supplier/activation;activationToken='+token;
+                                let link = 'https://app.normsup.com/suppliers/activation;activationToken='+token;
                                 // mailOptions.html = genericTemplate({ 'rTitle': rTitle, 'respresName': _.capitalize(data.lastname), 'client_name': client.denomination, 'denomination': denom, 'login': data.email, 'password': password });
                                 mailOptions.html = genericTemplate({ 'rTitle': rTitle, 'respresName': _.capitalize(data.lastname), 'link': link });
                                 mailOptions.to = data.email;
