@@ -12,8 +12,8 @@ import { filter } from 'rxjs/operators';
 export class SidebarComponent implements OnInit {
 
   @Input() topMenuNavLinks = [];
-  @Input() bottomMenuNavLinks = [];
   @Input() defaultLinkImgCircle;
+  @Input() withHelpBottomMenu = false;
 
   withHelp = true;
 
@@ -21,6 +21,8 @@ export class SidebarComponent implements OnInit {
   showHeader;
   isLoggedIn: Subscription;
   isBackoffice: Boolean = false;
+
+  displayHelp = false;
 
   constructor(private router: Router,
     private route: ActivatedRoute,
@@ -48,11 +50,3 @@ export class SidebarComponent implements OnInit {
   }
 
 }
-
-/*
-  - id
-  - logoLink
-  - label
-  - routerLink
-
- */

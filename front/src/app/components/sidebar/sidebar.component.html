@@ -19,32 +19,43 @@
 
   </ul>
 
-  <ul *ngIf="bottomMenuNavLinks && 0 !== bottomMenuNavLinks.length" class="nav flex-column mb-0 bottom-menu">
-    <li *ngFor="let bottomNavLink of bottomMenuNavLinks" class="nav-item" class="nav-item">
-      <a id="{{bottomNavLink.id}}" routerLinkActive="active" routerLink="{{bottomNavLink.navLink}}" class="nav-link text-dark nav-link-s" role="tab"
-         routerLinkActive="active"  #rla="routerLinkActive">
+  <ng-container
+    *ngIf="withHelpBottomMenu"
+    [ngTemplateOutlet]="helpBottomMenuTemplate">
+  </ng-container>
+
+</div>
+
+<ng-template #helpBottomMenuTemplate>
+  <ul class="nav flex-column mb-0 bottom-menu">
+    <li class="nav-item" (click)="displayHelp = !displayHelp">
+      <a class="nav-link text-dark nav-link-s">
         <div class="side-icon-placement">
           <span class="icn-cont dashboard-icn" style="bottom: 12px;">
-            <img *ngIf="bottomNavLink.logoLink" [src]="bottomNavLink.logoLink" class="icn-style added-pad" />
+             <img [src]="'../../assets/img/menu-groups.svg'" class="icn-style added-pad" />
           </span>
-          <span class="link-txt">
-            {{ bottomNavLink.label }}
-          </span>
-          <img *ngIf="defaultLinkImgCircle && rla.isActive" [src]="defaultLinkImgCircle"  class="active-lnk-icn added-pad"  />
-        </div>
-      </a>
-    </li>
-    <li class="nav-item">
-      <a id="documents" routerLinkActive="active" class="nav-link text-dark nav-link-s" routerLink="/backoffice/documents" role="tab">
-        <div class="side-icon-placement">
-          <span class="icn-cont grp-icn">
-            <img src="../../../assets/img/doc-icn.svg"  class="icn-style added-pad" style="width: 29px;height: 15px;"/>
-          </span>
-          <span class="link-txt">Documents</span>
-          <img *ngIf="active" src="../../../assets/img/active-link.svg"  class="active-lnk-icn added-pad"/>
+          <span class="link-txt">Besoin d'aide</span>
         </div>
       </a>
     </li>
 
+    <ul class="nav flex-column mb-0" *ngIf="displayHelp">
+      <li class="nav-item sub-menu-item">
+        <a href="https://www.google.fr" class="nav-link text-dark nav-link-s">
+          <div class="side-icon-placement">
+            <span class="link-txt">Contacter le support</span>
+          </div>
+        </a>
+      </li>
+
+      <li class="nav-item sub-menu-item">
+        <a href="https://www.google.fr" class="nav-link text-dark nav-link-s">
+          <div class="side-icon-placement">
+            <span class="link-txt">FAQ</span>
+          </div>
+        </a>
+      </li>
+
+    </ul>
   </ul>
-</div>
+</ng-template>
