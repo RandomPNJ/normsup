@@ -1,39 +1,42 @@
-<div class="container client-documents-information-container">
+<app-layout-page-content>
 
-  <div class="flex-row">
-    <app-ui-back-link
-      [link]="'../'"
-      [label]="'Retour aux documents'">
-    </app-ui-back-link>
-  </div>
 
-  <div class="title-row" style="padding-top: 45px !important; padding-bottom: 25px !important;">
+    <div class="flex-row">
+      <app-ui-back-link
+        [link]="'../'"
+        [label]="'Retour aux documents'">
+      </app-ui-back-link>
+    </div>
 
-    <div class="drop-off-document-container" *ngIf="currentDocument">
+    <div class="title-row" style="padding-top: 45px !important; padding-bottom: 25px !important;">
 
-      <div class="drop-off-document-title">
+      <div class="drop-off-document-container" *ngIf="currentDocument">
+
+        <div class="drop-off-document-title">
         <span>
           {{ currentDocument.name }}
         </span>
-      </div>
-
-      <div class="drop-off-document-body">
-
-        <div *ngIf="'KBIS' === documentType">
-          <app-kbis-form (dropOffBtnEvent)="onKbisSaveEvent($event)"></app-kbis-form>
         </div>
 
-        <div *ngIf="'ATTESTATION_VIGILANCE' === documentType">
-          <app-vigilance-certificate-form (dropOffBtnEvent)="onVigilanceCertificateSaveEvent($event)"></app-vigilance-certificate-form>
-        </div>
+        <div class="drop-off-document-body">
 
-        <div *ngIf="'LISTE_TRAVAILLEURS' === documentType">
-          <app-nominative-list-foreign-worker-form (dropOffBtnEvent)="onNominativeListForeignWorkerSaveEvent($event)"></app-nominative-list-foreign-worker-form>
+          <div *ngIf="'KBIS' === documentType">
+            <app-kbis-form (dropOffBtnEvent)="onKbisSaveEvent($event)"></app-kbis-form>
+          </div>
+
+          <div *ngIf="'ATTESTATION_VIGILANCE' === documentType">
+            <app-vigilance-certificate-form (dropOffBtnEvent)="onVigilanceCertificateSaveEvent($event)"></app-vigilance-certificate-form>
+          </div>
+
+          <div *ngIf="'LISTE_TRAVAILLEURS' === documentType">
+            <app-nominative-list-foreign-worker-form (dropOffBtnEvent)="onNominativeListForeignWorkerSaveEvent($event)"></app-nominative-list-foreign-worker-form>
+          </div>
+
         </div>
 
       </div>
 
     </div>
 
-  </div>
-</div>
+</app-layout-page-content>
+
