@@ -1,3 +1,5 @@
+<app-layout-page-content>
+
 <div *ngIf="currentDocument" class="container client-documents-information-container">
 
   <div class="flex-row">
@@ -9,7 +11,6 @@
 
   <div class="title-row" style="padding-top: 45px !important; padding-bottom: 25px !important;">
 
-    <div class="flex-row">
       <app-ui-page-title [title]="currentDocument.name"></app-ui-page-title>
 
       <span class="span-row-centered item-count" *ngIf="clients">
@@ -17,7 +18,6 @@
         <span class="count-style"> {{ clients.length }}</span>
         clients.
       </span>
-    </div>
 
   </div>
 
@@ -41,7 +41,7 @@
 
   </div>
 </div>
-
+</app-layout-page-content>
 <ng-template #clientListTemplate>
   <div
     *ngFor="let client of clients"
