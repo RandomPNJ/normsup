@@ -671,35 +671,43 @@ export default class SupplierRegistry {
                             supplier_id: res.insertId,
                             client_id: user.organisation
                         };
+
                         // REPRESENTATIVE 
                         representative['organisation_id'] = createdOrg.insertId;
                         representative['added_by'] = user.id;
                         representative['client_id'] = user.organisation;
-                        let confData = {supplier_id: createdOrg.insertId, client_id: user.organisation, start_date: moment().startOf('month').toDate()};
+                        // let confData = {supplier_id: createdOrg.insertId, client_id: user.organisation, start_date: moment().startOf('month').toDate()};
                         let promises = [];
-                        promises.push(this.orgConfig(newInsert, confData), this.represConfig(representative))
-
+                        if(representative && representative.email) {
+                            promises.push(this.orgConfig(newInsert, {}), this.represConfig(representative));
+                        } else {
+                            promises.push(this.orgConfig(newInsert, {}))
+                        }
                         return Promise.all(promises.map(p => p.catch(e => e)))
                             .then((promiseRes) => {
                                 loggerT.verbose('[createSupplierBis] RES ', promiseRes)
-                                if(promiseRes && promiseRes[1] && promiseRes[1].code === 'ER_DUP_ENTRY') {
-                                    return Promise.resolve({msg: 'Representative email already linked to another organisation', code: 1});
+                                if(representative && representative.email) {
+                                    if(promiseRes && promiseRes[1] && promiseRes[1].code === 'ER_DUP_ENTRY') {
+                                        return Promise.resolve({msg: 'Representative email already linked to another organisation', code: 1});
+                                    } else {
+                                        let suppData = {
+                                            name: representative.name,
+                                            lastname: representative.lastname,
+                                            email: representative.email,
+                                            password: null,
+                                            created_at: moment().toDate(),
+                                        };
+                                        return this.createSupplierUser(suppData, {id: createdOrg.insertId}, {id: user.organisation}, data, {}, promiseRes[1].insertId)
+                                            .then(res => {
+                                                return Promise.resolve({ msg: 'Supplier and supplier user created successfully.', code: 0 });
+                                            })
+                                            .catch(err => {
+                                                return Promise.resolve({ msg: 'Supplier created but couldn\'t create supplier user.', code: 2 });
+                                            })
+                                        ;
+                                    }
                                 } else {
-                                    let suppData = {
-                                        name: representative.name,
-                                        lastname: representative.lastname,
-                                        email: representative.email,
-                                        password: null,
-                                        created_at: moment().toDate(),
-                                    };
-                                    return this.createSupplierUser(suppData, {id: createdOrg.insertId}, {id: user.organisation}, data, {}, promiseRes[1].insertId)
-                                        .then(res => {
-                                            return Promise.resolve({ msg: 'Supplier and supplier user created successfully.', code: 0 });
-                                        })
-                                        .catch(err => {
-                                            return Promise.resolve({ msg: 'Supplier created but couldn\'t create supplier user.', code: 2 });
-                                        })
-                                    ;
+                                    return Promise.resolve({ msg: 'Supplier created successfully.', code: 0 });
                                 }
                             })
                         ; 
@@ -722,17 +730,29 @@ export default class SupplierRegistry {
             sql: Query.INSERT_REL,
             values: [relData],
         };
-        let q1 = {
+        // let q1 = {
+        //     timeout: 40000,
+        //     sql: Query.INSERT_SUPP_CONFORMITY,
+        //     values: [confData],
+        // };
+        let q2 = {
             timeout: 40000,
-            sql: Query.INSERT_SUPP_CONFORMITY,
-            values: [confData],
+            sql: Query.INSERT_DOC_REL,
+            values: [],
         };
-
+        let v = [];
+        for(let i=1; i<=3; i++) {
+            v.push([i, relData.supplier_id, relData.client_id]);
+        }
+        q2.values = [v];
+        loggerT.verbose('q2.values', q2.values);
         let prs = [];
         prs.push(this.mysql.query(q));
-        prs.push(this.mysql.query(q1));
+        // prs.push(this.mysql.query(q1));
+        prs.push(this.mysql.query(q2));
         return Promise.all(prs.map(p => p.catch(e => e)))
             .then((res) => {
+                loggerT.verbose('[orgConfig] res', res);
                 return Promise.resolve(res);
             })
         ;
@@ -1052,7 +1072,7 @@ export default class SupplierRegistry {
                 loggerT.error('ERROR ON QUERY getSuppliers.');
                 return Promise.reject(err);
             })
-            ;
+        ;
     }
 
     public login(username, password) {
@@ -1192,6 +1212,50 @@ export default class SupplierRegistry {
             ;
     }
 
+    public getDocumentList(data, user) {
+        loggerT.verbose('GET DOCUMENT LIST user', user);
+        let query = {
+            timeout: 40000
+        };
+        let finalRes = {
+            KBIS: {},
+            URSSAF: {},
+            LNTE: {},
+        };
+        if(data.type && data.type === 'LEGAL') {
+            query['sql'] = Query.GET_LEGAL_DOCUMENT_REQUIRED;
+            query['values'] = [];
+            user.org.forEach((o, i) => {
+                if(i==0) {
+                    query['sql'] += ' sdr.org_id = ' + o.org;
+                } else {
+                    query['sql'] += ' OR sdr.org_id = ' + o.org;
+                }
+            });
+        } else if(data.type === 'COMP') {
+
+        }
+
+        loggerT.verbose('getDocumentList  final SQL ==== ', query['sql']);
+
+        return this.mysql.query(query)
+            .then(res => {
+                loggerT.verbose('getDocumentList res', res)
+                if(res && res.length > 0) {
+                    res.forEach(r => {
+                        finalRes[r.name] = r;
+                    });
+                }
+
+                return Promise.resolve(finalRes);
+            })
+            .catch(err => {
+                loggerT.error('ERROR ON getDocumentList :', err);
+                return Promise.reject(err);
+            })
+        ;
+    }
+
     public createGroup(data, suppliers, remindersData) {
         loggerT.verbose('Group data', data);
         let query = {
@@ -1254,15 +1318,36 @@ export default class SupplierRegistry {
         return this.mysql.query(query)
             .then(res => {
                 loggerT.verbose('QUERY supplierLoginHistory RES ==== ', res);
-
-                return Promise.resolve(res)
-                    ;
+                return Promise.resolve(res);
             })
             .catch(err => {
                 loggerT.error('ERROR ON QUERY supplierLoginHistory : ', err);
                 throw new Error('Error when trying to update supplier login history.');
             })
-            ;
+        ;
+    }
+
+    public getClientList(data, user) {
+        let query = {
+            timeout: 40000
+        };
+        loggerT.verbose('getClientList data ', data);
+        if(data.docs) {
+            query['sql'] = Query.CLIENT_LIST_DOC;
+            query['values'] = [data.docs, user.id];
+        } else {
+        }
+
+        return this.mysql.query(query)
+            .then(res => {
+                loggerT.verbose('QUERY supplierLoginHistory RES ==== ', res);
+                return Promise.resolve(res);
+            })
+            .catch(err => {
+                loggerT.error('ERROR ON QUERY supplierLoginHistory : ', err);
+                throw new Error('Error when trying to update supplier login history.');
+            })
+        ;
     }
 
     // TODO: Remove & Add supplier account

@@ -26,9 +26,11 @@ export class CardDocumentTemplateComponent implements OnInit {
   }
 
   getExpirationStatus(expirationDate) {
-    if (expirationDate) {
-      const nbDays = moment(expirationDate).diff(moment(), 'days');
-      if (nbDays < 0) {
+    if(expirationDate) {
+      console.log('moment expirationDate :', moment(expirationDate));
+      const nbDays = moment(expirationDate, 'YYYY-MM-DD HH:mm:ss').diff(moment(), 'days');
+      console.log('nbDays :', nbDays);
+      if(nbDays < 0) {
         return 'EXPIRED';
       } else if (nbDays <= this.NB_DAYS_FOR_STATUS_EXPIRED_SOON) {
         return 'EXPIRED_SOON';
@@ -39,7 +41,8 @@ export class CardDocumentTemplateComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.status = this.getExpirationStatus(this.document.expirationDate);
+    console.log('this.document.validityDate', this.document.validityDate);
+    this.status = this.getExpirationStatus(this.document.validityDate);
   }
 
   onClickDropOffBtnEvent(document) {

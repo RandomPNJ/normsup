@@ -5,7 +5,7 @@
     <div class="card-content">
 
       <div class="card-header">
-        <span class="card-header-title">{{ document.name }}</span>
+        <span class="card-header-title">{{ document.description  }}</span>
       </div>
 
       <div class="card-btn-container">
@@ -14,7 +14,7 @@
         </ng-container>
 
         <ng-container
-          *ngIf="document.expirationDate"
+          *ngIf="document.validityDate"
           [ngTemplateOutlet]="cardStatusTemplate">
         </ng-container>
       </div>
@@ -26,15 +26,15 @@
 <!-- Card status template -->
 <ng-template #cardStatusTemplate>
   <span *ngIf="'EXPIRED' === status" class="exp-date-text status-expired">
-    Expiré depuis le {{ document.expirationDate | date : 'dd/MM/yyyy' }}
+    Expiré depuis le {{ document.validityDate | date : 'dd/MM/yyyy' }}
   </span>
 
   <span *ngIf="'EXPIRED_SOON' === status" class="exp-date-text status-expired-soon">
-    Expire le {{ document.expirationDate | date : 'dd/MM/yyyy' }}
+    Expire le {{ document.validityDate | date : 'dd/MM/yyyy' }}
   </span>
 
   <span *ngIf="'UP_TO_DATE' === status" class="exp-date-text status-up-to-date">
-    Expire le {{ document.expirationDate | date : 'dd/MM/yyyy' }}
+    Expire le {{ document.validityDate | date : 'dd/MM/yyyy' }}
   </span>
 </ng-template>
 

@@ -117,27 +117,4 @@ export class BackofficeDocumentComponent implements OnInit {
     this.modalRef = null;
   }
 
-  fillUser(record: any) {
-    this.clientToAdd.name = record.name;
-    this.clientToAdd.lastname = record.lastname;
-    this.clientToAdd.email = record.email;
-    this.clientToAdd.role = record.role;
-    this.openModal(this.modal, 'ModifyUser');
-  }
-
-
-
-  // TODO: modify this, we only need JWT
-  addClient(data: any) {
-    console.log('Client Data : ', data);
-
-    this.apiService.postData('/api/admin/clients/register', { client: data })
-      .subscribe(res => {
-        this.hideModal('');
-      }, err => {
-        console.log('addClient error : ', err)
-      })
-    ;
-  }
-
 }

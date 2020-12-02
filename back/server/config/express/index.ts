@@ -105,7 +105,7 @@ export default (expressApp) => {
      || req.url === '/admin/conformity/checkup' || req.url === '/admin/alerts' || req.url === '/auth/reset_password' || req.url === '/auth/generate_activation_link') {
       return next();
     }
-    if(req.url === '/supplier/currentSupplier' || req.url === '/documents/upload') {
+    if(req.url === '/supplier/currentSupplier' || req.url === '/documents/upload' || req.url.indexOf('/supplier/document_list') !== -1) {
       AuthMiddleware.useSupplier(req, res, next);
     } else if(req.url.indexOf('admin') !== -1) {
       AuthMiddleware.useAdmin(req, res, next);

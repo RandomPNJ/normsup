@@ -459,20 +459,51 @@ export default class AdminRegistry {
         let changeToReplaced = {
             timeout: 40000,
             sql: Query.UPDATE_DOC_TO_REPLACED,
-            values: [validated ? 1 : 0, data.validityDate, id]
+            values: [data.siren, data.category]
         };
-        let queries = [];
+        // let queries = [];
+
+        // if(validated) {
+        //     queries.push(this.mysql.query(changeToReplaced));
+        // }
+        // queries.push(this.mysql.query(changeMetadata));
 
         if(validated) {
-            queries.push(this.mysql.query(changeToReplaced));
+            return this.mysql.query(changeToReplaced)
+                .then(res => {
+                    if(res) {
+                        loggerT.verbose('changeToReplaced res', res);
+                        return this.mysql.query(changeMetadata)
+                            .then(res2 => {
+                                loggerT.verbose('changeMetadata res2', res2);
+                                if(res2) 
+                                    return Promise.resolve({msg: 'Old document replaced and new document status changed', status: 0});
+                                else
+                                    return Promise.reject({msg: 'Old document replaced and new document status not changed', status: 0});
+                            })
+                            .catch(err => {
+                                return Promise.reject({msg: 'Old document replaced and new document status not changed', status: 0});
+                            })
+                        ;
+                    }
+                })
+                .catch(err => {
+                    loggerT.error('[document validate] err', err);
+                    return Promise.reject({msg: 'Old document not replaced and new document status not changed', status: 0});
+                })
+            ;
+        } else {
+            return this.mysql.query(changeMetadata)
+                .then(res => {
+                    loggerT.verbose('[document unvalidate] res', res);
+                    return Promise.resolve({msg: 'New document status changed', status: 0});
+                })
+                .catch(err => {
+                    loggerT.error('[document unvalidate] err', err);
+                    return Promise.reject({msg: 'New document status not changed', status: 1});
+                })
+            ;
         }
-        queries.push(this.mysql.query(changeMetadata));
-
-        return Promise.all(queries.map(p => p.catch(e => e)))
-            .then((res) => {
-                return Promise.resolve(res);
-            })
-        ;
     }
 
     private downloadDocument(user, id) {

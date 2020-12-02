@@ -125,6 +125,8 @@ export default {
       actions: [
         { name: 'getCurrentSupplier', uriPattern: '/currentSupplier', method: 'get' },
         { name: 'getDocuments', uriPattern: '/documents', method: 'get' },
+        { name: 'getDocumentList', uriPattern: '/document_list', method: 'get' },
+        { name: 'getClientList', uriPattern: '/client_list', method: 'get' },
       ],
     },
     reminders: {

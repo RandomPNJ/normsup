@@ -24,11 +24,11 @@
             <app-kbis-form (dropOffBtnEvent)="onKbisSaveEvent($event)"></app-kbis-form>
           </div>
 
-          <div *ngIf="'ATTESTATION_VIGILANCE' === documentType">
+          <div *ngIf="'URSSAF' === documentType">
             <app-vigilance-certificate-form (dropOffBtnEvent)="onVigilanceCertificateSaveEvent($event)"></app-vigilance-certificate-form>
           </div>
 
-          <div *ngIf="'LISTE_TRAVAILLEURS' === documentType">
+          <div *ngIf="'LNTE' === documentType">
             <app-nominative-list-foreign-worker-form (dropOffBtnEvent)="onNominativeListForeignWorkerSaveEvent($event)"></app-nominative-list-foreign-worker-form>
           </div>
 

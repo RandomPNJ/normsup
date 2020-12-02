@@ -1,5 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
+import { HttpService } from 'src/app/services/http.service';
+import { NotifService } from 'src/app/services/notif.service';
 
 @Component({
   selector: 'app-dropoff-supplier-document',
@@ -13,7 +15,8 @@ export class DropoffSupplierDocumentComponent implements OnInit {
   currentDocument;
 
   constructor(
-    private route: ActivatedRoute
+    private route: ActivatedRoute, private httpService: HttpService,
+    private notifService: NotifService, private router: Router
   ) {
   }
 
@@ -27,6 +30,18 @@ export class DropoffSupplierDocumentComponent implements OnInit {
   onKbisSaveEvent(form) {
     console.log('In onKbisSaveEvent method');
     console.log(form.get('file').value);
+    let file = form.get('file').value;
+    let main_form: FormData = new FormData();
+    
+    main_form.append('files', file, 'k' + file.name);
+    return this.httpService
+        .uploadDocument('/api/documents/upload', main_form)
+        .subscribe(res => {
+          console.log('onKbisSaveEvent res', res);
+          this.router.navigate(['supplier', 'dashboard', 'documents']);
+          return this.notifService.success('Document KBIS ajouté avec succès.');
+        })
+    ;
   }
 
   onVigilanceCertificateSaveEvent(form) {
@@ -42,6 +57,29 @@ export class DropoffSupplierDocumentComponent implements OnInit {
       otherOrganizationName: otherOrganizationName,
       file: file
     });
+
+    let main_form: FormData = new FormData();
+    let name = '';
+    if(urssaf) {
+      name = 'u';
+      main_form.append('urssaf_org', 'URSSAF');
+    } else if(otherOrganization) {
+      if(otherOrganizationName) {
+        main_form.append('urssaf_org', otherOrganizationName);
+      } else {
+        main_form.append('urssaf_org', 'OTHER');
+      }
+    }
+
+    main_form.append('files', file, 'u' + file.name);
+    return this.httpService
+        .uploadDocument('/api/documents/upload', main_form)
+        .subscribe(res => {
+          console.log('onKbisSaveEvent res', res);
+          this.router.navigate(['supplier', 'dashboard', 'documents']);
+          return this.notifService.success('Document KBIS ajouté avec succès.');
+        })
+    ;
   }
 
   onNominativeListForeignWorkerSaveEvent(form) {

@@ -21,14 +21,16 @@ export class SupplierDocumentComponent implements OnInit {
 
   ngOnInit(): void {
     this.supplierService.getMandatoryDocumentsListMock().subscribe(data => {
-      this.mandatoryDocuments = data;
+      console.log('mandatoryDocuments data', data);
+      this.mandatoryDocuments = Object.values(data.body['items']);
     }, error => {
       console.log(error);
       this.notificationService.error('Impossible de récupérer la liste des documents légaux.');
     });
 
     this.supplierService.getOptionalDocumentsListMock().subscribe(data => {
-      this.optionalDocuments = data;
+      // this.optionalDocuments = data;
+      this.optionalDocuments = [];
     }, error => {
       console.log(error);
       this.notificationService.error('Impossible de récupérer la liste des documents complémentaires.');
@@ -37,14 +39,14 @@ export class SupplierDocumentComponent implements OnInit {
 
   onBtnCardClickEvent(document) {
     this.router.navigate(['/supplier/dashboard/documents/details'], { queryParams: {
-        documentType: document.type
+        documentType: document.name
     }});
   }
 
   onBtnDropOffClickEvent(document) {
     // Drop off document
     this.router.navigate(['/supplier/dashboard/documents/drop-off'], { queryParams: {
-        documentType: document.type
+        documentType: document.name
       }});
   }
 }

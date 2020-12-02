@@ -31,8 +31,9 @@ export class SupplierDocumentDetailsComponent implements OnInit {
   }
 
   private initMockClientList() {
-    this.supplierService.getClientListMock().subscribe(data => {
-      this.clients = data;
+    this.supplierService.getClientListMock(this.documentType).subscribe(data => {
+      console.log('initMockClientList data', data);
+      // this.clients = data;
     }, error => {
       this.notificationService.error('Impossible de récupérer les clients');
       console.log(error);

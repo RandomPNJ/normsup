@@ -33,12 +33,13 @@ export function validate(req, res, AdminRegistry) {
     let id 
     let data = req.body;
 
-    if(!data.item) {
+    if(!data.item || !data.item.validityDate || !data.item.siren) {
         const error = new Error(`Invalid request, please provide item property.`);
         error['statusCode'] = 400;
         throw error;
     }
-    if(!data.validated) {
+
+    if(!data.hasOwnProperty('validated') || typeof data.validated !== 'boolean') {
         const error = new Error(`Invalid request, please provide validated property.`);
         error['statusCode'] = 400;
         throw error;

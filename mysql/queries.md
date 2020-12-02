@@ -541,7 +541,7 @@ CREATE TABLE `normsup`.`doc_types` (
  
 ## Applied
  
-False
+True
  
  
 ## Date
@@ -577,12 +577,10 @@ CREATE TABLE `normsup`.`supplier_doc_relation` (
     ON DELETE CASCADE
     ON UPDATE NO ACTION);
  
- 
- 
- 
+
 ## Applied
  
-False
+True
 
 ## Date
  
@@ -603,7 +601,7 @@ ADD PRIMARY KEY (`siren`, `start_date`);
  
 ## Applied
  
-False
+True
 
 ## Date
  
@@ -621,6 +619,8 @@ ADD COLUMN `state` INT(1) NULL DEFAULT 2 AFTER `id`;
 
 ## Applied
  
-False
+True
+
+
 
 

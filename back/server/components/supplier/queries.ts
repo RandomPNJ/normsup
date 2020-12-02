@@ -74,6 +74,7 @@ export const INSERT_SUPP_CONFORMITY = 'INSERT INTO `supplier_conformity` SET ?';
 export const INSERT_GROUP = 'INSERT INTO `groups` SET ?';
 export const INSERT_GROUP_MEM = 'INSERT INTO `group_members` (group_id, member_id) VALUES ?';
 export const INSERT_REL = 'INSERT INTO `client_supplier_relation` SET ?';
+export const INSERT_DOC_REL = 'INSERT INTO `supplier_doc_relation` (doc_id, org_id, client_id) VALUES ?';
 export const INSERT_REPRESENTATIVE = 'INSERT INTO `representatives` SET ?'; 
 export const INSERT_GROUP_REMINDERS = 'INSERT INTO `group_reminders` (group_id, activated, legal_docs, comp_docs, frequency, last_reminder, next_reminder) VALUES (?,?,?,?,?,?,?)'
 export const MODIFY_GROUP_REMINDERS = 'INSERT INTO `group_reminders` (group_id, activated, legal_docs, comp_docs, frequency, next_reminder) VALUES (?,?,?,?,?,?)' + 
@@ -114,3 +115,6 @@ export const SUPPLIER_LOGIN_HISTORY = 'INSERT INTO supplier_connexion_history(su
 
 export const SUPP_LEGAL_DOCS = "SELECT * FROM normsup.document as d INNER JOIN organisations as o ON d.siren=o.siren WHERE o.added_by_org = ? AND o.id = ? AND (category = 'KBIS' OR category = 'LNTE' OR category = 'URSSAF');";
 export const SUPP_COMP_DOCS = "SELECT * FROM normsup.document as d INNER JOIN organisations as o ON d.siren=o.siren WHERE o.added_by_org = ? AND o.id = ? AND (category <> 'KBIS' AND category <> 'LNTE' AND category <> 'URSSAF');";
+
+export const GET_LEGAL_DOCUMENT_REQUIRED = 'SELECT o.siren,dt.name, dt.type, dt.description, d.validityDate FROM doc_types as dt INNER JOIN supplier_doc_relation as sdr ON dt.id=sdr.doc_id INNER JOIN organisations as o ON o.id=sdr.org_id LEFT JOIN document as d ON d.siren=o.siren AND d.category=dt.name AND d.state=1 WHERE ';
+export const CLIENT_LIST_DOC = 'SELECT * FROM supplier_org_relation as sor INNER JOIN client as c ON sor.client_id=c.id INNER JOIN supplier_doc_relation as sdr ON sdr.client_id=c.id AND sdr.org_id=sor.org_id INNER JOIN doc_types as dt ON dt.id=sdr.doc_id AND dt.name = ? WHERE sor.supplier_id = ? ;';

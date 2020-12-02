@@ -160,12 +160,8 @@ export class BackofficeDocumentTableComponent implements OnInit {
     }
 
     selectedDate(e, index) {
-      console.log('selectedDate e', e.start.toDate());
-      console.log('selectedDate index', index);
-      this.items[this.tableParams.start + index].validityDate = e.start.format('DD-MM-YYYYTHH:mm:ss.SSS');
-      this.itemsToDisplay[index].validityDate = e.start.format('DD-MM-YYYYTHH:mm:ss.SSS');
-      console.log('this.itemsToDisplay :', this.itemsToDisplay);
-      // console.log('selectedDate e', e);
+      this.items[this.tableParams.start + index].validityDate = e.start.format('YYYY-MM-DD HH:mm:ss');
+      this.itemsToDisplay[index].validityDate = e.start.format('YYYY-MM-DD HH:mm:ss');
     }
   
     closeDatePicker(e) {
@@ -195,18 +191,18 @@ export class BackofficeDocumentTableComponent implements OnInit {
       ;
     }
   
-    readFileFromBlob(blob) {
+    readFileFromBlob(blob) {  
       if(blob) {
-        // reader.readAsDataURL(blob);
         const fileURL = URL.createObjectURL(blob);
-        console.log('fileURL', fileURL)
         window.open(fileURL, '_blank');
       }
     }
+
     validate(item, validated) {
       let data = {
         item: {
-          validityDate: item.validityDate
+          validityDate: item.validityDate,
+          siren: item.siren
         },
         validated: validated
       };

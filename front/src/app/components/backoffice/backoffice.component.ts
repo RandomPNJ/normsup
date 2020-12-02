@@ -17,6 +17,33 @@ export class BackofficeComponent implements OnInit {
   sidebarVisible: Boolean = true;
   user: any;
 
+  sidebarItems: any = [
+    {
+       id: 'clients',
+       navLink: '/backoffice/clients',
+       logoLink: '../../assets/img/menu-groups.svg',
+       label: 'Clients'
+    },
+    {
+       id: 'users',
+       navLink: '/backoffice/users',
+       logoLink: '../../assets/img/menu-suppliers.svg',
+       label: 'Utilisateurs'
+    },
+    {
+      id: 'suppliers',
+      navLink: '/backoffice/users',
+      logoLink: '../../assets/img/menu-suppliers.svg',
+      label: 'Utilisateurs (fournisseur)'
+    },
+    {
+      id: 'documents',
+      navLink: '/backoffice/documents',
+      logoLink: '../../assets/img/menu-suppliers.svg',
+      label: 'Documents'
+    }
+  ];
+
   // Implement the admin checking
 
   constructor(private httpService: HttpService, private authService: AuthService,

@@ -557,35 +557,35 @@ export default class SupplierRegistry {
         let query = {
             timeout: 40000
         };
-        let query2 = {
-            timeout: 40000
-        };
+        // let query2 = {
+        //     timeout: 40000
+        // };
         let promises = [];
         let datas = [];
         let a;
-        let date = data.validityDate ? moment(data.validityDate).format("YYYY-MM-DD HH:mm:ss") : null;
+        let date = data.validityDate ? moment(data.validityDate).format("DD-MM-YYYY HH:mm:ss") : null;
         query['sql']    = Query.INSERT_DOC_METADATA;
         query['values'] = [data];
 
-        if(data.category === 'KBIS') {
-            query2['sql']    = Query.UPSERT_SUPPLIER_CONF_KBIS;
-        } else if(data.category === 'URSSAF') {
-            query2['sql']    = Query.UPSERT_SUPPLIER_CONF_URS;
-        } else if(data.category === 'LNTE') {
-            query2['sql']    = Query.UPSERT_SUPPLIER_CONF_LNTE;
-        }
+        // if(data.category === 'KBIS') {
+        //     query2['sql']    = Query.UPSERT_SUPPLIER_CONF_KBIS;
+        // } else if(data.category === 'URSSAF') {
+        //     query2['sql']    = Query.UPSERT_SUPPLIER_CONF_URS;
+        // } else if(data.category === 'LNTE') {
+        //     query2['sql']    = Query.UPSERT_SUPPLIER_CONF_LNTE;
+        // }
         promises = [this.mysql.query(query)];
         /**
          * La première ligne est commentée car la 3ème valeur, le 1, signifie que le fournisseur est valide pour le document
          * On la passe à 2 quand on a besoin de validation
          * On la passe à 3 quand le fournisseur est invalide pour le document
          */
-        user.org.forEach(o => {
-            a = cloneDeep(query2);
-            a['values'] = [o.siren, 2, moment().startOf('month').format("YYYY-MM-DD HH:mm:ss"), date, 2, date];
-            datas.push(a);
-        });
-        datas.forEach(d => promises.push(this.mysql.query(d)));
+        // user.org.forEach(o => {
+        //     a = cloneDeep(query2);
+        //     a['values'] = [o.siren, 2, moment().startOf('month').format("YYYY-MM-DD HH:mm:ss"), date, 2, date];
+        //     datas.push(a);
+        // });
+        // datas.forEach(d => promises.push(this.mysql.query(d)));
         
         // query2['values'] = [user.client, user.organisation, 1, moment().startOf('month').toDate(), data.validityDate ? data.validityDate : null, 1];
 

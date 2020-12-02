@@ -1,6 +1,10 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {of} from 'rxjs';
+import {HttpClient, HttpParams} from '@angular/common/http';
+import {of, throwError} from 'rxjs';
+import { map, filter, catchError, mergeMap } from 'rxjs/operators';
+import { HttpService } from './http.service';
+import { Configuration } from '../config/environment';
+
 
 @Injectable({
   providedIn: 'root'
@@ -10,34 +14,50 @@ import {of} from 'rxjs';
 export class SupplierService {
 
   constructor(
-    private httpClient: HttpClient
+    private _http: HttpClient, private httpService: HttpService
   ) {}
 
-  getMandatoryDocumentsListMock() {
+  public getMandatoryDocumentsListMock<t>() {
+    console.log('getMandatoryDocumentsListMock');
     // TODO Must call API
-    return of([
-      {
-        id: 1,
-        type: 'KBIS',
-        name: 'Extrait de KBIS',
-        logoLink: '../../../assets/img/param-icn.svg',
-        expirationDate: '2020-11-30 21:22:38'
-      },
-      {
-        id: 2,
-        type: 'ATTESTATION_VIGILANCE',
-        name: 'Attestation de vigilance',
-        logoLink: '../../../assets/img/param-icn.svg',
-        expirationDate: '2020-04-12 21:22:38'
-      },
-      {
-        id: 3,
-        type: 'LISTE_TRAVAILLEURS',
-        name: 'Liste nominative des travailleurs étrangers',
-        logoLink: '../../../assets/img/param-icn.svg',
-        expirationDate: '2020-10-24 21:22:38'
+    let p = new HttpParams().append('type', 'LEGAL');
+    return this._http.get<t>(Configuration.serverUrl + '/api/supplier/document_list', {
+      params: p,
+      responseType: 'json',
+      observe: 'response',
+      headers: {
+        'Content-Type': 'application/json'
       }
-    ]);
+    })
+      .pipe(
+        catchError(this.handleError.bind(this))
+      )
+    ;
+
+    // Response needed
+    // [
+    //   {
+    //     id: 1,
+    //     type: 'KBIS',
+    //     name: 'Extrait de KBIS',
+    //     logoLink: '../../../assets/img/param-icn.svg',
+    //     expirationDate: '2020-11-30 21:22:38'
+    //   },
+    //   {
+    //     id: 2,
+    //     type: 'ATTESTATION_VIGILANCE',
+    //     name: 'Attestation de vigilance',
+    //     logoLink: '../../../assets/img/param-icn.svg',
+    //     expirationDate: '2020-04-12 21:22:38'
+    //   },
+    //   {
+    //     id: 3,
+    //     type: 'LISTE_TRAVAILLEURS',
+    //     name: 'Liste nominative des travailleurs étrangers',
+    //     logoLink: '../../../assets/img/param-icn.svg',
+    //     expirationDate: '2020-10-24 21:22:38'
+    //   }
+    // ]
   }
 
   getOptionalDocumentsListMock() {
@@ -67,8 +87,26 @@ export class SupplierService {
     ]);
   }
 
-  getClientListMock() {
-    // TODO Must call API
+  getClientListMock<t>(doc?) {
+    let p = new HttpParams();
+    if(doc) {
+      p.append('docs', doc);
+    }
+    return this._http.get<t>(Configuration.serverUrl + '/api/supplier/client_list', {
+      params: p,
+      responseType: 'json',
+      observe: 'response',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .pipe(
+        catchError(this.handleError.bind(this))
+      )
+    ;
+
+    // MOCK API
+    /*
     return of([
       {
         id: 1,
@@ -119,6 +157,7 @@ export class SupplierService {
         name : 'Bouygues Telecom'
       }
     ]);
+    */
   }
 
   getDocumentInformation(documentType) {
@@ -137,6 +176,14 @@ export class SupplierService {
           name: 'Yassin'
         }
       });
+  }
+
+  // Private Service method to handle erronous response
+  private handleError(error: any) {
+    console.log('ERROR in HANDLE ERROR ', error);
+      const errMsg = (error.error.message) ? error.error.message :
+          error.status ? `${error.status} - ${error.statusText}` : 'Server error';
+      return throwError(errMsg);
   }
 
 }
