@@ -26,8 +26,13 @@
 }
 
 .alert-sub-cont {
+  // padding-left: 35px;
+}
+
+.alert-padd {
   padding-left: 35px;
 }
+
 
 .alert-subtitle-cont {
   background: rgba(243, 247, 252, 0.39);
@@ -132,7 +137,7 @@ h2 {
 }
 
 .alert-row {
-  padding: 20px 0px;
+  padding: 20px 0px 20px 35px;
 }
 
 .cs-alert-switch {

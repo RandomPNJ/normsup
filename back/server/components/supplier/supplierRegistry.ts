@@ -1338,18 +1338,46 @@ export default class SupplierRegistry {
         } else {
         }
 
+        loggerT.verbose('getClientList query values ', query['values']);
+
         return this.mysql.query(query)
             .then(res => {
-                loggerT.verbose('QUERY supplierLoginHistory RES ==== ', res);
+                loggerT.verbose('QUERY getClientList RES ==== ', res);
                 return Promise.resolve(res);
             })
             .catch(err => {
-                loggerT.error('ERROR ON QUERY supplierLoginHistory : ', err);
+                loggerT.error('ERROR ON QUERY getClientList : ', err);
                 throw new Error('Error when trying to update supplier login history.');
             })
         ;
     }
 
+    public getActiveDocDetails(data, user) {
+        let query = {
+            timeout: 40000
+        };
+        loggerT.verbose('getActiveDocDetails data ', data);
+        if(data.doc) {
+            query['sql'] = Query.ACTIVE_DOC_DETAILS;
+            query['values'] = [data.doc, user.id, data.doc];
+        } else {
+        }
+
+        loggerT.verbose('getActiveDocDetails query values ', query['values']);
+
+        return this.mysql.query(query)
+            .then(res => {
+                loggerT.verbose('QUERY getActiveDocDetails RES ==== ', res);
+                return Promise.resolve(res);
+            })
+            .catch(err => {
+                loggerT.error('ERROR ON QUERY getActiveDocDetails : ', err);
+                throw new Error('Error when trying to update supplier login history.');
+            })
+        ;
+    }
+
+    
     // TODO: Remove & Add supplier account
     public updateRepresentative(repres, id, userID) {
         let query = {

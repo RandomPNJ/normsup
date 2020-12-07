@@ -27,14 +27,15 @@
       <!-- <div class="col-md-auto col-lg-auto"><span class="table-header">Vous avez {{documents.length | i18nPlural: itemPluralMapping['supplier']}}.</span></div> -->
       <div class="col"></div>
       <div class="col-md-auto col-lg-auto legal-doc">
-        <button type="button" class="btn new-btn-normsup add-btn">
-          <!-- <span class="glyphicon glyphicon-download-alt download-icn fix-middle-icn" aria-hidden="true"></span> -->
-          <span class="button-txt">Tout télécharger</span>
-        </button>
-        <button style="border-radius: 5px;" type="button" class="btn btn-primary add-btn" (click)="addDoc()">
-          <!-- <object class="plus-icn" type="image/svg+xml" data="../../../../assets/img/plus-circle-solid.svg"></object> -->
+        <div style="padding-right: 35px;">
+          <button type="button" class="btn new-btn-normsup add-btn">
+            <!-- <span class="glyphicon glyphicon-download-alt download-icn fix-middle-icn" aria-hidden="true"></span> -->
+            <span class="button-txt">Tout télécharger</span>
+          </button>
+        </div>
+        <!-- <button style="border-radius: 5px;" type="button" class="btn btn-primary add-btn" (click)="addDoc()">
           <span class="button-txt">Ajouter un document</span>
-        </button>
+        </button> -->
       </div>
     </div>
   </div>

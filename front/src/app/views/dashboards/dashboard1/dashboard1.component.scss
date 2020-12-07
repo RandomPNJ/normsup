@@ -88,6 +88,7 @@
 }
 
 .box-title {
+    border-radius: 10px;
     font-size: 15px;
     font-family: 'Roboto Bold';
     color: #4E5983;
@@ -158,6 +159,7 @@
         font-family: 'Roboto Bold' !important;
         font-size: 13px !important;
         color: #4E5983;
+        background: rgba(243, 247, 252, 0.39) !important;
     }
 
 }

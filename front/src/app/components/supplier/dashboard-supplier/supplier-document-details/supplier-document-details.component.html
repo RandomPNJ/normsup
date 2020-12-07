@@ -47,7 +47,7 @@
     *ngFor="let client of clients"
     class="client-row">
     <span class="row-line client-txt text-capitalize">
-      {{ client.name }}
+      {{ client.org_name }}
     </span>
   </div>
 </ng-template>
@@ -74,14 +74,14 @@
       <div class="row-line information-line">
         <span class="left-column-information">Date d'expiration</span>
         <span class="right-column-information">
-          {{ currentDocument.expirationDate ? (currentDocument.expirationDate | date: 'dd/MM/yyyy') : 'N/A' }}
+          {{ currentDocument.validityDate ? (currentDocument.validityDate | date: 'dd/MM/yyyy') : 'N/A' }}
         </span>
       </div>
 
       <div class="row-line information-line">
         <span class="left-column-information">Date du dernier upload</span>
         <span class="right-column-information">
-          {{ currentDocument.uploadDate ? (currentDocument.uploadDate | date: 'dd/MM/yyyy') : 'N/A' }}
+          {{ currentDocument.createdAt ? (currentDocument.createdAt | date: 'dd/MM/yyyy') : 'N/A' }}
         </span>
       </div>
 
@@ -92,7 +92,7 @@
 
       <div class="row-line information-line">
         <span class="left-column-information">Durée de validité</span>
-        <span class="right-column-information">{{ currentDocument.durationValidity ? currentDocument.durationValidity + ' mois' : 'N/A'}}</span>
+        <span class="right-column-information">{{ currentDocument.durationValidity ? currentDocument.durationValidity : 'N/A'}}</span>
       </div>
     </div>
   </div>
@@ -100,7 +100,7 @@
   <div class="bottom-content">
     <div class="client-card-row row-line-centered save-document-btn">
 
-      <button type="button" class="btn new-btn-normsup custom-btn">
+      <button (click)="onClickDropOffButton(document)" type="button" class="btn new-btn-normsup custom-btn">
         <span class="card-btn-txt-container">
           <span>Déposer</span>
         </span>

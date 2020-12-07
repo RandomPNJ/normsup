@@ -49,9 +49,10 @@ export class MonthlyConformityComponent implements OnInit {
 			yAxes: [
 				{
 					gridLines: {
-						color: 'rgba(211, 211, 211, 0.3)',
+						color: '#F3F7FC',
 						zeroLineColor: '#D3D3D3',
-						zeroLineWidth: 2
+						zeroLineWidth: 2,
+						drawBorder: false,
 					},
 					ticks: {
 						callback: function(value, index, values) {
@@ -70,8 +71,9 @@ export class MonthlyConformityComponent implements OnInit {
 			],
 			xAxes: [{
 				gridLines: {
+					color: '#F3F7FC',
 					zeroLineColor: '#D3D3D3',
-					zeroLineWidth: 2
+					zeroLineWidth: 2,
 				},
 				ticks: {
 					fontColor: '#5b5f62',

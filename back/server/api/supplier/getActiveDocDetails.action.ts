@@ -9,10 +9,10 @@ export default {
     method: 'get',
     uriPattern: '',
     services: [''],
-    handler: (req, res, app) => getClientList(req, res, app.get('SupplierRegistry')),
+    handler: (req, res, app) => getActiveDocDetails(req, res, app.get('SupplierRegistry')),
 };
 
-export function getClientList(req, res, SupplierRegistry) {
+export function getActiveDocDetails(req, res, SupplierRegistry) {
     if(!req.decoded) {
         return Promise.reject(`Cannot get user informations, invalid request.`);
     }
@@ -20,9 +20,15 @@ export function getClientList(req, res, SupplierRegistry) {
     const params = req.query;
     loggerT.verbose('Getting a supplier\'s client list.');
 
+    if(!params || !params.doc) {
+        const error = new Error(`Invalid request, could not get document type.`);
+        error['statusCode'] = 400;
+        throw error;
+    }
+
     loggerT.verbose('supplier\'s client list user= ', req.decoded);
 
-    return SupplierRegistry.getClientList(params, req.decoded)
+    return SupplierRegistry.getActiveDocDetails(params, req.decoded)
         .then(res => {
             let result = {
                 items: res

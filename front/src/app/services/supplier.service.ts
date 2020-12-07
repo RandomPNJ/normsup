@@ -21,6 +21,7 @@ export class SupplierService {
     console.log('getMandatoryDocumentsListMock');
     // TODO Must call API
     let p = new HttpParams().append('type', 'LEGAL');
+
     return this._http.get<t>(Configuration.serverUrl + '/api/supplier/document_list', {
       params: p,
       responseType: 'json',
@@ -88,10 +89,14 @@ export class SupplierService {
   }
 
   getClientListMock<t>(doc?) {
-    let p = new HttpParams();
+    console.log('getClientListMock doc ===', doc);
+    let p;
     if(doc) {
-      p.append('docs', doc);
+      p = new HttpParams().append('docs', doc);
+    } else {
+      p = new HttpParams();
     }
+
     return this._http.get<t>(Configuration.serverUrl + '/api/supplier/client_list', {
       params: p,
       responseType: 'json',
@@ -160,9 +165,27 @@ export class SupplierService {
     */
   }
 
-  getDocumentInformation(documentType) {
-    // TODO Must call API
-    // TODO create model object for data
+  getDocumentInformation<t>(documentType) {
+    if(!documentType) {
+      return;
+    }
+    
+    let p = new HttpParams().append('doc', documentType);
+
+    return this._http.get<t>(Configuration.serverUrl + '/api/supplier/document/active', {
+      params: p,
+      responseType: 'json',
+      observe: 'response',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .pipe(
+        catchError(this.handleError.bind(this))
+      )
+    ;
+    // Mock call API
+    /*
     return of({
         name: 'Nom du document',
         type: documentType,
@@ -176,6 +199,7 @@ export class SupplierService {
           name: 'Yassin'
         }
       });
+    */
   }
 
   // Private Service method to handle erronous response

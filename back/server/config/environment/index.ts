@@ -127,6 +127,7 @@ export default {
         { name: 'getDocuments', uriPattern: '/documents', method: 'get' },
         { name: 'getDocumentList', uriPattern: '/document_list', method: 'get' },
         { name: 'getClientList', uriPattern: '/client_list', method: 'get' },
+        { name: 'getActiveDocDetails', uriPattern: '/document/active', method: 'get' },
       ],
     },
     reminders: {

@@ -3,6 +3,7 @@ import {Pipe, PipeTransform} from '@angular/core';
 @Pipe({name: 'userNamePipe'})
 export class UserNamePipe implements PipeTransform {
   transform(user: any, ...args: any[]): any {
+    console.log('pipe user', user);
     let firstName: string = user.name;
     let lastName: string = user.lastname;
 
