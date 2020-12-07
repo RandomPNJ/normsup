@@ -20,7 +20,7 @@ export class BackofficeComponent implements OnInit {
   sidebarItems: any = [
     {
        id: 'clients',
-       navLink: '/backoffice/clients',
+       navLink: '/backoffice/client',
        logoLink: '../../assets/img/menu-groups.svg',
        label: 'Clients'
     },
@@ -32,14 +32,14 @@ export class BackofficeComponent implements OnInit {
     },
     {
       id: 'suppliers',
-      navLink: '/backoffice/users',
-      logoLink: '../../assets/img/menu-suppliers.svg',
+      navLink: '/backoffice/suppliers',
+      logoLink: '../../assets/img/menu-groups.svg',
       label: 'Utilisateurs (fournisseur)'
     },
     {
       id: 'documents',
       navLink: '/backoffice/documents',
-      logoLink: '../../assets/img/menu-suppliers.svg',
+      logoLink: '../../assets/img/menu-exports.svg',
       label: 'Documents'
     }
   ];
