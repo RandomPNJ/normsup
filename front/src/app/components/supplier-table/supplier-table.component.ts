@@ -12,7 +12,7 @@ import { NotifService } from 'src/app/services/notif.service';
 import { Router } from '@angular/router';
 import { BrowserStorageService } from 'src/app/services/storageService';
 import { AuthService } from 'src/app/services/auth.service';
-import { p } from '@angular/core/src/render3';
+import { p, s } from '@angular/core/src/render3';
 
 @Component({
   selector: 'app-supplier-table',
@@ -106,7 +106,6 @@ export class SupplierTableComponent implements OnInit, OnDestroy {
           i.name = i.name[0].toUpperCase() + i.name.slice(1); 
           this.groups.push(i);
         });
-        
       }, err => {
         if(err.message === 'Unexpected error : Failed to authenticate token. (jwt expired)') {
           this.notif.error('Session expirée. Vous serez redirigé vers la page de connexion.');
@@ -126,7 +125,6 @@ export class SupplierTableComponent implements OnInit, OnDestroy {
         this.groupSelect = '';
       }
       if (this.groupSelect === groupName || this.groupSelect === '') {
-        // console.log('data === ' + itemsToDisplay[0] + ' group ==== ' + itemsToDisplay[1]);
         return true;
       }
       return false;
@@ -161,16 +159,12 @@ export class SupplierTableComponent implements OnInit, OnDestroy {
       },
       ajax: (dataTablesParameters: any, callback: any) => {
         that.processing = true;
-        console.log('dataTablesParameters', dataTablesParameters)
         const action = this.compareParams(dataTablesParameters);
         if(action === 'query') {
-          console.log('one');
           that.httpService
             .get('/api/suppliers', this.tableParams)
             .subscribe(resp => {
-              console.log('resp');
               if(resp.body['items'] && resp.body['items'].length > 0) {
-                console.log('not empty res');
                 resp.body['items'].forEach(a => {
                   if(a.spont_reminder) {
                     a.spont_reminder = new Date(a.spont_reminder);
@@ -201,13 +195,10 @@ export class SupplierTableComponent implements OnInit, OnDestroy {
               } 
             });
         } else if(action === 'length') {
-          console.log('length');
           that.httpService
             .get('/api/suppliers', this.tableParams)
             .subscribe(resp => {
-              console.log('resp');
               if(resp.body['items'] && resp.body['items'].length > 0) {
-                console.log('not empty res');
                 resp.body['items'].forEach(a => {
                   if(a.spont_reminder) {
                     a.spont_reminder = new Date(a.spont_reminder);
@@ -240,7 +231,6 @@ export class SupplierTableComponent implements OnInit, OnDestroy {
               } 
             });
         } else if(action === 'redraw') {
-          console.log('two');
           that.itemsToDisplay = that.data.slice(that.tableParams.start, that.tableParams.start + that.tableParams.length);
           callback({
             recordsTotal: that.nbOfRows, // grand total avant filtre
@@ -285,7 +275,7 @@ export class SupplierTableComponent implements OnInit, OnDestroy {
     // });
   }
 
-  compareParams(datatableParams) {
+  compareParams(datatableParams, filterByGroup?) {
     // TODO : Ordering with multiple columns
     let action = 'none';
 
@@ -304,8 +294,9 @@ export class SupplierTableComponent implements OnInit, OnDestroy {
     }
     if(this.tableParams.search !== datatableParams.search.value) {
       this.data.length = 0;
+      this.tableParams.start = 0;
       this.tableParams.search = datatableParams.search.value;
-      this.recount(this.tableParams.search);
+      this.recount(this.tableParams.search, this.tableParams.group || '');
       action = 'query';
     }
     if(this.tableParams.length !== datatableParams.length) {
@@ -313,15 +304,19 @@ export class SupplierTableComponent implements OnInit, OnDestroy {
       this.tableParams.start = 0;
       action = 'length';
     }
+
     return action;
 
   }
 
-  recount(search?: string) {
+  recount(search?: string, groupIds?: string) {
     const that = this;
     let firstQParams = new HttpParams();
     if(search) {
       firstQParams = firstQParams.set('search', search);
+    }
+    if(groupIds) {
+      firstQParams = firstQParams.set('groupIds', groupIds);
     }
     return this.httpService
       .get('/api/suppliers/count', firstQParams)
@@ -333,12 +328,11 @@ export class SupplierTableComponent implements OnInit, OnDestroy {
   }
 
   reload() {
-    
+    console.log('reload');
     this.datatableElement.dtInstance.then((dtInstance: DataTables.Api) => {
       this.httpService
         .get('/api/suppliers', this.tableParams)
         .subscribe(resp => {
-          console.log(resp);
           if(resp.body && resp.body['items'] && resp.body['items'].length > 0) {
             resp.body['items'].forEach(a => {
               if(a.spont_reminder) {
@@ -407,7 +401,6 @@ export class SupplierTableComponent implements OnInit, OnDestroy {
   }
 
   openInterlocInfo(item, i) {
-    console.log('openInterlocInfo i = ', i)
     this.modifyInterloc(false);
     if(this.indexInfo === i && this.infoType === 'INTERLOC') {
       this.indexInfo = -1;
@@ -418,7 +411,6 @@ export class SupplierTableComponent implements OnInit, OnDestroy {
       this.infoPopup = item;
       this.indexInfo = i;
     }
-    console.log('openInterlocInfo this.indexInfo = ', this.indexInfo)
   }
 
   modifyInterloc(toggle?) {
@@ -455,7 +447,6 @@ export class SupplierTableComponent implements OnInit, OnDestroy {
   }
 
   confirmInterlocModification() {
-    console.log('this.interloc', this.interloc);
     let data = {
       name: this.interloc.name,
       email: this.interloc.email,
@@ -470,9 +461,7 @@ export class SupplierTableComponent implements OnInit, OnDestroy {
         
         
         this.toggleModification = false;
-        console.log('[confirmInterlocModification] res', res);
       }, err => {
-        console.log('[confirmInterlocModification] err', err);
         this.notif.error('Erreur, veuillez réessayer plus tard.');
         this.interloc = {};
         this.toggleModification = false;
@@ -494,13 +483,11 @@ export class SupplierTableComponent implements OnInit, OnDestroy {
   deleteInterloc(index) {
     return this.httpService.delete('/api/suppliers/representatives/' + this.infoPopup.id + '/delete')
       .subscribe(res => {
-        console.log('deleteInterloc res', res);
         this.deleteLocalInterlocInfo(index);
         this.indexInfo = null;
         this.hideModal('');
         this.notif.success('Interlocuteur supprimé.');
       }, err => {
-        console.log('deleteInterloc err', err);
         this.indexInfo = null;
         this.notif.error('Erreur lors de la suppression de l\'interlocuteur, veuillez réessayer plus tard.');
       })
@@ -605,7 +592,6 @@ export class SupplierTableComponent implements OnInit, OnDestroy {
 
   openCompDocModal(item) {
     if(item) {
-      // console.log(item);
       const data: any = {data: item, type: 'Compdoc'};
       this.infoModal.emit(data);
     } else {
@@ -641,10 +627,8 @@ export class SupplierTableComponent implements OnInit, OnDestroy {
     });
   }
   private sendReminder(id) {
-    console.log('sendreminder id', id);
     return this.httpService.post('/api/reminders/supplier/' + id)
       .subscribe(res => {
-        console.log('[sendReminder] res', res);
         this.data.map(d => {
           if(d.id === id) {
             d.spont_success = true;
@@ -658,7 +642,6 @@ export class SupplierTableComponent implements OnInit, OnDestroy {
           }
         });
       }, err => {
-        console.log('[sendReminder] err', err);
         this.data.map(d => {
           if(d.id === id) {
             d.spont_success = true;
@@ -676,7 +659,6 @@ export class SupplierTableComponent implements OnInit, OnDestroy {
   }
 
   private countDownEvent(e, item) {
-    console.log('countDownEvent', item);
   }
 }
 

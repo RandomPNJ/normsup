@@ -109,7 +109,7 @@ export default class SupplierRegistry {
             }
             loggerT.verbose('Query computed = ', final);
             values = [data.company, moment().startOf('month').toDate(), data.company, data.company];
-        } else if (v === 'CGST') {// done
+        } else if (v === 'CGST') {// testing
             let templateQuery = _.template(Query['GET_SUPP_GRP_STATE']);
             if (data.state === 'UPTODATE') {
                 final = templateQuery({ 'state': ' AND (sc.kbis = 1 AND sc.lnte = 1 AND sc.urssaf = 1) ' });
@@ -127,13 +127,25 @@ export default class SupplierRegistry {
             } else if (data.state === 'NOTUPTODATE') {
                 final = templateQuery({ state: ' AND (sc.kbis = 0 OR sc.lnte = 0 OR sc.urssaf = 0 OR sc.kbis is null OR sc.lnte is null OR sc.urssaf is null) ' });
             } else if (data.state === 'OFFLINE') {
-                final = templateQuery({ state: ' AND d.last_date IS NULL ' });
+                final = templateQuery({ state: ' AND histo.last_date IS NULL ' });
             }
             loggerT.verbose('Query computed = ', final);
             values = [data.company, moment().startOf('month').toDate(), data.company, data.company, data.search, data.search, data.search];
-        } else if (v === 'CGSEST') {//
+        } else if (v === 'CGSEST') {// testing
+            let templateQuery = _.template(Query['GET_SUPPLIER_GROUP_SEARCH_STATE']);
+            if (data.state === 'UPTODATE') {
+                final = templateQuery({ 'state': ' AND (sc.kbis = 1 AND sc.lnte = 1 AND sc.urssaf = 1) ' });
+            } else if (data.state === 'NOTUPTODATE') {
+                final = templateQuery({ state: ' AND (sc.kbis = 0 OR sc.lnte = 0 OR sc.urssaf = 0 OR sc.kbis is null OR sc.lnte is null OR sc.urssaf is null) ' });
+            } else if (data.state === 'OFFLINE') {
+                final = templateQuery({ state: ' AND histo.last_date IS NULL ' });
+            }
+            loggerT.verbose('Query computed = ', final);
+            values = [data.company, moment().startOf('month').toDate(), data.company, data.group, data.company, data.search, data.limit, data.start];
+        } 
+        // else if(v==='CGSES') {// todo
 
-        }
+        // }
 
         return {
             type: final,
@@ -574,18 +586,24 @@ export default class SupplierRegistry {
         data.client = user.organisation;
         const s = data.search ? data.search = '%' + data.search + '%' : '';
         loggerT.verbose('Count data : ', data);
-        if (data.group && data.client && data.search) {
-
+        // Redo this
+        if(data.groupIds && data.client && data.search) {
+            query['sql'] = Query.QUERY_COUNT_SUPPLIERS_SEARCH_GRP;
+            query['values'] = [data.groupIds, data.client, s, data.client, s];
         } else if (data.client && data.search) {
             loggerT.verbose('Recount == ', s);
             query['sql'] = Query.QUERY_COUNT_SUPPLIERS_SEARCH;
             query['values'] = [data.client, s, data.client, s];
-        } else if (data.client) {
+        } else if(data.client && data.groupIds) {
             loggerT.verbose('Recount 2 == ', s);
+            query['sql'] = Query.QUERY_COUNT_SUPP_GRP;
+            query['values'] = [data.client, data.client, data.client];
+        } else if(data.client) {
+            loggerT.verbose('Recount 3 == ', s);
             query['sql'] = Query.QUERY_COUNT_SUPPLIERS_CLIENT;
             query['values'] = [data.client, data.client, data.client];
         } else {
-            loggerT.verbose('Recount 3 == ', s);
+            loggerT.verbose('Recount 4 == ', s);
             query['sql'] = Query.QUERY_COUNT_SUPPLIERS;
         }
         return this.mysql.query(query)
@@ -593,7 +611,7 @@ export default class SupplierRegistry {
                 loggerT.verbose('[countSuppliers] res', res)
                 let i = 0;
                 let j = 0;
-                if (res.length > 0) {
+                if(res.length > 0) {
                     res.map(element => {
                         if (element.kbis == 1 && element.urssaf == 1 && element.lnte == 1) {
                             i++;

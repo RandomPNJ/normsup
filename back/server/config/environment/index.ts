@@ -201,9 +201,9 @@ export default {
     // Start SEarch Company Group STate
     CST: 'GET_SUPPLIER_STATE',// new
     CGST: '',// new
-    CSEST: '',// new
+    CSEST: 'GET_SEARCH_STATE',// new
     CSST: '',// new
-    CGSEST: '',// new
+    CGSEST: 'GET_SUPPLIER_GROUP_SEARCH_STATE',// new
     CGSESST: '',// new
     CGSST: 'GET_SUPPLIER_OFFLIM_STATE',// new
     CSESST: '',// new
