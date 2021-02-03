@@ -26,7 +26,7 @@ export function conformityCheckup(req, res, AdminRegistry) {
         .then(result => {
             loggerT.verbose('result for admin loggin', result);
             if(result) {
-                return AdminRegistry.conformityCheckup()
+                return AdminRegistry.dailyConformity()
                     .then(secondRes => {
                         return secondRes;
                     })

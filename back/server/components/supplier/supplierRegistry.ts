@@ -27,21 +27,9 @@ export default class SupplierRegistry {
             loggerT.verbose('isArray');
             data.map(item => {
                 // Get the count of complementary documents for the suppliers
-                if (item['comp_docs_count'])
+                if(item['comp_docs_count'])
                     item['comp_docs_count'] = parseInt(item['comp_docs_count'], 10);
 
-                // Know if a supplier if valid or not, meaning they have valid legal documents on the platform
-                if (item['kbis'] === 1 && item['lnte'] === 1 && item['urssaf'] === 1) {
-                    item['valid'] = true;
-                    delete item['kbis'];
-                    delete item['lnte'];
-                    delete item['urssaf'];
-                } else {
-                    item['valid'] = false;
-                    delete item['kbis'];
-                    delete item['lnte'];
-                    delete item['urssaf'];
-                }
 
                 if (item['last_connexion']) {
                     item['offline'] = false;
@@ -87,16 +75,16 @@ export default class SupplierRegistry {
         // loggerT.verbose('Query final === ', final);
 
         if (v === 'C') {// done
-            values = [data.company, moment().startOf('month').toDate(), data.company, data.company, data.limit, data.start];
+            values = [data.company, moment().format("YYYY-MM-DD"), data.company, data.company, data.limit, data.start];
             final = Query[final];
         } else if (v === 'CGSE') {// done
-            values = [data.company, moment().startOf('month').toDate(), data.company, data.group, data.company, data.search, data.limit, data.start];
+            values = [data.company, moment().format("YYYY-MM-DD"), data.company, data.group, data.company, data.search, data.limit, data.start];
             final = Query[final];
         } else if (v === 'CG') {// done
-            values = [data.group, data.company, moment().startOf('month').toDate(), data.company, data.company, data.limit, data.start];
+            values = [data.group, data.company, moment().format("YYYY-MM-DD"), data.company, data.company, data.limit, data.start];
             final = Query[final];
         } else if (v === 'CSE') {// done
-            values = [data.company, moment().startOf('month').toDate(), data.company, data.search, data.search, data.search, data.company, data.limit, data.start];
+            values = [data.company, moment().format("YYYY-MM-DD"), data.company, data.search, data.search, data.search, data.company, data.limit, data.start];
             final = Query[final];
         } else if (v === 'CST') {// done
             let templateQuery = _.template(Query['GET_SUPPLIER_STATE']);
@@ -108,7 +96,7 @@ export default class SupplierRegistry {
                 final = templateQuery({ state: ' AND d.last_date IS NULL ' });
             }
             loggerT.verbose('Query computed = ', final);
-            values = [data.company, moment().startOf('month').toDate(), data.company, data.company];
+            values = [data.company, moment().format("YYYY-MM-DD"), data.company, data.company];
         } else if (v === 'CGST') {// testing
             let templateQuery = _.template(Query['GET_SUPP_GRP_STATE']);
             if (data.state === 'UPTODATE') {
@@ -119,7 +107,7 @@ export default class SupplierRegistry {
                 final = templateQuery({ state: ' AND d.last_date IS NULL ' });
             }
             loggerT.verbose('Query computed = ', final);
-            values = [data.company, moment().startOf('month').toDate(), data.group, data.company, data.company];
+            values = [data.company, moment().format("YYYY-MM-DD"), data.group, data.company, data.company];
         } else if (v === 'CSEST') {// testing
             let templateQuery = _.template(Query['GET_SEARCH_STATE']);
             if (data.state === 'UPTODATE') {
@@ -130,7 +118,7 @@ export default class SupplierRegistry {
                 final = templateQuery({ state: ' AND histo.last_date IS NULL ' });
             }
             loggerT.verbose('Query computed = ', final);
-            values = [data.company, moment().startOf('month').toDate(), data.company, data.company, data.search, data.search, data.search];
+            values = [data.company, moment().format("YYYY-MM-DD"), data.company, data.company, data.search, data.search, data.search];
         } else if (v === 'CGSEST') {// testing
             let templateQuery = _.template(Query['GET_SUPPLIER_GROUP_SEARCH_STATE']);
             if (data.state === 'UPTODATE') {
@@ -141,7 +129,7 @@ export default class SupplierRegistry {
                 final = templateQuery({ state: ' AND histo.last_date IS NULL ' });
             }
             loggerT.verbose('Query computed = ', final);
-            values = [data.company, moment().startOf('month').toDate(), data.company, data.group, data.company, data.search, data.limit, data.start];
+            values = [data.company, moment().format("YYYY-MM-DD"), data.company, data.group, data.company, data.search, data.limit, data.start];
         } 
         // else if(v==='CGSES') {// todo
 
@@ -178,7 +166,7 @@ export default class SupplierRegistry {
                 loggerT.error('ERROR ON QUERY getSuppliers.');
                 return Promise.reject(err);
             })
-            ;
+        ;
     }
 
     public getGroups(org, data) {
@@ -637,10 +625,10 @@ export default class SupplierRegistry {
             timeout: 40000
         };
         data.client = user.organisation;
-        if (data.client) {
+        if(data.client) {
             loggerT.verbose('getDashboardData ', data);
             query['sql'] = Query.GET_DASHBOARD_DATA;
-            query['values'] = [moment().startOf('month').toDate(), data.client, data.client, data.client];
+            query['values'] = [moment().format("YYYY-MM-DD"), data.client, data.client, data.client];
         } else {
             // throw error;
         }
@@ -648,14 +636,22 @@ export default class SupplierRegistry {
         return this.mysql.query(query)
             .then(res => {
                 loggerT.verbose('[getDashboardData] res', res)
-                let i = 0;
-                if (res.length > 0) {
+                let conformCount = 0
+                let legalCount = 0;
+                let compCount = 0;
+                if(res.length > 0) {
                     res.map(element => {
-                        if (element.kbis == 1 && element.urssaf == 1 && element.lnte == 1) {
-                            i++;
+                        if((element.legal == 1 && element.comp == 1) || (element.legal == 1 && element.comp && 2) || (element.legal == 2 && element.comp && 1)) {
+                            conformCount++;
+                        }
+                        if(element.legal == 1) {
+                            legalCount++;
+                        }
+                        if(element.comp == 1) {
+                            compCount++;
                         }
                     });
-                    return Promise.resolve({ count: res[0].count, conform: i, offline: res[0].off });
+                    return Promise.resolve({ count: res[0].count, conform: conformCount, legal: legalCount, comp: compCount, offline: res[0].off });
                 } else {
                     return Promise.resolve({ count: -1, conform: -1, offline: -1 })
                 }
@@ -1179,7 +1175,7 @@ export default class SupplierRegistry {
                 let query = {
                     timeout: 40000
                 };
-                if (data && data.startDate) {
+                if(data && data.startDate) {
                     // let m = moment(data.startDate);
                     // query['sql'] = Query.MONTHLY_CONFORMITY_ENDDATE;
                     // query['values'] = [user.organisation, user.organisation, m.startOf('month'), moment().];
@@ -1204,6 +1200,8 @@ export default class SupplierRegistry {
                                 conformity[e.month_evaluated].totalConnected = 0;
                                 conformity[e.month_evaluated].totalConform = 0;
                             }
+                            // To change
+                            /*
                             if(e.current_month === 0) {
                                 conformity[e.month_evaluated].totalConnected = e.connected_suppliers ? parseInt(e.connected_suppliers, 10) : 0;
                                 conformity[e.month_evaluated].totalConform += e.conformity ? parseInt(e.conformity, 10) : 0;
@@ -1212,7 +1210,7 @@ export default class SupplierRegistry {
                                 conformity[e.month_evaluated].totalConform += 1;
                             } else if(e.current_month === 1 && e.conformity != e.nb_doc_req) {
                                 conformity[e.month_evaluated].totalConnected = e.connected_suppliers !== null ? e.connected_suppliers : 0;
-                            }
+                            }*/
                         });
                         loggerT.verbose('conformity', conformity);
                         return Promise.resolve(conformity);

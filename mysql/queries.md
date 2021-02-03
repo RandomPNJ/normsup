@@ -622,5 +622,69 @@ ADD COLUMN `state` INT(1) NULL DEFAULT 2 AFTER `id`;
 True
 
 
+## Date
+ 
+17-11-2020
+ 
+## Comment
+ 
+Alter table `supplier_conformity`
+ 
+## Query
+ 
+ALTER TABLE `normsup`.`supplier_conformity` 
+DROP COLUMN `lnte_expiration`,
+DROP COLUMN `urssaf_expiration`,
+DROP COLUMN `kbis_expiration`,
+DROP COLUMN `lnte`,
+DROP COLUMN `urssaf`,
+DROP COLUMN `kbis`,
+ADD COLUMN `conform` INT NOT NULL AFTER `start_date`,
+CHANGE COLUMN `siren` `org_id` INT(11) NOT NULL ,
+CHANGE COLUMN `start_date` `start_date` DATE NOT NULL ;
+
+
+## Applied
+ 
+False
+
+
+## Date
+ 
+26-01-2020
+ 
+## Comment
+ 
+Alter table `supplier_conformity`
+ 
+## Query
+ 
+ALTER TABLE `normsup`.`supplier_conformity` 
+ADD COLUMN `comp` INT NOT NULL AFTER `legal`,
+CHANGE COLUMN `conform` `legal` INT(11) NOT NULL ;
+
+
+## Applied
+ 
+False
+
+
+## Date
+ 
+26-01-2020
+ 
+## Comment
+ 
+Alter table `supplier_conformity`
+ 
+## Query
+ 
+ALTER TABLE `normsup`.`supplier_conformity` 
+ADD COLUMN `client_id` INT NULL AFTER `comp`;
+
+## Applied
+ 
+False
+
 
 

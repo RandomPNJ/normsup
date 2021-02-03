@@ -154,6 +154,9 @@ export default class AdminRegistry {
         ;
     }
 
+    // Checks if supplier is still conform or not
+    // TO CHANGE
+
     public conformityCheckup() {
         let query = {
             timeout: 40000
@@ -170,6 +173,7 @@ export default class AdminRegistry {
             values: [],
             sql: Query.UPDATE_SUPPLIER_CONFORMITY
         };
+
         return this.mysql.query(query)
             .then(res => {
                 loggerT.verbose('[ADMIN] QUERY conformityCheckup RES ==== ', res);
@@ -240,6 +244,177 @@ export default class AdminRegistry {
             .catch(err => {
                 loggerT.error('[ADMIN] ERROR ON QUERY conformityCheckup : ', err);
                 return Promise.reject(err);
+            })
+        ;
+    }
+
+    public dailyConformity() {
+        let query = {
+            timeout: 40000,
+            sql: Query.GET_ALL_SUPPLIERS,
+            values: []
+        };
+        let date = moment().startOf('month').toDate();
+        let now = moment();
+        let orgs = {};
+
+        // Why this query ?
+        return this.mysql.query(query)
+            .then(r => {
+                if(r && r.length > 0) {
+                    r.forEach(e => {
+                        orgs[e.id] = e.added_by_org;
+                    });
+
+                    loggerT.verbose('[dailyConformity] orgs == ', orgs);
+
+                    let getDocs = {
+                        timeout: 40000,
+                        sql: Query.GET_ALL_USED_DOCS,
+                        values: []
+                    };
+                    let getDocNeeded = {
+                        timeout: 40000,
+                        sql: Query.GET_DOCS_NEEDED,
+                        values: []
+                    };
+                    let prs = [
+                        this.mysql.query(getDocs),
+                        this.mysql.query(getDocNeeded)
+                    ];
+                    return Promise.all(prs.map(p => p.catch(e => e)))
+                        .then((promiseRes) => {
+                            loggerT.verbose('[dailyConformity] Promise QUERY RES  ==== ', promiseRes);
+                            if(promiseRes && (promiseRes[0] && !promiseRes[0].code) && (promiseRes[1] && !promiseRes[1].code)) {
+                                let allDocs = promiseRes[0];
+                                let docsNeeded = promiseRes[1];
+                                let docsForOrg = {};
+                                let endRes = {};
+                                let v = [];
+                                let date = moment().format("YYYY-MM-DD HH:mm:ss");
+                                let qInsertConformity = {
+                                    timeout: 40000,
+                                    sql: Query.MASS_INSERT_CONFORMITY,
+                                    values: []
+                                };
+                                loggerT.verbose('[dailyConformity] allDocs : ', allDocs);
+                                loggerT.verbose('[dailyConformity] docsNeeded : ', docsNeeded);
+
+                                // Ce foreach permets d'avoir les organisations facilement bouclable
+                                // ainsi que d'avoir un accès direct à tous les documents nécessaire à l'organisation
+                                docsNeeded.forEach(d => {
+                                    if(!docsForOrg[d.org_id]) {
+                                        docsForOrg[d.org_id] = {compDocs: [], legalDocs: [], data: d};
+                                    }
+                                    if(parseInt(d.doc_id, 10) < 7) {
+                                        docsForOrg[d.org_id].legalDocs.push(d.doc_id);
+                                    } else {
+                                        docsForOrg[d.org_id].compDocs.push(d.doc_id);
+                                    }
+                                });
+
+
+                                loggerT.verbose('[dailyConformity] docsForOrg : ', docsForOrg);
+                                let ok;
+                                let found;
+
+                                // On boucle sur chacune des organisation ici
+                                Object.keys(docsForOrg).forEach(org_id => {
+                                    // ok => détermine si c'est compliant ou non
+                                    ok = true;
+                                    // found => détermine si le document est trouvé dans la liste ou non, doc non trouvé = org non compliant
+                                    found = false;
+                                    let i=0;
+                                    let a = orgs[org_id] ? orgs[org_id] : 0;
+                                    let res: any[] = [a,org_id, date];
+                                    if(docsForOrg[org_id].legalDocs.length > 0) {
+                                        for(let d of docsForOrg[org_id].legalDocs) {
+                                            allDocs.forEach(doc => {
+                                                if(docsForOrg[org_id].data.siren == doc.siren && d == doc.doc_id) {
+                                                    found = true;
+                                                    if(moment(doc.validityDate).isBefore(moment()))
+                                                        ok = false;
+                                                    else
+                                                        ok = true;
+                                                    loggerT.verbose('d ===  ', d, 'docsForOrg[org_id].data.siren === ', docsForOrg[org_id].data.siren, ' ok === ', ok, ' length == ', docsForOrg[org_id].legalDocs.length, 'found === ', found);
+                                                }
+                                            });
+                                            if(!found || !ok) {
+                                                endRes[org_id] = {
+                                                    compliant: false
+                                                };
+                                                res.push(false);
+                                                break;
+                                            }
+                                            if(ok && i === docsForOrg[org_id].legalDocs.length - 1) {
+                                                endRes[org_id] = {
+                                                    compliant: true
+                                                };
+                                                res.push(true);
+                                            }
+                                            i++;
+                                        }
+                                    } else {
+                                        res.push(2);
+                                    }
+                                    if(docsForOrg[org_id].compDocs.length > 0) {
+                                        for(let d of docsForOrg[org_id].compDocs) {
+                                            allDocs.forEach(doc => {
+                                                if(docsForOrg[org_id].data.siren == doc.siren && d == doc.doc_id) {
+                                                    found = true;
+                                                    if(moment(doc.validityDate).isBefore(moment()))
+                                                        ok = false;
+                                                    else
+                                                        ok = true;
+                                                    loggerT.verbose('d ===  ', d, 'docsForOrg[org_id].data.siren === ', docsForOrg[org_id].data.siren, ' ok === ', ok, ' length == ', docsForOrg[org_id].compDocs.length, 'found === ', found);
+                                                }
+                                            });
+                                            if(!found || !ok) {
+                                                endRes[org_id] = {
+                                                    compliant: false
+                                                };
+                                                res.push(false);
+                                                break;
+                                            }
+                                            if(ok && i === docsForOrg[org_id].compDocs.length - 1) {
+                                                endRes[org_id] = {
+                                                    compliant: true
+                                                };
+                                                res.push(true);
+                                            }
+                                            i++;
+                                        }
+                                    } else {
+                                        res.push(2);
+                                    }
+                                    v.push(res);
+                                });
+                                
+                                loggerT.verbose('[dailyConformity] v : ', v);
+                                qInsertConformity.values = [v];
+                                return this.mysql.query(qInsertConformity)
+                                    .then(finalRes => {
+                                        loggerT.verbose('[dailyConformity] finalRes : ', finalRes);
+                                        return Promise.resolve(finalRes);
+                                    })
+                                    .catch(finalErr => {
+                                        loggerT.error('[dailyConformity] finalErr : ', finalErr);
+                                        return Promise.reject(finalErr);
+                                    })
+                                ;
+                            }
+                        })
+                        .catch(err2 => {
+                            loggerT.error('[dailyConformity] ERROR ON SECOND QUERY : ', err2);
+                            return Promise.reject(err2);
+                        })
+                    ;
+                    
+                }
+            })
+            .catch(err1 => {
+                loggerT.error('[dailyConformity] ERROR ON FIRST QUERY : ', err1);
+                return Promise.reject(err1);
             })
         ;
     }

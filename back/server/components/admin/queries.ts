@@ -34,3 +34,10 @@ export const UPDATE_DOC_TO_REPLACED = 'UPDATE `document` set state = 3 WHERE sta
 // ======== TO TEST ==========
 export const ALERT_MAIL_DATA = 'SELECT DISTINCT csr.client_id, o.denomination, o.id, r.count as count, sc.kbis, sc.lnte, sc.urssaf, off_supp.off, sc.supplier_id FROM `organisations` as o INNER JOIN `client_supplier_relation` as csr ON o.id = csr.supplier_id LEFT JOIN `supplier_conformity` as sc ON (o.siren = sc.siren AND sc.start_date = ?), (SELECT COUNT(su.id) as off FROM `suppliers` as su WHERE su.client_id = ? AND su.last_connexion IS NULL) as off_supp, (SELECT COUNT(*) as count FROM `organisations` as org INNER JOIN `client_supplier_relation` as c ON org.id = c.supplier_id WHERE c.client_id = ?) as r WHERE csr.client_id = ?;';
 export const INSERT_ACC_ACTIVATION = 'INSERT INTO `account_activation` (`user_id`, `token`, `expiration_time`) VALUES (?, ?, ?)'
+
+
+// Conformity queries
+export const GET_ALL_SUPPLIERS = 'SELECT * from organisations';
+export const GET_ALL_USED_DOCS = 'SELECT d.id, d.siren, d.validityDate, dt.id as doc_id FROM `document` as d INNER JOIN `doc_types` as dt ON dt.name=d.category WHERE d.siren IN ( SELECT distinct siren from organisations ) AND d.state = 1;'
+export const GET_DOCS_NEEDED = 'SELECT sdr.doc_id,sdr.org_id,sdr.client_id,o.siren,dt.name as doc_name FROM `supplier_doc_relation` as sdr INNER JOIN organisations as o ON sdr.org_id=o.id INNER JOIN doc_types as dt ON dt.id=sdr.doc_id WHERE org_id IN ( SELECT distinct id from organisations ) GROUP BY doc_id, client_id, org_id ORDER BY org_id;';
+export const MASS_INSERT_CONFORMITY = 'INSERT INTO `supplier_conformity` (client_id, org_id, start_date, legal, comp) VALUES ?';

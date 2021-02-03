@@ -70,9 +70,9 @@
                 data-toggle="modal" data-target="#exampleModalCenter">
                 <span class="doc-icn-cont">
                   <img style="height: 25px; display: block;" src="../../../assets/img/legal-icn@2x.png" />
-                  <img class="valid-state-icn valid-icn-shadow" *ngIf="item.valid"
+                  <img class="valid-state-icn valid-icn-shadow" *ngIf="item.legal === 1"
                     src="../../../assets/img/valid-icn.svg" />
-                  <img class="invalid-state-icn valid-icn-shadow" *ngIf="!item.valid"
+                  <img class="invalid-state-icn valid-icn-shadow" *ngIf="item.legal !== 1"
                     src="../../../assets/img/invalid-doc-icn.svg" />
                   <span class="fix-middle align-txt doc-type-txt">Légal</span>
                 </span>
@@ -80,9 +80,9 @@
               <div class="doc-cont col-6 h-100" (click)="openCompDocModal(item)" *ngIf="item.comp_docs_count > 0">
                 <span class="doc-icn-cont">
                   <img style="height: 25px;" src="../../../assets/img/comp-icn@2x.png" />
-                  <img class="valid-state-icn-two valid-icn-shadow" *ngIf="false"
+                  <img class="valid-state-icn-two valid-icn-shadow" *ngIf="item.comp === 1"
                     src="../../../assets/img/valid-icn.svg" />
-                  <img class="invalid-state-icn-two valid-icn-shadow" *ngIf="true"
+                  <img class="invalid-state-icn-two valid-icn-shadow" *ngIf="item.comp !== 1"
                     src="../../../assets/img/invalid-doc-icn.svg" />
                   <span class="fix-middle doc-type-txt">Complémentaire</span>
                 </span>
