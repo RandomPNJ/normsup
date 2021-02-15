@@ -42,9 +42,9 @@
 <!-- Btn template for btn 'Déposer' -->
 <ng-template #expiredBtnTemplate>
 
-  <button (mouseover)="hover = true" (mouseout)="hover = false" (click)="onClickDropOffBtnEvent(document)" type="button" class="btn new-btn-normsup card-document-btn">
+  <button (mouseover)="hover = true" (mouseout)="hover = false" (click)="onClickDropOffBtnEvent(document)" type="button" class="btn btn-primary card-document-btn">
       <span class="card-btn-txt-container">
-        <img width="12" height="12" class="button-logo" [src]="hover ? '../../../assets/img/white-loupe.svg' : '../../../assets/img/loupe.svg'" />
+        <img width="15" height="15" class="button-logo" [src]="hover ? '../../../assets/img/white_upload.svg' : '../../../assets/img/white_upload.svg'" />
         <span>Déposer</span>
       </span>
   </button>
@@ -54,7 +54,7 @@
 <ng-template #notExpiredBtnTemplate>
   <button (mouseover)="hover = true" (mouseout)="hover = false" (click)="onclickCardBtnEvent(document)" type="button" class="btn new-btn-normsup card-document-btn">
       <span class="card-btn-txt-container">
-        <img width="12" height="12" class="button-logo" [src]="hover ? '../../../assets/img/white-loupe.svg' : '../../../assets/img/loupe.svg'" />
+        <img width="15" height="15" class="button-logo" [src]="hover ? '../../../assets/img/white-loupe.svg' : '../../../assets/img/loupe.svg'" />
         <span>Consulter</span>
       </span>
   </button>

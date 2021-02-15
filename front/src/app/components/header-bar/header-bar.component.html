@@ -8,24 +8,24 @@
             <img *ngIf="profilePic" [src]="profilePic" alt="..." width="34" height="34" class="rounded-circle shadow-sm">
             <div class="header-txt-cont" (click)='dropbox()' (clickOutside)="closeDropdown()">
                 <div style="width: 100%;max-width: 400px;" class="inline-b">
-                    <h4 class="m-0 one-liner show-username header-txt">{{currentUser.name}} {{currentUser.lastname}} <span>{{role ? "| " + role : ""}}</span></h4>
+                    <h4 class="m-0 one-liner show-username header-txt">{{currentUser.name | titlecase }} {{currentUser.lastname | uppercase }} <span>{{role ? "| " + role : ""}}</span></h4>
                 </div>
                 <div class="inline-b">
                     <span class="glyphicon glyphicon-menu-down menu-dwn grow-left"> </span>
                     <div [hidden]='!isLogout' class="dropContent" style="z-index: 1000 !important;">
-                        <div *ngIf="!backoffice" class='selectData' id="profile" routerLink="/dashboard/profile">
+                        <div class='selectData' id="profile" *ngIf="!backoffice && !supplierView" routerLink="/dashboard/profile">
                             <div class="selectDataChild">
                                 <img class="header-drop-icn" src="../../../assets/img/profile-icn.svg" style="height: 13px;"alt="">
                                 <p style="padding-right: 31px;">Mon compte</p>
                             </div>
                         </div>
-                        <div class='selectData' id="users" routerLink="/dashboard/users" *ngIf="isAdmin && !backoffice">
+                        <div class='selectData' id="users" routerLink="/dashboard/users" *ngIf="isAdmin && !backoffice && !supplierView">
                             <div class="selectDataChild">
                                 <img class="header-drop-icn" src="../../../assets/img/users-icn.svg" style="height: 17px;padding-right: 18px;"alt="">
                                 <p style="padding-right: 31px;">Gestion des utilisateurs</p>
                             </div>
                         </div>
-                        <div *ngIf="!backoffice" class='selectData' id="contact" routerLink="/dashboard/alerts">
+                        <div class='selectData' id="contact"  *ngIf="!backoffice && !supplierView"  routerLink="/dashboard/alerts">
                             <div class="selectDataChild">
                                 <img class="header-drop-icn" src="../../../assets/img/alert-icn.svg" style="height: 13px;"alt="">
                                 <p style="padding-right: 31px;">Alertes</p>

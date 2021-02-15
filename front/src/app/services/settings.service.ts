@@ -59,4 +59,16 @@ export class SettingsService {
       return false;
     }
   }
+
+  public supplierProfileModification(): any {
+    let loggedUser = this.bsService.getLocalStorage('current_supplier');
+    loggedUser = JSON.parse(loggedUser);
+    console.log('profileModification', loggedUser)
+    if(loggedUser && loggedUser.username) {
+      // I do this to preserve data coherency, as API return user in data property
+      return loggedUser;
+    } else {
+      return false;
+    }
+  }
 }

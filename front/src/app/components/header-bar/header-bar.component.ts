@@ -36,6 +36,7 @@ export class HeaderBarComponent implements OnInit {
   isLoggedIn: Subscription;
   profileSub: Subscription;
   isAdmin: Boolean = false;
+  supplierView: Boolean;
 
   constructor(private router: Router,
     private route: ActivatedRoute,
@@ -56,22 +57,29 @@ export class HeaderBarComponent implements OnInit {
         // console.log('/api/users/picture err', err);
       })
     ;
-    this.profileSub = this.settingsService.profileModif.subscribe(res => {
-      if(res && res.name && !this.backoffice) {
-        this.currentUser = res;
+    if(this.route.snapshot['_routerState'].url.indexOf('/supplier') === -1) {
+      this.profileSub = this.settingsService.profileModif.subscribe(res => {
+        if(res && res.name && !this.backoffice) {
+          this.currentUser = res;
+        }
+      });
+      console.log('this.currentUser.roles', this.currentUser.role);
+      console.log('find(this.currentUser.role, "admin")', indexOf(this.currentUser.role, 'admin'))
+      if(indexOf(this.currentUser.role, 'admin') !== -1) {
+        this.role = 'Administrateur';
+        console.log('admin found');
+        this.isAdmin = true;
+      } else {
+        this.role = 'Utilisateur';
       }
-    });
-    console.log('this.currentUser.roles', this.currentUser.role);
-    console.log('find(this.currentUser.role, "admin")', indexOf(this.currentUser.role, 'admin'))
-    if(indexOf(this.currentUser.role, 'admin') !== -1) {
-      this.role = 'Administrateur';
-      console.log('admin found');
-      this.isAdmin = true;
+      this.supplierView = false;
     } else {
-      this.role = 'Utilisateur';
+      this.supplierView = true;
+      this.role = 'Fournisseur';
     }
+    console.log('this.supplierView',this.supplierView)
   }
-
+    
 
   secondBtn(route) {
     if (route && route !== '') {

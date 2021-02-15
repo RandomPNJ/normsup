@@ -646,7 +646,7 @@ CHANGE COLUMN `start_date` `start_date` DATE NOT NULL ;
 
 ## Applied
  
-False
+True
 
 
 ## Date
@@ -666,7 +666,7 @@ CHANGE COLUMN `conform` `legal` INT(11) NOT NULL ;
 
 ## Applied
  
-False
+True
 
 
 ## Date
@@ -684,7 +684,7 @@ ADD COLUMN `client_id` INT NULL AFTER `comp`;
 
 ## Applied
  
-False
+True
 
 
 

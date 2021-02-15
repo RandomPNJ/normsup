@@ -1172,22 +1172,17 @@ export default class SupplierRegistry {
         return HelperQueries.getUserFromDB(userID)
             .then(res => {
                 let user = res[0];
+                // This query gets the supplier conformity
                 let query = {
-                    timeout: 40000
+                    timeout: 40000,
+                    sql: Query.MONTHLY_CONFORMITY,
+                    values: [user.organisation, user.organisation, moment().startOf('month').subtract(4, 'months').toDate()]
                 };
-                if(data && data.startDate) {
-                    // let m = moment(data.startDate);
-                    // query['sql'] = Query.MONTHLY_CONFORMITY_ENDDATE;
-                    // query['values'] = [user.organisation, user.organisation, m.startOf('month'), moment().];
-                } else {
-                    query['sql'] = Query.MONTHLY_CONFORMITY;
-                    query['values'] = [user.organisation, user.organisation, moment().startOf('month').subtract(4, 'months').toDate()];
-                }
-                // let query2 = {
-                //     timeout: 40000,
-                //     sql: Query.CURRENT_MONTH_CONFORMITY,
-                //     values: [user.organisation]
-                // };
+                let query2 = {
+                    timeout: 40000,
+                    sql: Query.CONFORMITY_ORG_CONNEXION,
+                    values: [user.organisation,user.organisation]
+                };
 
                 return this.mysql.query(query)
                     .then(res => {
@@ -1211,6 +1206,7 @@ export default class SupplierRegistry {
                             } else if(e.current_month === 1 && e.conformity != e.nb_doc_req) {
                                 conformity[e.month_evaluated].totalConnected = e.connected_suppliers !== null ? e.connected_suppliers : 0;
                             }*/
+                            
                         });
                         loggerT.verbose('conformity', conformity);
                         return Promise.resolve(conformity);
