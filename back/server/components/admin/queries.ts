@@ -37,8 +37,9 @@ export const INSERT_ACC_ACTIVATION = 'INSERT INTO `account_activation` (`user_id
 
 
 // Conformity queries
-export const MASS_INSERT_CLIENT_HISTORY = 'INSERT INTO `client_information_history` (client_id, orgCount) VALUES ?';
+export const MASS_INSERT_CLIENT_HISTORY = 'INSERT INTO `client_information_history` (client_id, orgCount, date) VALUES ?';
 export const GET_ALL_SUPPLIERS = 'SELECT * from organisations';
+export const GET_CLIENT_HISTO = "SELECT * from client_information_history as c where c.client_id = ?;";
 export const COUNT_SUPPLIERS = 'SELECT added_by_org as client_id, count(id) as orgCount from organisations group by added_by_org';
 export const GET_ALL_USED_DOCS = 'SELECT d.id, d.siren, d.validityDate, dt.id as doc_id FROM `document` as d INNER JOIN `doc_types` as dt ON dt.name=d.category WHERE d.siren IN ( SELECT distinct siren from organisations ) AND d.state = 1;'
 export const GET_DOCS_NEEDED = 'SELECT sdr.doc_id,sdr.org_id,sdr.client_id,o.siren,dt.name as doc_name FROM `supplier_doc_relation` as sdr INNER JOIN organisations as o ON sdr.org_id=o.id INNER JOIN doc_types as dt ON dt.id=sdr.doc_id WHERE org_id IN ( SELECT distinct id from organisations ) GROUP BY doc_id, client_id, org_id ORDER BY org_id;';

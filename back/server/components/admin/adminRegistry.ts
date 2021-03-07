@@ -277,7 +277,7 @@ export default class AdminRegistry {
                     });
 
                     loggerT.verbose('[dailyConformity] orgs == ', orgs);
-
+                    let today = moment().format('YYYY-MM-DD').toString();
                     let getDocs = {
                         timeout: 40000,
                         sql: Query.GET_ALL_USED_DOCS,
@@ -313,11 +313,20 @@ export default class AdminRegistry {
                                     sql: Query.MASS_INSERT_CLIENT_HISTORY,
                                     values: []
                                 };
+                                let orgCountPerClient = {};
                                 loggerT.verbose('[dailyConformity] allDocs : ', allDocs);
                                 loggerT.verbose('[dailyConformity] docsNeeded : ', docsNeeded);
 
                                 countRes.map(c => {
-                                    orgDataV.push([c.client_id, c.orgCount]);
+                                    if(!orgCountPerClient[c.client_id] || orgCountPerClient[c.client_id] && orgCountPerClient[c.client_id] < c.orgCount) {
+                                        orgCountPerClient[c.client_id] = c.orgCount;
+                                    }
+                                });
+
+                                loggerT.verbose('orgCountPerClient === ', orgCountPerClient);
+
+                                Object.keys(orgCountPerClient).forEach(k => {
+                                    orgDataV.push([k, orgCountPerClient[k], today]);
                                 });
 
                                 // Ce foreach permets d'avoir les organisations facilement bouclable
