@@ -1176,24 +1176,40 @@ export default class SupplierRegistry {
                 let query = {
                     timeout: 40000,
                     sql: Query.MONTHLY_CONFORMITY,
-                    values: [user.organisation, user.organisation, moment().startOf('month').subtract(4, 'months').toDate()]
+                    values: [user.organisation,user.organisation, user.organisation, moment().startOf('month').subtract(4, 'months').toDate()]
                 };
                 let query2 = {
                     timeout: 40000,
                     sql: Query.CONFORMITY_ORG_CONNEXION,
                     values: [user.organisation,user.organisation]
                 };
-
-                return this.mysql.query(query)
+                let prs = [];
+                prs.push(this.mysql.query(query));
+                // prs.push(this.mysql.query(q1));
+                prs.push(this.mysql.query(query2));
+                return Promise.all(prs.map(p => p.catch(e => e)))
                     .then(res => {
+                        let mConfRes = res[0];
+                        let orgConnexRes = res[1];
+                        let endRes = {};
                         let conformity = {};
-                        loggerT.verbose('[monthlyConformity] res', res);
-
-                        res.map(e => {
-                            if(!conformity[e.month_evaluated]) {
-                                conformity[e.month_evaluated] = {};
-                                conformity[e.month_evaluated].totalConnected = 0;
-                                conformity[e.month_evaluated].totalConform = 0;
+                        let totalConnected = {};
+                        let totalComp = 0;
+                        loggerT.verbose('[monthlyConformity] mConfRes', mConfRes);
+                        loggerT.verbose('[monthlyConformity] orgConnexRes', orgConnexRes);
+                        mConfRes.map(e => {
+                            if(!conformity[e.year_evaluated]) {
+                                conformity[e.year_evaluated] = {};
+                            }
+                            if(!conformity[e.year_evaluated][e.month_evaluated]) {
+                                conformity[e.year_evaluated][e.month_evaluated] = {};
+                            }
+                            if(!conformity[e.year_evaluated][e.month_evaluated][e.day_evaluated]) {
+                                conformity[e.year_evaluated][e.month_evaluated][e.day_evaluated] = {};
+                                conformity[e.year_evaluated][e.month_evaluated][e.day_evaluated].totalConnected = 0;
+                                conformity[e.year_evaluated][e.month_evaluated][e.day_evaluated].totalLegalConform = 0;
+                                conformity[e.year_evaluated][e.month_evaluated][e.day_evaluated].totalCompConform = 0;
+                                conformity[e.year_evaluated][e.month_evaluated][e.day_evaluated].totalCounted = 0;
                             }
                             // To change
                             /*
@@ -1206,10 +1222,42 @@ export default class SupplierRegistry {
                             } else if(e.current_month === 1 && e.conformity != e.nb_doc_req) {
                                 conformity[e.month_evaluated].totalConnected = e.connected_suppliers !== null ? e.connected_suppliers : 0;
                             }*/
-                            
+                            if(e.legal === 1) {
+                                conformity[e.year_evaluated][e.month_evaluated][e.day_evaluated].totalLegalConform += 1;
+                            }
+                            if(e.comp === 1) {
+                                conformity[e.year_evaluated][e.month_evaluated][e.day_evaluated].totalCompConform += 1;
+                                totalComp++;
+                            } else if(e.comp === 0) {
+                                totalComp++;
+                            }
+                            conformity[e.year_evaluated][e.month_evaluated][e.day_evaluated].totalCounted++;
                         });
-                        loggerT.verbose('conformity', conformity);
-                        return Promise.resolve(conformity);
+                        let endConf = {};
+                        Object.keys(conformity).forEach((year, index) => {
+                            endConf[year] = {};
+                            Object.keys(conformity[year]).forEach((month, index) => {
+                                endConf[year][month] = {
+                                    legalConform: 0,
+                                    compConform: 0,
+                                    counted: 0
+                                };
+                                Object.keys(conformity[year][month]).forEach((day, index) => {
+                                    if(endConf[year][month]['legalConform'] < conformity[year][month][day].totalLegalConform) {
+                                        endConf[year][month]['legalConform'] = conformity[year][month][day].totalLegalConform
+                                    }
+                                    if(endConf[year][month]['compConform'] < conformity[year][month][day].totalCompConform) {
+                                        endConf[year][month]['compConform'] = conformity[year][month][day].totalCompConform
+                                    }
+                                });
+                            });
+                        });
+                        endRes['conformity'] = endConf;
+                        // endRes['totalComp'] = totalComp;
+                        endRes['totalConnected'] = totalConnected;
+                        endRes['totalOrg'] = mConfRes[0].countOrg;
+                        loggerT.verbose('endRes', endRes);
+                        return Promise.resolve(endRes);
                     })
                     .catch(err => {
                         loggerT.error('ERROR ON QUERY monthlyConformity :', err);

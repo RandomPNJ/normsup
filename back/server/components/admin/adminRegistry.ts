@@ -254,13 +254,23 @@ export default class AdminRegistry {
             sql: Query.GET_ALL_SUPPLIERS,
             values: []
         };
+        let countQuery = {
+            timeout: 40000,
+            sql: Query.COUNT_SUPPLIERS,
+            values: []
+        };
         let date = moment().startOf('month').toDate();
         let now = moment();
         let orgs = {};
+        let prs = [];
+        prs.push(this.mysql.query(query));
+        prs.push(this.mysql.query(countQuery));
 
-        // Why this query ?
-        return this.mysql.query(query)
-            .then(r => {
+        return Promise.all(prs.map(p => p.catch(e => e)))
+            .then(res => {
+                let r = res[0];
+                let countRes = res[1];
+                
                 if(r && r.length > 0) {
                     r.forEach(e => {
                         orgs[e.id] = e.added_by_org;
@@ -291,14 +301,24 @@ export default class AdminRegistry {
                                 let docsForOrg = {};
                                 let endRes = {};
                                 let v = [];
+                                let orgDataV = [];
                                 let date = moment().format("YYYY-MM-DD HH:mm:ss");
                                 let qInsertConformity = {
                                     timeout: 40000,
                                     sql: Query.MASS_INSERT_CONFORMITY,
                                     values: []
                                 };
+                                let qInsertOrgData = {
+                                    timeout: 40000,
+                                    sql: Query.MASS_INSERT_CLIENT_HISTORY,
+                                    values: []
+                                };
                                 loggerT.verbose('[dailyConformity] allDocs : ', allDocs);
                                 loggerT.verbose('[dailyConformity] docsNeeded : ', docsNeeded);
+
+                                countRes.map(c => {
+                                    orgDataV.push([c.client_id, c.orgCount]);
+                                });
 
                                 // Ce foreach permets d'avoir les organisations facilement bouclable
                                 // ainsi que d'avoir un accès direct à tous les documents nécessaire à l'organisation
@@ -391,8 +411,14 @@ export default class AdminRegistry {
                                 });
                                 
                                 loggerT.verbose('[dailyConformity] v : ', v);
+                                loggerT.verbose('[dailyConformity] orgDataV: ', orgDataV);
                                 qInsertConformity.values = [v];
-                                return this.mysql.query(qInsertConformity)
+                                qInsertOrgData.values = [orgDataV];
+                                let prs = [
+                                    this.mysql.query(qInsertConformity),
+                                    this.mysql.query(qInsertOrgData)
+                                ];
+                                return Promise.all(prs.map(p => p.catch(e => e)))
                                     .then(finalRes => {
                                         loggerT.verbose('[dailyConformity] finalRes : ', finalRes);
                                         return Promise.resolve(finalRes);

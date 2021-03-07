@@ -31,7 +31,7 @@ services:
     extends:
       file: compose-default.yml
       service: mysql_database
-    command: --default-authentication-plugin=mysql_native_password
+    command: --default-authentication-plugin=mysql_native_password --sql_mode=""
     restart: always
     container_name: database.normsup
     environment:

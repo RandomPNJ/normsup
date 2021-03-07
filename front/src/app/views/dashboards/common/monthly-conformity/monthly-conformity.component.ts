@@ -116,27 +116,31 @@ export class MonthlyConformityComponent implements OnInit {
 		});
   }
 
-  getConformityRateData(data?) {
+  	getConformityRateData(data?) {
+		console.log('[getConformityRateData] data', data);
+		data = data.conformity;
 		this.chartDatasets.labels.push(' ');
-		Object.keys(data).forEach((k, index) => {
+		Object.keys(data).forEach((year, index) => {
 			// ?????
-			if(index === 0) {
-				if(data[k].totalConnected === 0) {
-					this.chartDatasets.datasets[0].data.push(0)
+			console.log('[getConformityRateData] year', year);
+			Object.keys(data[year]).forEach((month, i) => {
+				/**
+				 * First if => To initialize the dataset
+				 * Second if => To close the dataset
+				 * Third if => To populate the dataset
+				 */
+				console.log('[getConformityRateData] data[year][month]', data[year][month]);
+				if(index === 0) {
+					this.chartDatasets.datasets[0].data.push((data[year][month].legalConform / this.nbSuppliers) * 100);
+				} else if(index === Object.keys(data).length-1) {
+					this.chartDatasets.labels.push(this.months[parseInt(month, 10) - 1]);
+					this.chartDatasets.datasets[0].data.push((data[year][month].legalConform / this.nbSuppliers) * 100);
 				} else {
-					this.chartDatasets.datasets[0].data.push((data[k].totalConform / data[k].totalConnected) * 100)
+					this.chartDatasets.datasets[0].data.push((data[year][month].legalConform / this.nbSuppliers) * 100);
+					this.chartDatasets.labels.push(this.months[parseInt(month, 10) - 1]);
 				}
-			} else if(index === Object.keys(data).length-1) {
-				this.chartDatasets.labels.push(this.months[parseInt(k, 10) - 1]);
-				this.chartDatasets.datasets[0].data.push((data[k].totalConform / this.nbSuppliers) * 100)
-			} else {
-				if(data[k].totalConnected === 0) {
-					this.chartDatasets.datasets[0].data.push(0)
-				} else {
-					this.chartDatasets.datasets[0].data.push((data[k].totalConform / data[k].totalConnected) * 100)
-				}
-				this.chartDatasets.labels.push(this.months[parseInt(k, 10) - 1]);
-			}
+
+			});
 		});
 		this.chartDatasets.labels.push(' ');
 		console.log('this.chartDatasets', this.chartDatasets)
