@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {CheckboxFormComponent} from '../../../../ui-components/checkbox-form/checkbox-form.component';
 import {SignaturePadComponent} from '../../../../ui-components/signature-pad/signature-pad.component';
 import {UploadDocumentBtnComponent} from '../../../../ui-components/upload-document-btn/upload-document-btn.component';
+import HelloSign from "hellosign-embedded";
 import * as moment from 'moment';
 
 @Component({
@@ -24,6 +25,10 @@ export class NominativeListForeignWorkerFormComponent implements OnInit {
 
   workerForm: FormGroup;
 
+  // HelloSign
+  helloSignClient: any;
+  signUrl: String = '';
+
   currentUser;
   currentUserCompany;
 
@@ -42,6 +47,12 @@ export class NominativeListForeignWorkerFormComponent implements OnInit {
       noNominativeList: [false, [Validators.required]],
       file: [null, [Validators.required]]
     });
+    this.helloSignClient = new HelloSign(this.signUrl, {
+      clientId: '4413cfbd33daa2c75a85ff35ab180f84a5b361de1491f5a0603395fab5c3c5f3',
+      redirectTo: 'http://app.normsup.com/supplier/signsuccess',
+      allowCancel: true,
+      debug: true
+    });
   }
 
   ngOnInit() {
@@ -53,14 +64,14 @@ export class NominativeListForeignWorkerFormComponent implements OnInit {
 
     this.currentUserCompany = {
       denomination: 'AXA Banque et Assurance',
-      siret: '11111111111111',
+      siret: '1234567890',
       address: '1 Rue du Temple, Paris, 75001, France'
     };
   }
 
   onNominativeListCheckboxChangeEvent(event) {
     const checked = event.target.checked;
-    if (checked) {
+    if(checked) {
       this.handleNominativeCheckEvent();
     } else {
       this.handleNominativeUncheckEvent();
@@ -71,7 +82,7 @@ export class NominativeListForeignWorkerFormComponent implements OnInit {
 
   onNoNominativeListCheckboxChangeEvent(event) {
     const checked = event.target.checked;
-    if (checked) {
+    if(checked) {
       this.handleNoNominativeCheckEvent();
     } else {
       this.handleNoNominativeUncheckEvent();

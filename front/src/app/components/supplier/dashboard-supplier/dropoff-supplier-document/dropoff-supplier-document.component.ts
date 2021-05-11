@@ -98,27 +98,27 @@ export class DropoffSupplierDocumentComponent implements OnInit {
   private initDocument() {
     // Call api by document type
     // If error, redirection
-    if ('KBIS' === this.documentType) {
+    if('KBIS' === this.documentType) {
       this.currentDocument = {
         name: 'Extrait de KBIS',
         type: this.documentType
       };
     }
 
-    switch (this.documentType) {
+    switch(this.documentType) {
       case 'KBIS':
         this.currentDocument = {
           name: 'Extrait de KBIS',
           type: this.documentType
         };
         break;
-      case 'ATTESTATION_VIGILANCE':
+      case 'URSSAF':
         this.currentDocument = {
           name: 'Attestation de vigilance',
           type: this.documentType
         };
         break;
-      case 'LISTE_TRAVAILLEURS':
+      case 'LNTE':
         this.currentDocument = {
           name: 'Liste nominative des travailleurs étrangers',
           type: this.documentType
@@ -126,8 +126,6 @@ export class DropoffSupplierDocumentComponent implements OnInit {
         break;
       default:
         this.currentDocument = {
-          name: 'Extrait de KBIS',
-          type: this.documentType
         };
         break;
     }
