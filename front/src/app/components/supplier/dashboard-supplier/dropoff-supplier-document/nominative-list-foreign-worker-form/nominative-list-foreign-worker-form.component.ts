@@ -47,12 +47,12 @@ export class NominativeListForeignWorkerFormComponent implements OnInit {
       noNominativeList: [false, [Validators.required]],
       file: [null, [Validators.required]]
     });
-    this.helloSignClient = new HelloSign(this.signUrl, {
-      clientId: '4413cfbd33daa2c75a85ff35ab180f84a5b361de1491f5a0603395fab5c3c5f3',
-      redirectTo: 'http://app.normsup.com/supplier/signsuccess',
-      allowCancel: true,
-      debug: true
-    });
+    // this.helloSignClient = new HelloSign(this.signUrl, {
+    //   clientId: '4413cfbd33daa2c75a85ff35ab180f84a5b361de1491f5a0603395fab5c3c5f3',
+    //   redirectTo: 'http://app.normsup.com/supplier/signsuccess',
+    //   allowCancel: true,
+    //   debug: true
+    // });
   }
 
   ngOnInit() {
