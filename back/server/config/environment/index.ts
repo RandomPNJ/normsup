@@ -10,7 +10,7 @@ export default {
   momentLocale: 'fr',
 
   // api: {apiName: { url, routes}} // if using API
-  secret: 'eZyo2k4p',
+  secret: process.env.JWT_SCRT,
   jwt: {
     // expirationTime: 86400
     expirationTime: '180d'
@@ -25,8 +25,8 @@ export default {
     port: 465, // port for secure SMTP
     service: 'gmail',
     auth: {
-      user: 'mail.normsup@gmail.com',
-      pass: 'Panda78!'
+      user: process.env.SMTP_MAIL,
+      pass: process.env.SMTP_PASS
     }
   },
 
@@ -43,11 +43,11 @@ export default {
   },
 
   mysqlParams: {
-    host: 'database.normsup',
-    user: 'admin',
-    port: '3306',
-    password : 'Jesuisla1!',
-    database: 'normsup',
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    port: process.env.DB_PORT,
+    password : process.env.DB_PWD,
+    database: process.env.DB_NAME,
     waitForConnections: true,
     connectionLimit: 10,
     queueLimit: 0,
@@ -55,9 +55,9 @@ export default {
   },
 
   awsconfig: {
-    region: 'eu-west-1',
-    accessKeyId: 'AKIASFDGPSTATLP53JNR',
-    secretAccessKey: '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',
+    region: process.env.AWS_REGION,
+    accessKeyId: process.env.AWS_AKEY,
+    secretAccessKey: process.env.AWS_SCRT,
   },
   s3Params: {
     maxAsyncS3: 20,     // this is the default
